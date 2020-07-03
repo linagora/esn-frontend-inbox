@@ -1,0 +1,97 @@
+inbox-composer {
+  .flex-column;
+  .flex-shorthand(1);
+
+  .compose {
+    .flex-column;
+    .flex-shorthand(1);
+
+    background-color: @m-white;
+
+    .compose-from, .compose-to {
+      .flex-space-between;
+      .flex-vertical-centered;
+      margin: 0 10px;
+
+      .row {
+        margin: 0;
+      }
+
+      .fields {
+        .flex-column;
+        .flex-shorthand(1, 1);
+
+        padding-right: 0;
+
+        .form-group {
+          .flex-vertical-centered;
+
+          margin: 0;
+
+          > .inbox-recipients {
+            .flex-shorthand(1);
+
+            padding: 2px 2px 1px;
+            width: 10px;
+          }
+
+          > .control-label {
+            min-width: 45px;
+            margin: 0;
+            padding: 0;
+            text-align: left;
+            color: @secondaryTextColor
+          }
+
+          &.select {
+            select {
+              height: 31px;
+              line-height: 31px;
+              overflow: hidden;
+            }
+
+            &::before {
+              top: 0;
+              height: 30px;
+            }
+          }
+        }
+      }
+
+      .inbox-more-recipients {
+        color: @secondaryTextColor;
+        cursor: pointer;
+        padding-left: 0;
+        text-align: center;
+        min-width: 26px;
+        margin: 0 0 auto 0;
+
+        &.active, &:hover {
+          color: @text-color;
+        }
+
+        i {
+          font-size: 2em;
+        }
+      }
+
+    }
+
+    .compose-subject {
+      padding: 0 10px;
+      border-top: 1px solid lighten(@m-gray, 30%);
+      color: @text-color;
+    }
+
+    .compose-body {
+      .flex-column;
+      .flex-shorthand(1);
+
+      width: 100%;
+      padding: 5px 10px;
+      border: none;
+    }
+
+  }
+
+}

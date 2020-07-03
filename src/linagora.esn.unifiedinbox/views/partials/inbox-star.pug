@@ -1,0 +1,3 @@
+a
+  i.mdi.mdi-star.waves-notransition(ng-show='item.isFlagged', ng-click='ctrl.setIsFlagged(false); $event.preventDefault(); $event.stopImmediatePropagation();', title="{{ 'Unstar' | translate }}")
+  i.mdi.mdi-star-outline.waves-notransition(ng-show='!item.isFlagged', ng-click='ctrl.setIsFlagged(true); $event.preventDefault(); $event.stopImmediatePropagation();', title="{{ 'Star' | translate }}")

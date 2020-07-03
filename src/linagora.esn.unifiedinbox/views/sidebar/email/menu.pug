@@ -1,0 +1,36 @@
+.listview(ng-switch="ctrl.state")
+
+  .lv-body(ng-switch-when="LOADING")
+    .text-center(openpaas-logo-spinner, spinner-start-active='1', spinner-size='0.4')
+
+  .lv-body(ng-switch-when="LOADED")
+
+    .listview
+      .lv-item.clickable.inbox-item-with-icon.folder-with-icon.toggle-submenu.flex-end.waves-effect.waves-classic(title="{{ ::emailAddress }}", esn-toggle)
+        .badge-container
+          .caret-submenu
+            i.mdi.mdi-menu-down
+          i.inbox-icon.mdi.mdi-account-circle
+        .title.ellipsis
+          span {{ ::emailAddress }}
+      ul.nopadding
+        esn-filter-input(on-change="ctrl.filter = $filter")
+        mailbox-display.lv-item(is-special="true", mailbox="mailbox", ng-repeat="mailbox in specialMailboxes" ui-sref="unifiedinbox.inbox({ type: 'jmap', account: '', context: mailbox.id })")
+
+        mailbox-display.lv-item(is-system="true", mailbox="mailbox", ng-repeat="mailbox in mailboxes | filter: { role: { value: '' }, namespace: { type: 'Personal' }, name: ctrl.filter } track by mailbox.id", ui-sref="unifiedinbox.inbox({ type: 'jmap', account: '', context: mailbox.id })")
+
+        hr
+        inbox-sidebar-new-folder-button
+
+        div(ng-if="displayPersonnalFolders")
+          hr
+          .lv-item {{ 'My folders' | translate }}
+          mailbox-display.lv-item(is-folder="true", hide-aside="$hide()", mailbox="mailbox", ng-repeat="mailbox in mailboxes | filter: { role: { value: '!' }, namespace: { type: 'Personal' }, name: ctrl.filter } track by mailbox.id", ui-sref="unifiedinbox.inbox({ type: 'jmap', account: '', context: mailbox.id })")
+
+        div(ng-if="displayFoldersSharedWithMe")
+          hr
+          .lv-item {{ 'Shared folders' | translate }}
+          mailbox-display.lv-item(is-shared="true", hide-aside="$hide()", mailbox="mailbox", ng-repeat="mailbox in mailboxes | inboxFilterVisibleSharedMailboxes | filter: { name: ctrl.filter } track by mailbox.id", ui-sref="unifiedinbox.inbox({ type: 'jmap', account: '', context: mailbox.id })")
+
+  .lv-body(ng-switch-when="ERROR")
+    inbox-sidebar-account-unavailable.lv-item(account="::ctrl.account", ng-click="ctrl.load()")

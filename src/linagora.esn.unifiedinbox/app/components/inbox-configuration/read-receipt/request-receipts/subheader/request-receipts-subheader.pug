@@ -1,0 +1,8 @@
+extends /modules/subheader/responsive-subheader.pug
+
+block left
+  inbox-subheader-close-button.hidden-md
+  .title {{ 'Request receipts' | translate }}
+
+block right
+  inbox-subheader-save-button(ng-click="$ctrl.onSave()")

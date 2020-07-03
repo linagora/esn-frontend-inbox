@@ -1,0 +1,46 @@
+form.form-horizontal.compose.ng-cloak(ng-submit="$ctrl.send()")
+
+  inbox-composer-identity-selector(identity="$ctrl.message.identity", on-identity-update="$ctrl.message.identity = $identity")
+
+  .compose-to
+    .fields
+      .form-group
+        label.control-label {{ 'To' | translate }}
+        recipients-auto-complete.inbox-recipients.recipients-to(ng-model="$ctrl.message.to", template="recipients-auto-complete")
+      .form-group.ng-hide(ng-hide="$ctrl.isCollapsed")
+        label.control-label {{ 'Cc' | translate }}
+        recipients-auto-complete.inbox-recipients.recipients-cc(ng-model="$ctrl.message.cc", template="recipients-auto-complete")
+      .form-group.ng-hide(ng-hide="$ctrl.isCollapsed")
+        label.control-label {{ 'Bcc' | translate }}
+        recipients-auto-complete.inbox-recipients.recipients-bcc(ng-model="$ctrl.message.bcc", template="recipients-auto-complete")
+    .inbox-more-recipients(ng-click="$ctrl.isCollapsed = !$ctrl.isCollapsed", ng-class="{ 'isCollapsed': $ctrl.isCollapsed }")
+      i.mdi(ng-class="$ctrl.isCollapsed ? 'mdi-chevron-down' : 'mdi-chevron-up'")
+
+  input.form-control.compose-subject(type="text", placeholder="{{ 'Subject' | translate }}", ng-model="$ctrl.message.subject", ng-change="$ctrl.onTitleUpdate({ $title: $ctrl.message.subject })")
+
+  inbox-composer-body-editor-html.esn-summernote(
+    message="$ctrl.message",
+    identity="$ctrl.message.identity",
+    is-collapsed="$ctrl.isCollapsed",
+    send="$ctrl.send()",
+    upload="$ctrl.upload($attachment)",
+    remove-attachment="$ctrl.removeAttachment($attachment)",
+    on-body-update="$ctrl.message.htmlBody = $body"
+    on-attachments-upload="$ctrl.onAttachmentsUpload(attachments)")
+
+  .compose-footer.flex-space-between(attachment-drag-and-drop-handler="$ctrl.onAttachmentsUpload(attachments).then($ctrl.attachmentHolder.onAttachmentsUpdate)")
+    button.btn.btn-link.btn-icon(feature-flag="linagora.esn.unifiedinbox.drafts", ng-click="$ctrl.destroyDraft()", type="button", title="{{ 'Delete' | translate }}")
+      i.mdi.mdi-delete
+
+    .compose-right-footer.flex-row
+      md-menu-bar
+        md-menu
+          button.btn.btn-link.btn-icon(type="button", ng-click="$mdMenu.open()", title="{{ 'More' | translate }}")
+            i.mdi.mdi-dots-vertical
+          md-menu-content(width="3")
+            md-menu-item.md-indent(type="checkbox", ng-model="$ctrl.hasRequestedReadReceipt")
+              | {{ 'Request a read receipt' | translate }}
+      div(dynamic-directive='inboxComposerExtraButtons')
+      inbox-composer-attachments-selector(attachment-holder="$ctrl.attachmentHolder")
+      button.btn.btn-primary(type="submit", value="submit", ng-disabled="$ctrl.isSendingMessage") {{ 'Send' | translate }}
+        i.mdi.mdi-send

@@ -1,0 +1,125 @@
+.inbox-identity-form .esn-summernote,
+inbox-composer-body-editor-html.esn-summernote {
+  .flex-column;
+  .flex-shorthand(1);
+
+  background-color: @m-white;
+
+  .note-editor.note-frame {
+    .flex-column;
+    .flex-shorthand(1);
+
+    border: 0;
+
+    .panel-heading.note-toolbar {
+      background-color: inherit;
+      border: 0;
+
+      .dropdown-menu {
+        overflow-y: auto;
+        z-index: @summernotePlaceholderZIndex + 1;
+
+        &.dropdown-style {
+          .flex-space-around;
+          .flex-flow(row wrap);
+          .flex-vertical-centered;
+
+          width: @overlayMinWidth - 15px; // Makes the dropdown fit the composer when it's at its min-width
+        }
+      }
+
+      .note-alignment .dropdown-menu {
+        min-width: 141px;
+        padding: 5px;
+      }
+
+      .btn-group {
+        box-shadow: none;
+
+        .btn-default {
+          background-color: @body-bg;
+          color: @secondaryTextColor;
+          border: 0;
+          border-radius: 0;
+
+          &.active, &:hover {
+            background-color: @darkenBgColor;
+            color: @text-color;
+          }
+        }
+      }
+
+      .note-color .dropdown-menu {
+        min-width: 314px;
+
+        .btn-group {
+          .note-color-row {
+            height: 18px;
+          }
+
+          .note-color-reset {
+            padding: 3px 3px;
+          }
+
+          .note-palette-title {
+            margin: 3px 7px;
+            font-size: 13px;
+            border-bottom: none;
+          }
+        }
+      }
+
+      .note-color-palette {
+        margin: 2px;
+
+        div .note-color-btn {
+        width: 16px;
+        height: 16px;
+        border: none;
+        margin: 1px;
+        }
+      }
+    }
+
+    .note-placeholder {
+      z-index: @summernotePlaceholderZIndex;
+    }
+
+    .note-editing-area {
+      .flex-shorthand(1);
+      .fill-parent-block;
+
+      top: 40px;
+      overflow: auto;
+
+      .note-editable {
+        min-height: ~"calc(100% - @{inbox-composer-attachments-min-height})";
+        overflow: hidden;
+
+        blockquote {
+          margin: 5px 0;
+          padding: 0 0 0 10px;
+
+          border-left: 4px solid @darkenBgColor;
+        }
+
+        pre {
+          white-space: pre-wrap;
+
+          border: none;
+          background: none;
+          margin: 1em 0;
+          padding: 0;
+        }
+      }
+    }
+
+    .note-resizebar {
+      display: none;
+    }
+
+    &.panel.panel-default {
+      margin-bottom: 0;
+    }
+  }
+}

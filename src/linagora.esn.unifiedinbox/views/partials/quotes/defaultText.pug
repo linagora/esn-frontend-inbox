@@ -1,0 +1,12 @@
+pre {{ email.textBody }}
+br
+br
+br
+
+p {{ marker }}
+cite {{ 'On' | translate }} {{ email.quoted.date | esnDatetime:"mediumDate time" }}, {{ 'from' | translate }} {{ email.quoted.from.email }}:
+
+br
+br
+
+blockquote {{ email.quoted.textBody | inboxQuote }}

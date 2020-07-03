@@ -1,0 +1,219 @@
+@inboxAsideFontSize: 1.2em;
+@inboxAsideHeadingFontSize: 1.6em;
+@inboxAsideIconFontSize: 1.8em;
+@dividerColor: rgba(0, 0, 0, 0.08);
+@inboxAsideDragTargetBgColor: #FFCC80;
+
+.inbox-aside {
+  .menu-items(30px);
+
+  color: @secondaryTextColor;
+
+  hr {
+    margin: 6px 0;
+    border-top: 1px solid @dividerColor;
+  }
+
+  .clickable {
+    line-height: @inboxAsideIconFontSize;
+
+    &.selected {
+      color: @primaryColor;
+      font-weight: 500;
+      background-color: @darkenBgColor;
+      border-radius: 2px;
+
+      .badge {
+        border: 1px solid @badge-color;
+      }
+    }
+
+    &:hover {
+      .menu-item .menu-item-after:after {
+        background-color: @darkenBgColor;
+        border-radius: 2px;
+      }
+    }
+
+    &.toggle-submenu {
+      .menu-item .menu-item-after:after {
+        background-color: @body-bg;
+      }
+    }
+  }
+
+  .inbox-icon {
+    margin-left: -5px;
+
+    font-size: @inboxAsideIconFontSize;
+    vertical-align: bottom;
+  }
+
+  .listview:not(.lv-lg):not(.lv-message) {
+    .lv-item:not(.menu-heading) {
+      padding: 3px 3px 3px 22px;
+    }
+
+    .lv-item.toggle-submenu:not(.toggle-empty) {
+      padding: 3px 3px 3px 0;
+    }
+  }
+
+  .menu-heading {
+    .flex;
+
+    padding: 8px 0 8px 10px;
+
+    .title {
+      .flex;
+      .flex-shorthand(1);
+
+      .text {
+        .flex-shorthand(1);
+
+        font-weight: bold;
+        font-size: @inboxAsideHeadingFontSize;
+        color: @primaryColor;
+      }
+    }
+
+    .media > .pull-right {
+      padding-left: 2px;
+    }
+  }
+
+  esn-filter-input {
+    width: 100%;
+    margin: 2px 2px 2px 16px;
+
+    input:not([type='button']):not([type='submit']):not([type='file']) {
+      font-size: 13px;
+    }
+
+    div.fg-line {
+      width: ~"calc(100% - 25px)";
+    }
+  }
+}
+
+@media(min-width: @screen-md-min) {
+  .inbox-main-aside {
+    position: fixed;
+    padding-right: 0;
+    left: 0;
+    overflow-y: auto;
+    bottom: 0;
+    top: ~"calc(@{header-height} + @{sub-header-height})";
+
+    @media (min-width: @screen-md-min) {
+      top: ~"calc(@{header-height-md} + @{sub-header-height-md})";
+    }
+
+    @media (min-width: @screen-xl-min) {
+      top: ~"calc(@{header-height-xl} + @{sub-header-height-xl})";
+    }
+  }
+
+  .inbox-aside {
+
+    .listview:not(.lv-lg):not(.lv-message) {
+      .lv-item.menu-heading {
+        padding: 8px 0 8px 20px;
+      }
+    }
+
+    .menu-root {
+      border-left: 5px solid @primaryColor;
+      margin-top: 20px;
+      max-height: 35px;
+      margin-bottom: 5px;
+
+      .media .pull-right i.mdi {
+        vertical-align: sub;
+        font-size: 25px;
+        color: lighten(@secondaryTextColor, 10%);
+
+        &:hover {
+          color: darken(@secondaryTextColor, 20%);
+        }
+      }
+    }
+
+    .menu-heading {
+
+      .add-folder {
+        .transition(0.25s ease-out);
+        opacity: 0.5;
+
+        &:hover {
+          opacity: 1;
+        }
+
+        .inbox-icon {
+          margin: 0;
+        }
+      }
+
+    }
+
+    .clickable {
+      .inbox-ng-leave(-100%, 0);
+      .inbox-ng-enter(-100%, 0);
+      .inbox-ng-move;
+
+      transition: none;
+      max-height: 35px;
+
+      &.selected {
+        .menu-item .menu-item-after:after {
+          background-color: darken(@darkenBgColor, 2%);
+        }
+
+        &:hover {
+          .menu-item .menu-item-after:after {
+            background-color: @darkenBgColor;
+          }
+        }
+      }
+
+      &.folder-with-icon {
+        .menu-item .menu-item-after:after {
+          background-color: darken(@darkenBgColor, 2%);
+        }
+
+        &:hover {
+          .menu-item .menu-item-after:after {
+            background-color: @darkenBgColor;
+          }
+        }
+      }
+
+      &.toggle-submenu {
+        .menu-item .menu-item-after:after {
+          background-color: @darkenBgColor;
+        }
+      }
+
+      .menu-item .menu-item-after:after {
+        background-color: @body-bg;
+      }
+    }
+
+    esn-filter-input {
+      margin-right: 0;
+    }
+  }
+
+  .inbox-main-col {
+    position: absolute;
+    right: 0;
+  }
+}
+
+.is-mobile .inbox-aside .clickable {
+  &:hover {
+    .menu-item .menu-item-after:after {
+      background-color: white;
+    }
+  }
+}

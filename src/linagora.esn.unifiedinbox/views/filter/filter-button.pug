@@ -1,0 +1,8 @@
+button.btn.btn-link.inbox-filter-button.hidden-xs(dropdown-list="/unifiedinbox/views/filter/dropdown-list.html", ng-class="{ 'active': dropdownList.filtered }", title="{{ 'Filters' | translate }}")
+  .flex-vertical-centered
+    span.filter-label {{ dropdownList.placeholder | esnI18n }}
+    span.caret
+
+.visible-xs
+  button.btn.btn-link.btn-icon(dropdown-list="/unifiedinbox/views/filter/dropdown-list.html", ng-class="{ 'active': dropdownList.filtered }")
+    i.mdi.mdi.mdi-filter-variant

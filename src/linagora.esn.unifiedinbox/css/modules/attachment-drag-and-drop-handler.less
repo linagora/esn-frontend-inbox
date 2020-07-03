@@ -1,0 +1,19 @@
+.esn-dragzone {
+  .esn-dragzone-help-text {
+    position: absolute;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: @primaryColor;
+  }
+
+  &.esn-dragzone-hover {
+    opacity: 60%;
+
+    .esn-dragzone-help-text {
+      color: @darkPrimaryColor;
+    }
+  }
+}

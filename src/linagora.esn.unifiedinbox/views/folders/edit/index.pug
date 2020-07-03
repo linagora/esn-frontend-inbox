@@ -1,0 +1,22 @@
+.modal.inbox-root.inbox-modal
+  form(role="form", aria-hidden="true")
+    .modal-dialog
+      .modal-content
+        .modal-header
+          button.close(type='button', data-dismiss="modal", aria-label="Close", ng-click="$hide()")
+            span(aria-hidden="true") &times;
+          h4.modal-title.ellipsis {{ ::mailbox.name }}
+        .modal-body.overflow-none
+          .row
+            .col-xs-12
+              .form-group.fg-line
+                .field-name {{ 'Rename' | translate }}
+                input.form-control(ng-model="mailbox.name", placeholder="{{ 'Enter a name' | translate }}", auto-focus)
+              .form-group.fg-line.select
+                .field-name {{ 'Is located under' | translate }}
+                select.form-control(ng-model="mailbox.parentId", ng-options="box.id as box.qualifiedName for box in mailboxes | inboxFilterDescendantMailboxes: mailbox.id")
+                  option(value="") {{ 'Unified Inbox' | translate }}
+        .modal-footer.flex
+          .flex-vertical-centered.flex-end
+            button.btn.btn-link.color-default(type='button', ng-click="$hide()") {{ 'Cancel' | translate }}
+            button.btn.btn-primary.save(type='submit', ng-click="editFolder($hide)") {{ 'Save' | translate }}

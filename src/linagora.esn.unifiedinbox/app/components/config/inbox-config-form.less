@@ -1,0 +1,62 @@
+@formBorderColor: #DDDDDD;
+
+inbox-config-form {
+  ng-form {
+    .flex-column;
+
+    .left-block, .right-block {
+      width: 100%;
+      padding-right: 15px;
+      padding-left: 15px;
+    }
+  }
+
+  .option-field {
+    .flex-vertical-centered;
+
+    min-height: 35px;
+
+    input {
+      background: @app-gray;
+    }
+  }
+
+  .form-group.ts-disabled {
+    color: lighten(@text-color, 40%);
+    background: transparent;
+    cursor: auto;
+  }
+
+  admin-form-input-bytes {
+    ng-form {
+      padding-left: 15px;
+
+      input[name=dataSizeInput] {
+        text-align: right;
+      }
+    }
+  }
+}
+
+@media (min-width: @screen-md-min) {
+  inbox-config-form {
+    ng-form {
+      .flex-row;
+
+      .left-block, .right-block {
+        width: 50%;
+      }
+
+      .left-block {
+        padding-right: 5px;
+        padding-left: 15px;
+      }
+
+      .right-block {
+        padding-left: 15px;
+        border-left: 1px solid @formBorderColor;
+        margin-bottom: 10px;
+      }
+    }
+  }
+}

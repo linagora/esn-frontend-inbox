@@ -1,0 +1,22 @@
+// The avatar-url attribute is useless but is mandatory because we're using virtual repeat in inbox:
+//
+//    - The virtual repeat reuses the DOM nodes but updates its bindings, instead of creating a new DOM node.
+//    Because of this you cannot use one-time bindings for instance, you must trigger updates everytime the model
+//    changes or you'll face some weird issues, like the wrong avatar being displayed...
+//
+//    - The esnAvatar component uses a & binding for the resolve-avatar attribute, to evaluate the avatar in
+//    the context of the caller (in our case, the Emailer instance). Because of this, the esnAvatar component
+//    will not notice when the emailer changes, because the value of the & binding does not change so it does
+//    not trigger the $onChanges lifecycle callback of the component and the avatar is not updated...
+//
+//    - Passing avatar-url (a < binding) allows the esnAvatar component to be notified when the emailer changes
+//    so that it computes the avatar again, calling our resolveAvatar() function.
+//
+esn-avatar(
+  resolve-avatar="$ctrl.resolveAvatar()"
+  avatar-url="emailer.avatarUrl"
+  profile-popover-card="{source: 'emailer', property: 'objectType'}"
+  profile-popover-card-hide-on-element-scroll="body"
+  profile-popover-card-placement="right"
+  profile-popover-card-show-mobile
+)

@@ -1,0 +1,34 @@
+.from
+  label.line-header {{ 'From' | translate }}:
+  inbox-emailer(emailer="email.from")
+
+.flex
+  .recipients(ng-switch="collapsed")
+    .collapsed(ng-switch-when="true", ng-if="previewEmailer")
+      .to
+        label.line-header(ng-switch="previewEmailerGroup")
+          span(ng-switch-when="To") {{ 'To' | translate }}:
+          span(ng-switch-when="CC") {{ 'Cc' | translate }}:
+          span(ng-switch-when="BCC") {{ 'Bcc' | translate }}:
+        inbox-emailer(emailer="previewEmailer", hide-email="true")
+    .expanded(ng-switch-when="false")
+      .to(ng-if="(email.to && email.to.length)")
+        label.line-header {{ 'To' | translate }}:
+        inbox-emailer-group(group="email.to")
+      .cc(ng-if="(email.cc && email.cc.length)")
+        label.line-header {{ 'Cc' | translate }}:
+        inbox-emailer-group(group="email.cc")
+      .bcc(ng-if="(email.bcc && email.bcc.length)")
+        label.line-header {{ 'Bcc' | translate }}:
+        inbox-emailer-group(group="email.bcc")
+
+  .more.clickable(ng-show="showMoreButton", ng-switch="collapsed", ng-click="$event.stopPropagation(); collapsed = !collapsed")
+    .collapsed(ng-switch-when="true")
+      | +{{ numberOfHiddenEmailer }}
+      i.mdi.mdi-menu-down
+    .expanded(ng-switch-when="false")
+      i.mdi.mdi-menu-up
+
+.date
+  label.line-header {{ 'Date' | translate }}:
+  span {{ email.date | esnDatetime: 'shortDate time' }}

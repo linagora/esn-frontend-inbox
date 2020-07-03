@@ -1,0 +1,4 @@
+hr(ng-if="$ctrl.quotaInfoLabel")
+.listview(ng-if="$ctrl.quotaInfoLabel")
+  .lv-item {{ 'Storage quota' | translate }}
+    .inbox-quotas {{ $ctrl.quotaInfoLabel }}

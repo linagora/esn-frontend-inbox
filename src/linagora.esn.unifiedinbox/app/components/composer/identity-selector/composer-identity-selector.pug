@@ -1,0 +1,10 @@
+.compose-from
+  .fields
+    .form-group.select
+      label.control-label {{ 'From' | translate }}
+      select.form-control(
+        ng-model="$ctrl.identity",
+        ng-change="$ctrl.onIdentityChange()",
+        ng-options="$ctrl.getIdentityLabel(identity) group by identity.description for identity in $ctrl.identities",
+        name="from"
+      )

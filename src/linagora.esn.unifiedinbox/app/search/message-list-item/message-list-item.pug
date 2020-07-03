@@ -1,0 +1,24 @@
+.inbox-list-item.inbox-message-list-item
+  a.inbox-list-item-content.clickable(
+    ng-attr-ng-click="item.isDraft ? ctrl.openDraft(item.id) : undefined",
+    ng-attr-ui-sref="{{ !item.isDraft ? 'unifiedinbox.inbox.message({mailbox: mailbox, emailId: item.id})' : '.' }}"
+    )
+    .inbox-item-with-icon
+      .list-image.badge-container
+        inbox-emailer-avatar-popover(emailer="::mailboxRole.value !== 'sent' ? item.from : item.emailFirstRecipient" )
+      .media-body
+        .inbox-list-item-subject-and-from
+          .inbox-subject.lv-title
+            span.inbox-subject-inline(ng-class="{bold: item.isUnread}", ng-bind-html="::item.subject | esnHighlight: query") {{ ::item.subject }}
+          .inbox-from.lv-title
+            span.inbox-item-draft(ng-if="::item.isDraft") {{ 'Draft' | translate }}
+            span.inbox-item-draft-divider -
+            inbox-emailer(ng-if="::mailboxRole.value !== 'sent'", emailer="::item.from", highlight="{{::query}}")
+            inbox-emailer-group(ng-if="::mailboxRole.value === 'sent' && item.emailRecipients", group="item.emailRecipients", display-inline="true", highlight="{{::query}}")
+        .inbox-list-item-date-and-indicators
+          .date-and-indicators-container(ng-bind-html="::item.date | date: group.dateFormat | esnHighlight: query", ng-class="{bold: item.isUnread}") {{ ::item.date | date: group.dateFormat }}
+          .flex-end
+            .inbox-list-item-mailbox.ellipsis.flex-vertical-centered
+              span(ng-repeat="mailbox in item.mailboxes track by $index", title="{{ ::mailbox.name }}")  {{ ::mailbox.name }}
+            inbox-indicators(item="::item")
+    .inbox-preview-block.preview(ng-bind-html="::item.preview | esnHighlight: query") {{ ::item.preview }}

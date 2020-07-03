@@ -1,0 +1,5 @@
+.inbox-banner(ng-if="$ctrl.vacationActivated")
+  .flex-start.flex-grow
+    span {{ 'Your vacation responder is enabled.' | translate }}
+  .flex-end
+    button.btn.btn-link.inbox-banner-button(ng-click="$ctrl.disableVacation()") {{ 'Disable' | translate }}

@@ -1,0 +1,9 @@
+.emailer(
+  profile-popover-card="{source: 'emailer', property: 'objectType'}"
+  profile-popover-card-alternative-title="{{ emailer.email }}"
+  profile-popover-card-placement="right"
+  profile-popover-card-hide-on-element-scroll="body"
+  profile-popover-card-show-mobile
+)
+  span(ng-bind-html="emailer.name | esnHighlight: highlight") {{ emailer.name }}
+  span.me(ng-if="me") ({{ 'me' | translate }})

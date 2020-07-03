@@ -1,0 +1,11 @@
+.inbox-empty-container-message(ng-switch="isFilteringActive()")
+
+  .message(ng-switch-when="true")
+    .inbox-empty-icon.mdi.mdi-filter-remove-outline
+    .message {{ 'There is nothing to display' | translate }}
+    .message
+      | {{ 'Your active filter is too restrictive.' | translate }}
+      inbox-clear-filters-button
+
+  .message(ng-switch-when="false")
+    ng-include(src="containerTemplateUrl")

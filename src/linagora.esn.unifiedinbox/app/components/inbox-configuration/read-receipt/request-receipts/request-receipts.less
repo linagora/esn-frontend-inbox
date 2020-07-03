@@ -1,0 +1,47 @@
+.inbox-root {
+  .inbox-configuration-requestreceipts {
+
+    .inbox-toggle-switch {
+      color: lighten(@text-color, 50%);
+
+      span {
+        padding-left: 2px;
+        padding-right: 6px;
+      }
+
+      .toggle-switch {
+        transform: scale3d(.8, .8, 1);
+
+        .ts-helper {
+          margin: 0 10px 0 10px;
+        }
+      }
+
+      .toggle-active {
+
+        &.requestreceipts-enabled {
+          color: @secondaryTextColor;
+        }
+
+        &.requestreceipts-disabled {
+          color: @secondaryTextColor;
+        }
+      }
+    }
+
+  }
+}
+
+@media (min-width: @screen-md-min) {
+  .inbox-root {
+
+    .inbox-configuration-requestreceipts {
+      .form-group {
+        margin-bottom: 30px;
+        &.flex-form-group:not(.full-width) {
+          width: 80%;
+        }
+      }
+    }
+  }
+}

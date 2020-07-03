@@ -1,0 +1,39 @@
+james-domain-alias {
+  a {
+    &:extend(.dropdown-menu > li > a);
+    &:extend(.dropdown-menu.dropdown-menu-right > li > a);
+
+    &:hover {
+      &:extend(.dropdown-menu > li > a:hover);
+    }
+  }
+}
+
+.james-domain-alias-dialog {
+  .message {
+    .all-centered;
+
+    color: @secondaryTextColor;
+    font-size: 1.4em;
+  }
+
+  .domain-aliases {
+    padding-left: 10px;
+    padding-right: 10px;
+  
+    .domain-alias-list {
+      margin-top: 20px;
+      height: 15vh;
+      overflow-y: auto;
+      overflow-x: hidden;
+    
+      @media screen and (max-width: @screen-md-min) {
+        height: 60vh;
+      }
+    }
+
+    .message {
+      height: calc(~"15vh + 40px");
+    }
+  }
+}

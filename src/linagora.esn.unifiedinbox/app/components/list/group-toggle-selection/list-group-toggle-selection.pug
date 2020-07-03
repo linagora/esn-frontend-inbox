@@ -1,0 +1,2 @@
+button.btn.btn-link.btn-icon(ng-click="$ctrl.toggleSelection()", ng-hide="!$ctrl.hasSelectableItems()", title="{{ 'Select all' | translate }}")
+  i.mdi(ng-class="{ 'mdi-checkbox-marked-outline active': $ctrl.isSelected(), 'mdi-checkbox-blank-outline': !$ctrl.isSelected()}")

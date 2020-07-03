@@ -1,0 +1,7 @@
+.inbox-root.ui-view.full-width.nopadding(name="root", noanimation)
+  .inbox-main(sub-header-aware)
+    .col-md-3.col-xl-2.hidden-xs.hidden-sm.inbox-main-aside(ng-include="'/unifiedinbox/views/sidebar/sidebar-menu.html'")
+    .col-xs-12.col-md-9.col-xl-10.no-padding-xs.inbox-main-col(ng-class="{ 'has-sidebar-open' : inbox.rightSidebar.isVisible && !inbox.list.isElementOpened }")
+      inbox-quota-banner.inbox-banner-root
+      inbox-vacation-banner.inbox-banner-root
+      .ui-view(name="main", noanimation)

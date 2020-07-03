@@ -1,0 +1,24 @@
+@inbox-composer-attachments-min-height: 80px;
+@keyframes inboxAttachmentLoadingAnimate {
+  0%{ background-position: -@inbox-composer-attachments-min-height 0; }
+  100%{ background-position: @inbox-composer-attachments-min-height 0; }
+}
+
+inbox-composer-attachments {
+  .attachments-zone {
+    min-height: @inbox-composer-attachments-min-height;
+    background: @m-white;
+
+    .attachment.loading {
+      background: @primaryColor;
+
+      // Loading animation
+      animation-duration: 2s;
+      animation-fill-mode: forwards;
+      animation-iteration-count: infinite;
+      animation-timing-function: linear;
+      animation-name: inboxAttachmentLoadingAnimate;
+      background: linear-gradient(to right, #eee 2%, #ddd 18%, #eee 33%);
+    }
+  }
+}

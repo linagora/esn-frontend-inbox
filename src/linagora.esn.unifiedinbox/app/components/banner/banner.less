@@ -1,0 +1,37 @@
+@banner-height: 34px;
+@banner-height-md: @banner-margin-top + @banner-height + @banner-margin-bottom;
+@banner-height-xl: @banner-margin-top + @banner-height + @banner-margin-bottom;
+@banner-margin-top: 5px;
+@banner-margin-bottom: 5px;
+@banner-background-color: #c2c2c2;
+
+.inbox-banner-root {
+  .inbox-banner {
+    .flex-vertical-centered;
+
+    .inbox-ng-enter;
+    .inbox-ng-leave;
+
+    font-weight: 500;
+    background-color: @banner-background-color;
+    height: @banner-height;
+    padding: 0 5px;
+    line-height: 1.1em;
+
+    .inbox-banner-button:not(:hover) {
+      color: @primaryColor;
+    }
+  }
+}
+
+@media (min-width: @screen-md-min) {
+  .inbox-banner-root {
+    .inbox-banner {
+      text-align: center;
+      margin-top: @banner-margin-top;
+      margin-bottom: @banner-margin-bottom;
+      padding: 0 10px 0 15px;
+    }
+  }
+}
+

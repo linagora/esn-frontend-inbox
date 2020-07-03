@@ -1,0 +1,8 @@
+extends /modules/subheader/responsive-subheader.pug
+
+block left
+  inbox-subheader-close-button.hidden-md
+  .title {{ 'Forwardings' | translate }}
+
+block right
+  inbox-subheader-save-button(ng-if="$ctrl.forwardings", ng-click="$ctrl.onSave()")

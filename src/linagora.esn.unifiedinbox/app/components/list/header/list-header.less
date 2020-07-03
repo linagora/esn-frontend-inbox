@@ -1,0 +1,50 @@
+.inbox-list-header {
+  .flex-vertical-centered;
+
+  height: @inbox-list-header-height;
+  padding: 0 12px;
+  color: lighten(@secondaryTextColor, 20%);
+
+  .clickable:not(.text-danger):not(.menu-root).mdi, .mdi {
+    font-size: 1.6em;
+    vertical-align: sub;
+
+    &.active {
+      color: @primaryColor;
+    }
+
+    &:hover {
+      color: @text-color;
+      background-color: transparent;
+    }
+  }
+
+  inbox-list-group-toggle-selection button, inbox-refresh-button button {
+    margin-right: 8px;
+  }
+
+  .inbox-list-header-actions {
+    margin-left: auto;
+    .flex-vertical-centered;
+
+    .inbox-list-header-quick-filter input:not([type="button"]):not([type="submit"]):not([type="file"]) {
+      font-size: 13px;
+    }
+
+    inbox-filter-button {
+      margin-left: 8px;
+    }
+  }
+
+  .btn-icon {
+    width: 32px;
+    height: 32px;
+    font-size: 1em;
+  }
+}
+
+@media (min-width: @screen-xl-min) {
+  .inbox-list-header {
+    padding: 0 10px;
+  }
+}

@@ -1,0 +1,39 @@
+.inbox-search-form
+
+  fieldset
+    .form-group.flex-form-group.full-width
+      .field-name.field-label {{ 'From' | translate }}
+      .fg-line
+        .form-control
+          recipients-auto-complete.inbox-recipients.recipients-from(
+            ng-model="ctrl.query.advanced.from",
+            template="recipients-auto-complete",
+            ignore-email-format="true"
+          )
+
+    .form-group.flex-form-group.full-width
+      .field-name.field-label {{ 'To' | translate }}
+      .fg-line.form-control
+        recipients-auto-complete.inbox-recipients.recipients-to(
+          ng-model="ctrl.query.advanced.to",
+          template="recipients-auto-complete",
+          ignore-email-format="true"
+        )
+
+    .form-group.flex-form-group.full-width
+      .field-name.field-label {{ 'Subject' | translate }}
+      .fg-line
+        input.input.form-control(type='text', ng-model="ctrl.query.advanced.subject", autoclose="1")
+    .form-group.flex-form-group.full-width
+      .field-name.field-label {{ 'Has the words' | translate }}
+      .fg-line
+        input.input.form-control(type='text', ng-model="ctrl.query.advanced.contains", autoclose="1")
+    .form-group.flex-form-group.full-width
+      .field-name.field-label {{ 'Does not have' | translate }}
+      .fg-line
+        input.input.form-control(type='text', ng-model="ctrl.query.advanced.excluded", autoclose="1")
+    .checkbox.checkbox-styled
+      label
+        input(type="checkbox", ng-model='ctrl.query.advanced.hasAttachment')
+        i.input-helper
+        span {{ 'Has attachment' | translate }}

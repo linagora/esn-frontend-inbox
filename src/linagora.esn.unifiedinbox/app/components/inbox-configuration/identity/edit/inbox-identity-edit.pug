@@ -1,0 +1,16 @@
+inbox-identity-edit.modal.full-screen
+  form.modal-dialog(name="form", esn-submit="$ctrl.onSaveBtnClick()", ng-init="$ctrl.init()")
+    .modal-content
+      .modal-header
+        button.close(type="button", data-dismiss="modal", aria-label="Close", ng-click="$hide()")
+          span(aria-hidden="true") &times;
+        h4.modal-title {{ 'Edit identity' | translate }}
+      .modal-body.p-t-15
+        form(name="form")
+          inbox-identity-form(ng-if="$ctrl.identity" identity="$ctrl.identity" user-id="$ctrl.userId")
+      .modal-footer.flex
+        .flex-vertical-centered.flex-end
+          button.btn.btn-link(type="button", ng-click="$hide()")
+            | {{ 'Cancel' | translate }}
+          button.btn.btn-primary(type="submit", ng-disabled="form.$invalid || form.$pristine" ng-click="$hide()")
+            | {{ 'Save' | translate }}

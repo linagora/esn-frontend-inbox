@@ -1,0 +1,48 @@
+-var defaultTextBody = "{{ 'Thanks a lot for your message. I am currently out of office and will get back to you soon.' | translate }}"
+
+sub-header
+  inbox-configuration-vacation-subheader
+
+.inbox-configuration-vacation
+  .inbox-notification(ng-if="::(vacation.loadedSuccessfully && vacation.isEnabled && !vacation.isActivated)")
+    i.inbox-notification-icon.mdi.mdi-timer
+    .inbox-notification-message
+      span(ng-if="::vacation.fromDate.isAfter(moment())") {{ 'Your vacation responder will be activated on %s' | translate }} {{ ::vacation.fromDate.toDate() | esnDatetime:'mediumDate time' }}
+      span(ng-if="::vacation.toDate.isBefore(moment())") {{ 'Your vacation responder stopped on %s' | translate }} {{ ::vacation.toDate.toDate() | esnDatetime:'mediumDate time' }}
+
+  .inbox-notification.error(ng-if="::(vacation.loadedSuccessfully === false)")
+    i.inbox-notification-icon.mdi.mdi-alert-outline
+    .inbox-notification-message
+      span {{ 'Please verify your vacation settings' | translate }}
+
+  form
+    span {{ 'Vacation responder' | translate }}
+    .inbox-toggle-switch.form-group
+      span.clickable.vacation-disabled(ng-class='{"toggle-active": !vacation.isEnabled}', ng-click="ctrl.enableVacation(false)") {{ 'Deactivated' | translate }}
+      toggle-switch(ng-model='vacation.isEnabled', color='blue')
+      span.clickable.vacation-enabled(ng-class='{"toggle-active": vacation.isEnabled}', ng-click="ctrl.enableVacation(true)") {{ 'Activated' | translate }}
+    fieldset(ng-disabled="!vacation.isEnabled")
+      .form-group.flex-form-group.full-width
+        .field-name.field-label {{ 'Start date' | translate }}
+        .fg-line
+          input.input.form-control.from-date(type='text', ng-model="vacation.fromDate", autoclose="1", start-week="1", date-format="{{::dateFormat}}", placeholder="{{ 'Start date' | translate }}", ng-change="ctrl.updateDateAndTime('fromDate')", bs-datepicker)
+        .separator
+        .fg-line
+          input.input.form-control(ng-if="!is24HourFormat" type="text", ng-model="vacation.fromDate", autoclose="0", time-format= "shortTime", placeholder="{{ 'No end time' | translate }}", aria-expanded="false", ng-change="ctrl.fixTime('fromDate'); ctrl.updateDateAndTime('fromDate')", lng-clockpicker)
+          input.input.form-control(ng-if="is24HourFormat" type="text", ng-model="vacation.fromDate", autoclose="0", time-format= "shortTime", placeholder="{{ 'No end time' | translate }}", aria-expanded="false", ng-change="ctrl.fixTime('fromDate'); ctrl.updateDateAndTime('fromDate')", lng-clockpicker lng-clockpicker-options="{twelvehour: false}")
+      .checkbox.checkbox-styled
+        label
+          input(type="checkbox", ng-model='vacation.hasToDate')
+          i.input-helper
+          span {{ 'Vacation stops at' | translate }}
+      .form-group.flex-form-group.full-width.vacation-end-date(ng-disabled="!vacation.isEnabled || !vacation.hasToDate")
+        .field-name.field-label {{ 'End date' | translate }}
+        .fg-line(ng-class="{'invalid': ctrl.toDateIsInvalid()}")
+          input.input.form-control.to-date(type='text', ng-model="vacation.toDate", autoclose="1", start-week="1", date-format="{{::dateFormat}}", placeholder="{{ 'No end date' | translate }}", ng-disabled="!vacation.hasToDate", ng-class="{'invalid': ctrl.toDateIsInvalid()}", ng-change="ctrl.updateDateAndTime('toDate')", bs-datepicker)
+        .separator
+        .fg-line(ng-class="{'invalid': ctrl.toDateIsInvalid()}")
+          input.input.form-control(ng-if="!is24HourFormat" type="text", ng-model="vacation.toDate", autoclose="0", time-format= "shortTime", placeholder="{{ 'No end time' | translate }}", aria-expanded="false", ng-disabled="!vacation.hasToDate", ng-class="{'invalid': ctrl.toDateIsInvalid()}", ng-change="ctrl.fixTime('toDate'); ctrl.updateDateAndTime('toDate')", lng-clockpicker)
+          input.input.form-control(ng-if="is24HourFormat" type="text", ng-model="vacation.toDate", autoclose="0", time-format= "shortTime", placeholder="{{ 'No end time' | translate }}", aria-expanded="false", ng-disabled="!vacation.hasToDate", ng-class="{'invalid': ctrl.toDateIsInvalid()}", ng-change="ctrl.fixTime('toDate'); ctrl.updateDateAndTime('toDate')", lng-clockpicker lng-clockpicker-options="{twelvehour: !is24HourFormat}")
+      .form-group.full-width.fg-line
+        .field-name {{ 'Message body' | translate }}
+        textarea.form-control(ng-init="defaultTextBody = defaultTextBody", auto-size, rows="10", ng-model="vacation.textBody", placeholder="{{ 'Start writing your vacation message here' | translate }}")

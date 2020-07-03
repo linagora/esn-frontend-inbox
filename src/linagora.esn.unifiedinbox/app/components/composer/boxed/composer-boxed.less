@@ -1,0 +1,78 @@
+@summernotePlaceholderZIndex: 10;
+
+[inbox-composer-boxed] {
+
+  .compose-from, .compose-to, .compose-subject {
+    margin: 2px 0;
+  }
+
+  .compose {
+
+    .compose-footer {
+      .align-self(flex-end);
+
+      width: 100%;
+      padding: 2px;
+
+      .btn {
+        box-shadow: none;
+      }
+
+      .compose-right-footer {
+        margin-left: auto;
+      }
+
+      .badge-container {
+        padding-right: 0;
+
+        .composer-badge {
+          background: @primaryColor;
+          top: 8px;
+          right: 11px;
+          font-weight: bold;
+          line-height: 16px;
+          height: 16px;
+          min-width: 16px;
+
+          &.error {
+            background: @m-red;
+          }
+        }
+
+        .uploading {
+          animation: flashing-desktop 2.5s infinite linear;
+        }
+      }
+
+      .btn-icon {
+        padding-left: 5px;
+        padding-right: 5px;
+        color: @secondaryTextColor;
+        margin-right: 5px;
+
+        &.active, &:hover {
+          color: @text-color;
+        }
+
+        .mdi {
+          font-size: 1.6em;
+          vertical-align: middle;
+        }
+      }
+
+      .mdi-send {
+        margin-left: 5px;
+        font-size: 1.6em;
+        vertical-align: middle;
+      }
+
+      md-menu-bar {
+        padding: 0;
+        display: inline;
+        position: inherit;
+      }
+    }
+
+  }
+
+}

@@ -1,0 +1,12 @@
+.modal(tabindex="-1", role="dialog")
+  .modal-dialog
+    .modal-content
+      .modal-header
+        h4.modal-title {{ 'Disable forwarding?' | translate }}
+      .modal-body
+        p {{ 'This will remove forwardings of all users in domain after save. Do you wish to continue?' | translate }}
+      .modal-footer
+        button.btn.btn-link(ng-click="$ctrl.cancelBtnClick(); $hide()")
+          | {{ 'Cancel' | translate }}
+        button.btn.btn-danger(ng-click="$hide()")
+          | {{ 'Disable' | translate }}

@@ -1,0 +1,19 @@
+.inbox-list-header.flex-vertical-centered(ng-class="{ searching: $ctrl.searching }")
+  inbox-list-group-toggle-selection
+  inbox-refresh-button(refresh="$ctrl.refresh()", loading="$ctrl.loading")
+  .inbox-list-header-group.hidden-xs(ng-switch="$ctrl.group.name")
+    span(ng-switch-when="Today") {{ 'Today' | translate }}
+    span(ng-switch-when="Yesterday") {{ 'Yesterday' | translate }}
+    span(ng-switch-when="This week") {{ 'This week' | translate }}
+    span(ng-switch-when="Last week") {{ 'Last week' | translate }}
+    span(ng-switch-when="This month") {{ 'This month' | translate }}
+    span(ng-switch-when="Last month") {{ 'Last month' | translate }}
+    span(ng-switch-when="This year") {{ 'This year' | translate }}
+    span(ng-switch-when="Old messages") {{ 'Old messages' | translate }}
+
+  .inbox-list-header-actions
+    .inbox-list-header-quick-filter
+      esn-filter-input(placeholder="Search...", ng-if="$ctrl.searching || $ctrl.quickFilter", auto-focus-input="true", filter="$ctrl.quickFilter", on-change="$ctrl.setQuickFilter($filter)", on-blur="$ctrl.searching = false")
+      button.btn.btn-link.btn-icon.waves-notransition(ng-if="!$ctrl.searching && !$ctrl.quickFilter", ng-click="$ctrl.searching = true", ng-class="{ active: $ctrl.quickFilter }", title="{{ 'Search' | translate }}")
+        i.mdi.mdi-magnify
+    inbox-filter-button.clickable(ng-if="$ctrl.filters.length > 0", filters="$ctrl.filters")

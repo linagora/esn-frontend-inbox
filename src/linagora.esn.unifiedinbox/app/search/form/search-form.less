@@ -1,0 +1,70 @@
+.inbox-search-form {
+  fieldset {
+
+    &:not([disabled]) {
+      color: @text-color;
+    }
+
+    &[disabled] {
+      color: lighten(@secondaryTextColor, 25%);
+    }
+  }
+
+  .flex-form-group {
+    .flex-start;
+    .align-items(center);
+
+    .separator {
+      padding-left: 15px;
+    }
+  }
+
+  .form-group {
+    margin-bottom: 15px;
+
+    .form-control {
+      height: auto;
+    }
+
+    > .inbox-recipients {
+      .flex-shorthand(1);
+
+      width: 10px;
+    }
+  }
+
+  .field-label {
+    .esn-flex-noshrink;
+
+    min-width: 88px;
+    padding-right: 15px;
+  }
+
+  .invalid {
+    border-bottom-color: @m-red;
+
+    &.fg-line:not([class*=has-]):after {
+      background: @m-red;
+    }
+  }
+
+  .btn:not(.btn-link):not(.btn-float):not(.command-edit):not(.command-delete):not(.selectpicker) {
+    box-shadow: none;
+  }
+}
+
+@media (min-width: @screen-md-min) {
+  .inbox-search-form {
+
+    .field-label {
+      display: block;
+    }
+
+    .form-group {
+      margin-bottom: 1.2em;
+      &.flex-form-group:not(.full-width) {
+        width: 80%;
+      }
+    }
+  }
+}

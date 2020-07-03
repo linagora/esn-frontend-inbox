@@ -1,0 +1,44 @@
+james-quota-user {
+  a {
+    &:extend(.dropdown-menu > li > a);
+    &:extend(.dropdown-menu.dropdown-menu-right > li > a);
+
+    &:hover {
+      &:extend(.dropdown-menu > li > a:hover);
+    }
+  }
+}
+
+.james-quota-user-dialog {
+  .helper-text {
+    .text-muted;
+
+  }
+
+  small {
+    display: block;
+  }
+
+  .quota-set {
+    margin-top: 30px;
+  }
+
+  james-quota-form {
+    .row {
+      margin-left: 0;
+      margin-right: 0;
+    }
+  }
+
+  .error-message {
+    color: @secondaryTextColor;
+    font-size: 1.4em;
+    text-align: center;
+  }
+
+  .james-quota-displayer {
+    .row > * {
+      padding-left: 30px;
+    }
+  }
+}

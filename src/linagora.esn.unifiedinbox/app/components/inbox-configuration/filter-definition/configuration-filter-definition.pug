@@ -1,0 +1,51 @@
+sub-header
+  inbox-filter-definition-subheader(on-save='$ctrl.saveFilter()', is-edit-mode="$ctrl.editFilterId !== undefined")
+
+.inbox-configuration-filter-definition
+  form(name="form", esn-submit="$ctrl.saveFilter()")
+    esn-form-group(label="{{ 'Filter name' | translate }}")
+      input.form-control(required, auto-focus, ng-model="$ctrl.newFilter.name", name="filter name")
+
+    // When
+    .form-group.nomargin
+      label.fg-label {{ 'If a message' | translate }}
+      md-input-container
+        md-select(ng-model="$ctrl.newFilter.when")
+          md-option(
+            ng-repeat="condition in $ctrl.conditionsOptions"
+            ng-value="condition")
+            | {{condition.val}}
+
+    // Message is from, to, cc or recipents (cc or to)
+    .form-group(ng-class='{"ng-hide": $ctrl.hideRecipientsAutoComplete()}')
+      recipients-auto-complete.fg-line(
+        ng-class='{"no-more-results": $ctrl.hideMoreResults()}'
+        ng-model="$ctrl.newFilter.stakeholders"
+        template="recipients-auto-complete"
+        add-class="{ 'form-control' : true }")
+    .form-group(ng-class='{"ng-hide":$ctrl.newFilter.when.key !== $ctrl.JMAP_FILTER.CONDITIONS.SUBJECT.JMAP_KEY}')
+      .fg-line
+        input.form-control(
+          type="text"
+          placeholder="{{ 'Subject' | translate }}"
+          ng-model="$ctrl.newFilter.subject")
+
+    // Then
+    .form-group.nomargin
+      label.fg-label {{ 'then' | translate }}
+      md-input-container
+        md-select(ng-model="$ctrl.newFilter.then")
+          md-option(
+            ng-repeat="action in $ctrl.actionOptions"
+            ng-value="action")
+            | {{action.val}}
+
+
+    .form-group
+      .fg-line
+        md-input-container
+          md-select(ng-model='$ctrl.newFilter.moveTo')
+            md-option(
+              ng-repeat="mailbox in $ctrl.mailboxes track by mailbox.id"
+              ng-value="mailbox")
+              | {{mailbox.qualifiedName}}

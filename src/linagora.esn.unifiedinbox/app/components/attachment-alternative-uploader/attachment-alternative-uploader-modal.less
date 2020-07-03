@@ -1,0 +1,37 @@
+.inbox-attachment-alternative-uploader-modal {
+  .service-selection {
+    .flex-start;
+    .flex-vertical-centered;
+
+    .select {
+      margin-left: 10px;
+      min-width: 100px;
+    }
+  }
+
+  .file-list {
+    padding: 10px;
+    overflow-y: auto;
+    max-height: ~"calc(100% - 60px)";
+    max-width: 100%;
+    margin-top: 10px;
+
+    .file-list-item {
+      .flex-space-between;
+
+      .file-name {
+        .ellipsis;
+
+        margin-right: 10px;
+      }
+    }
+  }
+}
+
+@media (min-width: @screen-md-min) {
+  .inbox-attachment-alternative-uploader-modal {
+    .file-list {
+      max-height: ~"calc(60vh - 60px)";
+    }
+  }
+}

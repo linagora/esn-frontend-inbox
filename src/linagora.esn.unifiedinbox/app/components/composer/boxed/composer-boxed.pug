@@ -1,0 +1,13 @@
+inbox-composer(
+  inbox-composer-boxed,
+  template="composer-desktop.html",
+  message="email",
+  on-hide="$hide()",
+  on-show="$show()",
+  on-send="onSend()",
+  on-discard="onDiscard()",
+  on-message-id-update="$setId($id)",
+  on-title-update="$updateTitle($title)",
+  on-try-close='$onTryClose(callback)',
+  force-close='$forceClose()'
+)

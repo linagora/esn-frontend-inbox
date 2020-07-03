@@ -1,0 +1,6 @@
+.inbox-message-body-read-receipt(ng-hide="$ctrl.hide", ng-if="$ctrl.readReceiptRequest")
+  .read-receipt-text.flex-start
+    button.close(type="button", ng-click="$ctrl.hide = true", title="{{ 'Close' | translate }}") &times;
+    .inbox-message-body-html-autoscale-message {{ 'A read receipt has been requested.' | translate }}
+  .read-receipt-button.flex-end
+    a.btn.btn-link.inbox-message-body-html-autoscale-disable(ng-click="$ctrl.ackReceipt();", title="{{ 'Send the read receipt' | translate }}") {{ 'Send' | translate }}

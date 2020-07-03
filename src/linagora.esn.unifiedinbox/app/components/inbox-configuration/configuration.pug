@@ -1,0 +1,20 @@
+.inbox-main-content.configuration.card
+  ul.esn-tab.configuration-header
+    li.btn-wave(ui-sref-active="active")
+      a(href="", ui-sref="unifiedinbox.configuration.vacation", ui-sref-opts="{ location: 'replace' }")
+        | {{ 'Vacation' | translate }}
+    li.btn-wave(ng-if="$ctrl.isFoldersSharingEnabled", ui-sref-active="active")
+      a(href="", ui-sref="unifiedinbox.configuration.shared", ui-sref-opts="{ location: 'replace' }")
+        | {{ 'Shared folders' | translate }}
+    li.btn-wave(ui-sref-active="active")
+      a(href="", ui-sref="unifiedinbox.configuration.readreceipts", ui-sref-opts="{ location: 'replace' }")
+        | {{ 'Receipts' | translate }}
+    li.btn-wave(ng-if="$ctrl.isForwardingEnabled", ui-sref-active="active")
+      a(href="", ui-sref="unifiedinbox.configuration.forwardings", ui-sref-opts="{ location: 'replace' }")
+        | {{ 'Forwardings' | translate }}
+    li.btn-wave(ui-sref-active="active")
+      a(href="", ui-sref="unifiedinbox.configuration.filters", ui-sref-opts="{ location: 'replace' }")
+        | {{ 'Filters' | translate }}
+    li.btn-wave(ui-sref-active="active", dynamic-directive="inbox-configuration-tabs")
+
+  ui-view.configuration-content(name="configuration", noanimation)

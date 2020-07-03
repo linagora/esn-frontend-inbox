@@ -1,0 +1,8 @@
+.indicators.flex-end.esn-flex-noshrink
+  ul.actions.flex-vertical-centered
+    li.action-item(ng-class="{'hidden-xl': hiddenXl}")
+      i.flag-icon.mdi.mdi-reply(ng-if='item.isAnswered', title="{{ 'Replied' | translate }}")
+      i.flag-icon.mdi.mdi-forward(ng-if='item.isForwarded', title="{{ 'Forwarded' | translate }}")
+      i.inbox-message-indicators(dynamic-directive='inbox-message-indicators')
+      i.flag-icon.mdi.mdi-paperclip(ng-if='item.hasAttachment', title="{{ 'Attachments' | translate }}")
+    inbox-star(item='item')

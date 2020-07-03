@@ -1,0 +1,29 @@
+.action-list(ng-click='$hide(); $event.stopPropagation()')
+  .action(ng-switch='thread.isUnread')
+    a(ng-switch-when='false', ng-click='ctrl.markAsUnread()', title="{{ 'Mark as unread' | translate }}")
+      i.mdi.mdi-eye-off
+      span.label
+        | {{ 'Unread' | translate }}
+    a(ng-switch-when='true', ng-click='ctrl.markAsRead()', title="{{ 'Mark as read' | translate }}")
+      i.mdi.mdi-eye
+      span.label
+        | {{ 'Read' | translate }}
+  .action(ng-switch='thread.isFlagged')
+    a(ng-switch-when='false', ng-click='ctrl.markAsFlagged()', title="{{ 'Star' | translate }}")
+      i.mdi.mdi-star
+      span.label
+        | {{ 'Star' | translate }}
+    a(ng-switch-when='true', ng-click='ctrl.unmarkAsFlagged()', title="{{ 'Unstar' | translate }}")
+      i.mdi.mdi-star-off
+      span.label
+        | {{ 'Unstar' | translate }}
+  .action
+    a(ng-click='ctrl.move()', title="{{ 'Move to' | translate }}")
+      i.mdi.mdi-folder-move
+      span.label
+        | {{ 'Move to' | translate }}
+  .action
+    a(ng-click='ctrl.moveToTrash()', title="{{ 'Delete' | translate }}")
+      i.mdi.mdi-delete
+      span.label
+        | {{ 'Delete' | translate }}

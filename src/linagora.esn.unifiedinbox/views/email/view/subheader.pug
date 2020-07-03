@@ -1,0 +1,14 @@
+extends /modules/subheader/responsive-subheader.pug
+
+block left
+  inbox-subheader-back-button
+
+block right
+  button.btn.btn-link.btn-icon.button.hidden-xs(ng-disabled="!email.previous", ng-click="ctrl.previous()", title="{{ 'Previous' | translate }}")
+    i.mdi.mdi-chevron-left
+  button.btn.btn-link.btn-icon.button.hidden-xs(ng-disabled="!email.next", ng-click="ctrl.next()", title="{{ 'Next' | translate }}")
+    i.mdi.mdi-chevron-right
+  inbox-subheader-not-spam-button(ng-click="ctrl.unSpam()", ng-show="ctrl.canUnSpamMessages()")
+  inbox-subheader-delete-button(ng-click="ctrl.moveToTrash()", ng-show="ctrl.canTrashMessages()")
+  inbox-subheader-mark-as-unread-button(ng-click="ctrl.markAsUnread()")
+  inbox-subheader-more-button(action-list="/unifiedinbox/views/email/view/action-list-subheader.html")

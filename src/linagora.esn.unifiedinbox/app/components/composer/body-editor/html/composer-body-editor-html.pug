@@ -1,0 +1,11 @@
+summernote.compose-body(
+  ng-model="$ctrl.message.htmlBody",
+  ng-class="{ 'isCollapsed': $ctrl.isCollapsed }",
+  config="$ctrl.summernoteOptions",
+  on-init="$ctrl.onSummernoteInit(evt)",
+  on-keydown="$ctrl.onSummernoteKeydown(evt)",
+  on-blur="$ctrl.onSummernoteBlur()",
+  on-image-upload="$ctrl.onImageUpload(files)",
+  editable="editable",
+  editor="editor"
+)

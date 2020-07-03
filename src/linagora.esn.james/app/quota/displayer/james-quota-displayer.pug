@@ -1,0 +1,8 @@
+.james-quota-displayer.m-t-5
+  .row
+    .col-xs-6
+      span.helper-text {{ 'Data usage quota' | translate }}:
+      span.text-center  {{$ctrl.quota.size > 0 ? ($ctrl.quota.size | bytes) : 'Unlimited' | esnI18n }}
+    .col-xs-6
+      span.helper-text {{ 'Message count quota' | translate }}:
+      span.text-center  {{$ctrl.quota.count > 0 ? $ctrl.quota.count.toString() : 'Unlimited' | esnI18n}}

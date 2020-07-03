@@ -1,0 +1,247 @@
+@import './modules/commons';
+
+@import './modules/listItems';
+
+@import './modules/viewEmail';
+@import './modules/header';
+@import './modules/configuration';
+@import './modules/aside';
+@import './modules/attachment';
+@import './modules/filter';
+@import './modules/vacation';
+@import './modules/emailer';
+@import './modules/attachment-drag-and-drop-handler';
+
+.inbox-root {
+
+  .inbox-main {
+    width: 100%;
+
+    .actions {
+      a {
+        cursor: pointer;
+      }
+
+      li.action-item {
+
+        a {
+          width: 30px;
+          height: 30px;
+          line-height: 35px;
+          display: inline-block;
+          text-align: center;
+
+          i {
+            font-size: 1.9em;
+            vertical-align: sub;
+          }
+        }
+
+        :not(inbox-star) a:active {
+          i {
+            color: @m-black;
+          }
+        }
+
+        & > li.open,
+        &.open {
+          & > a {
+            & > i:before {
+              .scale(1);
+              .opacity(1);
+            }
+          }
+        }
+
+      }
+
+      .mdi-star {
+        color: @primaryColor;
+        font-size: 20px;
+      }
+
+      .mdi-star-outline {
+        color: @m-gray;
+        font-size: 20px;
+
+        &:hover {
+          color: @primaryColor;
+        }
+      }
+    }
+
+    .indicators {
+      vertical-align: middle;
+      margin-left: 5px;
+
+      i {
+        font-size: 18px;
+        color:  lighten(@text-color, 6%);
+      }
+    }
+  }
+
+  .inbox-main-content {
+    color: @secondaryTextColor;
+    width: 100%;
+    padding: 15px;
+
+    .clickable {
+      position: relative;
+    }
+  }
+
+  .inbox-icon {
+    margin-right: 5px;
+  }
+
+  .card {
+    margin-bottom: 20px;
+
+    .waves-effect:not(.attachment, inbox-item-with-icon) {
+      .ShadowedShape(none);
+
+      &:active {
+        .ShadowedShape(0px 8px 20px 1px rgba(0, 0, 0, 0.3));
+
+        border-bottom: none;
+      }
+    }
+
+  }
+
+  .inbox-list-item {
+    .inbox-ng-leave;
+
+    max-height: 250px;
+  }
+}
+
+.inbox-root {
+  .inbox-item-with-icon {
+    .flex-start;
+    .flex-vertical-centered;
+  }
+}
+
+.listview {
+  .folder-with-icon {
+
+    .title {
+      height: 30px;
+      text-align: left;
+      line-height: 30px;
+      font-weight: 500;
+    }
+
+    &.toggle-submenu {
+      background-color: @body-bg;
+      border-radius: 2px;
+
+      .caret-submenu {
+        .flex-grow;
+        .flex-start;
+      }
+
+      .badge-container i {
+        color: @primaryColor;
+      }
+
+      i.mdi-menu-down {
+        font-size: 1.8em;
+        color: @secondaryTextColor;
+      }
+    }
+  }
+
+  &.toggled {
+    .folder-with-icon {
+      &.toggle-submenu {
+
+        i.mdi-menu-down {
+          .rotateZ3d(-90deg);
+        }
+      }
+    }
+  }
+}
+
+inbox-fab {
+  .btn.disabled, .btn[disabled] {
+    opacity: 1;
+  }
+}
+
+@media (min-width: @screen-md-min) {
+  .inbox-root {
+    .clickable:not(.text-danger):not(.menu-root):hover {
+      color: @text-color;
+      background-color: @darkenBgColor;
+
+      &.droptarget {
+        background-color: lighten(@accentColor, 20%);
+        .cursor-grab;
+
+        .menu-item .menu-item-after:after {
+          background-color: lighten(@accentColor, 20%);
+        }
+
+        &:active{
+          .cursor-grabbing;
+        }
+      }
+    }
+    .clickable.text-danger:hover {
+      color: darken(@state-danger-text, 10%);
+    }
+
+    .actions {
+      li.action-item inbox-star a {
+        .hover-pop(rgba(0, 0, 0, 0.1), 50%, 250ms, 0);
+      }
+    }
+  }
+
+  .listview {
+    .folder-with-icon {
+      &.toggle-submenu {
+        background-color: darken(@body-bg, 2%);
+      }
+    }
+
+    .clickable {
+      &.selected {
+        background-color: darken(@darkenBgColor, 2%);
+      }
+    }
+  }
+}
+
+@media (max-width: @screen-md-min) {
+  .inbox-root {
+    .actions {
+      li.action-item inbox-star a {
+        .active-pop(rgba(0, 0, 0, 0.1), 50%, 250ms, 0);
+      }
+    }
+  }
+}
+
+// iOS workaround to disable auto-zoom on input fields
+.inbox-root {
+  input:not([type="button"]):not([type="submit"]):not([type="file"]), select, textarea, tags-input .tags .input {
+    font-size: 16px;
+  }
+}
+
+recipients-auto-complete {
+  height: 100%;
+
+  .tags .tag-item {
+    max-width: 20rem;
+
+    span {
+      .ellipsis;
+    }
+  }
+}

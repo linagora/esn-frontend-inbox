@@ -1,0 +1,11 @@
+sub-header
+  inbox-request-read-receipts-subheader(on-save="$ctrl.onSave()")
+
+.inbox-configuration-requestreceipts
+  form
+    span {{ 'Always request read receipts with outgoing messages ?' | translate }}
+    .inbox-toggle-switch.form-group
+      span.clickable.requestreceipts-disabled(ng-class='{"toggle-active": !$ctrl.isAlwaysSendingRequest}', ng-click="$ctrl.neverRequestReadReceipts()") {{ 'No' | translate }}
+      toggle-switch(ng-model='$ctrl.isAlwaysSendingRequest', color='blue')
+      span.clickable.requestreceipts-enabled(ng-class='{"toggle-active": $ctrl.isAlwaysSendingRequest}', ng-click="$ctrl.alwaysRequestReadReceipts()") {{ 'Yes' | translate }}
+

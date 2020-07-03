@@ -1,0 +1,32 @@
+.inbox-shared-mailbox {
+  .flex-vertical-centered;
+  .flex-space-between;
+
+  margin: 4px;
+
+  .meta {
+    .flex-row;
+    .flex-shorthand(1, 0, 40%);
+
+    .title {
+      .flex-column;
+
+      .name {
+        font-weight: 600;
+      }
+
+      .owner {
+        color: @secondaryTextColor;
+      }
+    }
+  }
+
+  .rights {
+    .flex-grow;
+    .flex-horizontal-centered;
+  }
+
+  .actions {
+    .flex-grow;
+  }
+}

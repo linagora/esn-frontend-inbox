@@ -1,0 +1,22 @@
+pre {{ email.textBody }}
+br
+br
+br
+
+p {{ marker }}
+cite
+  | ------- {{ 'Forwarded message' | translate }} -------
+  br
+  | {{ 'Subject' | translate }}: {{ email.quoted.subject }}
+  br
+  | {{ 'Date' | translate }}: {{ email.quoted.date | esnDatetime:"mediumDate time" }}
+  br
+  | {{ 'From' | translate }}: {{ email.quoted.from.email }}
+  br
+  | {{ email.quoted.to | emailerList:'{{ 'To' | translate }}: '}}
+  br
+  | {{ email.quoted.cc | emailerList:'{{ 'Cc' | translate }}: '}}
+br
+br
+
+blockquote {{ email.quoted.textBody | inboxQuote }}

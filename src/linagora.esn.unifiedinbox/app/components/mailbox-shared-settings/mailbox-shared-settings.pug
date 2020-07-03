@@ -1,0 +1,30 @@
+.modal(tabindex="-1", role="dialog", ng-class="{'full-screen': ctrl.isOwner()}")
+  .modal-dialog
+    .modal-content
+      .modal-header
+        button.close(type="button", ng-click="$hide()") &times;
+        h4.modal-title {{ 'Sharing settings' | translate }}
+      .modal-body
+        form(name='sharingSettingsForm')
+          .inbox-mailbox-shared-settings(ng-if="ctrl.isOwner()")
+            .user-search.form-group
+              .autocomplete
+                h5.field-name {{ 'Invite people:' | translate }}
+                users-autocomplete-input(mutable-users='ctrl.users', on-user-added='ctrl.onUserAdded', on-adding-user='ctrl.onAddingUser', add-from-autocomplete-only='true')
+            h5.field-name {{ 'Who has access:' | translate }}
+            .shared-users-list
+              inbox-mailbox-shared-settings-owner(owner="ctrl.owner")
+              inbox-mailbox-shared-settings-user(user="user", is-owner="ctrl.isOwner", delegation-types="ctrl.delegationTypes", on-user-removed='ctrl.onUserRemoved', on-user-role-changed='ctrl.onUserRoleChanged', ng-repeat="user in ctrl.usersShared")
+
+          .inbox-mailbox-shared-settings-owner(ng-if="!ctrl.isOwner()")
+            .shared-users-list
+              inbox-mailbox-shared-settings-owner(owner="ctrl.owner")
+              inbox-mailbox-shared-settings-user(user="user", is-owner="ctrl.isOwner", delegation-types="ctrl.delegationTypes", ng-repeat="user in ctrl.usersShared")
+
+
+      .modal-footer(ng-if="ctrl.isOwner()")
+        button.btn.btn-link.color-default(type="button", ng-click="$hide()") {{ 'Cancel' | translate }}
+        button.btn.btn-primary(type='button', ng-click='ctrl.addSharedUsers(); $hide()' ng-disabled='sharingSettingsForm.$invalid') {{ 'Save' | translate }}
+
+      .modal-footer(ng-if="!ctrl.isOwner()")
+        button.btn.btn-primary(type='button', ng-click='$hide()') {{ 'Close' | translate }}

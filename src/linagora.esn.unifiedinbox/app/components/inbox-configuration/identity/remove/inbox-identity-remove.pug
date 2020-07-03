@@ -1,0 +1,16 @@
+inbox-identity-edit.modal.full-screen
+  form.modal-dialog(name="form", esn-submit="$ctrl.onRemoveBtnClick()", ng-init="$ctrl.init()")
+    .modal-content
+      .modal-header
+        button.close(type="button", data-dismiss="modal", aria-label="Close", ng-click="$hide()")
+          span(aria-hidden="true") &times;
+        h4.modal-title {{ 'Remove identity' | translate }}
+      .modal-body
+        p {{ 'Remove identity' | translate }}
+          b.m-l-5 {{::$ctrl.identity.name}}
+      .modal-footer.flex
+        .flex-vertical-centered.flex-end
+          button.btn.btn-link(type="button", ng-click="$hide()")
+            | {{ 'Cancel' | translate }}
+          button.btn.btn-primary(type="submit", ng-disabled="form.$invalid" ng-click="$hide()")
+            | {{ 'Remove' | translate }}

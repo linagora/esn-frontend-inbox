@@ -1,0 +1,9 @@
+extends /modules/subheader/responsive-subheader.pug
+
+block left
+  inbox-subheader-close-button(ui-sref="unifiedinbox.configuration.identities")
+  .title.ellipsis.extra-title(ng-if="$ctrl.identityId") {{ 'Edit identity' | translate }}
+  .title.ellipsis.extra-title(ng-if="!$ctrl.identityId") {{ 'Create identity' | translate }}
+
+block right
+  inbox-subheader-save-button(esn-submit="$ctrl.onSave()")

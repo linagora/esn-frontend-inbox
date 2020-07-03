@@ -1,0 +1,15 @@
+ng-form(name="form")
+  .card
+    .card-header
+      h2 {{ 'Email Links' | translate }}
+    .card-body.card-padding
+      .inbox-preferences-mailto.flex-vertical-centered
+        .inbox-preferences-mailto-toggle.flex-grow
+          toggle-switch(ng-model='$ctrl.useEmailLinks', form="form")
+          span {{ 'Open email links with OpenPaaS' | translate }}
+        a.inbox-preferences-mailto-test.btn.btn-link(ng-if="$ctrl.useEmailLinks", ng-href="mailto:{{ $ctrl.mailtoTargetEmail }}", target="_blank") {{ 'Test' | translate }}
+
+      .inbox-preferences-mailto-information.flex-vertical-centered(ng-if="$ctrl.useEmailLinks")
+        i.mdi.mdi-lightbulb-outline
+        | {{ 'In order to make sure that you can open email links, please' | translate }}
+        a.btn.btn-primary.inbox-preferences-mailto-authorize(ng-click="$ctrl.authorizeBrowser()") {{ 'authorize your browser' | translate }}

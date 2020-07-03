@@ -1,0 +1,86 @@
+inbox-forwardings-form {
+  .inbox-forwardings-configuration {
+    font-size: 1.2em;
+
+    .keep-local-copy {
+      .toggle-switch {
+        margin-left: 100px;
+      }
+    }
+
+    .add-forwardings {
+      margin-top: 24px;
+  
+      .all-centered;
+      .flex-wrap;
+  
+      .forwardings-form {
+        .flex-row;
+        .flex-wrap;
+        .flex-grow(1);
+  
+        recipients-auto-complete {
+          min-width: 350px;
+  
+          .flex-shorthand(1, 0, 30%);
+        }
+      }
+
+      @media (min-width: @screen-md-min) {
+        .add-btn {
+          padding-left: 12px;
+          padding-right: 12px;
+        }
+      }
+  
+      @media (max-width: @screen-md-min) {
+        .add-btn {
+          .flex-end;
+          .flex-grow;
+        }
+      }
+    }
+  }
+
+  .forwarding-list-item {
+    margin-bottom: 10px;
+
+    .flex-vertical-centered;
+
+    .forwarding-info {
+      .flex-row;
+      .flex-vertical-centered;
+      .flex-grow(1);
+  
+      esn-avatar img {
+        height: 48px;
+        width: 48px;
+      }
+  
+      .user-info {
+        .flex-column;
+  
+        margin-left: 10px;
+      }
+    }
+
+    .forwarding-actions {
+      text-align: center;
+
+      a {
+        color: @m-red;
+      }
+
+      i.mdi {
+        font-size: 2em;
+        color: @m-red;
+      }
+    }
+
+    @media (min-width: @screen-md-min) {
+      .forwarding-actions {
+        padding-right: 12px;
+      }
+    }
+  }
+}

@@ -1,0 +1,48 @@
+.inbox-mailbox-shared-settings {
+  .flex-column;
+
+  min-height: 30vh;
+
+  .user-search {
+    .flex-row;
+    .flex-vertical-centered;
+
+    .autocomplete {
+      .flex-grow;
+
+      .col-xs-12, tags-input .tags, .form-control {
+        background-color: @body-bg;
+      }
+
+      .form-control:not(.fc-alt) {
+        border: none;
+      }
+    }
+  }
+
+  .shared-users-list {
+    .flex-column;
+
+    .empty {
+      .all-centered;
+
+      margin: 30px;
+      font-size: 1.4rem;
+    }
+  }
+
+  .actions {
+    .flex-end;
+  }
+}
+
+.inbox-mailbox-shared-settings-owner {
+  .flex-column;
+}
+
+.is-desktop {
+  .shared-users-list {
+    max-height: 400px;
+    overflow: visible;
+  }
+}

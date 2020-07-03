@@ -1,0 +1,9 @@
+extends /modules/subheader/responsive-subheader.pug
+
+block left
+  inbox-subheader-close-button(ui-sref="unifiedinbox.configuration.filters")
+  .title(ng-if="!$ctrl.isEditMode") {{ 'New filter' | translate }}
+  .title(ng-if="$ctrl.isEditMode") {{ 'Edit filter' | translate }}
+
+block right
+  inbox-subheader-save-button(ng-click="$ctrl.onSave()")

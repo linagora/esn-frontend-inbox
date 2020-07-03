@@ -1,0 +1,46 @@
+.inbox-thread-list-item.swipe(inbox-swipeable-list-item, swipe-right="onSwipeRight", swipe-left="onSwipeLeft", left-template="{{ leftTemplate }}", ng-class="{ selected: item.selected }")
+  .inbox-list-item-content.clickable(
+      ng-attr-ng-click="item.lastEmail.isDraft && !esnIsDragging ? ctrl.openDraft(item.lastEmail.id) : undefined",
+      esn-draggable,
+      inbox-draggable-list-item,
+      esn-drag-message="getDragMessage($dragData)",
+      esn-drag-data="getDragData()",
+      esn-drag-class="dragging",
+      ng-class="{ dragging: esnIsDragging && item.selected }",
+      ng-attr-ui-sref="{{ !item.lastEmail.isDraft && !esnIsDragging ? '.thread({mailbox: mailbox, threadId: item.lastEmail.id})' : '.' }}"
+    )
+    .inbox-item-with-icon
+      .list-image.badge-container(ng-click="ctrl.select(item, $event)", desktop-hover="hovering = hover && !esnIsDragging")
+        inbox-emailer-avatar(ng-hide="hovering || item.selected", emailer="mailboxRole.value !== 'sent' ? item.lastEmail.from : item.lastEmail.emailFirstRecipient" )
+        label.checkbox.clickable(ng-hide="!hovering && !item.selected")
+          input(type='checkbox', ng-model="item.selected")
+          i.input-helper
+      .media-body(ng-class="{ bold: item.isUnread }")
+        .inbox-list-item-subject-and-from
+          .inbox-subject.lv-title
+            .badge.badge-number.hidden-xl
+              span {{ item.messageIds.length }}
+            span.inbox-subject-inline {{ item.lastEmail.subject }}
+            span.inbox-preview-inline.inbox-preview-divider(ng-if='item.lastEmail.subject') -
+            .inbox-preview-inline.lv-small.preview(ng-if="item.lastEmail.preview") {{ item.lastEmail.preview }}
+          .flags-container.thread-list
+            i.flag-icon.mdi.mdi-forward.visible-xl(ng-if='item.lastEmail.isForwarded', title="{{ 'Forwarded' | translate }}")
+            i.flag-icon.mdi.mdi-reply.visible-xl(ng-if='item.lastEmail.isAnswered', title="{{ 'Replied' | translate }}")
+            .badge.badge-number.visible-xl
+              span {{ thread.messageIds.length }}
+          .inbox-from.lv-title
+            span.inbox-item-draft(ng-if="item.lastEmail.isDraft") {{ 'Draft' | translate }}
+            span.inbox-item-draft-divider -
+            inbox-emailer(ng-if="mailboxRole.value !== 'sent'", emailer="item.lastEmail.from")
+            inbox-emailer-group(ng-if="mailboxRole.value === 'sent' && item.emailRecipients", group="item.emailRecipients", display-inline="true")
+        .inbox-list-item-date-and-indicators
+          .date-and-indicators-container
+            .indicators.esn-flex-noshrink.visible-xl
+              ul.actions.flex-vertical-centered
+                li.action-item
+                  i.inbox-message-indicators(dynamic-directive='inbox-message-indicators')
+                  i.flag-icon.mdi.mdi-paperclip(ng-if='item.lastEmail.hasAttachment', title="{{ 'Attachments' | translate }}")
+            .date-container
+            span {{ item.lastEmail.date | date: item.group.dateFormat }}
+          inbox-indicators(item="item.lastEmail", hidden-xl="true")
+    .inbox-preview-block.preview {{ item.lastEmail.preview }}

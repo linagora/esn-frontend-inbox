@@ -1,0 +1,13 @@
+.modal.inbox-root.inbox-modal
+  .modal-dialog
+    .modal-content
+      .modal-header
+        button.close(type='button', data-dismiss="modal", aria-label="Close", ng-click="$hide()")
+          span(aria-hidden="true") &times;
+        h4.modal-title {{ 'Delete folder?' | translate }}
+      .modal-body(ng-if="::message")
+        p
+          | {{ ::message }}
+      .modal-footer
+        button.btn.btn-link(type="button", ng-click="$hide()") {{ 'Cancel' | translate }}
+        button.btn.btn-primary(type="submit", ng-click="ctrl.deleteFolder(); $hide()") {{ 'Delete' | translate }}

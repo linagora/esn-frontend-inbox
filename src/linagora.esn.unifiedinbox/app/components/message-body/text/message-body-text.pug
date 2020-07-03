@@ -1,0 +1,3 @@
+.inbox-message-body-text
+  inbox-read-receipt(message="$ctrl.message")
+  .lv-item.multilines(esn-string-to-dom="$ctrl.message.textBody | escapeHtml | autolink")

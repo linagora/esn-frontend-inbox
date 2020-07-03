@@ -1,0 +1,25 @@
+.inbox-identity.card
+  .inbox-identity-header.flex-vertical-centered.p-l-10
+    i.mdi.mdi-alert.c-red(ng-if="!$ctrl.identity.usable", title="{{ 'This identity is not usable' | translate }}")
+    .inbox-identity-description.flex
+      p.m-b-0.ellipsis {{ $ctrl.identity.description }}
+      .text-muted.m-l-5(ng-if="$ctrl.identity.default") ({{ 'default' | translate }})
+    ul.actions(ng-if="$ctrl.canEdit")
+      li.dropdown
+        a(href="" data-toggle="dropdown" aria-expanded="false")
+          i.mdi.mdi-dots-vertical
+        ul.dropdown-menu.dropdown-menu-right
+          li
+            a(href="", ng-click="$ctrl.onEditBtnClick()") {{ 'Edit' | translate }}
+          li
+            a(href="", ng-if="!$ctrl.identity.default" ng-click="$event.stopPropagation(); $ctrl.onRemoveBtnClick()") {{ 'Remove' | translate }}
+  .inbox-identity-body
+    .inbox-identity-name.ellipsis {{ $ctrl.identity.name }}
+    .inbox-identity-email.flex-vertical-centered.ellipsis
+      i.mdi.mdi-email
+      .text-lowercase(ng-class="{'error': $ctrl.identity.error.email }") {{ $ctrl.identity.email }}
+    .inbox-identity-reply-to.flex-vertical-centered.ellipsisn(ng-if="$ctrl.identity.replyTo")
+      i.mdi.mdi-reply
+      .text-lowercase(ng-class="{'error': $ctrl.identity.error.replyTo }") {{ $ctrl.identity.replyTo }}
+    div(ng-if="$ctrl.identity.htmlSignature" ng-bind-html="$ctrl.identity.htmlSignature | sanitizeStylisedHtml")
+    .inbox-identity-signature.ellipsis(ng-if="$ctrl.identity.textSignature") {{ $ctrl.identity.textSignature }}

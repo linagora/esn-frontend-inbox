@@ -1,0 +1,35 @@
+.inbox-forwardings-configuration
+  .keep-local-copy(ng-if="$ctrl.isLocalCopyEnabled")  
+    span {{ 'Keep local copy' | translate }}
+    toggle-switch(ng-model='$ctrl.keepLocalCopy', onchange="$ctrl.onKeepLocalCopyChange()", color='blue')
+
+  .add-forwardings
+    .forwardings-form
+      recipients-auto-complete.inbox-recipients.recipients-to(
+        ng-model="$ctrl.newForwardings",
+        excluded-emails="$ctrl.excludedEmails",
+        template="recipients-auto-complete"
+      )
+    .add-btn
+      .btn.btn-primary.btn-sm(ng-click="$ctrl.onAddForwarding()") {{ 'Add' | translate }}
+
+hr
+
+.no-forwarding(ng-if='!($ctrl.forwardings.filter($ctrl.isNotUserEmail).length > 0)')
+  .text-muted {{ 'You are not forwarding your email' | translate }}
+
+.forwarding-list-item(
+  ng-if='$ctrl.forwardings.filter($ctrl.isNotUserEmail).length > 0',
+  ng-repeat='forwarding in $ctrl.forwardings | filter: $ctrl.isNotUserEmail'
+)
+  .forwarding-info
+    esn-avatar(user-email="forwarding")
+    .user-info
+      a.ellipsis(
+        ng-href="mailto:{{::forwarding}}",
+        op-inbox-compose, op-inbox-compose-users="[forwarding]}}"
+      ) {{::forwarding}}
+  .forwarding-actions
+    a.hidden-xs(href='', ng-click='form.$setDirty(); $ctrl.onRemoveForwarding(forwarding)') {{ 'Remove' | translate }}
+    a.hidden-md(href='', ng-click='form.$setDirty(); $ctrl.onRemoveForwarding(forwarding)')
+      i.mdi.mdi-delete

@@ -1,0 +1,42 @@
+.inbox-identities {
+  padding: 15px;
+
+  .flex-wrap;
+  .flex-space-between;
+
+  > * {
+    width: 100%;
+  }
+}
+
+.inbox-identitites-error {
+  .flex-column;
+  .all-centered;
+
+  color: @secondaryTextColor;
+  height: 20vh;
+
+  .mdi {
+    color: @accentColor;
+    font-size: 5em;
+    opacity: 0.7;
+    margin-bottom: 10px;
+  }
+
+  .message {
+    font-size: 1.4em;
+    text-align: center;
+  }
+}
+
+@media (min-width: @screen-md-min) {
+  .inbox-identities {
+    > * {
+      width: 49%; // Two on a single line
+    }
+  }
+
+  .inbox-identitites-error {
+    height: 50vh;
+  }
+}

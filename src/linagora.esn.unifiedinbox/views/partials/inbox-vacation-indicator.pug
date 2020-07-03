@@ -1,0 +1,3 @@
+.inbox-vacation-indicator(ng-if="inbox.vacationActivated")
+  | {{ 'Your vacation responder is enabled.' | translate }}
+  button.btn.btn-link.inbox-disable-vacation(ng-click="ctrl.disableVacation()") {{ 'Disable' | translate }}

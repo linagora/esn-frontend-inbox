@@ -1,0 +1,41 @@
+ng-form(name="urlForm")
+  .form-title
+    h5 {{ 'Web Admin API' | translate }}
+    small.text-muted {{ 'Define the Web Admin API endpoint.' | translate }}
+  .row.flex-vertical-centered
+    .col-xs-6
+      esn-form-group(label="{{ 'Backend' | translate }}", form="urlForm")
+        input.form-control(type="url", ng-disabled="$ctrl.mode === $ctrl.availableModes.domain" ng-model="$ctrl.configurations.webadminApiBackend.value", name="webadminApiBackend", required)
+    .col-xs-6
+      esn-form-group(label="{{ 'Frontend' | translate }}", form="urlForm")
+        input.form-control(type="url", ng-disabled="$ctrl.mode === $ctrl.availableModes.domain", ng-model="$ctrl.configurations.webadminApiFrontend.value", name="webadminApiFrontend", ng-change="$ctrl.onServerUrlChange(configForm)", ng-model-options="{ updateOn: 'default blur', debounce: {'default': 300, 'blur': 0} }", required)
+
+ng-form(name="configForm")
+  div(ng-switch="$ctrl.connectionStatus")
+    div(ng-switch-when="connected")
+      .computed-quota(ng-if="$ctrl.mode === $ctrl.availableModes.domain")
+        h5 {{ 'Currently applied quota' | translate }}
+        james-quota-displayer(quota="$ctrl.config.computedQuota")
+      .quota-set
+        .form-title
+          h5 {{ 'Set quota' | translate }}
+          small.text-muted {{ 'Define the quota limit for each user. Leave the fields empty for no quota.' | translate }}
+        james-quota-form(quota="$ctrl.config.quota")
+
+    div(ng-switch-when="connecting")
+      .text-center(openpaas-logo-spinner, spinner-start-active="1", spinner-size="0.5")
+
+    admin-empty-message(
+      ng-switch-when="error",
+      icon="mdi-lan-disconnect",
+      message="{{ 'Cannot connect to James server, please check your Web Admin API for frontend' | translate }}")
+
+ng-form(name="deletedMessagesForm")
+  .form-title
+    h5 {{ 'Deleted messages' | translate }}
+  .form-group.flex.flex-vertical-centered
+    div.m-l-10
+      h5 {{ 'Enable restoring deleted messages' | translate }}
+      small.text-muted {{ 'Allow domain members to recover their deleted messages' | translate }}
+    .flex-end
+      toggle-switch(ng-model="$ctrl.configurations.deletedMessages.value.restore.isEnabled", form="deletedMessagesForm")

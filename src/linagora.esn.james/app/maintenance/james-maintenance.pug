@@ -1,0 +1,12 @@
+.card
+  .card-header
+    h2 {{ 'Domains' | translate }}
+  .card-body
+    .listview.lv-bordered
+      .lv-body
+        .lv-item
+          .flex-space-between
+            div {{ 'Synchronize domains in OpenPaaS with James' | translate }}
+            div
+              button.btn.btn-primary(ng-click="$ctrl.synchronizeDomains()") {{ 'Run' | translate }}
+

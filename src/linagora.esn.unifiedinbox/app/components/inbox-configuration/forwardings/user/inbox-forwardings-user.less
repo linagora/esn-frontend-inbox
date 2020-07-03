@@ -1,0 +1,23 @@
+inbox-forwardings-user {
+  a {
+    &:extend(.dropdown-menu > li > a);
+    &:extend(.dropdown-menu.dropdown-menu-right > li > a);
+
+    &:hover {
+      &:extend(.dropdown-menu > li > a:hover);
+    }
+  }
+
+  .inbox-forwardings-user-dialog {
+    .modal-body {
+      overflow-y: auto;
+    }
+  
+    .error-message {
+      color: @secondaryTextColor;
+      font-size: 1.4em;
+      text-align: center;
+    }
+  }
+}
+  

@@ -1,0 +1,9 @@
+.inbox-shared-mailbox
+  .meta
+    .title
+      .name
+        span {{::$ctrl.mailbox.name}}
+      .owner
+        span {{::$ctrl.mailbox.namespace.owner}}
+  .actions
+    toggle-switch(ng-model='$ctrl.mailbox.isDisplayed')

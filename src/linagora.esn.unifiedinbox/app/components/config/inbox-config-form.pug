@@ -1,0 +1,91 @@
+ng-form.p-t-25(name='form')
+  .left-block
+    esn-form-group(label="{{ 'JMAP API' | translate }}")
+      input.form-control(type="url", ng-model="$ctrl.configurations.api.value", name="apiUrl")
+    esn-form-group(label="{{ 'Upload API' | translate }}")
+      input.form-control(type="url", ng-model="$ctrl.configurations.uploadUrl.value", name="uploadUrl")
+    esn-form-group(label="{{ 'Download API' | translate }}")
+      input.form-control(type="url", ng-model="$ctrl.configurations.downloadUrl.value", name="downloadUrl")
+    esn-form-group(label="{{ 'Number of items per request, on bulk READ operations' | translate }}")
+      input.form-control(type="number", step="10", min="30", max="5000", ng-model="$ctrl.configurations.numberItemsPerPageOnBulkReadOperations.value", name="numberItemsPerPageOnBulkReadOperations")
+    esn-form-group(label="{{ 'Number of items per request, on bulk DELETE operations' | translate }}")
+      input.form-control(type="number", step="10", min="30", max="5000", ng-model="$ctrl.configurations.numberItemsPerPageOnBulkDeleteOperations.value", name="numberItemsPerPageOnBulkDeleteOperations")
+    esn-form-group(label="{{ 'Number of items per request, on bulk UPDATE operations' | translate }}")
+      input.form-control(type="number", step="10", min="30", max="5000", ng-model="$ctrl.configurations.numberItemsPerPageOnBulkUpdateOperations.value", name="numberItemsPerPageOnBulkUpdateOperations")
+    .form-group.option-field
+      .col-xs-4.field-name {{ 'Display email as' | translate }}
+      .col-xs-8.flex-space-between
+        label.col-xs-6.radio.radio-inline.disabled
+          //- James does not support thread at the moment
+          input(type="radio" , ng-model="$ctrl.configurations.view.value", value="threads", disabled)
+          i.input-helper
+          span
+            |  {{ 'Threads' | translate }}
+        label.col-xs-6.radio.radio-inline
+          input(type="radio", ng-model="$ctrl.configurations.view.value", value="messages")
+          i.input-helper
+          span
+            |  {{ 'Messages' | translate }}
+    h5 {{ 'Mobile options' | translate }}
+    .form-group.option-field
+      .col-xs-4.field-name {{ 'Swipe right action' | translate }}
+        p.small.text-muted {{ 'Configure swipe actions to quickly act on emails on the conversation list' | translate }}
+      .col-xs-8.flex-space-between
+        label.col-xs-6.radio.radio-inline
+          input(type="radio", ng-model="$ctrl.configurations.swipeRightAction.value", value="markAsRead")
+          i.input-helper
+          span
+            |  {{ 'Mark as read' | translate }}
+        label.col-xs-6.radio.radio-inline
+          input(type="radio", ng-model="$ctrl.configurations.swipeRightAction.value", value="moveToTrash")
+          i.input-helper
+          span
+            |  {{ 'Move to trash' | translate }}
+  .right-block
+    .form-group.option-field
+      .col-xs-8.field-name {{ 'Enable JMAP sending' | translate }}
+        p.small.text-muted {{ 'Activate JMAP protocol' | translate }}
+      .col-xs-4.flex-end
+        toggle-switch(ng-model="$ctrl.configurations.isJmapSendingEnabled.value", form="form")
+    h5 {{ 'Composer' | translate }}
+    .form-group.option-field
+      .col-xs-8.field-name {{ 'Enable draft email' | translate }}
+        p.text-muted {{ 'Unsent emails are saved as draft' | translate }}
+      .col-xs-4.flex-end
+        toggle-switch(ng-model="$ctrl.configurations.drafts.value", form="form")
+    .form-group.option-field
+      .col-xs-8.field-name {{ 'Enable attachments' | translate }}
+        p.text-muted {{ 'Enable attachments in composer' | translate }}
+      .col-xs-4.flex-end
+        toggle-switch(ng-model="$ctrl.configurations['composer.attachments'].value", form="form")
+    admin-form-input-bytes(input-value="$ctrl.configurations.maxSizeUpload.value", min="1KB", max="50TB", label="{{ 'Max size upload' | translate }}", required="true")
+    h5 {{ 'Forwarding' | translate }}
+    div(ng-if="$ctrl.mode === $ctrl.availableModes.domain")
+      p.small.text-muted {{ 'Automatic redirection of incoming emails to another email account' | translate }}
+      .form-group.option-field.m-b-10
+        .col-xs-8.field-name {{ 'Enable users to configure email forwarding' | translate }}
+        .col-xs-4.flex-end
+          toggle-switch(ng-model="$ctrl.forwardingConfigs.forwarding.value", form="form", onchange="$ctrl.onForwardingChange()")
+      .form-group.option-field(ng-class="{ 'ts-disabled': !$ctrl.forwardingConfigs.forwarding.value }")
+        .col-xs-8.field-name {{ 'Enable users to keep a local copy of forwarded emails' | translate }}
+        .col-xs-4.flex-end
+          toggle-switch(ng-model="$ctrl.forwardingConfigs.isLocalCopyEnabled.value", form="form", onchange="$ctrl.onLocalCopyChange()", ng-disabled="!$ctrl.forwardingConfigs.forwarding.value")
+    h5 {{ 'Shared folders' | translate }}
+    .form-group.option-field
+      .col-xs-8.field-name {{ 'Enable folders sharing' | translate }}
+        p.text-muted {{ 'Allow users to share folders to other users with some roles' | translate }}
+      .col-xs-4.flex-end
+        toggle-switch(ng-model="$ctrl.configurations.features.value.foldersSharing", form="form")
+    h5 {{ 'Identities' | translate }}
+    .form-group.option-field
+      .col-xs-8.field-name {{ 'Allow users to manage their identities' | translate }}
+        p.text-muted {{ 'Allow users to create or remove identities based on their mail aliases' | translate }}
+      .col-xs-4.flex-end
+        toggle-switch(ng-model="$ctrl.configurations.features.value.identity.allowMembersToManage", form="form")
+    .form-group.option-field
+      .col-xs-8.field-name {{ 'Allow users to choose identity emails from domain aliases' | translate }}
+        p.text-muted {{ 'Once enabled, users can choose identity emails not only from their emails but also from domain aliases.' | translate }}
+      .col-xs-4.flex-end
+        toggle-switch(ng-model="$ctrl.configurations.features.value.identity.acceptDomainAliasesAsEmailSource", form="form")
+
+    .inbox-config-item-dd(dynamic-directive='inbox-config-item')

@@ -1,0 +1,7 @@
+.right-sidebar-container
+  .button
+    button.btn.btn-link.btn-icon.pull-right.visible-xl(ui-sref="^", title="{{ 'Close' | translate }}")
+      i.mdi.mdi-close
+    button.btn.btn-link.btn-icon.pull-right.hidden-xl(ng-click='$hide()', title="{{ 'Close' | translate }}")
+      i.mdi.mdi-close
+  esn-attachment-list(object-type="{{ ::ctrl.providerType }}", id="{{ ::ctrl.mailbox }}")

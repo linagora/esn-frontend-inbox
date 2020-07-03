@@ -1,0 +1,26 @@
+sub-header
+  composer-subheader
+
+form.form-horizontal.compose.ng-cloak
+
+  inbox-composer-identity-selector(identity="$ctrl.message.identity", on-identity-update="$ctrl.message.identity = $identity")
+
+  .compose-to
+    .fields
+      .form-group
+        label.control-label {{ 'To' | translate }}
+        recipients-auto-complete.inbox-recipients.recipients-to(ng-model="$ctrl.message.to", template="recipients-auto-complete")
+      .form-group.ng-hide(ng-hide="$ctrl.isCollapsed")
+        label.control-label {{ 'Cc' | translate }}
+        recipients-auto-complete.inbox-recipients.recipients-cc(ng-model="$ctrl.message.cc", template="recipients-auto-complete")
+      .form-group.ng-hide(ng-hide="$ctrl.isCollapsed")
+        label.control-label {{ 'Bcc' | translate }}
+        recipients-auto-complete.inbox-recipients.recipients-bcc(ng-model="$ctrl.message.bcc", template="recipients-auto-complete")
+    .inbox-more-recipients(ng-click="$ctrl.isCollapsed = !$ctrl.isCollapsed", ng-class="{ 'isCollapsed': $ctrl.isCollapsed }")
+      i.mdi(ng-class="$ctrl.isCollapsed ? 'mdi-chevron-down' : 'mdi-chevron-up'")
+
+  input.form-control.compose-subject(type="text", placeholder="{{ 'Subject' | translate }}", ng-model="$ctrl.message.subject", ng-change="$ctrl.onTitleUpdate({ $title: $ctrl.message.subject })")
+
+  inbox-composer-body-editor-text(message="$ctrl.message", identity="$ctrl.message.identity", is-collapsed="$ctrl.isCollapsed", on-body-update="$ctrl.message.textBody = $body")
+
+  inbox-composer-attachments(message="$ctrl.message", upload="$ctrl.upload($attachment)", remove-attachment="$ctrl.removeAttachment($attachment)")

@@ -1,0 +1,77 @@
+.inbox-mailbox-shared-settings-user {
+  .flex-vertical-centered;
+  .flex-space-between;
+
+  height: 40px;
+
+  .meta {
+    .flex-row;
+    .flex-shorthand(1, 0, 40%);
+
+    max-width: 30%;
+
+    .avatar {
+      margin-right: 8px;
+
+      img {
+        .esn-avatar;
+      }
+    }
+
+    .title {
+      .flex-column;
+
+      max-width: 100%;
+
+      .name {
+        font-weight: 600;
+      }
+
+      .owner {
+        color: @secondaryTextColor;
+      }
+    }
+  }
+
+  .rights {
+    .flex-grow;
+    .all-centered;
+
+    padding-left: 20px;
+
+    .select {
+      max-width: 60%;
+    }
+
+    .mdi {
+      font-size: 1.2em;
+      padding-right: 5px;
+      color: @gray-light;
+    }
+  }
+
+  .actions {
+    .flex-grow;
+    .flex-shorthand(1, 0, 10%);
+    text-align: right;
+
+    .mdi {
+      font-size: 1.2em;
+      vertical-align: middle;
+    }
+  }
+}
+
+.is-desktop {
+  .inbox-mailbox-shared-settings-user {
+    .meta {
+      max-width: 40%;
+    }
+
+    .actions {
+      .flex-grow;
+      .flex-shorthand(1, 0, 0);
+    }
+  }
+}
+

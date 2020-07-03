@@ -1,0 +1,51 @@
+.inbox-root {
+  .emailer {
+    display: inline-block;
+    cursor: pointer;
+    word-break: break-all;
+
+    .email {
+      margin-left: 5px;
+    }
+
+    .me {
+      margin-left: 2px;
+    }
+  }
+
+  .emailer-inline {
+    display: inline;
+  }
+
+
+  inbox-emailer-display {
+    .from, .to, .cc, .bcc, .date {
+      .flex-start;
+
+      .line-header {
+        .esn-flex-noshrink;
+
+        min-width: 40px;
+      }
+    }
+
+    .more {
+      &:hover {
+        color: @text-color;
+        background-color: @darkenBgColor;
+      }
+
+      .esn-flex-noshrink;
+
+      margin: 0 0 auto 5px;
+
+      .collapsed, .expanded {
+        .flex-vertical-centered;
+      }
+
+      .mdi {
+        font-size: 1.6em;
+      }
+    }
+  }
+}

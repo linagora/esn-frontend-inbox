@@ -1,0 +1,38 @@
+{
+  "name": "esn-frontend-inbox",
+  "version": "0.1.0",
+  "description": "OpenPaaS suite Webmail (https://open-paas.org/)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "serve": "webpack-dev-server --watch --progress",
+    "build:dev": "webpack"
+  },
+  "author": "",
+  "license": "AGPLv3",
+  "dependencies": {
+    "angularjs-dragula": "2.0.0",
+    "dompurify": "1.0.9",
+    "esn-frontend-common-libs": "github:openpaas-suite/esn-frontend-common-libs#main",
+    "jmap-draft-client": "^0.1.2",
+    "sanitize-html": "github:linagora/sanitize-html#c89d4ebe09da48296f33cc80ddcc02e11d853265",
+    "ui-select": "0.19.8"
+  },
+  "devDependencies": {
+    "css-loader": "^3.6.0",
+    "exports-loader": "^1.0.0",
+    "expose-loader": "^1.0.0",
+    "file-loader": "^6.0.0",
+    "glob-all": "^3.2.1",
+    "html-webpack-plugin": "^4.3.0",
+    "less-loader": "^6.1.1",
+    "pug": "^3.0.0",
+    "pug-loader": "^2.4.0",
+    "style-loader": "^1.2.1",
+    "svg-inline-loader": "^0.8.2",
+    "url-loader": "^4.1.0",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.11.0"
+  }
+}

@@ -1,0 +1,17 @@
+sub-header
+  inbox-shared-mailboxes-subheader(on-save="$ctrl.onSave()")
+
+.inbox-shared-mailboxes
+  .shared-list(ng-if="$ctrl.mailboxes.length > 0")
+    .header
+      .name
+        span {{ 'Folder name' | translate }}
+      .actions
+        span {{ 'Show' | translate }}
+    inbox-shared-mailbox(mailbox="mailbox", ng-repeat="mailbox in $ctrl.mailboxes track by mailbox.id")
+
+  .inbox-list(ng-if="$ctrl.mailboxes.length === 0")
+    .inbox-empty-container-message
+      .message
+        .inbox-empty-icon.mdi.mdi-folder-outline
+        .message {{ 'There is nothing to display' | translate }}

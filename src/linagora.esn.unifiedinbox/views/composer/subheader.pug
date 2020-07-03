@@ -1,0 +1,26 @@
+extends /modules/subheader/fullwidth-subheader.pug
+
+block left
+  inbox-subheader-close-button(ng-click='$ctrl.tryClose(); $ctrl.onHide()')
+
+block right
+  .inbox-composer-buttons.flex-vertical-centered
+    div(dynamic-directive='inboxMobileComposerExtraButtons')
+    inbox-composer-attachments-selector(attachment-holder="$ctrl.attachmentHolder")
+    button.send.btn.btn-link.flex-vertical-centered.hidden-xs(ng-click='$ctrl.send()', ng-disabled="$ctrl.isSendingMessage")
+      | {{ 'Send' | translate }}
+      i.mdi.mdi-send.mdi-margin-left
+    button.send.btn.btn-link.btn-icon.visible-xs(ng-click='$ctrl.send()', ng-disabled="$ctrl.isSendingMessage")
+      i.mdi.mdi-send
+    md-menu-bar
+      md-menu
+        button.btn.btn-link.btn-icon(type="button", ng-click="$mdMenu.open()", title="{{ 'More' | translate }}")
+          i.mdi.mdi-dots-vertical
+        md-menu-content.dm-icon(width="3")
+          md-menu-item.md-indent(type="checkbox", ng-model="$ctrl.hasRequestedReadReceipt")
+            | {{ 'Request a read receipt' | translate }}
+          md-menu-divider(feature-flag="linagora.esn.unifiedinbox.drafts")
+          md-menu-item.md-indent(feature-flag="linagora.esn.unifiedinbox.drafts")
+            md-icon(md-svg-icon="delete", aria-label="delete Icon")
+            md-button(ng-click="$ctrl.destroyDraft()")
+              | {{ 'Delete' | translate }}

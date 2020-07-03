@@ -1,0 +1,4 @@
+.inbox-message-body-html
+  inbox-read-receipt(message="$ctrl.message")
+  div.inbox-message-body-html
+    div(ng-bind-html="$ctrl.message.htmlBody | loadImagesAsync | esnDomPurify")

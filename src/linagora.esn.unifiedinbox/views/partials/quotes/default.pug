@@ -1,0 +1,5 @@
+p
+  br
+
+cite {{ 'On' | translate }} {{ email.quoted.date | esnDatetime:"mediumDate time" }}, {{ 'from' | translate }} {{ email.quoted.from.email }}
+blockquote {{ email.quoted.htmlBody || (email.quoted.textBody | escapeHtml | nl2br) }}

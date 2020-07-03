@@ -1,0 +1,59 @@
+.action-list(ng-click='$hide(); $event.stopPropagation()')
+  .action
+    a(ng-click='ctrl.forward()', title="{{ 'Forward' | translate }}")
+      i.mdi.mdi-forward
+      span.label
+        | {{ 'Forward' | translate }}
+  .action
+    a(ng-click='ctrl.reply()', title="{{ 'Reply' | translate }}")
+      i.mdi.mdi-reply
+      span.label
+        | {{ 'Reply' | translate }}
+  .action(ng-if='::email.hasReplyAll')
+    a(ng-click='ctrl.replyAll()', title="{{ 'Reply all' | translate }}")
+      i.mdi.mdi-reply-all
+      span.label
+        | {{ 'Reply all' | translate }}
+  .action(ng-if="onSwipeRight", ng-switch='email.isUnread')
+    a(ng-switch-when='false', ng-click='ctrl.markAsUnread()', title="{{ 'Mark as unread' | translate }}")
+      i.mdi.mdi-eye-off
+      span.label
+        | {{ 'Unread' | translate }}
+    a(ng-switch-when='true', ng-click='ctrl.markAsRead()', title="{{ 'Mark as read' | translate }}")
+      i.mdi.mdi-eye
+      span.label
+        | {{ 'Read' | translate }}
+  .action(ng-if="onSwipeRight", ng-switch='email.isFlagged')
+    a(ng-switch-when='false', ng-click='ctrl.markAsFlagged()', title="{{ 'Star' | translate }}")
+      i.mdi.mdi-star
+      span.label
+        | {{ 'Star' | translate }}
+    a(ng-switch-when='true', ng-click='ctrl.unmarkAsFlagged()', title="{{ 'Unstar' | translate }}")
+      i.mdi.mdi-star-off
+      span.label
+        | {{ 'Unstar' | translate }}
+  .action(ng-if="onSwipeRight", ng-show='ctrl.canMoveMessagesOutOfMailbox()')
+    a(ng-click='ctrl.move()', title="{{ 'Move to' | translate }}")
+      i.mdi.mdi-folder-move
+      span.label
+        | {{ 'Move to' | translate }}
+  .action(ng-if="onSwipeRight", ng-show='ctrl.canTrashMessages()')
+    a(ng-click='ctrl.moveToTrash()', title="{{ 'Delete' | translate }}")
+      i.mdi.mdi-delete
+      span.label
+        | {{ 'Delete' | translate }}
+  .action(ng-if="onSwipeRight", ng-show='ctrl.canUnSpamMessages()')
+    a(ng-click='ctrl.unSpam()', title="{{ 'Not spam' | translate }}")
+      i.mdi.mdi-approval
+      span.label
+        | {{ 'Not spam' | translate }}
+  .action(ng-if="onSwipeRight", ng-show='ctrl.canMoveMessageToSpam()')
+    a(ng-click='ctrl.moveToSpam()', title="{{ 'Mark as spam' | translate }}")
+      i.mdi.mdi-alert-decagram
+      span.label
+        | {{ 'Spam' | translate }}
+  .action
+    a(ng-click='ctrl.download()', title="{{ 'Download (.eml)' | translate }}", href="", target="_blank")
+      i.mdi.mdi-download
+      span.label
+        | {{ 'Download (.eml)' | translate }}

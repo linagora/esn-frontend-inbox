@@ -1,0 +1,20 @@
+.action-list(ng-click='$hide(); $event.stopPropagation()')
+  .action(ng-switch='email.isFlagged')
+    a(ng-switch-when='false', ng-click='ctrl.markAsFlagged()', title="{{ 'Star' | translate }}")
+      i.mdi.mdi-star
+      span.label
+        | {{ 'Star' | translate }}
+    a(ng-switch-when='true', ng-click='ctrl.unmarkAsFlagged()', title="{{ 'Unstar' | translate }}")
+      i.mdi.mdi-star-off
+      span.label
+        | {{ 'Unstar' | translate }}
+  .action(ng-show='ctrl.canMoveMessagesOutOfMailbox()')
+    a(ng-click='ctrl.move()', title="{{ 'Move to' | translate }}")
+      i.mdi.mdi-folder-move
+      span.label
+        | {{ 'Move to' | translate }}
+  .action(ng-show='ctrl.canMoveMessageToSpam()')
+    a(ng-click='ctrl.moveToSpam()', title="{{ 'Mark as spam' | translate }}")
+      i.mdi.mdi-alert-decagram
+      span.label
+        | {{ 'Spam' | translate }}

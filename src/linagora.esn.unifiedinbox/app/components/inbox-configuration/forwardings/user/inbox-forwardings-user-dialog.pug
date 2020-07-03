@@ -1,0 +1,30 @@
+.inbox-forwardings-user-dialog.modal.full-screen(ng-init='$ctrl.init()')
+  form(name="form", ng-submit="$ctrl.updateUserForwardings(); $hide()")
+    .modal-dialog
+      .modal-content
+        .modal-header
+          button.close(type="button", data-dismiss="modal", aria-label="Close", ng-click="$hide()")
+            span(aria-hidden="true") &times;
+          h4.modal-title {{ 'Set email forwardings for %s' | translate:$ctrl.userDisplayName }}
+
+        .modal-body.overflow-none
+          .text-center(
+            ng-if="$ctrl.status === 'loading'",
+            openpaas-logo-spinner,
+            spinner-start-active='1',
+            spinner-size='0.3')
+          
+          inbox-forwardings-form(
+            ng-if="$ctrl.status === 'loaded' && $ctrl.forwardings",
+            forwardings="$ctrl.forwardings",
+            user="$ctrl.user")
+          .error-message(ng-if="$ctrl.status === 'error'") {{ 'Error while loading forwarding settings!' | translate }}
+
+        .modal-footer(ng-if="$ctrl.status === 'loaded'")
+          button.btn.btn-link(type="button", ng-click="$hide()")
+            | {{ 'Cancel' | translate }}
+          button.btn.btn-primary(type="submit")
+            | {{ 'Save' | translate }}
+        .modal-footer(ng-if="$ctrl.status === 'error'")    
+          button.btn.btn-primary.btn-ok(type="button", ng-click="$hide()")
+            | {{ 'OK' | translate }}

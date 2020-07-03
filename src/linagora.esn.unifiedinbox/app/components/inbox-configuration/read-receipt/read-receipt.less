@@ -1,0 +1,23 @@
+.inbox-message-body-read-receipt {
+  .inbox-ng-enter;
+  .inbox-ng-leave;
+  .flex-vertical-centered;
+
+  .read-receipt-text, .read-receipt-button {
+    .flex-vertical-centered;
+    .flex-grow;
+  }
+
+  margin: 5px 0;
+  padding: 0 5px;
+  background-color: @darkenBgColor;
+
+  .close {
+    opacity: 0.5;
+    padding: 5px 5px 5px 2px;
+  }
+
+  a:not(:hover) {
+    color: @primaryColor;
+  }
+}

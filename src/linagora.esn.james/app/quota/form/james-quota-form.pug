@@ -1,0 +1,20 @@
+ng-form(name="form")
+  .james-quota-form
+    .flex-row.m-t-25
+      .data-use-input
+        admin-form-input-bytes(input-value="$ctrl.dataUsageQuota", min="1BYTE", label="{{ 'Data usage quota' | translate }}", disabled="$ctrl.unlimitedDataUsage")
+      .unlimit-checkbox
+        label.checkbox.checkbox-inline
+          input(type="checkbox", ng-model="$ctrl.unlimitedDataUsage", ng-change="$ctrl.onDataUsageUnlimitedCheckboxChange()")
+          i.input-helper
+          | {{ 'Unlimited' | translate }}
+
+    .flex-row
+      .message-count-input
+        esn-form-group(label="{{ 'Message count quota' | translate }}")
+          input.form-control(type="number", ng-model="$ctrl.messageCountQuota", min="1", name="quotaCount", ng-disabled="$ctrl.unlimitedMessageCount")
+      .unlimit-checkbox
+        label.checkbox.checkbox-inline
+          input(type="checkbox", ng-model="$ctrl.unlimitedMessageCount", ng-change="$ctrl.onMessageCountUnlimitedCheckboxChange()")
+          i.input-helper
+          | {{ 'Unlimited' | translate }}

@@ -1,0 +1,12 @@
+.inbox-mailbox-shared-settings-user
+  .meta
+    .avatar
+      esn-avatar(user-id="ctrl.owner._id")
+    .title
+      .name.ellipsis(title="{{::ctrl.owner.displayName}}")
+        span {{::ctrl.owner.displayName}}
+      .owner.ellipsis(title="{{::ctrl.owner.preferredEmail}}")
+        span {{::ctrl.owner.preferredEmail}}
+
+  .actions
+    span {{ 'Owner' | translate }}

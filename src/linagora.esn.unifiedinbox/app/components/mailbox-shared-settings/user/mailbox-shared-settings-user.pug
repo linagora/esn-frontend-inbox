@@ -1,0 +1,20 @@
+.inbox-mailbox-shared-settings-user
+  .meta
+    .avatar
+      esn-avatar(user-id="ctrl.user._id")
+    .title
+      .name.ellipsis(title="{{::ctrl.user.displayName}}")
+        span {{::ctrl.user.displayName}}
+      .owner.ellipsis(title="{{::ctrl.user.preferredEmail}}")
+        span {{::ctrl.user.preferredEmail}}
+
+  .rights(ng-if="ctrl.isOwner()")
+    i.mdi.mdi-pencil
+    .select
+      select.addDelegation.form-control(ng-model='ctrl.user.selectedShareeRight', ng-change="ctrl.onUserRoleChanged(ctrl.user.selectedShareeRight, ctrl.user.preferredEmail)")
+        option(ng-repeat="delegationType in ctrl.delegationTypes" value="{{delegationType.value}}" ng-selected="delegationType.value === ctrl.user.selectedShareeRight") {{delegationType.name | esnI18n}}
+
+  .actions
+    button.btn.btn-link.btn-icon.button(ng-if="ctrl.isOwner()", title="{{ 'Delete' | translate }}", ng-click="ctrl.onUserRemoved(ctrl.user)")
+      i.mdi.mdi-close
+    span(ng-if="!ctrl.isOwner()") {{ctrl.delegationTypes[ctrl.user.selectedShareeRight].name | esnI18n}}
