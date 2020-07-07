@@ -387,19 +387,6 @@ angular.module('linagora.esn.unifiedinbox')
     };
   })
 
-  .directive('emailBodyEditor', function(emailBodyService) {
-    function template(name) {
-      return '/unifiedinbox/views/composer/editor/' + name + '.html';
-    }
-
-    return {
-      restrict: 'E',
-      templateUrl: function() {
-        return emailBodyService.supportsRichtext() ? template('richtext') : template('plaintext');
-      }
-    };
-  })
-
   .directive('inboxStar', function(inboxJmapItemService) {
     return {
       restrict: 'E',
