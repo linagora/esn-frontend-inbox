@@ -1,5 +1,4 @@
 const path = require('path');
-const { accessSync } = require('fs');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
@@ -12,6 +11,8 @@ const momentPath = path.resolve(__dirname, 'node_modules', 'moment', 'moment.js'
 const pugLoaderOptions = {
   root: `${__dirname}/node_modules/esn-frontend-common-libs/src/frontend/views`
 };
+
+const BASE_HREF = process.env.BASE_HREF || '/';
 
 module.exports = {
   mode: 'development',
@@ -53,6 +54,7 @@ module.exports = {
   ],
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
+    contentBasePublicPath: BASE_HREF,
     compress: true,
     port: 9900,
     proxy: [{
@@ -231,7 +233,15 @@ module.exports = {
         test: /assets\/index\.pug$/,
         use: [
           {
-            loader: 'pug-loader',
+            loader: 'html-loader',
+          },
+          {
+            loader:'pug-html-loader',
+            options: {
+              data: {
+                base: BASE_HREF,
+              },
+            },
           },
         ],
       },
