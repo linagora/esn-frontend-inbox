@@ -39,13 +39,6 @@ angular.module('linagora.esn.unifiedinbox')
     };
   })
 
-  .directive('fullscreenEditFormSubheader', function() {
-    return {
-      restrict: 'E',
-      templateUrl: '/unifiedinbox/views/composer/fullscreen-edit-form/subheader.html'
-    };
-  })
-
   .directive('inboxSubheaderCloseButton', function() {
     return {
       restrict: 'E',

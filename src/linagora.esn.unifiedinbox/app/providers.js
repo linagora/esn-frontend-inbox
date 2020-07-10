@@ -225,11 +225,11 @@ angular.module('linagora.esn.unifiedinbox')
   })
 
   .factory('inboxHostedMailMessagesProvider', function(inboxNewMessageProvider, computeUniqueSetOfRecipients) {
-    return inboxNewMessageProvider('/unifiedinbox/views/unified-inbox/elements/message', computeUniqueSetOfRecipients);
+    return inboxNewMessageProvider('/unifiedinbox/views/unified-inbox/elements/message.html', computeUniqueSetOfRecipients);
   })
 
-  .factory('inboxHostedMailAttachmentProvider', function(withJmapClient, pagedJmapRequest, newProvider, ByDateElementGroupingTool,
-                                                         inboxFilteringService, inboxMailboxesService, inboxJmapProviderContextBuilder,
+  .factory('inboxHostedMailAttachmentProvider', function(withJmapClient, pagedJmapRequest, newProvider,
+                                                         inboxMailboxesService, inboxJmapProviderContextBuilder,
                                                          JMAP_GET_MESSAGES_ATTACHMENTS_LIST, ELEMENTS_PER_REQUEST, PROVIDER_TYPES) {
     return newProvider({
       type: PROVIDER_TYPES.JMAP,
@@ -254,7 +254,7 @@ angular.module('linagora.esn.unifiedinbox')
       buildFetchContext: function(options) {
         return (options.id && inboxMailboxesService.getMessageListFilter(options.id)) || inboxJmapProviderContextBuilder(options);
       },
-      templateUrl: '/unifiedinbox/views/components/sidebar/attachment/sidebar-attachment-item'
+      templateUrl: '/unifiedinbox/views/components/sidebar/attachment/sidebar-attachment-item.html'
     });
   })
 
