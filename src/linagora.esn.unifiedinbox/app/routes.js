@@ -266,7 +266,7 @@
             item: undefined,
             selection: false
           }
-        }, '/unifiedinbox/views/email/view/move/index', 'inboxMoveItemController'))
+        }, '/unifiedinbox/views/email/view/move/index.html', 'inboxMoveItemController'))
         .state('unifiedinbox.inbox.message', stateOpeningListItem({
           url: '/:emailId',
           views: {
@@ -278,6 +278,6 @@
         }))
         .state('unifiedinbox.inbox.message.move', stateOpeningModal({
           url: '/move'
-        }, '/unifiedinbox/views/email/view/move/index', 'inboxMoveItemController'));
+        }, '/unifiedinbox/views/email/view/move/index.html', 'inboxMoveItemController'));
     });
 })(angular);
