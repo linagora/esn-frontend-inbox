@@ -250,9 +250,6 @@ module.exports = {
         exclude: /assets\/index\.pug$/,
         use: [
           {
-            loader: 'apply-loader',
-          },
-          {
             loader: 'pug-loader',
             options: pugLoaderOptions
           },
