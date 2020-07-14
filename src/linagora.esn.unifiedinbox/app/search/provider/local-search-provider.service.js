@@ -1,3 +1,7 @@
+require('../../search/provider/search-results-provider.service.js');
+require('../../constants.js');
+require('../../search/search.constants.js');
+
 (function(angular) {
   'use strict';
 

@@ -1,4 +1,7 @@
-(function() {
+const _ = require('lodash');
+require('../../../../constants.js');
+
+(function(angular) {
   'use strict';
 
   angular.module('linagora.esn.unifiedinbox')
@@ -9,7 +12,6 @@
       $element,
       $compile,
       $filter,
-      _,
       INBOX_SUMMERNOTE_OPTIONS,
       INBOX_SIGNATURE_SEPARATOR
     ) {
@@ -136,4 +138,4 @@
         return $q.all(promises);
       }
     });
-})();
+})(angular);

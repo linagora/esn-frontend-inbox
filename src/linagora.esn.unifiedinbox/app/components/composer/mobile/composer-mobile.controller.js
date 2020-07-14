@@ -1,4 +1,6 @@
-(function() {
+require('../../../services/new-composer/new-composer.js');
+
+(function(angular) {
   'use strict';
 
   angular.module('linagora.esn.unifiedinbox')
@@ -26,4 +28,4 @@
 
     });
 
-})();
+})(angular);

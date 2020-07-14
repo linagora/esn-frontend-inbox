@@ -1,3 +1,6 @@
+require('../../services/plugins/plugins.js');
+require('./search-plugin.service.js');
+
 (function(angular) {
   'use strict';
 

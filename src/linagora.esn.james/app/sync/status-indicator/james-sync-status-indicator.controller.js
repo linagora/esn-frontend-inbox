@@ -1,3 +1,6 @@
+require('../synchronizer/james-synchronizer.service.js');
+
+
 (function(angular) {
   'use strict';
 

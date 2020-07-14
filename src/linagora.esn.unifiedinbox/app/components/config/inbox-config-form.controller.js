@@ -1,3 +1,6 @@
+require('./inbox-config-form.constants.js');
+require('../../services/forwardings/inbox-forwardings-api-client.service.js');
+
 (function(angular) {
   'use strict';
 

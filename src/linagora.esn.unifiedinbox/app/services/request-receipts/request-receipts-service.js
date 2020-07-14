@@ -1,9 +1,14 @@
-(function() {
+const _ = require('lodash');
+require('../config/config.js');
+require('../../constants.js');
+require('./request-receipts.constants.js');
+
+(function(angular) {
   'use strict';
 
   angular.module('linagora.esn.unifiedinbox')
 
-    .service('inboxRequestReceiptsService', function($q, _, inboxConfig, esnUserConfigurationService, INBOX_MODULE_NAME, INBOX_RECEIPTS_CONFIG_KEY) {
+    .service('inboxRequestReceiptsService', function($q, inboxConfig, esnUserConfigurationService, INBOX_MODULE_NAME, INBOX_RECEIPTS_CONFIG_KEY) {
       var requestReceiptsConfig;
 
       return {
@@ -35,4 +40,4 @@
 
     });
 
-})();
+})(angular);

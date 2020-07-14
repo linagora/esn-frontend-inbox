@@ -1,9 +1,11 @@
+const _ = require('lodash');
+
 (function(angular) {
   'use strict';
 
   angular.module('linagora.esn.unifiedinbox').controller('inboxSearchFormController', inboxSearchFormController);
 
-  function inboxSearchFormController(_) {
+  function inboxSearchFormController() {
     var self = this;
 
     self.$onInit = $onInit;

@@ -1,3 +1,5 @@
+require('../../quota/james-quota-helpers.service.js');
+
 (function(angular) {
   'use strict';
 

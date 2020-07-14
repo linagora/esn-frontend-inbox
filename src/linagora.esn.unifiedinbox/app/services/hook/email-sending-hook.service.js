@@ -1,10 +1,12 @@
-(function() {
+const _ = require('lodash');
+
+(function(angular) {
   'use strict';
 
   angular.module('linagora.esn.unifiedinbox')
     .factory('inboxEmailSendingHookService', inboxEmailSendingHookService);
 
-  function inboxEmailSendingHookService($q, _) {
+  function inboxEmailSendingHookService($q) {
     var preSendingHooks = [];
     var postSendingHooks = [];
 
@@ -47,4 +49,4 @@
       });
     }
   }
-})();
+})(angular);

@@ -1,9 +1,11 @@
-(function() {
+const _ = require('lodash');
+
+(function(angular) {
   'use strict';
 
   angular.module('linagora.esn.unifiedinbox')
 
-    .filter('inboxFilterDescendantMailboxes', function(_) {
+    .filter('inboxFilterDescendantMailboxes', function() {
       return function(mailboxes, id, filterOnlyParentMailbox) {
         if (!mailboxes || !id) {
           return mailboxes;
@@ -26,4 +28,4 @@
       };
     });
 
-})();
+})(angular);

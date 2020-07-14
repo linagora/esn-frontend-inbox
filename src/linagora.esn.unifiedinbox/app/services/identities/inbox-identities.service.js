@@ -1,10 +1,12 @@
-(function() {
+const _ = require('lodash');
+require('./inbox-users-identities-api-client.service.js');
+
+(function(angular) {
   'use strict';
 
   angular.module('linagora.esn.unifiedinbox')
 
     .factory('inboxIdentitiesService', function(
-      _,
       $q,
       session,
       esnConfig,
@@ -114,4 +116,4 @@
         });
       }
     });
-})();
+})(angular);

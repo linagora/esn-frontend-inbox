@@ -1,3 +1,6 @@
+require('../jmap-client-wrapper/jmap-client-wrapper.service.js');
+require('./emailer.service.js');
+
 (function(angular) {
   'use strict';
 

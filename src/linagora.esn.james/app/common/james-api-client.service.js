@@ -1,3 +1,5 @@
+require('./james-restangular.service.js');
+
 (function(angular) {
   'use strict';
 

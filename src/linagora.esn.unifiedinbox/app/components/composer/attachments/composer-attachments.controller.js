@@ -1,4 +1,6 @@
-(function() {
+require('../../../services/attachment-provider-registry/attachment-provider-registry.service.js');
+
+(function(angular) {
   'use strict';
 
   angular.module('linagora.esn.unifiedinbox')
@@ -17,4 +19,4 @@
       }
     });
 
-})();
+})(angular);

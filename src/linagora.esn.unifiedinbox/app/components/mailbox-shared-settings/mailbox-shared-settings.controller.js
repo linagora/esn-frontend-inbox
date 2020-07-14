@@ -1,4 +1,9 @@
-(function() {
+const _ = require('lodash');
+require('../../services/mailboxes/mailboxes-service.js');
+require('../../services/mailboxes/permissions-service.js');
+require('../../services/mailboxes/permissions-service.constants.js');
+
+(function(angular) {
   'use strict';
 
   angular.module('linagora.esn.unifiedinbox')
@@ -6,7 +11,6 @@
 
   function InboxMailboxSharedSettingsController(
     $scope,
-    _,
     session,
     inboxMailboxesService,
     inboxSharedMailboxesPermissionsService,
@@ -144,4 +148,4 @@
         self.owner._id === self.sessionUser._id;
     }
   }
-})();
+})(angular);

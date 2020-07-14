@@ -1,4 +1,8 @@
-(function() {
+const _ = require('lodash');
+require('../jmap-client-wrapper/jmap-client-wrapper.service.js');
+require('./make-selectable.js');
+
+(function(angular) {
   'use strict';
 
   angular.module('linagora.esn.unifiedinbox')
@@ -51,4 +55,4 @@
       inboxMakeSelectable(jmapDraft.Thread.prototype);
     });
 
-})();
+})(angular);

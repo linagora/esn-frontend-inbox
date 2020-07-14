@@ -1,3 +1,5 @@
+require('../constants.js');
+
 (function(angular) {
   'use strict';
 

@@ -1,3 +1,5 @@
+require('./james-quota.constants.js');
+
 (function(angular) {
   'use strict';
 

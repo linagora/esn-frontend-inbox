@@ -1,8 +1,14 @@
-'use strict';
+require('./providers.js');
+require('./constants.js');
 
-angular.module('linagora.esn.unifiedinbox')
+(function (angular) {
 
-  .run(function(inboxHostedMailAttachmentProvider, esnAttachmentListProviders, esnModuleRegistry, INBOX_MODULE_METADATA) {
-    esnAttachmentListProviders.add(inboxHostedMailAttachmentProvider);
-    esnModuleRegistry.add(INBOX_MODULE_METADATA);
-  });
+  'use strict';
+
+  angular.module('linagora.esn.unifiedinbox')
+
+    .run(function (inboxHostedMailAttachmentProvider, esnAttachmentListProviders, esnModuleRegistry, INBOX_MODULE_METADATA) {
+      esnAttachmentListProviders.add(inboxHostedMailAttachmentProvider);
+      esnModuleRegistry.add(INBOX_MODULE_METADATA);
+    });
+});

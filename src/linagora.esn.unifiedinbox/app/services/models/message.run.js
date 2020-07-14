@@ -1,4 +1,9 @@
-(function() {
+require('../jmap-client-wrapper/jmap-client-wrapper.service.js');
+require('./make-selectable.js');
+require('../mailboxes/mailboxes-service.js');
+require('../../services.js');
+
+(function(angular) {
   'use strict';
 
   angular.module('linagora.esn.unifiedinbox')
@@ -30,4 +35,4 @@
       inboxMakeSelectable(jmapDraft.Message.prototype);
     });
 
-})();
+})(angular);

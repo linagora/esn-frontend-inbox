@@ -1,10 +1,11 @@
-(function() {
+require('../../../constants.js');
+
+(function(angular) {
   'use strict';
 
   angular
     .module('linagora.esn.unifiedinbox')
-    .controller('inboxPreferencesMailtoController', function($window, session, esnUserConfigurationService, absoluteUrl,
-                                                             INBOX_MODULE_NAME) {
+    .controller('inboxPreferencesMailtoController', function($window, session, esnUserConfigurationService, absoluteUrl, INBOX_MODULE_NAME) {
       var self = this,
           mailtoURL = absoluteUrl('/unifiedinbox/mailto?uri=%s');
 
@@ -37,4 +38,4 @@
       }
     });
 
-})();
+})(angular);

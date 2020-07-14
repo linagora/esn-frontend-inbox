@@ -1,3 +1,7 @@
+require('../../services.js');
+require('../../services/jmap-client-wrapper/jmap-client-wrapper.service.js');
+require('../../services/attachment-jmap/attachment-jmap.constants.js');
+
 (function(angular) {
   'use strict';
 

@@ -1,9 +1,12 @@
+const _ = require('lodash');
+require('../../../services/new-composer/new-composer.js');
+
 (function(angular) {
   'use strict';
 
   angular.module('linagora.esn.unifiedinbox')
 
-    .controller('inboxMessageBodyHtmlController', function($timeout, $q, newComposerService, _) {
+    .controller('inboxMessageBodyHtmlController', function($timeout, $q, newComposerService) {
       var self = this;
 
       self.$onInit = _.partial($timeout, $onInit);

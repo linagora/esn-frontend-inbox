@@ -1,9 +1,11 @@
+const _ = require('lodash');
+
 (function(angular) {
   'use strict';
 
   angular.module('linagora.esn.unifiedinbox').directive('attachmentDragAndDropHandler', attachmentDragAndDropHandler);
 
-  function attachmentDragAndDropHandler(_, $compile, esnI18nService) {
+  function attachmentDragAndDropHandler($compile, esnI18nService) {
     return {
       restrict: 'A',
       scope: {attachmentUploadCallback: '&attachmentDragAndDropHandler'},

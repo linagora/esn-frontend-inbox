@@ -1,9 +1,13 @@
-(function() {
+const _ = require('lodash');
+require('../mailboxes/mailboxes-service.js');
+require('./user-quota-service.constants.js');
+
+(function(angular) {
   'use strict';
 
   angular.module('linagora.esn.unifiedinbox')
 
-    .service('inboxUserQuotaService', function($q, _, inboxMailboxesService, INBOX_QUOTA_LEVEL_THRESHOLDS) {
+    .service('inboxUserQuotaService', function($q, inboxMailboxesService, INBOX_QUOTA_LEVEL_THRESHOLDS) {
 
       return {
         getUserQuotaInfo: getUserQuotaInfo
@@ -51,4 +55,4 @@
 
     });
 
-})();
+})(angular);

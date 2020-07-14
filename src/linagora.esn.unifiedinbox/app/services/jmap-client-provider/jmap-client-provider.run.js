@@ -1,3 +1,5 @@
+require('../jmap-client-provider/jmap-client-provider.js');
+
 (function(angular) {
   'use strict';
 

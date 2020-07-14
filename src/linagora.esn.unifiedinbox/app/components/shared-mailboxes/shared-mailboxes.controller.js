@@ -1,9 +1,13 @@
-(function() {
+const _ = require('lodash');
+require('../../services/mailboxes/mailboxes-service.js');
+require('../../services/mailboxes/shared-mailboxes.js');
+
+(function(angular) {
   'use strict';
 
   angular.module('linagora.esn.unifiedinbox')
 
-    .controller('inboxSharedMailboxesController', function(inboxMailboxesService, inboxSharedMailboxesService, _) {
+    .controller('inboxSharedMailboxesController', function(inboxMailboxesService, inboxSharedMailboxesService) {
       var self = this;
 
       self.$onInit = $onInit;
@@ -29,4 +33,4 @@
 
     });
 
-})();
+})(angular);

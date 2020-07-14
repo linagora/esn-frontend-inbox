@@ -1,4 +1,4 @@
-(function() {
+(function(angular) {
   'use strict';
 
   angular.module('linagora.esn.unifiedinbox')
@@ -12,4 +12,4 @@
     .constant('INBOX_DEFAULT_FOLDERS_SHARING_CONFIG', false)
     .constant('INBOX_FOLDERS_SHARING_CONFIG_KEY', 'features.foldersSharing');
 
-})();
+})(angular);

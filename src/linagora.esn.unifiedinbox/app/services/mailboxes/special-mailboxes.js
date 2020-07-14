@@ -1,9 +1,11 @@
-(function() {
+const _ = require('lodash');
+
+(function(angular) {
   'use strict';
 
   angular.module('linagora.esn.unifiedinbox')
 
-    .factory('inboxSpecialMailboxes', function(_, esnI18nService) {
+    .factory('inboxSpecialMailboxes', function(esnI18nService) {
       var mailboxes = [];
 
       return {
@@ -41,4 +43,4 @@
       }
     });
 
-})();
+})(angular);

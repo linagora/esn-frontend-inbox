@@ -1,4 +1,12 @@
-(function() {
+const _ = require('lodash');
+require('../with-jmap-client/with-jmap-client.js');
+require('../jmap-client-wrapper/jmap-client-wrapper.service.js');
+require('../../services.js');
+require('./special-mailboxes.js');
+require('./shared-mailboxes.js');
+require('../../constants.js');
+
+(function(angular) {
   'use strict';
 
   angular.module('linagora.esn.unifiedinbox')
@@ -8,7 +16,7 @@
       'drafts'
     ])
 
-    .factory('inboxMailboxesService', function($q, _, $state, $rootScope, withJmapClient, jmapDraft, asyncJmapAction,
+    .factory('inboxMailboxesService', function($q, $state, $rootScope, withJmapClient, jmapDraft, asyncJmapAction,
                                                inboxSpecialMailboxes, inboxMailboxesCache, inboxSharedMailboxesService,
                                                esnI18nService, INBOX_EVENTS, MAILBOX_LEVEL_SEPARATOR, INBOX_RESTRICTED_MAILBOXES) {
 
@@ -521,4 +529,4 @@
       }
     });
 
-})();
+})(angular);

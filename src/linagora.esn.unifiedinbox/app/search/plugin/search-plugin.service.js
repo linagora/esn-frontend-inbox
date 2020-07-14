@@ -1,9 +1,12 @@
+const _ = require('lodash');
+require('../../constants.js');
+
 (function(angular) {
   'use strict';
 
   angular.module('linagora.esn.unifiedinbox').factory('inboxSearchPluginService', inboxSearchPluginService);
 
-  function inboxSearchPluginService($q, _, PROVIDER_TYPES) {
+  function inboxSearchPluginService($q, PROVIDER_TYPES) {
     return function() {
       return {
         type: PROVIDER_TYPES.SEARCH,

@@ -1,9 +1,14 @@
-(function() {
+const _ = require('lodash');
+require('../mailboxes/mailboxes-service.js');
+require('../filtering/filters.js');
+require('../../constants.js');
+
+(function(angular) {
   'use strict';
 
   angular.module('linagora.esn.unifiedinbox')
 
-    .factory('inboxFilteringService', function($rootScope, inboxMailboxesService, inboxFilters, _, INBOX_EVENTS) {
+    .factory('inboxFilteringService', function($rootScope, inboxMailboxesService, inboxFilters, INBOX_EVENTS) {
       var providerFilters = {}, quickFilter = null;
 
       return {
@@ -102,4 +107,4 @@
       }
     });
 
-})();
+})(angular);

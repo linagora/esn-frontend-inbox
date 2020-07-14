@@ -1,11 +1,12 @@
-(function() {
+require('../../../../services/email-body/email-body.js');
+require('../../../../constants.js');
+
+(function(angular) {
   'use strict';
 
   angular.module('linagora.esn.unifiedinbox')
 
-    .controller('inboxComposerBodyEditorTextController', function($timeout, $scope, $element,
-                                                                  emailBodyService, elementScrollService, autosize,
-                                                                  INBOX_SIGNATURE_SEPARATOR) {
+    .controller('inboxComposerBodyEditorTextController', function($timeout, $element, emailBodyService, autosize, INBOX_SIGNATURE_SEPARATOR) {
       var self = this;
 
       self.$onChanges = $onChanges;
@@ -93,4 +94,4 @@
       }
     });
 
-})();
+})(angular);

@@ -1,3 +1,6 @@
+require('../new-composer/new-composer.js');
+require('./shortcuts.constants.js');
+
 (function(angular) {
   'use strict';
 

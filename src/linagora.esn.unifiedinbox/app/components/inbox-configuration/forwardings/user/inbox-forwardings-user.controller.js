@@ -1,3 +1,7 @@
+const _ = require('lodash');
+require('../../../../services/forwardings/inbox-forwardings.service.js');
+require('../../../../services/forwardings/inbox-forwardings-api-client.service.js');
+
 (function(angular) {
   'use strict';
 
@@ -6,7 +10,6 @@
 
   function InboxForwardingsUserController(
     $stateParams,
-    _,
     user,
     userUtils,
     asyncAction,
