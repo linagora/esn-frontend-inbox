@@ -327,4 +327,22 @@ angular.module('linagora.esn.unifiedinbox')
 
       return item;
     };
+  })
+
+  /**
+   * When the value of a dynamic translated text (%s) is relied on the result of the function
+   * We'll watch the translated text when it's changed on get method on Object.defineProperty
+   * The get method should return the updated value
+   *
+   * @param {Object} object         Base object to add property
+   * @param {Object} property       Name of perperty to watch
+   * @param {Function} callback     Function is runned every time we get property value
+  */
+
+  .factory('watchDynamicTranslatedValue', function() {
+    return function(object, propertyName, callback) {
+      Object.defineProperty(object, propertyName, {
+        get() { return callback(); }
+      });
+    }
   });

@@ -423,9 +423,13 @@ angular.module('linagora.esn.unifiedinbox')
     esnPreviousPage,
     esnI18nDateFormatService,
     esnConfig,
+    esnDatetimeService,
+    watchDynamicTranslatedValue,
     INBOX_EVENTS
     ) {
     var self = this;
+
+    self.vacationDate = {};
 
     this.momentTimes = {
       fromDate: {
@@ -473,6 +477,9 @@ angular.module('linagora.esn.unifiedinbox')
                 $scope.vacation.fromDate = moment();
               } else {
                 self.fixTime('fromDate');
+                watchDynamicTranslatedValue(self.vacationDate, 'start', function() {
+                  return esnDatetimeService.format($scope.vacation.fromDate.toDate(), 'mediumDate time');
+                });
               }
               self.updateDateAndTime('fromDate');
 
@@ -480,6 +487,9 @@ angular.module('linagora.esn.unifiedinbox')
                 $scope.vacation.hasToDate = true;
                 self.fixTime('toDate');
                 self.updateDateAndTime('toDate');
+                watchDynamicTranslatedValue(self.vacationDate, 'end', function() {
+                  return esnDatetimeService.format($scope.vacation.toDate.toDate(), 'mediumDate time');
+                });
               }
             })
             .then(function() {
@@ -685,9 +695,18 @@ angular.module('linagora.esn.unifiedinbox')
     }
   })
 
-  .controller('inboxListSubheaderController', function($state, $stateParams,
-                                                       inboxSelectionService, inboxJmapItemService,
-                                                       _, inboxMailboxesService, inboxPlugins) {
+  .controller('inboxListSubheaderController', inboxListSubheaderController)
+
+  function inboxListSubheaderController(
+    $state,
+    $stateParams,
+    inboxSelectionService,
+    inboxJmapItemService,
+    _,
+    inboxMailboxesService,
+    inboxPlugins,
+    watchDynamicTranslatedValue
+  ) {
     var self = this,
         account = $stateParams.account,
         context = $stateParams.context,
@@ -707,6 +726,7 @@ angular.module('linagora.esn.unifiedinbox')
     self.isSelecting = inboxSelectionService.isSelecting;
     self.getSelectedItems = inboxSelectionService.getSelectedItems;
     self.unselectAllItems = inboxSelectionService.unselectAllItems;
+    self.selectedItems = {};
 
     ['markAsUnread', 'markAsRead', 'unmarkAsFlagged', 'markAsFlagged', 'moveToTrash', 'moveToSpam', 'unSpam'].forEach(function(action) {
       self[action] = function() {
@@ -715,6 +735,7 @@ angular.module('linagora.esn.unifiedinbox')
       };
     });
 
+    watchDynamicTranslatedValue(self.selectedItems, 'items', self.getSelectedItems);
     self.move = function() {
       $state.go('.move', { selection: true });
     };
@@ -749,4 +770,4 @@ angular.module('linagora.esn.unifiedinbox')
     self.canUnSpamMessages = function() {
       return _canActionBeDone(inboxMailboxesService.canUnSpamMessages);
     };
-  });
+  };

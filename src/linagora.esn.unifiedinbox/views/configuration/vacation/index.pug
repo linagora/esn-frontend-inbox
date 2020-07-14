@@ -7,8 +7,8 @@ sub-header
   .inbox-notification(ng-if="::(vacation.loadedSuccessfully && vacation.isEnabled && !vacation.isActivated)")
     i.inbox-notification-icon.mdi.mdi-timer
     .inbox-notification-message
-      span(ng-if="::vacation.fromDate.isAfter(moment())") {{ 'Your vacation responder will be activated on %s' | translate }} {{ ::vacation.fromDate.toDate() | esnDatetime:'mediumDate time' }}
-      span(ng-if="::vacation.toDate.isBefore(moment())") {{ 'Your vacation responder stopped on %s' | translate }} {{ ::vacation.toDate.toDate() | esnDatetime:'mediumDate time' }}
+      span(ng-if="::vacation.fromDate.isAfter(moment())") {{ 'Your vacation responder will be activated on %s' | translate:ctrl.vacationDate }}
+      span(ng-if="::vacation.toDate.isBefore(moment())") {{ 'Your vacation responder stopped on %s' | translate:ctrl.vacationDate }}
 
   .inbox-notification.error(ng-if="::(vacation.loadedSuccessfully === false)")
     i.inbox-notification-icon.mdi.mdi-alert-outline
