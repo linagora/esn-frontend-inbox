@@ -1,4 +1,4 @@
-(function() {
+(function(angular) {
   'use strict';
 
   angular.module('linagora.esn.unifiedinbox')
@@ -20,4 +20,4 @@
       READ_AND_UPDATE: ['l', 'r', 'w'],
       ORGANIZE: ['l', 'r', 'w', 'i', 'e', 't']
     });
-})();
+})(angular);

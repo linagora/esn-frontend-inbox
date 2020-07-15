@@ -1,10 +1,13 @@
-(function() {
+const _ = require('lodash');
+require('../../services/user-quota/user-quota-service.js');
+
+(function(angular) {
   'use strict';
 
   angular.module('linagora.esn.unifiedinbox')
     .controller('inboxSidebarUserQuotaController', inboxSidebarUserQuotaController);
 
-  function inboxSidebarUserQuotaController($scope, $q, _, inboxUserQuotaService, bytesFilter, esnI18nService) {
+  function inboxSidebarUserQuotaController($scope, $q, inboxUserQuotaService, bytesFilter, esnI18nService) {
     var self = this;
 
     self.$onInit = $onInit;
@@ -38,4 +41,4 @@
     }
 
   }
-})();
+})(angular);

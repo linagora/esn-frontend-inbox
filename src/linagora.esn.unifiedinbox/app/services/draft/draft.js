@@ -1,9 +1,16 @@
-(function() {
+const _ = require('lodash');
+require('../../services/email-body/email-body.js');
+require('../../services.js');
+require('../../services/jmap-helper/jmap-helper.js');
+require('../../services/config/config.js');
+require('../../constants.js');
+
+(function(angular) {
   'use strict';
 
   angular.module('linagora.esn.unifiedinbox')
 
-    .factory('InboxDraft', function($rootScope, $q, _, emailBodyService, asyncJmapAction, inboxJmapHelper,
+    .factory('InboxDraft', function($rootScope, $q, emailBodyService, asyncJmapAction, inboxJmapHelper,
                                     waitUntilMessageIsComplete, inboxConfig, gracePeriodService,
                                     INBOX_EVENTS, ATTACHMENTS_ATTRIBUTES) {
       function InboxDraft(original) {
@@ -126,4 +133,4 @@
 
     });
 
-})();
+})(angular);

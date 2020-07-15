@@ -1,4 +1,4 @@
-(function() {
+(function(angular) {
   'use strict';
 
   angular.module('linagora.esn.unifiedinbox')
@@ -42,4 +42,4 @@
         appendIn: 'MOVE_TO'
       }
     });
-})();
+})(angular);

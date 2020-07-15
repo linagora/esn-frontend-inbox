@@ -1,9 +1,14 @@
-(function() {
+const _ = require('lodash');
+require('../jmap-client-wrapper/jmap-client-wrapper.service.js');
+require('../../services.js');
+require('../../constants.js');
+
+(function(angular) {
   'use strict';
 
   angular.module('linagora.esn.unifiedinbox')
 
-    .run(function(limitToFilter, jmapDraft, inboxMailboxesCache, _, INBOX_DISPLAY_NAME_SIZE) {
+    .run(function(limitToFilter, jmapDraft, inboxMailboxesCache, INBOX_DISPLAY_NAME_SIZE) {
       function getMailboxDescendants(mailboxId) {
         var descendants = [],
             toScanMailboxIds = [mailboxId],
@@ -51,4 +56,4 @@
 
     });
 
-})();
+})(angular);

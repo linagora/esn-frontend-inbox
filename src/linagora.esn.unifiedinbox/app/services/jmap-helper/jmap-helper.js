@@ -1,9 +1,16 @@
-(function() {
+const _ = require('lodash');
+require('../jmap-client-wrapper/jmap-client-wrapper.service.js');
+require('../email-body/email-body.js');
+require('../with-jmap-client/with-jmap-client.js');
+require('../identities/inbox-identities.service.js');
+require('../../constants.js');
+
+(function(angular) {
   'use strict';
 
   angular.module('linagora.esn.unifiedinbox')
 
-    .factory('inboxJmapHelper', function($q, jmapDraft, emailBodyService, withJmapClient, inboxIdentitiesService, _, JMAP_GET_MESSAGES_VIEW) {
+    .factory('inboxJmapHelper', function($q, jmapDraft, emailBodyService, withJmapClient, inboxIdentitiesService, JMAP_GET_MESSAGES_VIEW) {
       return {
         getMessageById: getMessageById,
         toOutboundMessage: toOutboundMessage
@@ -56,4 +63,4 @@
       }
     });
 
-})();
+})(angular);

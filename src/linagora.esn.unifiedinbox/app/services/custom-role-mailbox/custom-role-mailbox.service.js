@@ -1,9 +1,11 @@
+const _ = require('lodash');
+
 (function(angular) {
   'use strict';
 
   angular.module('linagora.esn.unifiedinbox')
 
-    .factory('inboxCustomRoleMailboxService', function(_) {
+    .factory('inboxCustomRoleMailboxService', function() {
       var customMailboxes = [];
 
       return {

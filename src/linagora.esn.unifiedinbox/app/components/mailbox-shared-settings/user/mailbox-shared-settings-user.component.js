@@ -1,4 +1,4 @@
-(function() {
+(function(angular) {
   'use strict';
 
   angular.module('linagora.esn.unifiedinbox')
@@ -13,4 +13,4 @@
       controllerAs: 'ctrl',
       template: require("./mailbox-shared-settings-user.pug")
     });
-})();
+})(angular);

@@ -1,4 +1,7 @@
-(function() {
+require('../../../services/jmap-item/jmap-item-service.js');
+require('../../../services/mailboxes/shared-mailboxes.js');
+
+(function(angular) {
   'use strict';
 
   angular.module('linagora.esn.unifiedinbox')
@@ -33,4 +36,4 @@
       return inboxSharedMailboxesService.isShareableMailbox(mailbox);
     }
   }
-})();
+})(angular);

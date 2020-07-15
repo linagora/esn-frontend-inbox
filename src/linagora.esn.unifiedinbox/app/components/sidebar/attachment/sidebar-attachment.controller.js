@@ -1,4 +1,6 @@
-(function() {
+require('../../../constants.js');
+
+(function(angular) {
   'use strict';
 
   angular.module('linagora.esn.unifiedinbox')
@@ -8,4 +10,4 @@
       this.mailbox = $stateParams.context;
       this.providerType = PROVIDER_TYPES.JMAP;
     }
-})();
+})(angular);

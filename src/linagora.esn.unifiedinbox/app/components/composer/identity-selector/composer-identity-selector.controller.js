@@ -1,10 +1,13 @@
-(function() {
+const _ = require('lodash');
+require('../../../services/identities/inbox-identities.service.js');
+
+(function(angular) {
   'use strict';
 
   angular.module('linagora.esn.unifiedinbox')
     .controller('inboxComposerIdentitySelectorController', inboxComposerIdentitySelectorController);
 
-  function inboxComposerIdentitySelectorController(_, inboxIdentitiesService) {
+  function inboxComposerIdentitySelectorController(inboxIdentitiesService) {
     var self = this;
 
     self.$onInit = $onInit;
@@ -31,4 +34,4 @@
       return identity.name + ' <' + identity.email + '>';
     }
   }
-})();
+})(angular);

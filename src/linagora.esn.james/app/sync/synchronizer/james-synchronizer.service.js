@@ -1,3 +1,5 @@
+require('./james-group-synchronizer.service.js');
+
 (function(angular) {
   'use strict';
 

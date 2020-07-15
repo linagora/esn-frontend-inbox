@@ -1,3 +1,6 @@
+require('../../services/attachment-provider-registry/attachment-provider-registry.service.js');
+require('../../services/attachment-jmap/attachment-jmap.constants.js');
+
 (function(angular) {
   'use strict';
 

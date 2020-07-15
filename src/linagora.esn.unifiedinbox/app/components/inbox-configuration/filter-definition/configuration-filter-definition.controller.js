@@ -1,3 +1,8 @@
+const _ = require('lodash');
+require('../../../services/mailboxes/mailboxes-service.js');
+require('../../../services/mailboxes-filter/mailboxes-filter-service.js');
+require('../../../services/mailboxes-filter/mailboxes-filter-service.constants.js');
+
 (function(angular) {
   'use strict';
 
@@ -6,7 +11,6 @@
 
   function inboxConfigurationFilterDefinitionController(
     $state,
-    _,
     inboxMailboxesService,
     inboxMailboxesFilterService,
     esnI18nService,

@@ -1,4 +1,4 @@
-(function() {
+(function(angular) {
   'use strict';
 
   angular
@@ -7,4 +7,4 @@
       template: require("./sidebar-attachment-button.pug")
     });
 
-})();
+})(angular);

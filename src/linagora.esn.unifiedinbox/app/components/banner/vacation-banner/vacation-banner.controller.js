@@ -1,4 +1,7 @@
-(function() {
+require('../../../services/jmap-item/jmap-item-service.js');
+require('../../../constants.js');
+
+(function(angular) {
   'use strict';
 
   angular.module('linagora.esn.unifiedinbox')
@@ -32,4 +35,4 @@
       $rootScope.$on(INBOX_EVENTS.VACATION_STATUS, setVacationStatus);
     });
 
-})();
+})(angular);

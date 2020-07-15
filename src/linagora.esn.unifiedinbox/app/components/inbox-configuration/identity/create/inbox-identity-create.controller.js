@@ -1,3 +1,6 @@
+require('../../../../services/identities/inbox-identities.service.js');
+require('../../identities/inbox-identities.constants.js');
+
 (function(angular) {
   'use strict';
 

@@ -1,4 +1,4 @@
-(function() {
+(function(angular) {
   'use strict';
 
   angular.module('linagora.esn.james')
@@ -24,4 +24,4 @@
       }
     })
     .constant('JAMES_MODULE_NAME', 'linagora.esn.james');
-})();
+})(angular);

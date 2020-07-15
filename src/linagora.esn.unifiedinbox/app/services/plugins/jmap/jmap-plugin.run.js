@@ -1,9 +1,14 @@
-(function() {
+const _ = require('lodash');
+require('../../mailboxes/mailboxes-service.js');
+require('../plugins.js');
+require('../../../constants.js');
+
+(function(angular) {
   'use strict';
 
   angular.module('linagora.esn.unifiedinbox')
 
-    .run(function($q, inboxMailboxesService, inboxPlugins, _, PROVIDER_TYPES) {
+    .run(function($q, inboxMailboxesService, inboxPlugins, PROVIDER_TYPES) {
       inboxPlugins.add({
         type: PROVIDER_TYPES.JMAP,
         contextSupportsAttachments: _.constant($q.when(true)),
@@ -29,4 +34,4 @@
       $templateCache.put('/unifiedinbox/app/services/plugins/jmap/jmap-empty-message.html', require('./jmap-empty-message.pug'));
       $templateCache.put('/unifiedinbox/app/services/plugins/jmap/jmap-empty-message-custom-folder.html', require('./jmap-empty-message-custom-folder.pug'));
     })
-})();
+})(angular);

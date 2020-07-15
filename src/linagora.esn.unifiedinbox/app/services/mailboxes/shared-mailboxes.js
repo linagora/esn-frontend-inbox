@@ -1,9 +1,14 @@
-(function() {
+const _ = require('lodash');
+require('../config/config.js');
+require('../../constants.js');
+require('./shared-mailboxes.constants.js');
+
+(function(angular) {
   'use strict';
 
   angular.module('linagora.esn.unifiedinbox')
 
-    .service('inboxSharedMailboxesService', function($q, _, inboxConfig, esnUserConfigurationService,
+    .service('inboxSharedMailboxesService', function($q, inboxConfig, esnUserConfigurationService,
                                                      INBOX_MODULE_NAME, INBOX_HIDDEN_SHAREDMAILBOXES_CONFIG_KEY, INBOX_ROLE_NAMESPACE_TYPES,
                                                      INBOX_MAILBOXES_NON_SHAREABLE, INBOX_DEFAULT_FOLDERS_SHARING_CONFIG, INBOX_FOLDERS_SHARING_CONFIG_KEY) {
       var hiddenSharedMaiboxesConfig;
@@ -100,4 +105,4 @@
       };
     });
 
-})();
+})(angular);

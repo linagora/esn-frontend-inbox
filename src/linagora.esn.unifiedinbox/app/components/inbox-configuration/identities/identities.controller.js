@@ -1,4 +1,7 @@
-(function() {
+require('../../../services/identities/inbox-identities.service.js');
+require('./inbox-identities.constants.js');
+
+(function(angular) {
   'use strict';
 
   angular.module('linagora.esn.unifiedinbox')
@@ -52,4 +55,4 @@
         });
       }
     });
-})();
+})(angular);

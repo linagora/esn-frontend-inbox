@@ -1,3 +1,5 @@
+require('../common/inbox-restangular.service.js');
+
 (function(angular) {
   'use strict';
 

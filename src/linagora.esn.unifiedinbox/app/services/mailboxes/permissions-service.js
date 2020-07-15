@@ -1,9 +1,13 @@
-(function() {
+const _ = require('lodash');
+require('./mailboxes-service.js');
+require('./permissions-service.constants.js');
+
+(function(angular) {
   'use strict';
 
   angular.module('linagora.esn.unifiedinbox')
 
-    .service('inboxSharedMailboxesPermissionsService', function($q, _, inboxMailboxesService,
+    .service('inboxSharedMailboxesPermissionsService', function($q, inboxMailboxesService,
                                                                 INBOX_PERSONAL_MAILBOX_NAMESPACE_TYPE, INBOX_MAILBOX_SHARING_ROLES, INBOX_MAILBOX_SHARING_PERMISSIONS) {
 
       var mapOfRolesByPermission = buildMapOfRolesIndexedByPermissions();
@@ -115,4 +119,4 @@
       }
     });
 
-})();
+})(angular);

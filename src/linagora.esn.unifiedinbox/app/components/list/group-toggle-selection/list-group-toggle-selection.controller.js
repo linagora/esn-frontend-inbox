@@ -1,9 +1,13 @@
-(function() {
+const _ = require('lodash');
+require('../../../services/selection/selection.service.js');
+require('../../../services/filtered-list/filtered-list.js');
+
+(function(angular) {
   'use strict';
 
   angular.module('linagora.esn.unifiedinbox')
 
-    .controller('inboxListGroupToggleSelectionController', function(inboxSelectionService, inboxFilteredList, _) {
+    .controller('inboxListGroupToggleSelectionController', function(inboxSelectionService, inboxFilteredList) {
       var self = this;
 
       self.toggleSelection = toggleSelection;
@@ -33,4 +37,4 @@
       }
     });
 
-})();
+})(angular);

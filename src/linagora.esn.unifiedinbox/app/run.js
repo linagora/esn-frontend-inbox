@@ -1,3 +1,9 @@
+require('./services/config/config.js');
+require('./services/hook/email-composing-hook.service.js');
+require('./services.js');
+require('./providers.js');
+require('./constants.js');
+
 (function(angular) {
   'use strict';
 

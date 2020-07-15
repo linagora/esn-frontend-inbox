@@ -1,3 +1,5 @@
+require('../inbox-config-form.constants.js');
+
 (function(angular) {
   'use strict';
 

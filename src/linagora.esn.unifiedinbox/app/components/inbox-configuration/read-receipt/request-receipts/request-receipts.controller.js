@@ -1,9 +1,12 @@
-(function() {
+const _ = require('lodash');
+require('../../../../services/request-receipts/request-receipts-service.js');
+
+(function(angular) {
   'use strict';
 
   angular.module('linagora.esn.unifiedinbox')
 
-    .controller('inboxRequestReadReceiptsController', function(_, inboxRequestReceiptsService) {
+    .controller('inboxRequestReadReceiptsController', function(inboxRequestReceiptsService) {
       var self = this;
 
       self.$onInit = $onInit;
@@ -35,4 +38,4 @@
 
     });
 
-})();
+})(angular);

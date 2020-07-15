@@ -1,3 +1,6 @@
+require('../../providers.js');
+require('../../search/provider/search-submit.service.js');
+
 (function(angular) {
   'use strict';
 

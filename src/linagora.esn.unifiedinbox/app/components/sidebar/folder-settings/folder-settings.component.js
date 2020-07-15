@@ -1,4 +1,6 @@
-(function() {
+const angular = require("esn-frontend-common-libs/src/angular-common");
+
+(function(angular) {
 'use strict';
 
   angular.module('linagora.esn.unifiedinbox')
@@ -13,4 +15,4 @@
       controllerAs: 'ctrl',
       controller: 'inboxFolderSettingsController'
     });
-})();
+})(angular);

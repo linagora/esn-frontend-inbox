@@ -1,4 +1,8 @@
-(function() {
+const _ = require('lodash');
+require('../filtering/filtering-service.js');
+require('../../constants.js');
+
+(function(angular) {
   'use strict';
 
   angular.module('linagora.esn.unifiedinbox').factory('inboxFilteredList', inboxFilteredList);
@@ -8,7 +12,6 @@
     $q,
     filterFilter,
     inboxFilteringService,
-    _,
     INBOX_EVENTS, VIRTUAL_SCROLL_DISTANCE
   ) {
     var items = [];
@@ -213,4 +216,4 @@
       });
     }
   }
-})();
+})(angular);

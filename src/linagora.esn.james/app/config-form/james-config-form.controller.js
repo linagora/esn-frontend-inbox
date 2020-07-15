@@ -1,3 +1,7 @@
+require('../quota/james-quota-helpers.service.js');
+require('../common/james-api-client.service.js');
+
+
 (function(angular) {
   'use strict';
 

@@ -1,3 +1,5 @@
+require('./controllers.js');
+
 (function(angular) {
   'use strict';
 

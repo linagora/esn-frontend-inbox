@@ -1,4 +1,7 @@
-(function() {
+require('../../../services/jmap-item/jmap-item-service.js');
+require('../../../services.js');
+
+(function(angular) {
   'use strict';
 
   angular.module('linagora.esn.unifiedinbox')
@@ -26,4 +29,4 @@
       }
     });
 
-})();
+})(angular);

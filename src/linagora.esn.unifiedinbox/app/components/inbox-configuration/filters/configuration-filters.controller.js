@@ -1,3 +1,6 @@
+const _ = require('lodash');
+require('../../../services/mailboxes-filter/mailboxes-filter-service.js');
+
 (function(angular) {
   'use strict';
 
@@ -6,7 +9,6 @@
 
   function inboxConfigurationFiltersController(
     $scope,
-    _,
     inboxMailboxesFilterService,
     dragulaService
   ) {

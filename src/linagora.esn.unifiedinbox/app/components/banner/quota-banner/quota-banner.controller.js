@@ -1,4 +1,6 @@
-(function() {
+require('../../../services/user-quota/user-quota-service.js');
+
+(function(angular) {
   'use strict';
 
   angular.module('linagora.esn.unifiedinbox')
@@ -19,4 +21,4 @@
 
     });
 
-})();
+})(angular);

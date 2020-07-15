@@ -1,4 +1,6 @@
-(function() {
+require('./special-mailboxes.constants.js');
+
+(function(angular) {
   'use strict';
 
   angular.module('linagora.esn.unifiedinbox')
@@ -7,4 +9,4 @@
       inboxSpecialMailboxes.add(INBOX_ALL_MAIL_MAILBOX);
     });
 
-})();
+})(angular);

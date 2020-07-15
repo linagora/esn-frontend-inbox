@@ -1,11 +1,24 @@
-(function() {
+const _ = require('lodash');
+require('../new-composer/new-composer.js');
+require('../../services.js');
+require('../with-jmap-client/with-jmap-client.js');
+require('../jmap-client-wrapper/jmap-client-wrapper.service.js');
+require('../mailboxes/mailboxes-service.js');
+require('../selection/selection.service.js');
+require('../../services.js');
+require('../../constants.js');
+require('../filtered-list/filtered-list.js');
+require('../config/config.js');
+
+
+(function(angular) {
   'use strict';
 
   angular.module('linagora.esn.unifiedinbox')
 
     .service('inboxJmapItemService', function($q, $rootScope, session, newComposerService, emailSendingService,
                                               withJmapClient,
-                                              jmapDraft, inboxMailboxesService, infiniteListService, inboxSelectionService, asyncJmapAction, notificationFactory, _, esnI18nService,
+                                              jmapDraft, inboxMailboxesService, infiniteListService, inboxSelectionService, asyncJmapAction, notificationFactory, esnI18nService,
                                               INBOX_EVENTS, INBOX_DISPLAY_NAME_SIZE, inboxFilteredList, inboxConfig, uuid4, INBOX_DEFAULT_NUMBER_ITEMS_PER_PAGE_ON_BULK_READ_OPERATIONS,
                                               INBOX_DEFAULT_NUMBER_ITEMS_PER_PAGE_ON_BULK_DELETE_OPERATIONS, INBOX_DEFAULT_NUMBER_ITEMS_PER_PAGE_ON_BULK_UPDATE_OPERATIONS) {
 
@@ -417,4 +430,4 @@
       }
     });
 
-})();
+})(angular);

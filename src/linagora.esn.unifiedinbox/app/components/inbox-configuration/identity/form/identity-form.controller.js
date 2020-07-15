@@ -1,10 +1,13 @@
-(function() {
+const _ = require('lodash');
+require('../../../../services/identities/inbox-users-identities-api-client.service.js');
+require('../../../../constants.js');
+
+(function(angular) {
   'use strict';
 
   angular.module('linagora.esn.unifiedinbox')
 
     .controller('inboxIdentityFormController', function(
-      _,
       $scope,
       esnI18nService,
       inboxUsersIdentitiesClient,
@@ -56,4 +59,4 @@
       }
     });
 
-})();
+})(angular);

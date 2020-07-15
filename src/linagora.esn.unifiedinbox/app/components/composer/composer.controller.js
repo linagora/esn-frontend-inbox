@@ -1,11 +1,21 @@
-(function() {
+const _ = require('lodash');
+require('../../constants.js');
+require('../../services.js');
+require('../../services/request-receipts/request-receipts-service.js');
+require('../../services/email-body/email-body.js');
+require('../../services/attachment-upload/inbox-attachment-upload.service.js');
+require('../../services/draft/draft.js');
+require('../../services/attachment-provider-registry/attachment-provider-registry.service.js');
+require('../../services/hook/email-composing-hook.service.js');
+require('../../services/attachment-jmap/attachment-jmap.constants.js');
+
+(function(angular) {
   'use strict';
 
   angular.module('linagora.esn.unifiedinbox')
 
     .controller('inboxComposerController', function(
       $q,
-      _,
       notificationFactory,
       emailSendingService,
       inboxRequestReceiptsService,
@@ -204,4 +214,4 @@
       }
     });
 
-})();
+})(angular);

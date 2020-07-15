@@ -1,3 +1,5 @@
+require('../../../../services/mailboxes-filter/mailboxes-filter-service.js');
+
 (function(angular) {
   'use strict';
 
