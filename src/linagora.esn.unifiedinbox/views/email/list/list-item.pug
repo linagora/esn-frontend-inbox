@@ -34,7 +34,9 @@
             .indicators.esn-flex-noshrink.visible-xl
               ul.actions.flex-vertical-centered
                 li.action-item
-                  i.inbox-message-indicators(dynamic-directive='inbox-message-indicators')
+                  i.inbox-message-indicators
+                    cal-inbox-invitation-message-indicator(ng-if="ctrl.shouldDisplayCalendarInvitationMessageIndicator")
+                    cal-inbox-resource-management-indicator(ng-if="ctrl.shouldDisplayCalendarResourceManagementIndicator")
                   i.flag-icon.mdi.mdi-paperclip(ng-if='item.hasAttachment', title="{{ 'Attachments' | translate }}")
             .date-container
             span {{ item.date | inboxItemDate }}

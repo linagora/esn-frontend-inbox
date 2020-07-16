@@ -430,7 +430,12 @@ require('../services.js');
     .directive('email', function (inboxJmapItemService, navigateTo) {
       return {
         restrict: 'E',
-        controller: function ($scope) {
+        controller: /* @ngInject */ function (
+          $scope,
+          INVITATION_MESSAGE_HEADERS,
+          X_OPENPAAS_CAL_HEADERS,
+          X_OPENPAAS_CAL_VALUES
+        ) {
           ['reply', 'replyAll', 'forward'].forEach(function (action) {
             this[action] = function () {
               inboxJmapItemService[action]($scope.email);
@@ -446,6 +451,18 @@ require('../services.js');
 
           this.download = function () {
             inboxJmapItemService.downloadEML($scope.email).then(navigateTo);
+          };
+
+          this.shouldInjectCalendarInvitationMessageBlueBar = function () {
+            return $scope.email &&
+              $scope.email.headers &&
+              INVITATION_MESSAGE_HEADERS.UID in $scope.email.headers;
+          };
+
+          this.shouldInjectCalendarResourceManagementBlueBar = function () {
+            return $scope.email &&
+              $scope.email.headers &&
+              $scope.email.headers[X_OPENPAAS_CAL_HEADERS.ACTION] === X_OPENPAAS_CAL_VALUES.RESOURCE_REQUEST;
           };
         },
         controllerAs: 'ctrl',
@@ -464,6 +481,17 @@ require('../services.js');
         scope: {
           item: '=',
           hiddenXl: '@'
+        },
+        controllerAs: 'ctrl',
+        controller: /* @ngInject */ function (
+          $scope,
+          INVITATION_MESSAGE_HEADERS,
+          X_OPENPAAS_CAL_HEADERS
+        ) {
+          var self = this;
+
+          self.shouldDisplayCalendarInvitationMessageIndicator = $scope.item.headers[INVITATION_MESSAGE_HEADERS.UID];
+          self.shouldDisplayCalendarResourceManagementIndicator = $scope.item.headers[X_OPENPAAS_CAL_HEADERS.ACTION];
         }
       };
     })
