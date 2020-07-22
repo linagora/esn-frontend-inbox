@@ -3,6 +3,7 @@
 
   angular.module('linagora.esn.unifiedinbox', [
     'restangular',
+    'ngTagsInput',
     'esn.router',
     'angularMoment',
     'esn.notification',
@@ -53,6 +54,9 @@
     'esn.shortcuts',
     'esn.promise',
     'esn.people',
+    'esn.actionList',
+    'esn.previous-page',
+    'esn.touchscreen-detector',
     'material.components.button',
     'material.components.menu',
     'material.components.icon',
@@ -109,6 +113,10 @@ require('esn-frontend-common-libs/src/frontend/js/modules/people/people.module.j
 require('esn-frontend-common-libs/src/frontend/js/modules/http.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/attachments-selector/attachments-selector.module.js');
 require('esn-frontend-common-libs/src/modules/linagora.esn.graceperiod/frontend/js/app.js');
+require('esn-frontend-common-libs/src/frontend/js/modules/action-list');
+require('esn-frontend-common-libs/src/frontend/js/modules/touchscreen-detector');
+require('esn-frontend-common-libs/src/frontend/js/modules/previous-page');
+
 
 require ('./components/attachment-alternative-uploader/attachment-alternative-uploader-modal.controller.js');
 require ('./components/attachment-alternative-uploader/attachment-alternative-uploader-modal.service.js');
