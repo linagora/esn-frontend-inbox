@@ -55,6 +55,7 @@
     'esn.promise',
     'esn.people',
     'esn.actionList',
+    'esn.previous-page',
     'esn.touchscreen-detector',
     'material.components.button',
     'material.components.menu',
@@ -114,6 +115,7 @@ require('esn-frontend-common-libs/src/frontend/js/modules/attachments-selector/a
 require('esn-frontend-common-libs/src/modules/linagora.esn.graceperiod/frontend/js/app.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/action-list');
 require('esn-frontend-common-libs/src/frontend/js/modules/touchscreen-detector');
+require('esn-frontend-common-libs/src/frontend/js/modules/previous-page');
 
 
 require ('./components/attachment-alternative-uploader/attachment-alternative-uploader-modal.controller.js');
