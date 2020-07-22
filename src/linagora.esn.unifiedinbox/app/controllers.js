@@ -2,7 +2,6 @@ const _ = require('lodash');
 const moment = require('moment');
 require('./providers.js');
 require('./services.js');
-require('./constants.js');
 require('./services/selection/selection.service.js');
 require('./services/mailboxes/mailboxes-service.js');
 require('./services/mailboxes/special-mailboxes.js');

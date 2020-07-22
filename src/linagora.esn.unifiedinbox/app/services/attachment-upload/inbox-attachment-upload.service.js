@@ -3,7 +3,6 @@ require('../attachment-provider-registry/attachment-provider-registry.service.js
 require('../../services/config/config.js');
 require('../../services/with-jmap-client/with-jmap-client.js');
 require('../../components/attachment-alternative-uploader/attachment-alternative-uploader-modal.service.js');
-require('../../constants.js');
 
 (function(angular) {
   'use strict';

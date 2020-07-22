@@ -4,7 +4,6 @@ require('../jmap-client-wrapper/jmap-client-wrapper.service.js');
 require('../../services.js');
 require('./special-mailboxes.js');
 require('./shared-mailboxes.js');
-require('../../constants.js');
 
 (function(angular) {
   'use strict';

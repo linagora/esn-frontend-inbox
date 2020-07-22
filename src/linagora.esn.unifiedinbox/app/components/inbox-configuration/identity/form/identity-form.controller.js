@@ -1,6 +1,5 @@
 const _ = require('lodash');
 require('../../../../services/identities/inbox-users-identities-api-client.service.js');
-require('../../../../constants.js');
 
 (function(angular) {
   'use strict';

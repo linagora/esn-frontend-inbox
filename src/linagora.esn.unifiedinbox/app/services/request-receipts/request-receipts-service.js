@@ -1,6 +1,5 @@
 const _ = require('lodash');
 require('../config/config.js');
-require('../../constants.js');
 require('./request-receipts.constants.js');
 
 (function(angular) {

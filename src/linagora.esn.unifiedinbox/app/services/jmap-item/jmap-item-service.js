@@ -6,7 +6,6 @@ require('../jmap-client-wrapper/jmap-client-wrapper.service.js');
 require('../mailboxes/mailboxes-service.js');
 require('../selection/selection.service.js');
 require('../../services.js');
-require('../../constants.js');
 require('../filtered-list/filtered-list.js');
 require('../config/config.js');
 
