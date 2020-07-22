@@ -244,11 +244,25 @@ module.exports = {
       },
       {
         test: /\.pug$/i,
-        exclude: /assets\/index\.pug$/,
+        exclude: [
+          /assets\/index\.pug$/,
+          /jmap-empty-message\.pug$/
+        ],
         use: [
+          {
+            loader: 'apply-loader',
+          },
           {
             loader: 'pug-loader',
             options: pugLoaderOptions
+          },
+        ],
+      },
+      {
+        test: /jmap-empty-message\.pug$/,
+        use: [
+          {
+            loader: 'pug-loader',
           },
         ],
       },
