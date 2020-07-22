@@ -1,12 +1,19 @@
 doctype html
-html
+html.loading
   head
     meta(charset='utf8')
     base(href=base)
     title OpenPaas
     meta(name="viewport", content="width=device-width, initial-scale=1")
     meta(name="theme-color", content="#0C7CD5")
+    style(type='text/css').
+      html.loading, html.loading body, html.loading body > #wrap {
+        height: 100%;
+        padding: 0;
+        margin: 0;
+      }
     script(src="/socket.io/socket.io.js")
 
-  body.container-fluid.ng-cloak(ng-app="esnApp", ng-controller="sessionInitESNController", device-detector, ng-class="{ 'grabbable': esnIsDragging }")
+  body.container-fluid(ng-app="esnApp", ng-controller="sessionInitESNController", device-detector, ng-class="{ 'grabbable': esnIsDragging }")
     #wrap(ng-include='session.template')
+      include ../src/app/app-loading.pug
