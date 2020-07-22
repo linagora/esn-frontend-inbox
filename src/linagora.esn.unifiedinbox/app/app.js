@@ -53,6 +53,7 @@
     'esn.shortcuts',
     'esn.promise',
     'esn.people',
+    'esn.actionList',
     'material.components.button',
     'material.components.menu',
     'material.components.icon',
@@ -109,6 +110,8 @@ require('esn-frontend-common-libs/src/frontend/js/modules/people/people.module.j
 require('esn-frontend-common-libs/src/frontend/js/modules/http.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/attachments-selector/attachments-selector.module.js');
 require('esn-frontend-common-libs/src/modules/linagora.esn.graceperiod/frontend/js/app.js');
+require('esn-frontend-common-libs/src/frontend/js/modules/action-list');
+
 
 require ('./components/attachment-alternative-uploader/attachment-alternative-uploader-modal.controller.js');
 require ('./components/attachment-alternative-uploader/attachment-alternative-uploader-modal.service.js');
