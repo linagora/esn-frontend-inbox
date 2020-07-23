@@ -9,7 +9,7 @@ require('./controllers.js');
 
       function stateOpeningListItem(state) {
         function toggleElementOpened(opening) {
-          return function($rootScope) {
+          return /* @ngInject */ function($rootScope) {
             $rootScope.inbox.list.isElementOpened = opening;
 
             if (opening) {
@@ -55,7 +55,7 @@ require('./controllers.js');
 
       function stateOpeningRightSidebar(state) {
         function toggleSidebarVisibility(visible) {
-          return function($rootScope) {
+          return /* @ngInject */ function($rootScope) {
             $rootScope.inbox.rightSidebar.isVisible = visible;
           };
         }
@@ -66,7 +66,7 @@ require('./controllers.js');
         return state;
       }
 
-      function isModuleActive($location, inboxConfig) {
+      function /* @ngInject */ isModuleActive($location, inboxConfig) {
         return inboxConfig('enabled', true).then(function(isEnabled) {
           if (!isEnabled) {
             $location.path('/');
