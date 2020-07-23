@@ -30,6 +30,7 @@ module.exports = {
   },
   plugins: [
     new webpack.IgnorePlugin({ resourceRegExp: /codemirror/ }), // for summernote
+    new webpack.IgnorePlugin({ resourceRegExp: /^\.\/locale$/, contextRegExp: /moment$/ }),
     new webpack.ProvidePlugin({
       jQuery: 'jquery',
       $: 'jquery',
