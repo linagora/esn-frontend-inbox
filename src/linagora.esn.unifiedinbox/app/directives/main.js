@@ -7,7 +7,6 @@ require('../services/email-body/email-body.js');
 require('../services/shortcuts/shortcuts.constants.js');
 require('../services/filtering/filtering-service.js');
 require('../services/plugins/plugins.js');
-require('../constants.js');
 require('../services.js');
 
 (function (angular) {

@@ -63,10 +63,12 @@
     'material.components.menuBar',
     'esn.attachments-selector',
     'linagora.esn.james',
+    'esn.inbox.libs',
     angularDragula(angular) // eslint-disable-line no-undef
   ]);
 })(angular);
 
+require('../../esn.inbox.libs/app/app.module.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/esn.router.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/notification.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/iframe-resizer-wrapper.js');
@@ -161,20 +163,6 @@ require ('./components/inbox-configuration/forwardings/subheader/inbox-forwardin
 require ('./components/inbox-configuration/forwardings/user/inbox-forwardings-user.component.js');
 require ('./components/inbox-configuration/forwardings/user/inbox-forwardings-user.controller.js');
 require ('./components/inbox-configuration/forwardings/user/inbox-forwardings-user.run.js');
-require ('./components/inbox-configuration/identities/identities.controller.js');
-require ('./components/inbox-configuration/identities/identities.js');
-require ('./components/inbox-configuration/identities/identities.run.js');
-require ('./components/inbox-configuration/identities/inbox-identities.constants.js');
-require ('./components/inbox-configuration/identities/subheader/identities-subheader.js');
-require ('./components/inbox-configuration/identities/tab/inbox-identites-tab.component.js');
-require ('./components/inbox-configuration/identity/create/inbox-identity-create.controller.js');
-require ('./components/inbox-configuration/identity/edit/inbox-identity-edit.controller.js');
-require ('./components/inbox-configuration/identity/form/identity-form.controller.js');
-require ('./components/inbox-configuration/identity/form/identity-form.js');
-require ('./components/inbox-configuration/identity/form/subheader/identity-form-subheader.js');
-require ('./components/inbox-configuration/identity/identity.controller.js');
-require ('./components/inbox-configuration/identity/identity.js');
-require ('./components/inbox-configuration/identity/remove/inbox-identity-remove.controller.js');
 require ('./components/inbox-configuration/read-receipt/read-receipt.component.js');
 require ('./components/inbox-configuration/read-receipt/read-receipt.controller.js');
 require ('./components/inbox-configuration/read-receipt/request-receipts/request-receipts.controller.js');
@@ -214,7 +202,6 @@ require ('./components/subheader/not-spam-button/subheader-not-spam-button.js');
 require ('./components/user-quota/user-quota.controller.js');
 require ('./components/user-quota/user-quota.js');
 require ('./config.js');
-require ('./constants.js');
 require ('./controllers.js');
 require ('./directives/attachment-drag-and-drop-handler.js');
 require ('./directives/dragula-disable-scroll-on.js');
@@ -250,7 +237,6 @@ require ('./services/attachment-jmap/attachment-jmap.run.js');
 require ('./services/attachment-jmap/attachment-jmap.service.js');
 require ('./services/attachment-provider-registry/attachment-provider-registry.service.js');
 require ('./services/attachment-upload/inbox-attachment-upload.service.js');
-require ('./services/common/inbox-restangular.service.js');
 require ('./services/common/inbox-utils.service.js');
 require ('./services/config/config.js');
 require ('./services/custom-role-mailbox/custom-role-mailbox.service.js');

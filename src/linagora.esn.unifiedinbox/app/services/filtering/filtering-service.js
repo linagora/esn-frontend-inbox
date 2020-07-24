@@ -1,7 +1,6 @@
 const _ = require('lodash');
 require('../mailboxes/mailboxes-service.js');
 require('../filtering/filters.js');
-require('../../constants.js');
 
 (function(angular) {
   'use strict';

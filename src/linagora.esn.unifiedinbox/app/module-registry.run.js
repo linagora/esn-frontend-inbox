@@ -1,5 +1,4 @@
 require('./providers.js');
-require('./constants.js');
 
 (function (angular) {
 

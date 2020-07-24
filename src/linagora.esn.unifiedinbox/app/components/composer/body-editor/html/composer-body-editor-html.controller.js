@@ -1,5 +1,4 @@
 const _ = require('lodash');
-require('../../../../constants.js');
 
 (function(angular) {
   'use strict';

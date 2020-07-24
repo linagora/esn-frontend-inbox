@@ -1,7 +1,7 @@
 (function(angular) {
   'use strict';
 
-  angular.module('linagora.esn.unifiedinbox')
+  angular.module('esn.inbox.libs')
 
     .constant('INBOX_MODULE_NAME', 'linagora.esn.unifiedinbox')
     .constant('MAILBOX_ROLE_ICONS_MAPPING', {

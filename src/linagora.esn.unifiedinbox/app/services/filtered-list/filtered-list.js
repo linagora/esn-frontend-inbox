@@ -1,6 +1,5 @@
 const _ = require('lodash');
 require('../filtering/filtering-service.js');
-require('../../constants.js');
 
 (function(angular) {
   'use strict';

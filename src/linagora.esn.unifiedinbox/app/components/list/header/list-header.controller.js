@@ -1,5 +1,4 @@
 require('../../../services/filtering/filtering-service.js');
-require('../../../constants.js');
 
 
 (function(angular) {

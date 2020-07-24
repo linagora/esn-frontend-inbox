@@ -1,6 +1,5 @@
 const _ = require('lodash');
 require('../config/config.js');
-require('../../constants.js');
 require('./shared-mailboxes.constants.js');
 
 (function(angular) {

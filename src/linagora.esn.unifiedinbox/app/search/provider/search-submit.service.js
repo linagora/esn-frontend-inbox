@@ -1,5 +1,4 @@
 require('../../services/filtered-list/filtered-list.js');
-require('../../constants.js');
 require('../../search/search.constants.js');
 
 (function(angular) {

@@ -1,5 +1,4 @@
 const _ = require('lodash');
-require('../../constants.js');
 require('../../services.js');
 require('../../services/request-receipts/request-receipts-service.js');
 require('../../services/email-body/email-body.js');

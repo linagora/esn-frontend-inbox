@@ -10,7 +10,6 @@ require('./services/email-body/email-body.js');
 require('./services/attachment-jmap/attachment-jmap.constants.js');
 require('./services/email-resolver/inbox-email-resolver.service.js');
 require('./services/jmap-client-provider/jmap-client-provider.js');
-require('./constants.js');
 
 (function (angular) {
   'use strict';

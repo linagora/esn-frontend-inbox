@@ -3,7 +3,6 @@ require('../../services/email-body/email-body.js');
 require('../../services.js');
 require('../../services/jmap-helper/jmap-helper.js');
 require('../../services/config/config.js');
-require('../../constants.js');
 
 (function(angular) {
   'use strict';
