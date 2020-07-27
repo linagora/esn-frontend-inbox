@@ -2,6 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
 
 const commonLibsPath = path.resolve(__dirname, 'node_modules', 'esn-frontend-common-libs');
 const angularCommon = path.resolve(__dirname, 'node_modules', 'esn-frontend-common-libs', 'src', 'angular-common.js');
@@ -29,6 +30,7 @@ module.exports = {
     },
   },
   plugins: [
+    new Dotenv({ systemvars: true }),
     new webpack.IgnorePlugin({ resourceRegExp: /codemirror/ }), // for summernote
     new webpack.IgnorePlugin({ resourceRegExp: /^\.\/locale$/, contextRegExp: /moment$/ }),
     new webpack.ProvidePlugin({
