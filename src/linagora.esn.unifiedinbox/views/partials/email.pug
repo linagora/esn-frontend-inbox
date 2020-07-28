@@ -22,7 +22,15 @@
           inbox-star(item='::email')
 
   .email-body
-    .inbox-message-info(ng-if="::email", dynamic-directive="inbox-message-info")
+    .inbox-message-info(ng-if="::email")
+      cal-inbox-invitation-message-blue-bar(
+        ng-if="ctrl.shouldInjectCalendarInvitationMessageBlueBar()",
+        message="email"
+      )
+      cal-inbox-resource-management-blue-bar(
+        ng-if="ctrl.shouldInjectCalendarResourceManagementBlueBar()",
+        message="email"
+      )
 
     .text-center(ng-if="!email.loaded", openpaas-logo-spinner, spinner-start-active="1", spinner-size="0.4")
 

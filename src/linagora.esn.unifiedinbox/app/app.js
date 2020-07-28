@@ -57,6 +57,7 @@
     'esn.actionList',
     'esn.previous-page',
     'esn.touchscreen-detector',
+    'esn.dropdownList',
     'material.components.button',
     'material.components.menu',
     'material.components.icon',
@@ -64,6 +65,7 @@
     'esn.attachments-selector',
     'linagora.esn.james',
     'esn.inbox.libs',
+    'esn.inbox-calendar',
     angularDragula(angular) // eslint-disable-line no-undef
   ]);
 })(angular);
@@ -118,7 +120,9 @@ require('esn-frontend-common-libs/src/modules/linagora.esn.graceperiod/frontend/
 require('esn-frontend-common-libs/src/frontend/js/modules/action-list');
 require('esn-frontend-common-libs/src/frontend/js/modules/touchscreen-detector');
 require('esn-frontend-common-libs/src/frontend/js/modules/previous-page');
+require('esn-frontend-common-libs/src/frontend/js/modules/dropdown-list');
 
+require('esn-frontend-inbox-calendar/src/app/app.module.js');
 
 require ('./components/attachment-alternative-uploader/attachment-alternative-uploader-modal.controller.js');
 require ('./components/attachment-alternative-uploader/attachment-alternative-uploader-modal.service.js');

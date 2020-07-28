@@ -17,6 +17,7 @@
     "angularjs-dragula": "2.0.0",
     "dompurify": "1.0.9",
     "esn-frontend-common-libs": "github:openpaas-suite/esn-frontend-common-libs#main",
+    "esn-frontend-inbox-calendar": "github:openpaas-suite/esn-frontend-inbox-calendar#main",
     "jmap-draft-client": "^0.1.2",
     "sanitize-html": "github:linagora/sanitize-html#c89d4ebe09da48296f33cc80ddcc02e11d853265",
     "ui-select": "0.19.8"

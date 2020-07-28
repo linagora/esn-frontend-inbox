@@ -69,7 +69,11 @@ require('../services/mailboxes/mailboxes-service.js');
     ) {
       return {
         restrict: 'E',
-        controller: function ($scope) {
+        controller: /* @ngInject */ function (
+          $scope,
+          INVITATION_MESSAGE_HEADERS,
+          X_OPENPAAS_CAL_HEADERS
+        ) {
           var self = this,
             context = $stateParams.context;
 
@@ -107,6 +111,9 @@ require('../services/mailboxes/mailboxes-service.js');
             markAsRead: self.markAsRead,
             moveToTrash: self.moveToTrash
           });
+
+          self.shouldDisplayCalendarInvitationMessageIndicator = $scope.item.headers[INVITATION_MESSAGE_HEADERS.UID];
+          self.shouldDisplayCalendarResourceManagementIndicator = $scope.item.headers[X_OPENPAAS_CAL_HEADERS.ACTION];
 
           function _canActionBeDone(checkFunction) {
             var message = $scope.email;
@@ -146,12 +153,19 @@ require('../services/mailboxes/mailboxes-service.js');
       inboxSwipeHelper, inboxSelectionService) {
       return {
         restrict: 'E',
-        controller: function ($scope) {
+        controller: /* @ngInject */ function (
+          $scope,
+          INVITATION_MESSAGE_HEADERS,
+          X_OPENPAAS_CAL_HEADERS
+        ) {
           var self = this;
 
           $scope.mailbox = $stateParams.mailbox || ($scope.mailbox && $scope.mailbox.id) || ($scope.item && _.first($scope.item.lastEmail.mailboxIds));
           // need this scope value for action list
           $scope.thread = $scope.item;
+
+          self.shouldDisplayCalendarInvitationMessageIndicator = $scope.item.headers[INVITATION_MESSAGE_HEADERS.UID];
+          self.shouldDisplayCalendarResourceManagementIndicator = $scope.item.headers[X_OPENPAAS_CAL_HEADERS.ACTION];
 
           self.select = function (item, $event) {
             $event.stopPropagation();
