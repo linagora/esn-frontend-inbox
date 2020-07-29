@@ -4,7 +4,7 @@ const _ = require('lodash');
   'use strict';
 
   /* global sanitizeHtml: false */
-  angular.module('linagora.esn.unifiedinbox').filter('sanitizeStylisedHtml', function($sce) {
+  angular.module('esn.inbox.libs').filter('sanitizeStylisedHtml', function($sce) {
     return function(dirty) {
       // sanitize-html's default options are available here: https://www.npmjs.com/package/sanitize-html#what-are-the-default-options
       return $sce.trustAsHtml(sanitizeHtml(dirty, {
