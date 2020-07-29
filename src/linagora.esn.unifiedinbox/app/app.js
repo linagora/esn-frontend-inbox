@@ -218,7 +218,6 @@ require ('./filters.js');
 require ('./filters/filter-descendant-mailboxes.js');
 require ('./filters/item-date.js');
 require ('./filters/quote/quote.js');
-require ('./filters/sanitize-stylised-html-filter.js');
 require ('./filters/visible-shared-mailboxes.js');
 require ('./module-registry.run.js');
 require ('./providers.js');
