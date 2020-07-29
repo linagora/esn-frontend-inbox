@@ -121,6 +121,7 @@ require('esn-frontend-common-libs/src/frontend/js/modules/action-list');
 require('esn-frontend-common-libs/src/frontend/js/modules/touchscreen-detector');
 require('esn-frontend-common-libs/src/frontend/js/modules/previous-page');
 require('esn-frontend-common-libs/src/frontend/js/modules/dropdown-list');
+require('esn-frontend-common-libs/src/frontend/js/modules/box-overlay/box-overlay.module.js');
 
 require('esn-frontend-inbox-calendar/src/app/app.module.js');
 
