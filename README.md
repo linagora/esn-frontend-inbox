@@ -4,6 +4,8 @@ Webmail application for OpenPaaS
 
 ## Development
 
+### Configuration
+
 First, you want to ensure that the application grid component is provided with the necessary information about the apps via the environment variable `APP_GRID_ITEMS`:
 
 ```sh
@@ -31,6 +33,15 @@ The development server can also be used to serve minified SPA to check that ever
 
 ```sh
 OPENPAAS_URL=https://dev.open-paas.org npm run serve:prod
+```
+
+### Authentication
+
+Authentication is provided by a dedicated SPA [esn-frontend-login-app](https://github.com/OpenPaaS-Suite/esn-frontend-login) which is defined in the project `devDependencies`.
+In order to make it work with the webpack-dev-server launched by the `npm run server` command, you will have to generate it like this:
+
+```sh
+cd ./node_modules/esn-frontend-login && npm install && npm run build
 ```
 
 ## Build
