@@ -8,8 +8,7 @@
     "serve": "webpack-dev-server --watch --progress",
     "serve:prod": "webpack-dev-server --env=prod",
     "build:dev": "webpack",
-    "build:prod": "webpack --env=prod",
-    "postinstall": "cd ./node_modules/esn-frontend-login && npm install && npm run build"
+    "build:prod": "webpack --env=prod"
   },
   "author": "",
   "license": "AGPLv3",
