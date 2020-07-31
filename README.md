@@ -38,7 +38,7 @@ OPENPAAS_URL=https://dev.open-paas.org npm run serve:prod
 ### Authentication
 
 Authentication is provided by a dedicated SPA [esn-frontend-login-app](https://github.com/OpenPaaS-Suite/esn-frontend-login) which is defined in the project `devDependencies`.
-In order to make it work with the webpack-dev-server launched by the `npm run server` command, you will have to generate it like this:
+In order to make it work with the webpack-dev-server launched by the `npm run serve` command, you will have to generate it like this:
 
 ```sh
 cd ./node_modules/esn-frontend-login && npm install && npm run build
