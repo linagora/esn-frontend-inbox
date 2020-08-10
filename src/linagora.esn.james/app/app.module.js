@@ -33,6 +33,7 @@ require('esn-frontend-common-libs/src/frontend/js/modules/domain.js');
 
 require('./app.constants.js');
 require('./app.routes.js');
+require('./app.config.js');
 require('./app.run.js');
 require('./common/james-api-client.service.js');
 require('./common/james-restangular.service.js');
