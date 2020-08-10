@@ -8,7 +8,9 @@
       controller: 'inboxComposerController',
       bindings: {
         message: '<',
+        onSending: '&',
         onSend: '&',
+        onFail: '&',
         onSave: '&',
         onDiscard: '&',
         onHide: '&',

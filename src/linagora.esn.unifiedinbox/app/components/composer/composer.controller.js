@@ -8,6 +8,7 @@ require('../../services/attachment-provider-registry/attachment-provider-registr
 require('../../services/hook/email-composing-hook.service.js');
 require('../../services/attachment-jmap/attachment-jmap.constants.js');
 
+// TODO: Write tests for this (https://github.com/OpenPaaS-Suite/esn-frontend-mailto/issues/2)
 (function(angular) {
   'use strict';
 
@@ -134,6 +135,8 @@ require('../../services/attachment-jmap/attachment-jmap.constants.js');
             progressing: 'Your message is being sent...',
             success: 'Message sent',
             failure: function() {
+              if (typeof self.onFail === 'function') self.onFail();
+
               if (!Offline.state || Offline.state === 'down') {
                 return 'You have been disconnected. Please check if the message was sent before retrying';
               }
@@ -141,6 +144,8 @@ require('../../services/attachment-jmap/attachment-jmap.constants.js');
               return 'Your message cannot be sent';
             }
           }, function() {
+            if (typeof self.onSending === 'function') self.onSending();
+
             return waitUntilMessageIsComplete(self.message)
               .then(_quoteOriginalEmailIfNeeded)
               .then(emailSendingService.sendEmail.bind(emailSendingService, self.message));
