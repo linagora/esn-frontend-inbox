@@ -14,14 +14,6 @@ require('../services.js');
 
   angular.module('linagora.esn.unifiedinbox')
 
-    .directive('applicationMenuInbox', function (applicationMenuTemplateBuilder, INBOX_MODULE_METADATA) {
-      return {
-        retrict: 'E',
-        replace: true,
-        template: applicationMenuTemplateBuilder('/#/unifiedinbox', { url: INBOX_MODULE_METADATA.icon }, 'Inbox', 'core.modules.linagora.esn.unifiedinbox.enabled', INBOX_MODULE_METADATA.isDisplayedByDefault)
-      };
-    })
-
     .directive('newComposer', function ($timeout, newComposerService) {
       return {
         restrict: 'A',
