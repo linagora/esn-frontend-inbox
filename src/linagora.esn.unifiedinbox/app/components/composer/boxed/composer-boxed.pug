@@ -4,7 +4,9 @@ inbox-composer(
   message="email",
   on-hide="$hide()",
   on-show="$show()",
+  on-sending="onSending()",
   on-send="onSend()",
+  on-fail="onFail()"
   on-discard="onDiscard()",
   on-message-id-update="$setId($id)",
   on-title-update="$updateTitle($title)",
