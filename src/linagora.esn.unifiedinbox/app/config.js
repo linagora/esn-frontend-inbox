@@ -1,13 +1,15 @@
-(function(angular) {
- 'use strict';
+'use strict';
 
-  angular.module('linagora.esn.unifiedinbox')
+angular.module('linagora.esn.unifiedinbox')
+  .config(injectAttachmentsActionList)
+  .config(setDefaultIcon);
 
-    .config(function(dynamicDirectiveServiceProvider, $mdIconProvider) {
-      var attachmentDownloadAction = new dynamicDirectiveServiceProvider.DynamicDirective(true, 'attachment-download-action');
+function injectAttachmentsActionList(dynamicDirectiveServiceProvider) {
+  const attachmentDownloadAction = new dynamicDirectiveServiceProvider.DynamicDirective(true, 'attachment-download-action');
 
-      dynamicDirectiveServiceProvider.addInjection('attachments-action-list', attachmentDownloadAction);
+  dynamicDirectiveServiceProvider.addInjection('attachments-action-list', attachmentDownloadAction);
+}
 
-      $mdIconProvider.defaultIconSet('images/mdi/mdi.svg', 24);
-    });
-})(angular);
+function setDefaultIcon($mdIconProvider) {
+  $mdIconProvider.defaultIconSet('images/mdi/mdi.svg', 24);
+}
