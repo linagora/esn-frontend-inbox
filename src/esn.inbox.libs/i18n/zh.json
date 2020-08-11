@@ -1,0 +1,15 @@
+{
+  "Bcc": "密送",
+  "Cc": "抄送",
+  "Message sent": "消息已发送",
+  "My identity": "我的身份",
+  "Name or email address": "名字或邮箱地址",
+  "New message": "新消息",
+  "Reopen the composer": "重新打开编辑",
+  "Request a read receipt": "要求已读回执",
+  "You have been disconnected. Please check if the message was sent before retrying": "连接断开。请检查消息是否已发送，然后重试",
+  "Your device has lost Internet connection. Try later!": "您的设置断开了连接。请稍后重试！",
+  "Your email should have at least one recipient": "您的邮件需要至少一个收件人",
+  "Your message cannot be sent": "您的消息无法被发送",
+  "Your message is being sent...": "您的消息发送中…"
+}

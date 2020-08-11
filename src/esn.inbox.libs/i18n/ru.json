@@ -1,0 +1,15 @@
+{
+  "Bcc": "Bcc",
+  "Cc": "Cc",
+  "Message sent": "Сообщение отправлено",
+  "My identity": "Моя личность",
+  "Name or email address": "Имя или адрес электронной почты",
+  "New message": "Новое сообщение",
+  "Reopen the composer": "Открыть еще раз компоновщик",
+  "Request a read receipt": "Запросить подтверждение прочтения",
+  "You have been disconnected. Please check if the message was sent before retrying": "Вы были отключены. Перед повторной попыткой проверьте, было ли отправлено сообщение.",
+  "Your device has lost Internet connection. Try later!": "Ваше устройство потеряло подключение к Интернету. Попробуйте позже!",
+  "Your email should have at least one recipient": "В вашем письме должен быть хотя бы один получатель",
+  "Your message cannot be sent": "Ваше сообщение не может быть отправлено",
+  "Your message is being sent...": "Ваше сообщение отправляется..."
+}

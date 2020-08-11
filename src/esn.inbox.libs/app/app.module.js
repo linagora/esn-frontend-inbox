@@ -6,5 +6,6 @@ angular.module('esn.inbox.libs', [
 ]);
 
 require('esn-frontend-common-libs/src/frontend/js/modules/http.js');
+require('./app.config');
 require('./app.constants');
 require('./services/inbox-restangular.service');

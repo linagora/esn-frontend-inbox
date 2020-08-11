@@ -1,0 +1,15 @@
+{
+  "Bcc": "Cci",
+  "Cc": "Cc",
+  "Message sent": "Message envoyé",
+  "My identity": "Mon identité",
+  "Name or email address": "Nom ou adresse email",
+  "New message": "Nouveau message",
+  "Reopen the composer": "Réouvrir le compositeur",
+  "Request a read receipt": "Demander une confirmation de lecture",
+  "You have been disconnected. Please check if the message was sent before retrying": "Vous avez été déconnecté. Vérifiez si le message a été envoyé avant de réessayer",
+  "Your device has lost Internet connection. Try later!": "La connexion a été coupée. Veuillez réessayer plus tard!",
+  "Your email should have at least one recipient": "Votre courrier électronique devrait avoir au moins un destinataire",
+  "Your message cannot be sent": "Votre message ne peut pas être envoyé",
+  "Your message is being sent...": "Votre message est envoyé..."
+}
