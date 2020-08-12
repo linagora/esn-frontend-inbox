@@ -630,7 +630,7 @@ require('./services/jmap-client-wrapper/jmap-client-wrapper.service.js');
         return asyncAction({
           progressing: 'Please wait while your download is being prepared',
           success: 'Your download has started',
-          failure: esnI18nService.translate('Unable to download attachment %s', attachment.name)
+          failure: esnI18nService.translate('Unable to download attachment %s', { attachmentName: attachment.name })
         }, function () {
           return attachment.getSignedDownloadUrl().then(navigateTo);
         });

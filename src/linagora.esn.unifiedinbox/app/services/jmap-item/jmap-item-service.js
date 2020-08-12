@@ -90,8 +90,11 @@ require('../config/config.js');
 
         return asyncJmapAction({
           failure: items.length > 1 ?
-            esnI18nService.translate('Some items could not be moved to "%s"', mailbox.displayName) :
-            esnI18nService.translate('Cannot move "%s" to "%s"', items[0].subject, mailbox.displayName)
+            esnI18nService.translate('Some items could not be moved to "%s"', { mailboxName: mailbox.displayName }) :
+            esnI18nService.translate('Cannot move "%s" to "%s"', {
+              itemSubject: items[0].subject,
+              mailboxName: mailbox.displayName
+            })
         }, function(client) {
           return client.setMessages({
             update: _.mapValues(itemsById, _.constant({ mailboxIds: toMailboxIds }))
@@ -245,11 +248,11 @@ require('../config/config.js');
         }
         sendMDNRequestData[mdnRequestId] = {
           messageId: message.id,
-          subject: esnI18nService.translate('Read: %s', message.subject).toString(),
+          subject: esnI18nService.translate('Read: %s', { subject: message.subject }).toString(),
           textBody:
-            esnI18nService.translate('To: %s', message.from.email) + '\n' +
-            esnI18nService.translate('Subject: %s', message.subject || '') +
-            '\n' + esnI18nService.translate('Message was displayed on %s', new Date(Date.now()).toString()),
+            esnI18nService.translate('To: %s', { email: message.from.email }) + '\n' +
+            esnI18nService.translate('Subject: %s', { subject: message.subject || '' }) +
+            '\n' + esnI18nService.translate('Message was displayed on %s', { date: new Date(Date.now()).toString() }),
           reportingUA: 'OpenPaaS Unified Inbox',
           disposition: {
             actionMode: 'manual-action',
@@ -309,7 +312,7 @@ require('../config/config.js');
         return asyncJmapAction({
           failure: items.length > 1 ?
             'Some items could not be updated' :
-            esnI18nService.translate('Could not update "%s"', items[0].subject)
+            esnI18nService.translate('Could not update "%s"', { subject: items[0].subject })
         }, function(client) {
           return client.setMessages({
             update: _.mapValues(itemsById, _.constant(_.zipObject([flag], [state])))
@@ -344,9 +347,9 @@ require('../config/config.js');
         var messageSubject = _truncateWithEllipsis(item.subject, INBOX_DISPLAY_NAME_SIZE);
 
         return asyncJmapAction({
-          progressing: esnI18nService.translate('Downloading message "%s"...', messageSubject),
-          success: esnI18nService.translate('Message "%s" successfully downloaded', messageSubject),
-          failure: esnI18nService.translate('Could not download message "%s"', messageSubject)
+          progressing: esnI18nService.translate('Downloading message "%s"...', { messageSubject }),
+          success: esnI18nService.translate('Message "%s" successfully downloaded', { messageSubject }),
+          failure: esnI18nService.translate('Could not download message "%s"', { messageSubject })
         }, function(client) {
           var encodedSubject = encodeURIComponent(messageSubject + '.eml');
 

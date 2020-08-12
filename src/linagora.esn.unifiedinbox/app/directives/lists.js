@@ -28,7 +28,7 @@ require('../services/mailboxes/mailboxes-service.js');
 
           scope.getDragMessage = function ($dragData) {
             if ($dragData.length > 1) {
-              return esnI18nService.translate('%s items', $dragData.length);
+              return esnI18nService.translate('%s items', $dragData);
             }
 
             return $dragData[0].subject || esnI18nService.translate('1 item');
