@@ -85,7 +85,16 @@ require('./controllers.js');
             fn: function() {
               return { state: 'unifiedinbox.inbox' };
             }
-          }
+          },
+          controller: function($rootScope, $state) {
+            $rootScope.$on('$stateChangeStart', (event, toState) => {
+              if (toState.name !== 'unifiedinbox') return;
+
+              event.preventDefault();
+              $state.go('unifiedinbox.inbox', {}, { inherit: false });
+            });
+          },
+          default: true
         })
         .state('unifiedinbox.compose', {
           url: '/compose',
