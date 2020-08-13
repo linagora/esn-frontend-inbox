@@ -1,5 +1,5 @@
 const _ = require('lodash');
-require('../../../services/identities/inbox-identities.service.js');
+require('../../../../../esn.inbox.libs/app/services/identities/inbox-identities.service.js');
 
 (function(angular) {
   'use strict';
