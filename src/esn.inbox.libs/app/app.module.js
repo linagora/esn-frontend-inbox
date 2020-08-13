@@ -4,12 +4,21 @@ angular.module('esn.inbox.libs', [
    'restangular',
    'esn.async-action',
    'esn.background',
-   'esn.http'
+   'esn.configuration',
+   'esn.http',
+   'esn.i18n',
+   'esn.session',
+   'esn.user-configuration',
+   'ng.deviceDetector'
 ]);
 
 require('esn-frontend-common-libs/src/frontend/js/modules/async-action.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/background.js');
+require('esn-frontend-common-libs/src/frontend/js/modules/config/config.module.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/http.js');
+require('esn-frontend-common-libs/src/frontend/js/modules/i18n/i18n.module.js');
+require('esn-frontend-common-libs/src/frontend/js/modules/session.js');
+require('esn-frontend-common-libs/src/frontend/js/modules/user-configuration/user-configuration.module.js');
 
 require('./app.config');
 require('./app.constants');

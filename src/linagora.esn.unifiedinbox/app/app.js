@@ -28,7 +28,6 @@
     'esn.provider',
     'esn.dragndrop',
     'esn.autolinker-wrapper',
-    'esn.configuration',
     'esn.core',
     'linagora.esn.graceperiod',
     'ngAnimate',
@@ -36,19 +35,14 @@
     'esn.cache',
     'esn.search',
     'esn.user',
-    'esn.session',
     'esn.attachment-list',
     'esn.avatar',
     'esn.highlight',
     'esn.registry',
     'material.components.virtualRepeat',
     'esn.module-registry',
-    'esn.user-configuration',
     'esn.ui',
-    'ng.deviceDetector',
     'esn.datetime',
-    'esn.i18n',
-    'esn.http',
     'esn.shortcuts',
     'esn.promise',
     'esn.people',
@@ -91,26 +85,21 @@ require('esn-frontend-common-libs/src/frontend/js/modules/aggregator.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/provider.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/dragndrop.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/esn.autolinker-wrapper.js');
-require('esn-frontend-common-libs/src/frontend/js/modules/config/config.module.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/core.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/escape-html.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/cache.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/search/search.module.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/user/user.module.js');
-require('esn-frontend-common-libs/src/frontend/js/modules/session.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/attachment/list/attachment-list.module.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/avatar.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/highlight.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/registry.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/module-registry/module-registry.module.js');
-require('esn-frontend-common-libs/src/frontend/js/modules/user-configuration/user-configuration.module.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/ui.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/datetime/datetime.module.js');
-require('esn-frontend-common-libs/src/frontend/js/modules/i18n/i18n.module.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/shortcuts/shortcuts.module.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/promise/promise.module.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/people/people.module.js');
-require('esn-frontend-common-libs/src/frontend/js/modules/http.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/attachments-selector/attachments-selector.module.js');
 require('esn-frontend-common-libs/src/modules/linagora.esn.graceperiod/frontend/js/app.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/action-list');
