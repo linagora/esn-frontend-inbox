@@ -7,7 +7,7 @@ require('../mailboxes/mailboxes-service.js');
 require('../selection/selection.service.js');
 require('../../services.js');
 require('../filtered-list/filtered-list.js');
-require('../config/config.js');
+require('../../../../esn.inbox.libs/app/services/config/config.js');
 
 
 (function(angular) {

@@ -2,7 +2,7 @@ const _ = require('lodash');
 require('../../../../esn.inbox.libs/app/services/email-body/email-body.js');
 require('../../services.js');
 require('../../services/jmap-helper/jmap-helper.js');
-require('../../services/config/config.js');
+require('../../../../esn.inbox.libs/app/services/config/config.js');
 
 (function(angular) {
   'use strict';
