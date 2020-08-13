@@ -1,6 +1,6 @@
 const _ = require('lodash');
 require('../../services/new-composer/new-composer.js');
-require('../../services/mailboxes/mailboxes-service.js');
+require('esn.inbox.libs/app/services/mailboxes/mailboxes-service.js');
 require('../../services/plugins/plugins.js');
 
 (function(angular) {

@@ -1,12 +1,11 @@
 'use strict';
 
 const _ = require('lodash');
-
-require('../mailboxes/mailboxes-service.js');
+require('esn.inbox.libs/app/services/mailboxes/mailboxes-service.js');
 require('./mailboxes-filter-service.constants.js');
-require('../../../../esn.inbox.libs/app/services/jmap-client-wrapper/jmap-client-wrapper.service.js');
+require('esn.inbox.libs/app/services/jmap-client-wrapper/jmap-client-wrapper.service.js');
 require('../../services.js');
-require('../with-jmap-client/with-jmap-client.js');
+require('esn.inbox.libs/app/services/with-jmap-client/with-jmap-client.js');
 
 angular.module('linagora.esn.unifiedinbox')
   .factory('inboxMailboxesFilterService', function(

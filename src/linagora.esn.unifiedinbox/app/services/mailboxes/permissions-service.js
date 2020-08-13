@@ -1,5 +1,5 @@
 const _ = require('lodash');
-require('./mailboxes-service.js');
+require('esn.inbox.libs/app/services/mailboxes/mailboxes-service.js');
 require('./permissions-service.constants.js');
 
 (function(angular) {

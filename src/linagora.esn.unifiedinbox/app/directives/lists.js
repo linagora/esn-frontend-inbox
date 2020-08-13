@@ -1,10 +1,10 @@
 const _ = require('lodash');
 require('../services/selection/selection.service.js');
-require('../../../esn.inbox.libs/app/services/config/config.js');
+require('esn.inbox.libs/app/services/config/config.js');
 require('../services/new-composer/new-composer.js');
 require('../services/jmap-item/jmap-item-service.js');
 require('../services.js');
-require('../../../esn.inbox.libs/app/services/mailboxes/mailboxes-service.js');
+require('esn.inbox.libs/app/services/mailboxes/mailboxes-service.js');
 
 (function (angular) {
   'use strict';

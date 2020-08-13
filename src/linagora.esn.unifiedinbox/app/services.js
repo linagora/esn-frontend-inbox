@@ -1,15 +1,14 @@
 const _ = require('lodash');
 
-require('../../esn.inbox.libs/app/services/with-jmap-client/with-jmap-client.js');
-require('../../esn.inbox.libs/app/services/config/config.js');
-require('../../esn.inbox.libs/app/services/jmap-client-wrapper/jmap-client-wrapper.service.js');
-require('../../esn.inbox.libs/app/services/jmap-helper/jmap-helper.js');
-require('../../esn.inbox.libs/app/services/mailboxes/mailboxes-service.js');
-require('../../esn.inbox.libs/app/services/hook/email-sending-hook.service.js');
-require('../../esn.inbox.libs/app/services/email-body/email-body.js');
-require('./services/attachment-jmap/attachment-jmap.constants.js');
-require('./services/email-resolver/inbox-email-resolver.service.js');
-require('../../esn.inbox.libs/app/services/jmap-client-provider/jmap-client-provider.js');
+require('esn.inbox.libs/app/services/with-jmap-client/with-jmap-client.js');
+require('esn.inbox.libs/app/services/config/config.js');
+require('esn.inbox.libs/app/services/jmap-client-wrapper/jmap-client-wrapper.service.js');
+require('esn.inbox.libs/app/services/jmap-helper/jmap-helper.js');
+require('esn.inbox.libs/app/services/mailboxes/mailboxes-service.js');
+require('esn.inbox.libs/app/services/hook/email-sending-hook.service.js');
+require('esn.inbox.libs/app/services/email-body/email-body.js');
+// require('./services/email-resolver/inbox-email-resolver.service.js');
+require('esn.inbox.libs/app/services/jmap-client-provider/jmap-client-provider.js');
 
 (function (angular) {
   'use strict';

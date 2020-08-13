@@ -1,5 +1,3 @@
-require('../../services/attachment-jmap/attachment-jmap.constants.js');
-
 (function(angular) {
   'use strict';
 

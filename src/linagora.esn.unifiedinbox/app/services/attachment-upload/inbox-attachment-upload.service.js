@@ -1,7 +1,7 @@
 const _ = require('lodash');
 require('../attachment-provider-registry/attachment-provider-registry.service.js');
-require('../../../../esn.inbox.libs/app/services/config/config.js');
-require('../../../../esn.inbox.libs/app/services/with-jmap-client/with-jmap-client.js');
+require('esn.inbox.libs/app/services/config/config.js');
+require('esn.inbox.libs/app/services/with-jmap-client/with-jmap-client.js');
 require('../../components/attachment-alternative-uploader/attachment-alternative-uploader-modal.service.js');
 
 (function(angular) {

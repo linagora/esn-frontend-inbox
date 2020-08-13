@@ -1,5 +1,5 @@
 const _ = require('lodash');
-require('../../../../esn.inbox.libs/app/services/mailboxes/mailboxes-service.js');
+require('esn.inbox.libs/app/services/mailboxes/mailboxes-service.js');
 require('./user-quota-service.constants.js');
 
 (function(angular) {

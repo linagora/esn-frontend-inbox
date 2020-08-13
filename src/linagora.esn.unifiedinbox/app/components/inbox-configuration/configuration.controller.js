@@ -1,5 +1,5 @@
-require('../../services/config/config.js');
-require('../../services/mailboxes/shared-mailboxes.constants.js');
+require('esn.inbox.libs/app/services/config/config.js');
+require('esn.inbox.libs/app/services/mailboxes/shared-mailboxes.constants.js');
 
 (function(angular) {
   'use strict';
