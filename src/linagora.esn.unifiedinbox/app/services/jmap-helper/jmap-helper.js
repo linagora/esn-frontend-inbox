@@ -1,6 +1,6 @@
 const _ = require('lodash');
 require('../jmap-client-wrapper/jmap-client-wrapper.service.js');
-require('../email-body/email-body.js');
+require('../../../../esn.inbox.libs/app/services/email-body/email-body.js');
 require('../with-jmap-client/with-jmap-client.js');
 require('../identities/inbox-identities.service.js');
 

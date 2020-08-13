@@ -246,7 +246,6 @@ require ('./services/common/inbox-utils.service.js');
 require ('./services/config/config.js');
 require ('./services/custom-role-mailbox/custom-role-mailbox.service.js');
 require ('./services/draft/draft.js');
-require ('./services/email-body/email-body.js');
 require ('./services/email-resolver/inbox-email-resolver.service.js');
 require ('./services/filtered-list/filtered-list.js');
 require ('./services/filtering/filtering-service.js');

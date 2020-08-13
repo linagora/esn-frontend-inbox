@@ -1,7 +1,7 @@
 const _ = require('lodash');
 require('../../services.js');
 require('../../services/request-receipts/request-receipts-service.js');
-require('../../services/email-body/email-body.js');
+require('../../../../esn.inbox.libs/app/services/email-body/email-body.js');
 require('../../services/attachment-upload/inbox-attachment-upload.service.js');
 require('../../services/draft/draft.js');
 require('../../services/attachment-provider-registry/attachment-provider-registry.service.js');
