@@ -1,4 +1,4 @@
-require('../jmap-client-provider/jmap-client-provider.js');
+require('../../../../esn.inbox.libs/app/services/jmap-client-provider/jmap-client-provider.js');
 
 (function(angular) {
   'use strict';
