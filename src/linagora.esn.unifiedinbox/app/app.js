@@ -24,7 +24,6 @@
     'esn.form.helper',
     'esn.infinite-list',
     'esn.url',
-    'esn.background',
     'esn.aggregator',
     'esn.provider',
     'esn.dragndrop',
@@ -36,7 +35,6 @@
     'esn.escape-html',
     'esn.cache',
     'esn.search',
-    'esn.async-action',
     'esn.user',
     'esn.session',
     'esn.attachment-list',
@@ -89,7 +87,6 @@ require('esn-frontend-common-libs/src/frontend/js/modules/desktop-utils.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/form-helper/form-helper.module.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/infinite-list/infinite-list.module.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/url.js');
-require('esn-frontend-common-libs/src/frontend/js/modules/background.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/aggregator.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/provider.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/dragndrop.js');
@@ -99,7 +96,6 @@ require('esn-frontend-common-libs/src/frontend/js/modules/core.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/escape-html.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/cache.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/search/search.module.js');
-require('esn-frontend-common-libs/src/frontend/js/modules/async-action.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/user/user.module.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/session.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/attachment/list/attachment-list.module.js');

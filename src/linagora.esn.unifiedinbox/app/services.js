@@ -16,22 +16,6 @@ require('../../esn.inbox.libs/app/services/jmap-client-provider/jmap-client-prov
 
   angular.module('linagora.esn.unifiedinbox')
 
-    .factory('backgroundAction', function (asyncAction, inBackground) {
-      return function (message, action, options) {
-        return asyncAction(message, function () {
-          return inBackground(action());
-        }, options);
-      };
-    })
-
-    .factory('asyncJmapAction', function (backgroundAction, withJmapClient) {
-      return function (message, action, options) {
-        return backgroundAction(message, function () {
-          return withJmapClient(action);
-        }, options);
-      };
-    })
-
     .factory('sendEmail', function ($http, $q, inboxConfig, inBackground, jmapDraft, withJmapClient, inboxJmapHelper, inboxMailboxesService, httpConfigurer, inboxEmailSendingHookService) {
       function sendBySmtp(email) {
         return $http.post(httpConfigurer.getUrl('/unifiedinbox/api/inbox/sendemail'), email);
