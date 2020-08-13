@@ -15,7 +15,7 @@ require('./search/provider/local-search-provider.service.js');
 require('./services/shortcuts/shortcuts.constants.js');
 require('./services/with-jmap-client/with-jmap-client.js');
 require('./services/common/inbox-utils.service.js');
-require('./services/jmap-client-wrapper/jmap-client-wrapper.service.js');
+require('../../esn.inbox.libs/app/services/jmap-client-wrapper/jmap-client-wrapper.service.js');
 
 (function (angular) {
   'use strict';

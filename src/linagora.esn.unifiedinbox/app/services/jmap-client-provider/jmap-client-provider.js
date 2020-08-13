@@ -1,5 +1,5 @@
 require('../config/config.js');
-require('../jmap-client-wrapper/jmap-client-wrapper.service.js');
+require('../../../../esn.inbox.libs/app/services/jmap-client-wrapper/jmap-client-wrapper.service.js');
 require('../generate-jwt-token/generate-jwt-token.js');
 require('../custom-role-mailbox/custom-role-mailbox.service.js');
 

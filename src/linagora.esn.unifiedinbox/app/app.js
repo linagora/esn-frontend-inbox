@@ -259,7 +259,6 @@ require ('./services/identities/inbox-identities.service.js');
 require ('./services/identities/inbox-users-identities-api-client.service.js');
 require ('./services/jmap-client-provider/jmap-client-provider.js');
 require ('./services/jmap-client-provider/jmap-client-provider.run.js');
-require ('./services/jmap-client-wrapper/jmap-client-wrapper.service.js');
 require ('./services/jmap-helper/jmap-helper.js');
 require ('./services/jmap-item/jmap-item-service.js');
 require ('./services/mailboxes-filter/mailboxes-filter-service.constants.js');

@@ -1,4 +1,4 @@
-require('../jmap-client-wrapper/jmap-client-wrapper.service.js');
+require('../../../../esn.inbox.libs/app/services/jmap-client-wrapper/jmap-client-wrapper.service.js');
 require('./make-selectable.js');
 require('../mailboxes/mailboxes-service.js');
 require('../../services.js');

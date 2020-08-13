@@ -2,7 +2,7 @@ const _ = require('lodash');
 require('../new-composer/new-composer.js');
 require('../../services.js');
 require('../with-jmap-client/with-jmap-client.js');
-require('../jmap-client-wrapper/jmap-client-wrapper.service.js');
+require('../../../../esn.inbox.libs/app/services/jmap-client-wrapper/jmap-client-wrapper.service.js');
 require('../mailboxes/mailboxes-service.js');
 require('../selection/selection.service.js');
 require('../../services.js');

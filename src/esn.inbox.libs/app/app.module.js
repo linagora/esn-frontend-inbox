@@ -10,3 +10,4 @@ require('./app.config');
 require('./app.constants');
 require('./services/inbox-restangular.service');
 require('./services/email-body/email-body');
+require('./services/jmap-client-wrapper/jmap-client-wrapper.service');
