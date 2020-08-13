@@ -1,7 +1,7 @@
 const _ = require('lodash');
 require('../../../../esn.inbox.libs/app/services/jmap-client-wrapper/jmap-client-wrapper.service.js');
 require('../../../../esn.inbox.libs/app/services/email-body/email-body.js');
-require('../with-jmap-client/with-jmap-client.js');
+require('../../../../esn.inbox.libs/app/services/with-jmap-client/with-jmap-client.js');
 require('../../../../esn.inbox.libs/app/services/identities/inbox-identities.service.js');
 
 (function(angular) {

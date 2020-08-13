@@ -13,7 +13,7 @@ require('./services/user-quota/user-quota-service.js');
 require('./services/plugins/plugins.js');
 require('./search/provider/local-search-provider.service.js');
 require('./services/shortcuts/shortcuts.constants.js');
-require('./services/with-jmap-client/with-jmap-client.js');
+require('../../esn.inbox.libs/app/services/with-jmap-client/with-jmap-client.js');
 require('./services/common/inbox-utils.service.js');
 require('../../esn.inbox.libs/app/services/jmap-client-wrapper/jmap-client-wrapper.service.js');
 
