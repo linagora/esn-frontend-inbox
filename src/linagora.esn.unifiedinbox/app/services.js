@@ -35,10 +35,6 @@ require('../../esn.inbox.libs/app/services/jmap-client-provider/jmap-client-prov
       };
     })
 
-    .factory('inboxMailboxesCache', function () {
-      return [];
-    })
-
     .factory('inboxCacheService', function (Cache, inboxEmailResolverService, INBOX_CACHE_TTL) {
       var cache = new Cache({
         loader: inboxEmailResolverService.resolve,
