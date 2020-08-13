@@ -1,5 +1,4 @@
 require('../../../services/jmap-item/jmap-item-service.js');
-require('esn.inbox.libs/app/services/mailboxes/shared-mailboxes.js');
 
 (function(angular) {
   'use strict';

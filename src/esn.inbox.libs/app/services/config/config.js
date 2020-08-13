@@ -1,5 +1,6 @@
-
 'use strict';
+
+require('../../app.constants');
 
 angular.module('esn.inbox.libs')
   .factory('inboxConfig', function(esnConfig, INBOX_MODULE_NAME) {

@@ -1,6 +1,4 @@
 const _ = require('lodash');
-require('esn.inbox.libs/app/services/mailboxes/mailboxes-service.js');
-require('esn.inbox.libs/app/services/mailboxes/shared-mailboxes.js');
 
 (function(angular) {
   'use strict';

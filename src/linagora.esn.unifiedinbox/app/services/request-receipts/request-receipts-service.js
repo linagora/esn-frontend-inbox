@@ -1,5 +1,4 @@
 const _ = require('lodash');
-require('esn.inbox.libs/app/services/config/config.js');
 require('./request-receipts.constants.js');
 
 (function(angular) {

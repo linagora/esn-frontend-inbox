@@ -1,5 +1,3 @@
-require('esn.inbox.libs/app/services/config/config.js');
-require('esn.inbox.libs/app/services/hook/email-composing-hook.service.js');
 require('./services.js');
 require('./providers.js');
 

@@ -62,7 +62,7 @@
   ]);
 })(angular);
 
-require('esn.inbox.libs/app/app.module.js');
+require('../../esn.inbox.libs/app/app.module.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/esn.router.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/notification.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/iframe-resizer-wrapper.js');

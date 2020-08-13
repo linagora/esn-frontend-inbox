@@ -14,4 +14,4 @@ require('./app.config');
 require('./app.run');
 require('../linagora.esn.james/app/app.module.js');
 require('../linagora.esn.unifiedinbox/app/app.js');
-require('esn.inbox.libs/app/app.module.js');
+require('../esn.inbox.libs/app/app.module.js');

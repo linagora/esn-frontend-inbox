@@ -10,7 +10,6 @@ const angularInjections = path.resolve(__dirname, 'src', 'require-angular-inject
 const chartJs = path.resolve(__dirname, 'node_modules', 'esn-frontend-common-libs', 'src', 'frontend', 'components', 'Chart.js/Chart.js')
 const materialAdmin = path.resolve(__dirname, 'node_modules', 'esn-frontend-common-libs', 'src', 'frontend', 'js', 'material.js');
 const momentPath = path.resolve(__dirname, 'node_modules', 'moment', 'moment.js');
-const inboxLibsPath = path.resolve(__dirname, 'src', 'esn.inbox.libs');
 const pugLoaderOptions = {
   root: `${__dirname}/node_modules/esn-frontend-common-libs/src/frontend/views`
 };
@@ -27,8 +26,7 @@ module.exports = {
   resolve: {
     alias: {
       'moment/moment.js': momentPath,
-      'moment$': momentPath,
-      'esn.inbox.libs': inboxLibsPath
+      'moment$': momentPath
     },
   },
   plugins: [

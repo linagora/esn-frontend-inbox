@@ -6,6 +6,7 @@ require('../jmap-client-wrapper/jmap-client-wrapper.service.js');
 require('../action/async-jmap-action.service.js');
 require('./special-mailboxes.js');
 require('./shared-mailboxes.js');
+require('../../app.constants');
 
 angular.module('esn.inbox.libs')
 

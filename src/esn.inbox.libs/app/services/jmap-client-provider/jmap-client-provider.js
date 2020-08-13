@@ -5,7 +5,6 @@ require('../jmap-client-wrapper/jmap-client-wrapper.service.js');
 require('../generate-jwt-token/generate-jwt-token.js');
 require('../custom-role-mailbox/custom-role-mailbox.service.js');
 
-
 angular.module('esn.inbox.libs')
   .service('jmapClientProvider', function($q, inboxConfig, jmapDraft, dollarHttpTransport, dollarQPromiseProvider, generateJwtToken, inboxCustomRoleMailboxService) {
     let jmapClient;

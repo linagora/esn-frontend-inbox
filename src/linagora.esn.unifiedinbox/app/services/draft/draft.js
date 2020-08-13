@@ -1,8 +1,5 @@
 const _ = require('lodash');
-require('esn.inbox.libs/app/services/email-body/email-body.js');
 require('../../services.js');
-require('esn.inbox.libs/app/services/jmap-helper/jmap-helper.js');
-require('esn.inbox.libs/app/services/config/config.js');
 
 (function(angular) {
   'use strict';

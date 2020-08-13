@@ -1,4 +1,3 @@
-require('esn.inbox.libs/app/services/jmap-client-wrapper/jmap-client-wrapper.service.js');
 require('./emailer.service.js');
 
 (function(angular) {

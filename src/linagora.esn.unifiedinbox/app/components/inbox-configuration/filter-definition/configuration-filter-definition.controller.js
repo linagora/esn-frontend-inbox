@@ -1,5 +1,4 @@
 const _ = require('lodash');
-require('esn.inbox.libs/app/services/mailboxes/mailboxes-service.js');
 require('../../../services/mailboxes-filter/mailboxes-filter-service.js');
 require('../../../services/mailboxes-filter/mailboxes-filter-service.constants.js');
 

@@ -1,5 +1,6 @@
-
 'use strict';
+
+require('../inbox-restangular.service');
 
 angular.module('esn.inbox.libs')
   .factory('inboxUsersIdentitiesClient', inboxUsersIdentitiesClient);

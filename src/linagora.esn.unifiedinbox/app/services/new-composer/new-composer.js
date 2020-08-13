@@ -1,5 +1,3 @@
-require('esn.inbox.libs/app/services/jmap-helper/jmap-helper.js');
-
 (function(angular) {
   'use strict';
 

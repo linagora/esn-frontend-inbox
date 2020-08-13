@@ -3,6 +3,7 @@
 const _ = require('lodash');
 require('../config/config.js')
 require('./shared-mailboxes.constants.js');
+require('../../app.constants');
 
 angular.module('esn.inbox.libs')
 

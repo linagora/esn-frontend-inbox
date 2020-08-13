@@ -1,7 +1,8 @@
 'use strict';
 
 require('../email-body/email-body');
-require('../jmap-helper/jmap-helper.js');
+require('../jmap-helper/jmap-helper');
+require('../../app.constants');
 
 angular.module('esn.inbox.libs')
   .factory('emailSendingService', function ($q, emailService, jmapDraft, session, emailBodyService, sendEmail, inboxJmapHelper, INBOX_ATTACHMENT_TYPE_JMAP, INBOX_MESSAGE_HEADERS) {
