@@ -8,7 +8,7 @@ require('./services/mailboxes/special-mailboxes.js');
 require('./services/mailboxes/shared-mailboxes.js');
 require('./services/filtered-list/filtered-list.js');
 require('./services/jmap-item/jmap-item-service.js');
-require('./services/jmap-helper/jmap-helper.js');
+require('../../esn.inbox.libs/app/services/jmap-helper/jmap-helper.js');
 require('./services/user-quota/user-quota-service.js');
 require('./services/plugins/plugins.js');
 require('./search/provider/local-search-provider.service.js');
