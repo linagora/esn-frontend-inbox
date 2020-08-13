@@ -94,4 +94,5 @@ angular.module('esn.inbox.libs')
     disableable: true,
     isDisplayedByDefault: true
   })
-  .constant('INBOX_SIGNATURE_SEPARATOR', '-- \n'); // https://tools.ietf.org/html/rfc3676#section-4.3
+  .constant('INBOX_SIGNATURE_SEPARATOR', '-- \n') // https://tools.ietf.org/html/rfc3676#section-4.3
+  .constant('INBOX_ATTACHMENT_TYPE_JMAP', 'jmap');
