@@ -3,7 +3,7 @@ require('../new-composer/new-composer.js');
 require('../../services.js');
 require('../../../../esn.inbox.libs/app/services/with-jmap-client/with-jmap-client.js');
 require('../../../../esn.inbox.libs/app/services/jmap-client-wrapper/jmap-client-wrapper.service.js');
-require('../mailboxes/mailboxes-service.js');
+require('../../../../esn.inbox.libs/app/services/mailboxes/mailboxes-service.js');
 require('../selection/selection.service.js');
 require('../../services.js');
 require('../filtered-list/filtered-list.js');

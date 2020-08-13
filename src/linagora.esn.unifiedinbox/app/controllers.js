@@ -3,7 +3,7 @@ const moment = require('moment');
 require('./providers.js');
 require('./services.js');
 require('./services/selection/selection.service.js');
-require('./services/mailboxes/mailboxes-service.js');
+require('../../esn.inbox.libs/app/services/mailboxes/mailboxes-service.js');
 require('./services/mailboxes/special-mailboxes.js');
 require('./services/mailboxes/shared-mailboxes.js');
 require('./services/filtered-list/filtered-list.js');
