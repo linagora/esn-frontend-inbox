@@ -1,5 +1,10 @@
 'use strict';
 
+require('../config/config');
+require('../jmap-client-wrapper/jmap-client-wrapper.service');
+require('../mailboxes/mailboxes-service');
+require('../hook/email-sending-hook.service');
+
 angular.module('esn.inbox.libs')
   .factory('sendEmail', function ($http, $q, inboxConfig, inBackground, jmapDraft, withJmapClient, inboxJmapHelper, inboxMailboxesService, httpConfigurer, inboxEmailSendingHookService) {
     function sendBySmtp(email) {
