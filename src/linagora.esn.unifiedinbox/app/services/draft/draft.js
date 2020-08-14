@@ -1,8 +1,5 @@
 const _ = require('lodash');
-require('../../services/email-body/email-body.js');
 require('../../services.js');
-require('../../services/jmap-helper/jmap-helper.js');
-require('../../services/config/config.js');
 
 (function(angular) {
   'use strict';

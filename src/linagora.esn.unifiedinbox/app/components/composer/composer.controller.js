@@ -1,12 +1,9 @@
 const _ = require('lodash');
 require('../../services.js');
 require('../../services/request-receipts/request-receipts-service.js');
-require('../../services/email-body/email-body.js');
 require('../../services/attachment-upload/inbox-attachment-upload.service.js');
 require('../../services/draft/draft.js');
 require('../../services/attachment-provider-registry/attachment-provider-registry.service.js');
-require('../../services/hook/email-composing-hook.service.js');
-require('../../services/attachment-jmap/attachment-jmap.constants.js');
 
 // TODO: Write tests for this (https://github.com/OpenPaaS-Suite/esn-frontend-mailto/issues/2)
 (function(angular) {

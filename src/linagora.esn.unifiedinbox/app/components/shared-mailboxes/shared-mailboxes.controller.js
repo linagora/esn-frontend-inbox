@@ -1,6 +1,4 @@
 const _ = require('lodash');
-require('../../services/mailboxes/mailboxes-service.js');
-require('../../services/mailboxes/shared-mailboxes.js');
 
 (function(angular) {
   'use strict';

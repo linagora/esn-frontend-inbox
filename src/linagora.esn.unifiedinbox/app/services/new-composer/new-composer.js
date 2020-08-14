@@ -1,5 +1,3 @@
-require('../jmap-helper/jmap-helper.js');
-
 (function(angular) {
   'use strict';
 

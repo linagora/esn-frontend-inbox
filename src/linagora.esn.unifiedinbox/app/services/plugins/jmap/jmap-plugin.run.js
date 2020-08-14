@@ -1,5 +1,4 @@
 const _ = require('lodash');
-require('../../mailboxes/mailboxes-service.js');
 require('../plugins.js');
 
 (function(angular) {

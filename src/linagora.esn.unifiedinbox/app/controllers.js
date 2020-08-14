@@ -3,19 +3,13 @@ const moment = require('moment');
 require('./providers.js');
 require('./services.js');
 require('./services/selection/selection.service.js');
-require('./services/mailboxes/mailboxes-service.js');
-require('./services/mailboxes/special-mailboxes.js');
-require('./services/mailboxes/shared-mailboxes.js');
 require('./services/filtered-list/filtered-list.js');
 require('./services/jmap-item/jmap-item-service.js');
-require('./services/jmap-helper/jmap-helper.js');
 require('./services/user-quota/user-quota-service.js');
 require('./services/plugins/plugins.js');
 require('./search/provider/local-search-provider.service.js');
 require('./services/shortcuts/shortcuts.constants.js');
-require('./services/with-jmap-client/with-jmap-client.js');
 require('./services/common/inbox-utils.service.js');
-require('./services/jmap-client-wrapper/jmap-client-wrapper.service.js');
 
 (function (angular) {
   'use strict';

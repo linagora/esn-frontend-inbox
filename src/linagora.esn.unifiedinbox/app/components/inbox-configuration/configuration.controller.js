@@ -1,6 +1,3 @@
-require('../../services/config/config.js');
-require('../../services/mailboxes/shared-mailboxes.constants.js');
-
 (function(angular) {
   'use strict';
 

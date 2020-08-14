@@ -1,6 +1,4 @@
 const _ = require('lodash');
-require('./services/email-body/email-body.js');
-require('./services/mailboxes/mailboxes-service.js');
 
 (function (angular) {
   'use strict';

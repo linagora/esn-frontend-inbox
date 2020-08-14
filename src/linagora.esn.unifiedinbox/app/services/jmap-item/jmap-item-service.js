@@ -1,14 +1,9 @@
 const _ = require('lodash');
 require('../new-composer/new-composer.js');
 require('../../services.js');
-require('../with-jmap-client/with-jmap-client.js');
-require('../jmap-client-wrapper/jmap-client-wrapper.service.js');
-require('../mailboxes/mailboxes-service.js');
 require('../selection/selection.service.js');
 require('../../services.js');
 require('../filtered-list/filtered-list.js');
-require('../config/config.js');
-
 
 (function(angular) {
   'use strict';

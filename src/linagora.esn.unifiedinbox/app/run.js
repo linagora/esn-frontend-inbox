@@ -1,5 +1,3 @@
-require('./services/config/config.js');
-require('./services/hook/email-composing-hook.service.js');
 require('./services.js');
 require('./providers.js');
 

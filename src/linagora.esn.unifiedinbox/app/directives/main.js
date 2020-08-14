@@ -1,9 +1,6 @@
 const _ = require('lodash');
 require('../services/new-composer/new-composer.js');
-require('../services/custom-role-mailbox/custom-role-mailbox.service.js');
-require('../services/mailboxes/mailboxes-service.js');
 require('../services/jmap-item/jmap-item-service.js');
-require('../services/email-body/email-body.js');
 require('../services/shortcuts/shortcuts.constants.js');
 require('../services/filtering/filtering-service.js');
 require('../services/plugins/plugins.js');

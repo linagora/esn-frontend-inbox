@@ -1,5 +1,4 @@
 const _ = require('lodash');
-require('../mailboxes/mailboxes-service.js');
 require('./user-quota-service.constants.js');
 
 (function(angular) {

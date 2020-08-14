@@ -24,33 +24,25 @@
     'esn.form.helper',
     'esn.infinite-list',
     'esn.url',
-    'esn.background',
     'esn.aggregator',
     'esn.provider',
     'esn.dragndrop',
     'esn.autolinker-wrapper',
-    'esn.configuration',
     'esn.core',
     'linagora.esn.graceperiod',
     'ngAnimate',
     'esn.escape-html',
     'esn.cache',
     'esn.search',
-    'esn.async-action',
     'esn.user',
-    'esn.session',
     'esn.attachment-list',
     'esn.avatar',
     'esn.highlight',
     'esn.registry',
     'material.components.virtualRepeat',
     'esn.module-registry',
-    'esn.user-configuration',
     'esn.ui',
-    'ng.deviceDetector',
     'esn.datetime',
-    'esn.i18n',
-    'esn.http',
     'esn.shortcuts',
     'esn.promise',
     'esn.people',
@@ -89,32 +81,25 @@ require('esn-frontend-common-libs/src/frontend/js/modules/desktop-utils.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/form-helper/form-helper.module.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/infinite-list/infinite-list.module.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/url.js');
-require('esn-frontend-common-libs/src/frontend/js/modules/background.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/aggregator.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/provider.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/dragndrop.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/esn.autolinker-wrapper.js');
-require('esn-frontend-common-libs/src/frontend/js/modules/config/config.module.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/core.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/escape-html.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/cache.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/search/search.module.js');
-require('esn-frontend-common-libs/src/frontend/js/modules/async-action.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/user/user.module.js');
-require('esn-frontend-common-libs/src/frontend/js/modules/session.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/attachment/list/attachment-list.module.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/avatar.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/highlight.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/registry.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/module-registry/module-registry.module.js');
-require('esn-frontend-common-libs/src/frontend/js/modules/user-configuration/user-configuration.module.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/ui.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/datetime/datetime.module.js');
-require('esn-frontend-common-libs/src/frontend/js/modules/i18n/i18n.module.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/shortcuts/shortcuts.module.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/promise/promise.module.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/people/people.module.js');
-require('esn-frontend-common-libs/src/frontend/js/modules/http.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/attachments-selector/attachments-selector.module.js');
 require('esn-frontend-common-libs/src/modules/linagora.esn.graceperiod/frontend/js/app.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/action-list');
@@ -237,42 +222,23 @@ require ('./search/search-query.run.js');
 require ('./search/search.constants.js');
 require ('./search/search.run.js');
 require ('./services.js');
-require ('./services/attachment-jmap/attachment-jmap.constants.js');
 require ('./services/attachment-jmap/attachment-jmap.run.js');
 require ('./services/attachment-jmap/attachment-jmap.service.js');
 require ('./services/attachment-provider-registry/attachment-provider-registry.service.js');
 require ('./services/attachment-upload/inbox-attachment-upload.service.js');
 require ('./services/common/inbox-utils.service.js');
-require ('./services/config/config.js');
-require ('./services/custom-role-mailbox/custom-role-mailbox.service.js');
 require ('./services/draft/draft.js');
-require ('./services/email-body/email-body.js');
 require ('./services/email-resolver/inbox-email-resolver.service.js');
 require ('./services/filtered-list/filtered-list.js');
 require ('./services/filtering/filtering-service.js');
 require ('./services/filtering/filters.js');
 require ('./services/forwardings/inbox-forwardings-api-client.service.js');
 require ('./services/forwardings/inbox-forwardings.service.js');
-require ('./services/generate-jwt-token/generate-jwt-token.js');
-require ('./services/hook/email-composing-hook.service.js');
-require ('./services/hook/email-sending-hook.service.js');
-require ('./services/identities/inbox-identities.service.js');
-require ('./services/identities/inbox-users-identities-api-client.service.js');
-require ('./services/jmap-client-provider/jmap-client-provider.js');
-require ('./services/jmap-client-provider/jmap-client-provider.run.js');
-require ('./services/jmap-client-wrapper/jmap-client-wrapper.service.js');
-require ('./services/jmap-helper/jmap-helper.js');
 require ('./services/jmap-item/jmap-item-service.js');
 require ('./services/mailboxes-filter/mailboxes-filter-service.constants.js');
 require ('./services/mailboxes-filter/mailboxes-filter-service.js');
-require ('./services/mailboxes/mailboxes-service.js');
 require ('./services/mailboxes/permissions-service.constants.js');
 require ('./services/mailboxes/permissions-service.js');
-require ('./services/mailboxes/shared-mailboxes.constants.js');
-require ('./services/mailboxes/shared-mailboxes.js');
-require ('./services/mailboxes/special-mailboxes.constants.js');
-require ('./services/mailboxes/special-mailboxes.js');
-require ('./services/mailboxes/special-mailboxes.run.js');
 require ('./services/mailto-parser/mailto-parser.js');
 require ('./services/models/emailer.run.js');
 require ('./services/models/emailer.service.js');
@@ -290,4 +256,3 @@ require ('./services/shortcuts/shortcuts.constants.js');
 require ('./services/shortcuts/shortcuts.run.js');
 require ('./services/user-quota/user-quota-service.constants.js');
 require ('./services/user-quota/user-quota-service.js');
-require ('./services/with-jmap-client/with-jmap-client.js');

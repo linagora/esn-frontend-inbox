@@ -1,6 +1,4 @@
 const _ = require('lodash');
-require('./services/mailboxes/mailboxes-service.js');
-require('./services/with-jmap-client/with-jmap-client.js');
 require('./services/filtering/filtering-service.js');
 require('./directives/lists.js');
 

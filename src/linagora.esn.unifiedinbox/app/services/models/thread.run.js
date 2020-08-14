@@ -1,5 +1,4 @@
 const _ = require('lodash');
-require('../jmap-client-wrapper/jmap-client-wrapper.service.js');
 require('./make-selectable.js');
 
 (function(angular) {

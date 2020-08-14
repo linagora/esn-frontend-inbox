@@ -1,5 +1,3 @@
-require('../../../../esn.inbox.libs/app/app.constants.js');
-
 (function(angular) {
   'use strict';
 

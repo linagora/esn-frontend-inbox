@@ -1,5 +1,4 @@
 const _ = require('lodash');
-require('./mailboxes-service.js');
 require('./permissions-service.constants.js');
 
 (function(angular) {

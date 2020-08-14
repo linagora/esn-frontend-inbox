@@ -1,5 +1,3 @@
-require('../../../../services/email-body/email-body.js');
-
 (function(angular) {
   'use strict';
 

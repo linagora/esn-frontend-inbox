@@ -1,5 +1,3 @@
-require('../../../../services/config/config.js');
-
 (function(angular) {
   'use strict';
 
