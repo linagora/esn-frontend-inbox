@@ -41,27 +41,5 @@ module.exports = function(config) {
     ],
 
     coverageReporter: { type: 'text', dir: '/tmp' },
-
-    ngJade2ModulePreprocessor: {
-      cacheIdFromPath: function(filepath) {
-        return filepath
-          .replace(/pug$/, 'html')
-          .replace(/^src\/linagora.esn.unifiedinbox/, '/unifiedinbox')
-          .replace(/^src\/linagora.esn.james/, '/james')
-          .replace(/^node_modules\/esn-frontend-common-libs\/src\/frontend/, '');
-      },
-      // setting this option will create only a single module that contains templates
-      // from all the files, so you can load them all with module('templates')
-      jadeRenderOptions: {
-        basedir: require('path').resolve(__dirname, '../../node_modules/esn-frontend-common-libs/src/frontend/views')
-      },
-      jadeRenderLocals: {
-        __: function(str) {
-          return str;
-        }
-      },
-      moduleName: 'jadeTemplates'
-    }
-
   });
 };

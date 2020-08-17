@@ -8,7 +8,7 @@ describe('The inboxComposerMobileController controller', function() {
 
   var $componentController, newComposerService, esnPreviousPage, ctrl;
 
-  beforeEach(angular.mock.module('jadeTemplates', 'linagora.esn.unifiedinbox', function($provide) {
+  beforeEach(angular.mock.module('linagora.esn.unifiedinbox', function($provide) {
     $provide.value('esnPreviousPage', {
       back: sinon.spy()
     });

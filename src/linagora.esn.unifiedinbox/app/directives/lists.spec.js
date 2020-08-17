@@ -12,7 +12,6 @@ describe('The linagora.esn.unifiedinbox List module directives', function() {
   beforeEach(function() {
     angular.mock.module('esn.core');
     angular.mock.module('linagora.esn.unifiedinbox');
-    angular.mock.module('jadeTemplates');
   });
 
   beforeEach(angular.mock.module(function($provide) {

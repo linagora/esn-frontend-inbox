@@ -12,7 +12,6 @@ describe('The inboxConfigurationFilterDefinitionController', function() {
       $translateProvider.useInterpolation('esnI18nInterpolator');
     });
 
-    angular.mock.module('jadeTemplates');
     angular.mock.module('linagora.esn.unifiedinbox', function($provide) {
       $provide.value('inboxMailboxesService', {
         assignMailboxesList: angular.noop

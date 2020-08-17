@@ -29,7 +29,6 @@ describe('The linagora.esn.unifiedinbox Main module directives', function() {
     angular.mock.module('esn.datetime', function($provide) {
       $provide.constant('ESN_DATETIME_DEFAULT_TIMEZONE', 'UTC');
     });
-    angular.mock.module('jadeTemplates');
   });
 
   beforeEach(angular.mock.module(function($provide) {

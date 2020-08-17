@@ -9,7 +9,7 @@ describe('The emailBodyService factory', function() {
   var $rootScope, emailBodyService, _, isMobile;
 
   beforeEach(function() {
-    angular.mock.module('linagora.esn.unifiedinbox', 'jadeTemplates', function($provide) {
+    angular.mock.module('linagora.esn.unifiedinbox', function($provide) {
       isMobile = false;
 
       $provide.value('esnConfig', function(key) {

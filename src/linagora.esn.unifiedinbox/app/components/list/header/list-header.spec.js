@@ -20,7 +20,7 @@ describe('The inboxListHeader component', function() {
   }
 
   beforeEach(function() {
-    angular.mock.module('jadeTemplates', 'linagora.esn.unifiedinbox', function($provide) {
+    angular.mock.module('linagora.esn.unifiedinbox', function($provide) {
       $provide.constant('moment', function(argument) {
         return moment.tz(argument || nowDate, 'UTC');
       });

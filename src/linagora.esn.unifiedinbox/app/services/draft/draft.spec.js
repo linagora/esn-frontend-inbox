@@ -8,7 +8,7 @@ describe('The InboxDraft factory', function() {
 
   var InboxDraft, notificationFactory, jmapClient, emailBodyService, $rootScope, INBOX_EVENTS;
 
-  beforeEach(angular.mock.module('linagora.esn.unifiedinbox', 'jadeTemplates', function($provide) {
+  beforeEach(angular.mock.module('linagora.esn.unifiedinbox', function($provide) {
     jmapClient = {};
     notificationFactory = {
       strongInfo: sinon.stub().returns({ close: angular.noop }),

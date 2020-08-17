@@ -13,7 +13,7 @@ describe('The inboxVacationBannerController controller', function() {
     INBOX_EVENTS;
 
   beforeEach(function() {
-    angular.mock.module('linagora.esn.unifiedinbox', 'jadeTemplates');
+    angular.mock.module('linagora.esn.unifiedinbox');
   });
 
   beforeEach(function() {

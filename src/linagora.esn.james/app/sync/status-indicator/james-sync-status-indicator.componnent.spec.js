@@ -11,7 +11,6 @@ describe('The jamesSyncStatusIndicator component', function() {
   var resourceId, resourceType;
 
   beforeEach(function() {
-    angular.mock.module('jadeTemplates');
     angular.mock.module('linagora.esn.james');
   });
 

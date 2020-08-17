@@ -27,7 +27,6 @@ describe('The inboxMessageBodyHtml component', function() {
 
   beforeEach(function() {
     angular.mock.module('linagora.esn.unifiedinbox');
-    angular.mock.module('jadeTemplates');
   });
 
   beforeEach(function() {

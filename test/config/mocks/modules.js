@@ -14,5 +14,5 @@ angular.module('esn.shortcuts', [])
     };
   });
 angular.module('esn.profile', []).factory('profilePopoverCardService', function() {
-  return {bind: angular.noop};
+  return { bind: angular.noop };
 });

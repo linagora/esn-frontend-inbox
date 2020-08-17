@@ -18,7 +18,6 @@ describe('The inboxIdentities component', function() {
   }
 
   beforeEach(function() {
-    angular.mock.module('jadeTemplates');
     angular.mock.module('linagora.esn.unifiedinbox', function($provide) {
       $provide.value('inboxIdentitiesService', {
         getAllIdentities: function() {

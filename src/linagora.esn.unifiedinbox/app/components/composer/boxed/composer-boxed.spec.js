@@ -26,7 +26,7 @@ describe.skip('The inboxComposerBoxed directive', function() {
     }
   });
 
-  beforeEach(angular.mock.module('jadeTemplates', 'linagora.esn.unifiedinbox', function($provide) {
+  beforeEach(angular.mock.module('linagora.esn.unifiedinbox', function($provide) {
     $provide.value('inboxIdentitiesService', {
       getAllIdentities: function() {
         return $q.when([]);

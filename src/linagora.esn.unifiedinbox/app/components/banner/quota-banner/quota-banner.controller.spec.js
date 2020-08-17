@@ -12,7 +12,7 @@ describe('The inboxQuotaBannerController controller', function() {
     $q;
 
   beforeEach(function() {
-    angular.mock.module('linagora.esn.unifiedinbox', 'jadeTemplates');
+    angular.mock.module('linagora.esn.unifiedinbox');
   });
 
   beforeEach(function() {

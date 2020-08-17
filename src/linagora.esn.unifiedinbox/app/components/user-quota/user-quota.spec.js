@@ -24,7 +24,7 @@ describe('The inboxSidebarUserQuota component', function() {
     }
   });
 
-  beforeEach(angular.mock.module('jadeTemplates', 'linagora.esn.unifiedinbox'));
+  beforeEach(angular.mock.module('linagora.esn.unifiedinbox'));
 
   beforeEach(angular.mock.module(function($provide) {
     serviceMock = {

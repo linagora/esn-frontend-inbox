@@ -8,7 +8,6 @@ describe('The inboxConfigurationFiltersController', function() {
   var $q, $controller, $scope, $rootScope, inboxMailboxesFilterService, touchscreenDetectorService;
 
   beforeEach(function() {
-    angular.mock.module('jadeTemplates');
     angular.mock.module('linagora.esn.unifiedinbox', function($provide) {
       inboxMailboxesFilterService = {};
       touchscreenDetectorService = {

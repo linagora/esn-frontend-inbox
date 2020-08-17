@@ -9,7 +9,7 @@ describe('The inboxFolderSettings controller', function() {
   var $rootScope, scope, $controller, mailbox, inboxJmapItemService, inboxSharedMailboxesService;
 
   beforeEach(function() {
-    angular.mock.module('linagora.esn.unifiedinbox', 'jadeTemplates');
+    angular.mock.module('linagora.esn.unifiedinbox');
   });
 
   beforeEach(function() {
