@@ -86,7 +86,8 @@ module.exports = {
           '/unifiedinbox/api',
           '/calendar/app',
           '/calendar/api',
-          '/linagora.esn.resource/api'
+          '/linagora.esn.resource/api',
+          '/linagora.esn.linshare/api'
         ],
         target: OPENPAAS_URL,
         disableHostCheck: true,
