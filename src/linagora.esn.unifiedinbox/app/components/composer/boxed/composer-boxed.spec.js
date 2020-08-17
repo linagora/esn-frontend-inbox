@@ -26,7 +26,7 @@ describe.skip('The inboxComposerBoxed directive', function() {
     }
   });
 
-  beforeEach(module('jadeTemplates', 'linagora.esn.unifiedinbox', function($provide) {
+  beforeEach(angular.mock.module('jadeTemplates', 'linagora.esn.unifiedinbox', function($provide) {
     $provide.value('inboxIdentitiesService', {
       getAllIdentities: function() {
         return $q.when([]);
@@ -34,7 +34,7 @@ describe.skip('The inboxComposerBoxed directive', function() {
     });
   }));
 
-  beforeEach(inject(function(_$compile_, _$rootScope_, _$timeout_) {
+  beforeEach(angular.mock.inject(function(_$compile_, _$rootScope_, _$timeout_) {
     $compile = _$compile_;
     $rootScope = _$rootScope_;
     $timeout = _$timeout_;
@@ -75,7 +75,7 @@ describe.skip('The inboxComposerBoxed directive', function() {
 
     var ESN_BOX_OVERLAY_EVENTS;
 
-    beforeEach(inject(function(_ESN_BOX_OVERLAY_EVENTS_) {
+    beforeEach(angular.mock.inject(function(_ESN_BOX_OVERLAY_EVENTS_) {
       ESN_BOX_OVERLAY_EVENTS = _ESN_BOX_OVERLAY_EVENTS_;
     }));
 

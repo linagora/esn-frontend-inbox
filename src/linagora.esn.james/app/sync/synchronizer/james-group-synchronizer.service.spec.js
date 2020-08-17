@@ -10,9 +10,9 @@ describe('The jamesGroupSynchronizer service', function() {
   var jamesGroupSynchronizer, jamesApiClient;
 
   beforeEach(function() {
-    module('linagora.esn.james');
+    angular.mock.module('linagora.esn.james');
 
-    inject(function(
+    angular.mock.inject(function(
       _$rootScope_,
       _$q_,
       _jamesGroupSynchronizer_,

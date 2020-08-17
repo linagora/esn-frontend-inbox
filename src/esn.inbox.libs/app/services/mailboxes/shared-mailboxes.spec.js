@@ -8,8 +8,8 @@
 
     var $rootScope, inboxSharedMailboxesService, inboxConfigMock, configHiddenSharedCalls, configFoldersSharingCalls, esnUserConfigurationServiceMock, INBOX_HIDDEN_SHAREDMAILBOXES_CONFIG_KEY, INBOX_FOLDERS_SHARING_CONFIG_KEY;
 
-    beforeEach(module('linagora.esn.unifiedinbox'));
-    beforeEach(module(function($provide) {
+    beforeEach(angular.mock.module('linagora.esn.unifiedinbox'));
+    beforeEach(angular.mock.module(function($provide) {
       inboxConfigMock = {};
       configHiddenSharedCalls = 0;
       configFoldersSharingCalls = 0;
@@ -29,7 +29,7 @@
       $provide.value('esnUserConfigurationService', esnUserConfigurationServiceMock);
     }));
 
-    beforeEach(inject(function(_$rootScope_, _inboxSharedMailboxesService_, _INBOX_HIDDEN_SHAREDMAILBOXES_CONFIG_KEY_, _INBOX_FOLDERS_SHARING_CONFIG_KEY_) {
+    beforeEach(angular.mock.inject(function(_$rootScope_, _inboxSharedMailboxesService_, _INBOX_HIDDEN_SHAREDMAILBOXES_CONFIG_KEY_, _INBOX_FOLDERS_SHARING_CONFIG_KEY_) {
       $rootScope = _$rootScope_;
       inboxSharedMailboxesService = _inboxSharedMailboxesService_;
       INBOX_HIDDEN_SHAREDMAILBOXES_CONFIG_KEY = _INBOX_HIDDEN_SHAREDMAILBOXES_CONFIG_KEY_;

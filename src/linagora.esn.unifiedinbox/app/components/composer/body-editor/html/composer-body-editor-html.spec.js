@@ -48,9 +48,9 @@ describe('The inboxComposerBodyEditorHtml component', function() {
     }
   });
 
-  beforeEach(module('jadeTemplates', 'linagora.esn.unifiedinbox'));
+  beforeEach(angular.mock.module('jadeTemplates', 'linagora.esn.unifiedinbox'));
 
-  beforeEach(inject(function(_$q_, _$compile_, _$rootScope_) {
+  beforeEach(angular.mock.inject(function(_$q_, _$compile_, _$rootScope_) {
     $compile = _$compile_;
     $rootScope = _$rootScope_;
     $q = _$q_;

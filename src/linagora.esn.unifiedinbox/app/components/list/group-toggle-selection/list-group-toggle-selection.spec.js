@@ -26,7 +26,7 @@ describe('The inboxListGroupToggleSelection component', function() {
   });
 
   beforeEach(function() {
-    module('jadeTemplates', 'linagora.esn.unifiedinbox', function($provide) {
+    angular.mock.module('jadeTemplates', 'linagora.esn.unifiedinbox', function($provide) {
       $provide.value('inboxFilteredList', {
         list: function() {
           return $rootScope.elements;
@@ -35,7 +35,7 @@ describe('The inboxListGroupToggleSelection component', function() {
     });
   });
 
-  beforeEach(inject(function(_$compile_, _$rootScope_, _inboxSelectionService_, _INBOX_EVENTS_) {
+  beforeEach(angular.mock.inject(function(_$compile_, _$rootScope_, _inboxSelectionService_, _INBOX_EVENTS_) {
     $compile = _$compile_;
     $rootScope = _$rootScope_;
     inboxSelectionService = _inboxSelectionService_;

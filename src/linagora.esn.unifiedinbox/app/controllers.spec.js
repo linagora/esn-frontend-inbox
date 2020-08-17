@@ -37,7 +37,7 @@ describe('The linagora.esn.unifiedinbox module controllers', function() {
     angular.mock.module('esn.notification');
     angular.mock.module('esn.previous-page');
 
-    module('linagora.esn.unifiedinbox', function($provide) {
+    angular.mock.module('linagora.esn.unifiedinbox', function($provide) {
       jmapClient = {
         getVacationResponse: function() {
           return $q.when(new jmapDraft.SetResponse(jmapClient));
@@ -146,7 +146,7 @@ describe('The linagora.esn.unifiedinbox module controllers', function() {
 
     var INBOX_CONTROLLER_LOADING_STATES, inboxFilters, inboxFilteringService, inboxProviders, folder;
 
-    beforeEach(inject(function(_inboxProviders_, _inboxFilteringService_, _inboxFilters_, _inboxMailboxesCache_, _INBOX_CONTROLLER_LOADING_STATES_, _inboxJmapItemService_, _inboxUserQuotaService_) {
+    beforeEach(angular.mock.inject(function(_inboxProviders_, _inboxFilteringService_, _inboxFilters_, _inboxMailboxesCache_, _INBOX_CONTROLLER_LOADING_STATES_, _inboxJmapItemService_, _inboxUserQuotaService_) {
       inboxProviders = _inboxProviders_;
       inboxFilters = _inboxFilters_;
       inboxFilteringService = _inboxFilteringService_;
@@ -1809,7 +1809,7 @@ describe('The linagora.esn.unifiedinbox module controllers', function() {
 
     var inboxSpecialMailboxes, session, inboxSharedMailboxesService;
 
-    beforeEach(inject(function(_inboxSpecialMailboxes_, _session_, _inboxSharedMailboxesService_) {
+    beforeEach(angular.mock.inject(function(_inboxSpecialMailboxes_, _session_, _inboxSharedMailboxesService_) {
       inboxSpecialMailboxes = _inboxSpecialMailboxes_;
       session = _session_;
       inboxSharedMailboxesService = _inboxSharedMailboxesService_;

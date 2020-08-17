@@ -24,16 +24,16 @@ describe('The inboxSidebarUserQuota component', function() {
     }
   });
 
-  beforeEach(module('jadeTemplates', 'linagora.esn.unifiedinbox'));
+  beforeEach(angular.mock.module('jadeTemplates', 'linagora.esn.unifiedinbox'));
 
-  beforeEach(module(function($provide) {
+  beforeEach(angular.mock.module(function($provide) {
     serviceMock = {
       getUserQuotaInfo: sinon.spy(function() { return $q.when({usedStorage: 1e9, maxStorage: 2e9, storageRatio: 0.5}); })
     };
     $provide.value('inboxUserQuotaService', serviceMock);
   }));
 
-  beforeEach(inject(function(_$compile_, _$rootScope_, _$timeout_) {
+  beforeEach(angular.mock.inject(function(_$compile_, _$rootScope_, _$timeout_) {
     $compile = _$compile_;
     $rootScope = _$rootScope_;
     $timeout = _$timeout_;

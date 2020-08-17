@@ -9,14 +9,14 @@ var expect = chai.expect;
 describe('The inboxSidebarUserQuotaController controller', function() {
   var $rootScope, scope, $controller, ctrl, serviceMock, fakeQuotaInfo;
 
-  beforeEach(module('jadeTemplates', 'linagora.esn.unifiedinbox'));
+  beforeEach(angular.mock.module('jadeTemplates', 'linagora.esn.unifiedinbox'));
 
-  beforeEach(module(function($provide) {
+  beforeEach(angular.mock.module(function($provide) {
     serviceMock = { getUserQuotaInfo: sinon.spy(function() { return fakeQuotaInfo || $q.reject(new Error('No quota info available !'));}) };
     $provide.value('inboxUserQuotaService', serviceMock);
   }));
 
-  beforeEach(inject(function(_$rootScope_, _$controller_) {
+  beforeEach(angular.mock.inject(function(_$rootScope_, _$controller_) {
     $rootScope = _$rootScope_;
     $controller = _$controller_;
     scope = $rootScope.$new();

@@ -34,7 +34,7 @@ describe.skip('The newComposerService ', function() {
     config = {};
   });
 
-  beforeEach(inject(function(_$rootScope_, _$state_, _$timeout_, _newComposerService_, _deviceDetector_, _boxOverlayOpener_) {
+  beforeEach(angular.mock.inject(function(_$rootScope_, _$state_, _$timeout_, _newComposerService_, _deviceDetector_, _boxOverlayOpener_) {
     $rootScope = _$rootScope_;
     newComposerService = _newComposerService_;
     deviceDetector = _deviceDetector_;

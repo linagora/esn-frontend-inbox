@@ -31,7 +31,7 @@ describe('The emailBodyService factory', function() {
     });
   });
 
-  beforeEach(inject(function(_emailBodyService_, _$rootScope_, ___) {
+  beforeEach(angular.mock.inject(function(_emailBodyService_, _$rootScope_, ___) {
     $rootScope = _$rootScope_;
     _ = ___;
 

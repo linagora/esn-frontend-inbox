@@ -10,9 +10,9 @@ describe('The JamesDomainAliasController', function() {
   var jamesApiClient;
 
   beforeEach(function() {
-    module('linagora.esn.james');
+    angular.mock.module('linagora.esn.james');
 
-    inject(function(
+    angular.mock.inject(function(
       _$controller_,
       _$rootScope_,
       _$q_,

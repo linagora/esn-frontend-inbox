@@ -10,9 +10,9 @@ describe('The jamesQuotaFormController', function() {
   var JAMES_UNLIMITED_QUOTA;
 
   beforeEach(function() {
-    module('linagora.esn.james');
+    angular.mock.module('linagora.esn.james');
 
-    inject(function(
+    angular.mock.inject(function(
       _$controller_,
       _$rootScope_,
       _JAMES_UNLIMITED_QUOTA_

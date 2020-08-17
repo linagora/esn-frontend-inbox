@@ -8,7 +8,7 @@ describe('The inboxFilteredList factory', function() {
 
   var $rootScope, jmapClient, jmapDraft, inboxFilteringService, inboxFilters, _, inboxFilteredList, esnSearchProvider, inboxHostedMailMessagesProvider, INBOX_EVENTS, PROVIDER_TYPES, counter, inboxConfigMock;
 
-  beforeEach(module('linagora.esn.unifiedinbox', function($provide) {
+  beforeEach(angular.mock.module('linagora.esn.unifiedinbox', function($provide) {
     jmapClient = {
       getMailboxes: function() {
         return $q.when([
@@ -25,7 +25,7 @@ describe('The inboxFilteredList factory', function() {
     });
   }));
 
-  beforeEach(inject(function(_$rootScope_, _jmapDraft_, _inboxFilteringService_, _inboxFilters_, ___, _inboxFilteredList_,
+  beforeEach(angular.mock.inject(function(_$rootScope_, _jmapDraft_, _inboxFilteringService_, _inboxFilters_, ___, _inboxFilteredList_,
                              _esnSearchProvider_,
                              _inboxHostedMailMessagesProvider_, _INBOX_EVENTS_, _PROVIDER_TYPES_) {
     $rootScope = _$rootScope_;

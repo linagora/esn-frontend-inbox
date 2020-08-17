@@ -13,7 +13,7 @@ describe('The inboxComposerController controller', function() {
 
   function InboxDraftMock() {}
 
-  beforeEach(module('jadeTemplates', 'linagora.esn.unifiedinbox', function($provide) {
+  beforeEach(angular.mock.module('jadeTemplates', 'linagora.esn.unifiedinbox', function($provide) {
     $provide.constant('DRAFT_SAVING_DEBOUNCE_DELAY', 0);
     $provide.value('InboxDraft', InboxDraftMock);
     $provide.value('sendEmail', sinon.stub());
@@ -34,7 +34,7 @@ describe('The inboxComposerController controller', function() {
 
   }));
 
-  beforeEach(inject(function(
+  beforeEach(angular.mock.inject(function(
     _$rootScope_,
     _$componentController_,
     _$q_,

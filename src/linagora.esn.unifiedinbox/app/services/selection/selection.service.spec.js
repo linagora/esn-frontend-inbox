@@ -9,9 +9,9 @@ var expect = chai.expect;
 describe('The inboxSelectionService factory', function() {
   var inboxSelectionService, inboxFilteredList;
 
-  beforeEach(module('linagora.esn.unifiedinbox'));
+  beforeEach(angular.mock.module('linagora.esn.unifiedinbox'));
 
-  beforeEach(module(function($provide) {
+  beforeEach(angular.mock.module(function($provide) {
     inboxFilteredList = {
       list: sinon.stub()
     };
@@ -19,7 +19,7 @@ describe('The inboxSelectionService factory', function() {
     $provide.value('inboxFilteredList', inboxFilteredList);
   }));
 
-  beforeEach(inject(function(_inboxSelectionService_) {
+  beforeEach(angular.mock.inject(function(_inboxSelectionService_) {
     inboxSelectionService = _inboxSelectionService_;
   }));
 

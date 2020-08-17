@@ -9,10 +9,10 @@ describe('The inboxFilterDescendantMailboxes filter', function() {
   var _, filter, cache;
 
   beforeEach(function() {
-    module('linagora.esn.unifiedinbox');
+    angular.mock.module('linagora.esn.unifiedinbox');
   });
 
-  beforeEach(inject(function(inboxFilterDescendantMailboxesFilter, inboxMailboxesCache, jmapDraft, ___) {
+  beforeEach(angular.mock.inject(function(inboxFilterDescendantMailboxesFilter, inboxMailboxesCache, jmapDraft, ___) {
     filter = inboxFilterDescendantMailboxesFilter;
     cache = inboxMailboxesCache;
     _ = ___;

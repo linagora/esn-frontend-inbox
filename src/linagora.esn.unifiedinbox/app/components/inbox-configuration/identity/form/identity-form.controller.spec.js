@@ -14,9 +14,9 @@ describe('The inboxIdentityFormController', function() {
     userId = '1';
     validEmails = ['a', 'b', 'c'];
 
-    module('linagora.esn.unifiedinbox');
+    angular.mock.module('linagora.esn.unifiedinbox');
 
-    inject(function(
+    angular.mock.inject(function(
       _$q_,
       _$rootScope_,
       _$controller_,

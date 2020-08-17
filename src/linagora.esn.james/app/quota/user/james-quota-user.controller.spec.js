@@ -13,14 +13,14 @@ describe('The jamesQuotaUserController', function() {
   var user = { _id: 'userId' };
 
   beforeEach(function() {
-    module('linagora.esn.james');
-    module('esn.configuration', function($provide) {
+    angular.mock.module('linagora.esn.james');
+    angular.mock.module('esn.configuration', function($provide) {
       $provide.value('esnConfig', function() {
         return $q.when();
       });
     });
 
-    inject(function(
+    angular.mock.inject(function(
       _$controller_,
       _$rootScope_,
       _$q_,

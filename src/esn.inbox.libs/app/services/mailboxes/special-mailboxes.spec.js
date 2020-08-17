@@ -8,9 +8,9 @@ describe('The inboxSpecialMailboxes factory', function() {
 
   var inboxSpecialMailboxes;
 
-  beforeEach(module('linagora.esn.unifiedinbox'));
+  beforeEach(angular.mock.module('linagora.esn.unifiedinbox'));
 
-  beforeEach(inject(function(_inboxSpecialMailboxes_) {
+  beforeEach(angular.mock.inject(function(_inboxSpecialMailboxes_) {
     inboxSpecialMailboxes = _inboxSpecialMailboxes_;
   }));
 

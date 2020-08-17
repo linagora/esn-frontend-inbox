@@ -9,19 +9,19 @@ describe('The InboxForwardingsFormController controller', function() {
   var inboxConfigMock;
 
   beforeEach(function() {
-    module('linagora.esn.unifiedinbox');
+    angular.mock.module('linagora.esn.unifiedinbox');
 
     inboxConfigMock = function(key, defaultValue) {
       return $q.when(defaultValue);
     };
 
-    module(function($provide) {
+    angular.mock.module(function($provide) {
       $provide.value('inboxConfig', inboxConfigMock);
     });
   });
 
   beforeEach(function() {
-    inject(function(
+    angular.mock.inject(function(
       _$rootScope_,
       _$controller_
     ) {

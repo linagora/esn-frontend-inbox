@@ -11,7 +11,7 @@ describe('The JMAP plugin', function() {
   beforeEach(function() {
     mailbox = { name: 'mailboxName', role: {} };
 
-    module('linagora.esn.unifiedinbox', function($provide) {
+    angular.mock.module('linagora.esn.unifiedinbox', function($provide) {
       $provide.value('inboxMailboxesService', {
         assignMailbox: function() {
           return $q.when(mailbox);
@@ -20,7 +20,7 @@ describe('The JMAP plugin', function() {
     });
   });
 
-  beforeEach(inject(function(_$rootScope_, _inboxPlugins_) {
+  beforeEach(angular.mock.inject(function(_$rootScope_, _inboxPlugins_) {
     $rootScope = _$rootScope_;
     inboxPlugins = _inboxPlugins_;
   }));

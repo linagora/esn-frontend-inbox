@@ -8,10 +8,10 @@ describe('The Thread run block', function() {
   var jmapDraft, _;
 
   beforeEach(function() {
-    module('linagora.esn.unifiedinbox');
+    angular.mock.module('linagora.esn.unifiedinbox');
   });
 
-  beforeEach(inject(function(_jmapDraft_, ___) {
+  beforeEach(angular.mock.inject(function(_jmapDraft_, ___) {
     jmapDraft = _jmapDraft_;
     _ = ___;
   }));

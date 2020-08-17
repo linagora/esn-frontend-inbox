@@ -8,9 +8,9 @@ describe('The inboxFilters service', function() {
 
   var inboxFilters;
 
-  beforeEach(module('linagora.esn.unifiedinbox'));
+  beforeEach(angular.mock.module('linagora.esn.unifiedinbox'));
 
-  beforeEach(inject(function(_inboxFilters_) {
+  beforeEach(angular.mock.inject(function(_inboxFilters_) {
     inboxFilters = _inboxFilters_;
   }));
 

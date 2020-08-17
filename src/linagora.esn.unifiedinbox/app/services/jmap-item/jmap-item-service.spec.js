@@ -10,9 +10,9 @@ describe('The inboxJmapItemService service', function() {
       notificationFactory, counter, infiniteListService, inboxSelectionService, INFINITE_LIST_EVENTS, INBOX_EVENTS,
       inboxConfigMock, inboxMailboxesService, inboxFilteredList;
 
-  beforeEach(module('linagora.esn.unifiedinbox'));
+  beforeEach(angular.mock.module('linagora.esn.unifiedinbox'));
 
-  beforeEach(module(function($provide) {
+  beforeEach(angular.mock.module(function($provide) {
     counter = 0;
     jmapClientMock = {
       setMessages: sinon.spy(function() {
@@ -52,7 +52,7 @@ describe('The inboxJmapItemService service', function() {
     });
   }));
 
-  beforeEach(inject(function(_$rootScope_, _jmapDraft_, ___, _inboxJmapItemService_, _notificationFactory_,
+  beforeEach(angular.mock.inject(function(_$rootScope_, _jmapDraft_, ___, _inboxJmapItemService_, _notificationFactory_,
                              _infiniteListService_, _inboxSelectionService_, _INFINITE_LIST_EVENTS_, _INBOX_EVENTS_,
                              _inboxMailboxesService_, _inboxMailboxesCache_, _inboxFilteredList_) {
     $rootScope = _$rootScope_;
@@ -212,7 +212,7 @@ describe('The inboxJmapItemService service', function() {
 
     var inboxMailboxesService, mailbox;
 
-    beforeEach(inject(function(_inboxMailboxesService_) {
+    beforeEach(angular.mock.inject(function(_inboxMailboxesService_) {
       inboxMailboxesService = _inboxMailboxesService_;
 
       inboxMailboxesService.updateCountersWhenMovingMessage = sinon.spy(inboxMailboxesService.updateCountersWhenMovingMessage);
@@ -655,7 +655,7 @@ describe('The inboxJmapItemService service', function() {
     var inboxMailboxesService, inboxMailboxesCache, inboxFilteredList, notificationFactory,
         perPage, messageIdsList, mailboxId;
 
-    beforeEach(inject(function(_inboxMailboxesService_, _inboxMailboxesCache_, _inboxFilteredList_) {
+    beforeEach(angular.mock.inject(function(_inboxMailboxesService_, _inboxMailboxesCache_, _inboxFilteredList_) {
       inboxMailboxesService = _inboxMailboxesService_;
       inboxMailboxesCache = _inboxMailboxesCache_;
       inboxFilteredList = _inboxFilteredList_;
@@ -734,7 +734,7 @@ describe('The inboxJmapItemService service', function() {
     var _, unreadFlag, state, inboxMailboxesService, inboxMailboxesCache, inboxFilteredList,
     perPage, messageIdsList, mailboxId;
 
-    beforeEach(inject(function(___, _inboxMailboxesService_, _inboxMailboxesCache_, _inboxFilteredList_) {
+    beforeEach(angular.mock.inject(function(___, _inboxMailboxesService_, _inboxMailboxesCache_, _inboxFilteredList_) {
       inboxMailboxesService = _inboxMailboxesService_;
       inboxMailboxesCache = _inboxMailboxesCache_;
       inboxFilteredList = _inboxFilteredList_;

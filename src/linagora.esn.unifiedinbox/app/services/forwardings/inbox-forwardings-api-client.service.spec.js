@@ -5,9 +5,9 @@ describe('The inboxForwardingClient service', function() {
   var $httpBackend;
   var inboxForwardingClient;
 
-  beforeEach(module('linagora.esn.unifiedinbox'));
+  beforeEach(angular.mock.module('linagora.esn.unifiedinbox'));
 
-  beforeEach(inject(function(_$httpBackend_, _inboxForwardingClient_) {
+  beforeEach(angular.mock.inject(function(_$httpBackend_, _inboxForwardingClient_) {
     $httpBackend = _$httpBackend_;
     inboxForwardingClient = _inboxForwardingClient_;
   }));

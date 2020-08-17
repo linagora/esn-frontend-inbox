@@ -10,9 +10,9 @@ describe('The inboxAttachmentJmap service', function() {
   var inboxAttachmentJmap;
   var INBOX_ATTACHMENT_TYPE_JMAP;
 
-  beforeEach(module('linagora.esn.unifiedinbox'));
+  beforeEach(angular.mock.module('linagora.esn.unifiedinbox'));
 
-  beforeEach(inject(function(_$rootScope_, _$q_, _inboxAttachmentJmap_, _INBOX_ATTACHMENT_TYPE_JMAP_) {
+  beforeEach(angular.mock.inject(function(_$rootScope_, _$q_, _inboxAttachmentJmap_, _INBOX_ATTACHMENT_TYPE_JMAP_) {
     $rootScope = _$rootScope_;
     $q = _$q_;
     inboxAttachmentJmap = _inboxAttachmentJmap_;
@@ -23,7 +23,7 @@ describe('The inboxAttachmentJmap service', function() {
     var fileUploadService;
     var uploaderMock;
 
-    beforeEach(inject(function(_fileUploadService_) {
+    beforeEach(angular.mock.inject(function(_fileUploadService_) {
       fileUploadService = _fileUploadService_;
 
       uploaderMock = {
@@ -159,7 +159,7 @@ describe('The inboxAttachmentJmap service', function() {
   describe('The fileToAttachment fn', function() {
     var jmapDraft;
 
-    beforeEach(inject(function(_jmapDraft_) {
+    beforeEach(angular.mock.inject(function(_jmapDraft_) {
       jmapDraft = _jmapDraft_;
     }));
 

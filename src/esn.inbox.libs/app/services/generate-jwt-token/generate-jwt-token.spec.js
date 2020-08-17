@@ -8,9 +8,9 @@ describe('The generateJwtToken service', function() {
 
   var $httpBackend, generateJwtToken;
 
-  beforeEach(module('linagora.esn.unifiedinbox'));
+  beforeEach(angular.mock.module('linagora.esn.unifiedinbox'));
 
-  beforeEach(inject(function(_$httpBackend_, _generateJwtToken_) {
+  beforeEach(angular.mock.inject(function(_$httpBackend_, _generateJwtToken_) {
     $httpBackend = _$httpBackend_;
 
     generateJwtToken = _generateJwtToken_;

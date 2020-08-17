@@ -12,10 +12,10 @@ describe('The linagora.esn.unifiedinbox List module directives', function() {
   beforeEach(function() {
     angular.mock.module('esn.core');
     angular.mock.module('linagora.esn.unifiedinbox');
-    module('jadeTemplates');
+    angular.mock.module('jadeTemplates');
   });
 
-  beforeEach(module(function($provide) {
+  beforeEach(angular.mock.module(function($provide) {
     inboxConfigMock = {};
 
     $provide.value('inboxConfig', function(key, defaultValue) {
@@ -29,7 +29,7 @@ describe('The linagora.esn.unifiedinbox List module directives', function() {
     });
   }));
 
-  beforeEach(inject(function(_$compile_, _$rootScope_, _inboxJmapItemService_, _infiniteListService_, _inboxSelectionService_) {
+  beforeEach(angular.mock.inject(function(_$compile_, _$rootScope_, _inboxJmapItemService_, _infiniteListService_, _inboxSelectionService_) {
     $compile = _$compile_;
     $rootScope = _$rootScope_;
     inboxJmapItemService = _inboxJmapItemService_;

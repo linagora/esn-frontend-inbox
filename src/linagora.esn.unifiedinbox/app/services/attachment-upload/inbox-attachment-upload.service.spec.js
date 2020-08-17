@@ -13,7 +13,7 @@ describe('The inboxAttachmentUploadService service', function() {
   var DEFAULT_FILE_TYPE;
   var DEFAULT_MAX_SIZE_UPLOAD;
 
-  beforeEach(module('linagora.esn.unifiedinbox', 'esn.attachments-selector', 'jadeTemplates', function($provide) {
+  beforeEach(angular.mock.module('linagora.esn.unifiedinbox', 'esn.attachments-selector', 'jadeTemplates', function($provide) {
     $provide.value('inboxConfig', function(key, defaultValue) {
       return $q.when(defaultValue);
     });
@@ -27,7 +27,7 @@ describe('The inboxAttachmentUploadService service', function() {
     });
   }));
 
-  beforeEach(inject(function(
+  beforeEach(angular.mock.inject(function(
     _$rootScope_,
     _inboxAttachmentUploadService_,
     _inboxAttachmentProviderRegistry_,

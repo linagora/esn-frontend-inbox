@@ -14,15 +14,15 @@ describe('The inboxIdentityEditController', function() {
     userId = 'userId';
     identity = { foo: 'bar' };
 
-    module('linagora.esn.unifiedinbox');
+    angular.mock.module('linagora.esn.unifiedinbox');
 
-    module(function($provide) {
+    angular.mock.module(function($provide) {
       $provide.value('asyncAction', function(message, action) {
         return action();
       });
     });
 
-    inject(function(
+    angular.mock.inject(function(
       _$q_,
       _$rootScope_,
       _$controller_,

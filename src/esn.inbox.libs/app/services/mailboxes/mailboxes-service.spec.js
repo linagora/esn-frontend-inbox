@@ -9,7 +9,7 @@ describe('The inboxMailboxesService factory', function() {
   var inboxMailboxesCache, inboxMailboxesService, jmapClient, $rootScope, jmapDraft, notificationFactory,
     inboxConfigMock, INBOX_HIDDEN_SHAREDMAILBOXES_CONFIG_KEY, INBOX_ROLE_NAMESPACE_TYPES, INBOX_EVENTS;
 
-  beforeEach(module('linagora.esn.unifiedinbox', function($provide) {
+  beforeEach(angular.mock.module('linagora.esn.unifiedinbox', function($provide) {
     jmapClient = {
       getMailboxes: function() { return $q.when([]); }
     };
@@ -28,7 +28,7 @@ describe('The inboxMailboxesService factory', function() {
     });
   }));
 
-  beforeEach(inject(function(_inboxMailboxesService_, _$state_, _$rootScope_,
+  beforeEach(angular.mock.inject(function(_inboxMailboxesService_, _$state_, _$rootScope_,
                              _inboxMailboxesCache_, _jmapDraft_, _notificationFactory_, _INBOX_EVENTS_,
                               _INBOX_HIDDEN_SHAREDMAILBOXES_CONFIG_KEY_, _INBOX_ROLE_NAMESPACE_TYPES_) {
     inboxMailboxesCache = _inboxMailboxesCache_;
@@ -490,7 +490,7 @@ describe('The inboxMailboxesService factory', function() {
 
     var inboxMailboxesCache;
 
-    beforeEach(inject(function(_inboxSpecialMailboxes_, _inboxMailboxesCache_) {
+    beforeEach(angular.mock.inject(function(_inboxSpecialMailboxes_, _inboxMailboxesCache_) {
       inboxMailboxesCache = _inboxMailboxesCache_;
     }));
 
@@ -546,7 +546,7 @@ describe('The inboxMailboxesService factory', function() {
 
     var inboxMailboxesCache, inboxSpecialMailboxes, draftMailbox, outboxMailbox;
 
-    beforeEach(inject(function(_inboxMailboxesCache_, _inboxSpecialMailboxes_) {
+    beforeEach(angular.mock.inject(function(_inboxMailboxesCache_, _inboxSpecialMailboxes_) {
       inboxMailboxesCache = _inboxMailboxesCache_;
       inboxSpecialMailboxes = _inboxSpecialMailboxes_;
 
@@ -745,7 +745,7 @@ describe('The inboxMailboxesService factory', function() {
 
     var inboxSpecialMailboxes;
 
-    beforeEach(inject(function(_inboxSpecialMailboxes_) {
+    beforeEach(angular.mock.inject(function(_inboxSpecialMailboxes_) {
       inboxSpecialMailboxes = _inboxSpecialMailboxes_;
     }));
 
@@ -1252,7 +1252,7 @@ describe('The inboxMailboxesService factory', function() {
       jmapClient.getMailboxes = function() {
         return $q.when([sharedInbox, personalInbox]);
       };
-    });
+    }); 
 
     it('should resolve with nothing if the Mailbox is not found', function(done) {
       jmapClient.getMailboxes = _.constant($q.when([sharedInbox]));

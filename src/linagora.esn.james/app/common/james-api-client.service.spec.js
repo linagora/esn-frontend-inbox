@@ -5,9 +5,9 @@ describe('The jamesApiClient service', function() {
   var jamesApiClient;
 
   beforeEach(function() {
-    module('linagora.esn.james');
+    angular.mock.module('linagora.esn.james');
 
-    inject(function(_$httpBackend_, _jamesApiClient_) {
+    angular.mock.inject(function(_$httpBackend_, _jamesApiClient_) {
       $httpBackend = _$httpBackend_;
       jamesApiClient = _jamesApiClient_;
     });

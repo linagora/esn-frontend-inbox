@@ -8,7 +8,7 @@ describe('The InboxDraft factory', function() {
 
   var InboxDraft, notificationFactory, jmapClient, emailBodyService, $rootScope, INBOX_EVENTS;
 
-  beforeEach(module('linagora.esn.unifiedinbox', 'jadeTemplates', function($provide) {
+  beforeEach(angular.mock.module('linagora.esn.unifiedinbox', 'jadeTemplates', function($provide) {
     jmapClient = {};
     notificationFactory = {
       strongInfo: sinon.stub().returns({ close: angular.noop }),
@@ -38,7 +38,7 @@ describe('The InboxDraft factory', function() {
     });
   }));
 
-  beforeEach(inject(function(_$rootScope_, _InboxDraft_, _INBOX_EVENTS_) {
+  beforeEach(angular.mock.inject(function(_$rootScope_, _InboxDraft_, _INBOX_EVENTS_) {
     InboxDraft = _InboxDraft_;
     $rootScope = _$rootScope_;
     INBOX_EVENTS = _INBOX_EVENTS_;
@@ -387,7 +387,7 @@ describe('The InboxDraft factory', function() {
 
     var INBOX_EVENTS;
 
-    beforeEach(inject(function(_INBOX_EVENTS_) {
+    beforeEach(angular.mock.inject(function(_INBOX_EVENTS_) {
       INBOX_EVENTS = _INBOX_EVENTS_;
     }));
 

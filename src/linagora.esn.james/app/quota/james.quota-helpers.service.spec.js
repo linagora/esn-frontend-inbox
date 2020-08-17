@@ -11,7 +11,7 @@ describe('The jamesQuotaHelpers service', function() {
   beforeEach(function() {
     angular.mock.module('linagora.esn.james');
 
-    inject(function(_jamesQuotaHelpers_, _JAMES_UNLIMITED_QUOTA_) {
+    angular.mock.inject(function(_jamesQuotaHelpers_, _JAMES_UNLIMITED_QUOTA_) {
       jamesQuotaHelpers = _jamesQuotaHelpers_;
       JAMES_UNLIMITED_QUOTA = _JAMES_UNLIMITED_QUOTA_;
     });

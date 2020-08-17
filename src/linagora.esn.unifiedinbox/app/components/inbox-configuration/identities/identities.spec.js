@@ -18,8 +18,8 @@ describe('The inboxIdentities component', function() {
   }
 
   beforeEach(function() {
-    module('jadeTemplates');
-    module('linagora.esn.unifiedinbox', function($provide) {
+    angular.mock.module('jadeTemplates');
+    angular.mock.module('linagora.esn.unifiedinbox', function($provide) {
       $provide.value('inboxIdentitiesService', {
         getAllIdentities: function() {
           return $q.when([{ uuid: 'default' }, { uuid: 'customIdentity1 '}]); // Two identities
@@ -34,7 +34,7 @@ describe('The inboxIdentities component', function() {
     });
   });
 
-  beforeEach(inject(function(_$compile_, _$rootScope_) {
+  beforeEach(angular.mock.inject(function(_$compile_, _$rootScope_) {
     $compile = _$compile_;
     $rootScope = _$rootScope_;
   }));

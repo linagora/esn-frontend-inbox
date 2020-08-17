@@ -10,10 +10,10 @@ describe.skip('The inboxMailtoParser factory', function() {
   var inboxMailtoParser;
 
   beforeEach(function() {
-    module('linagora.esn.unifiedinbox');
+    angular.mock.module('linagora.esn.unifiedinbox');
   });
 
-  beforeEach(inject(function(_inboxMailtoParser_) {
+  beforeEach(angular.mock.inject(function(_inboxMailtoParser_) {
     inboxMailtoParser = _inboxMailtoParser_;
   }));
 

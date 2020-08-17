@@ -14,7 +14,7 @@ describe('The linagora.esn.unifiedinbox Main module directives', function() {
       $httpBackend, inboxCustomRoleMailboxService;
 
   beforeEach(function() {
-    module('esn.i18n', function($translateProvider) {
+    angular.mock.module('esn.i18n', function($translateProvider) {
       $translateProvider.useInterpolation('esnI18nInterpolator');
     });
     angular.module('esn.iframe-resizer-wrapper', []);
@@ -29,10 +29,10 @@ describe('The linagora.esn.unifiedinbox Main module directives', function() {
     angular.mock.module('esn.datetime', function($provide) {
       $provide.constant('ESN_DATETIME_DEFAULT_TIMEZONE', 'UTC');
     });
-    module('jadeTemplates');
+    angular.mock.module('jadeTemplates');
   });
 
-  beforeEach(module(function($provide) {
+  beforeEach(angular.mock.module(function($provide) {
     isMobile = false;
     windowMock = {
       open: sinon.spy()
@@ -83,7 +83,7 @@ describe('The linagora.esn.unifiedinbox Main module directives', function() {
     });
   }));
 
-  beforeEach(inject(function(_$compile_, _$rootScope_, _$timeout_, _$stateParams_, _$templateCache_, _$httpBackend_, session,
+  beforeEach(angular.mock.inject(function(_$compile_, _$rootScope_, _$timeout_, _$stateParams_, _$templateCache_, _$httpBackend_, session,
                              _inboxJmapItemService_, _inboxPlugins_, ___, _inboxCustomRoleMailboxService_, _INBOX_EVENTS_) {
     $compile = _$compile_;
     $rootScope = _$rootScope_;
@@ -139,7 +139,7 @@ describe('The linagora.esn.unifiedinbox Main module directives', function() {
 
     var newComposerService;
 
-    beforeEach(inject(function(_newComposerService_) {
+    beforeEach(angular.mock.inject(function(_newComposerService_) {
       newComposerService = _newComposerService_;
     }));
 
@@ -160,7 +160,7 @@ describe('The linagora.esn.unifiedinbox Main module directives', function() {
 
     var newComposerService, emailElement;
 
-    beforeEach(inject(function(_newComposerService_) {
+    beforeEach(angular.mock.inject(function(_newComposerService_) {
       newComposerService = _newComposerService_;
     }));
 
@@ -369,7 +369,7 @@ describe('The linagora.esn.unifiedinbox Main module directives', function() {
       describe('The onDrop function', function() {
         var inboxJmapItemService;
 
-        beforeEach(inject(function(_inboxJmapItemService_) {
+        beforeEach(angular.mock.inject(function(_inboxJmapItemService_) {
           inboxJmapItemService = _inboxJmapItemService_;
 
           inboxJmapItemService.moveMultipleItems = sinon.spy(function() {
@@ -392,7 +392,7 @@ describe('The linagora.esn.unifiedinbox Main module directives', function() {
 
         var inboxMailboxesService;
 
-        beforeEach(inject(function(_inboxMailboxesService_) {
+        beforeEach(angular.mock.inject(function(_inboxMailboxesService_) {
           inboxMailboxesService = _inboxMailboxesService_;
           inboxMailboxesService.canMoveMessage = sinon.spy(function() {
             return true;
@@ -436,7 +436,7 @@ describe('The linagora.esn.unifiedinbox Main module directives', function() {
   describe('The inboxFab directive', function() {
     var newComposerService;
 
-    beforeEach(inject(function(_newComposerService_) {
+    beforeEach(angular.mock.inject(function(_newComposerService_) {
       newComposerService = _newComposerService_;
     }));
 
@@ -976,7 +976,7 @@ describe('The linagora.esn.unifiedinbox Main module directives', function() {
 
     var session;
 
-    beforeEach(inject(function(_session_) {
+    beforeEach(angular.mock.inject(function(_session_) {
       session = _session_;
     }));
 
@@ -1100,7 +1100,7 @@ describe('The linagora.esn.unifiedinbox Main module directives', function() {
 
     var filters;
 
-    beforeEach(inject(function(inboxFilters) {
+    beforeEach(angular.mock.inject(function(inboxFilters) {
       filters = inboxFilters;
     }));
 
@@ -1127,7 +1127,7 @@ describe('The linagora.esn.unifiedinbox Main module directives', function() {
 
     var filters;
 
-    beforeEach(inject(function(inboxFilters) {
+    beforeEach(angular.mock.inject(function(inboxFilters) {
       filters = inboxFilters;
     }));
 
@@ -1181,7 +1181,7 @@ describe('The linagora.esn.unifiedinbox Main module directives', function() {
       };
     });
 
-    beforeEach(inject(function(___) {
+    beforeEach(angular.mock.inject(function(___) {
       _ = ___;
     }));
 

@@ -15,9 +15,9 @@ describe('The inboxIdentitiesController', function() {
     identities = [{ a: 1 }, { b: 2 }];
     user = { _id: 'userId' };
 
-    module('linagora.esn.unifiedinbox');
+    angular.mock.module('linagora.esn.unifiedinbox');
 
-    inject(function(
+    angular.mock.inject(function(
       _$q_,
       _$rootScope_,
       _$controller_,

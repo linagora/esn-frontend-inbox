@@ -37,7 +37,7 @@ describe('The inboxPreferencesMailto component', function() {
   });
 
   beforeEach(function() {
-    module('jadeTemplates', 'linagora.esn.unifiedinbox', function($provide) {
+    angular.mock.module('jadeTemplates', 'linagora.esn.unifiedinbox', function($provide) {
       $provide.decorator('$window', function($delegate) {
         $delegate.navigator.unregisterProtocolHandler = sinon.spy();
         $delegate.navigator.registerProtocolHandler = sinon.spy();
@@ -57,7 +57,7 @@ describe('The inboxPreferencesMailto component', function() {
     });
   });
 
-  beforeEach(inject(function(_$window_, _$compile_, _$rootScope_, _esnUserConfigurationService_) {
+  beforeEach(angular.mock.inject(function(_$window_, _$compile_, _$rootScope_, _esnUserConfigurationService_) {
     $window = _$window_;
     $compile = _$compile_;
     $rootScope = _$rootScope_;
