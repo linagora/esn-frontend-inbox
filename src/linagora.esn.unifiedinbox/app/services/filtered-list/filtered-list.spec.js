@@ -6,7 +6,7 @@ var expect = chai.expect;
 
 describe('The inboxFilteredList factory', function() {
 
-  var $rootScope, jmapClient, jmapDraft, inboxFilteringService, inboxFilters, _, inboxFilteredList, esnSearchProvider, inboxHostedMailMessagesProvider, INBOX_EVENTS, PROVIDER_TYPES, counter, inboxConfigMock;
+  var $rootScope, jmapClient, jmapDraft, inboxFilteringService, inboxFilters, inboxFilteredList, esnSearchProvider, inboxHostedMailMessagesProvider, INBOX_EVENTS, PROVIDER_TYPES, counter, inboxConfigMock;
 
   beforeEach(angular.mock.module('linagora.esn.unifiedinbox', function($provide) {
     jmapClient = {
@@ -25,14 +25,13 @@ describe('The inboxFilteredList factory', function() {
     });
   }));
 
-  beforeEach(angular.mock.inject(function(_$rootScope_, _jmapDraft_, _inboxFilteringService_, _inboxFilters_, ___, _inboxFilteredList_,
+  beforeEach(angular.mock.inject(function(_$rootScope_, _jmapDraft_, _inboxFilteringService_, _inboxFilters_, _inboxFilteredList_,
                              _esnSearchProvider_,
                              _inboxHostedMailMessagesProvider_, _INBOX_EVENTS_, _PROVIDER_TYPES_) {
     $rootScope = _$rootScope_;
     jmapDraft = _jmapDraft_;
     inboxFilteringService = _inboxFilteringService_;
     inboxFilters = _inboxFilters_;
-    _ = ___;
     inboxFilteredList = _inboxFilteredList_;
     inboxHostedMailMessagesProvider = _inboxHostedMailMessagesProvider_;
     esnSearchProvider = _esnSearchProvider_;

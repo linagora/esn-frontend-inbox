@@ -10,7 +10,7 @@ describe('The linagora.esn.unifiedinbox Main module directives', function() {
   var $compile, $rootScope, $scope, $timeout, $templateCache, element, jmapClient, inboxPlugins,
       iFrameResize = angular.noop, elementScrollService, $stateParams, $dropdown,
       isMobile, searchService, windowMock, fakeNotification,
-      sendEmailFakePromise, inboxConfigMock, inboxJmapItemService, _, INBOX_EVENTS,
+      sendEmailFakePromise, inboxConfigMock, inboxJmapItemService, INBOX_EVENTS,
       $httpBackend, inboxCustomRoleMailboxService;
 
   beforeEach(function() {
@@ -83,7 +83,7 @@ describe('The linagora.esn.unifiedinbox Main module directives', function() {
   }));
 
   beforeEach(angular.mock.inject(function(_$compile_, _$rootScope_, _$timeout_, _$stateParams_, _$templateCache_, _$httpBackend_, session,
-                             _inboxJmapItemService_, _inboxPlugins_, ___, _inboxCustomRoleMailboxService_, _INBOX_EVENTS_) {
+                             _inboxJmapItemService_, _inboxPlugins_, _inboxCustomRoleMailboxService_, _INBOX_EVENTS_) {
     $compile = _$compile_;
     $rootScope = _$rootScope_;
     $timeout = _$timeout_;
@@ -93,7 +93,6 @@ describe('The linagora.esn.unifiedinbox Main module directives', function() {
     inboxJmapItemService = _inboxJmapItemService_;
     inboxPlugins = _inboxPlugins_;
     inboxCustomRoleMailboxService = _inboxCustomRoleMailboxService_;
-    _ = ___;
     INBOX_EVENTS = _INBOX_EVENTS_;
 
     // in the mailbox-display we put a folder-settings component which use an icon provider that load this icon set
@@ -1169,7 +1168,7 @@ describe('The linagora.esn.unifiedinbox Main module directives', function() {
 
   describe('The inboxEmailerDisplay directive', function() {
 
-    var email, _;
+    var email;
 
     beforeEach(function() {
       email = {
@@ -1179,10 +1178,6 @@ describe('The linagora.esn.unifiedinbox Main module directives', function() {
         bcc: [{ name: 'John', email: 'john@email', resolve: angular.noop }]
       };
     });
-
-    beforeEach(angular.mock.inject(function(___) {
-      _ = ___;
-    }));
 
     it('should initialize by exposing scope attributes properly', function() {
       $scope.email = email;

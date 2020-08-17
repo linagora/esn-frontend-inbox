@@ -9,7 +9,7 @@ describe('The linagora.esn.unifiedinbox module controllers', function() {
   var $stateParams, $rootScope, scope, $controller, $timeout, $interval,
       jmapClient, jmapDraft, notificationFactory, Offline = {},
       newComposerService = {}, $state, $modal, $hide, navigateTo, inboxPlugins, inboxFilteredList,
-      inboxMailboxesService, inboxJmapItemService, _, fileUploadMock, config, moment, inboxMailboxesCache,
+      inboxMailboxesService, inboxJmapItemService, fileUploadMock, config, moment, inboxMailboxesCache,
       esnPreviousPage, inboxFilterDescendantMailboxesFilter, inboxSelectionService,
       inboxUserQuotaService, inboxUnavailableAccountNotifier, inboxUtils;
   var JMAP_GET_MESSAGES_VIEW, INBOX_EVENTS, DEFAULT_MAX_SIZE_UPLOAD, INFINITE_LIST_POLLING_INTERVAL;
@@ -100,7 +100,7 @@ describe('The linagora.esn.unifiedinbox module controllers', function() {
   });
 
   beforeEach(angular.mock.inject(function(_$rootScope_, _$controller_, _$timeout_, _$interval_, _jmapDraft_, _inboxPlugins_, _inboxFilteredList_,
-                                          _inboxMailboxesService_, ___, _JMAP_GET_MESSAGES_VIEW_,
+                                          _inboxMailboxesService_, _JMAP_GET_MESSAGES_VIEW_,
                                           _DEFAULT_FILE_TYPE_, _moment_, _DEFAULT_MAX_SIZE_UPLOAD_, _inboxJmapItemService_,
                                           _INBOX_EVENTS_, _inboxMailboxesCache_, _esnPreviousPage_, _inboxSelectionService_, _inboxUnavailableAccountNotifier_,
                                           _INFINITE_LIST_POLLING_INTERVAL_, _inboxUtils_) {
@@ -113,7 +113,6 @@ describe('The linagora.esn.unifiedinbox module controllers', function() {
     inboxJmapItemService = _inboxJmapItemService_;
     inboxMailboxesCache = _inboxMailboxesCache_;
     inboxUnavailableAccountNotifier = _inboxUnavailableAccountNotifier_;
-    _ = ___;
     JMAP_GET_MESSAGES_VIEW = _JMAP_GET_MESSAGES_VIEW_;
     DEFAULT_MAX_SIZE_UPLOAD = _DEFAULT_MAX_SIZE_UPLOAD_;
     INBOX_EVENTS = _INBOX_EVENTS_;

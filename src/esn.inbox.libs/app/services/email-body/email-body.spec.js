@@ -6,7 +6,7 @@ var expect = chai.expect;
 
 describe('The emailBodyService factory', function() {
 
-  var $rootScope, emailBodyService, _, isMobile;
+  var $rootScope, emailBodyService, isMobile;
 
   beforeEach(function() {
     angular.mock.module('linagora.esn.unifiedinbox', function($provide) {
@@ -31,10 +31,8 @@ describe('The emailBodyService factory', function() {
     });
   });
 
-  beforeEach(angular.mock.inject(function(_emailBodyService_, _$rootScope_, ___) {
+  beforeEach(angular.mock.inject(function(_emailBodyService_, _$rootScope_) {
     $rootScope = _$rootScope_;
-    _ = ___;
-
     emailBodyService = _emailBodyService_;
   }));
 

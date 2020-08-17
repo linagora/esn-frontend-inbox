@@ -6,7 +6,7 @@ require('./make-selectable.js');
 
   angular.module('linagora.esn.unifiedinbox')
 
-    .run(function(jmapDraft, inboxMakeSelectable, _) {
+    .run(function(jmapDraft, inboxMakeSelectable) {
       function _defineFlagProperty(flag) {
         Object.defineProperty(jmapDraft.Thread.prototype, flag, {
           configurable: true,
