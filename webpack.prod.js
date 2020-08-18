@@ -24,7 +24,8 @@ module.exports = merge(commons, {
           path.resolve(__dirname, "node_modules/esn-frontend-calendar/src/esn.resource.libs"),
           path.resolve(__dirname, "node_modules/esn-frontend-mailto-handler"),
           path.resolve(__dirname, "node_modules/esn-frontend-linshare"),
-          path.resolve(__dirname, "node_modules/esn-frontend-inbox-linshare")
+          path.resolve(__dirname, "node_modules/esn-frontend-inbox-linshare"),
+          path.resolve(__dirname, "node_modules/esn-frontend-videoconference-calendar")
         ],
         exclude: [
           path.resolve(__dirname, "node_modules/esn-frontend-common-libs/src/frontend/components"),
