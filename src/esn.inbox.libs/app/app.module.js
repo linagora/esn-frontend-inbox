@@ -19,6 +19,7 @@ require('esn-frontend-common-libs/src/frontend/js/modules/http.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/i18n/i18n.module.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/session.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/user-configuration/user-configuration.module.js');
+require('jmap-draft-client/dist/jmap-draft-client.js');
 
 require('./app.config');
 require('./app.constants');
