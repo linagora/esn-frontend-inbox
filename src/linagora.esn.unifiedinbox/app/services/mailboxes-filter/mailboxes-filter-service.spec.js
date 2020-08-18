@@ -8,10 +8,6 @@ describe('The inboxMailboxesFilterService factory', function() {
   var $rootScope, asyncJmapAction, jmapClient, inboxMailboxesFilterService, JMAP_FILTER, jmapDraft;
 
   beforeEach(function() {
-    angular.mock.module('esn.i18n', function($translateProvider) {
-      $translateProvider.useInterpolation('esnI18nInterpolator');
-    });
-
     angular.mock.module('linagora.esn.unifiedinbox', function($provide) {
       jmapClient = {
         getFilter: sinon.stub().callsFake(function() { // $q is not injected at this stage, `.returns` is unusable
