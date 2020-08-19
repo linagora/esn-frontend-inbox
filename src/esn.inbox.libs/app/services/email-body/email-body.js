@@ -2,7 +2,7 @@
 
 angular.module('esn.inbox.libs')
 
-  .factory('emailBodyService', function($interpolate, $templateRequest, deviceDetector) {
+  .factory('emailBodyService', function($interpolate, $templateRequest, deviceDetector, esnI18nService) {
     return {
       bodyProperty: supportsRichtext() ? 'htmlBody' : 'textBody',
       quote: quote,
@@ -29,7 +29,12 @@ angular.module('esn.inbox.libs')
     }
 
     function interpolate(email, template) {
-      return $interpolate(template)({ email: email, marker: '\x00' });
+      return $interpolate(template)({
+        email,
+        marker: '\x00',
+        toPrefix: `${esnI18nService.translate('To')}: `,
+        ccPrefix: `${esnI18nService.translate('Cc')}: `
+      });
     }
 
     function _quote(email, template, supportRichTextTemplate) {
