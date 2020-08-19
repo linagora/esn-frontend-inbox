@@ -500,7 +500,10 @@ describe('The linagora.esn.unifiedinbox Main module directives', function() {
     }
 
     function newTag(tag) {
-      element.find('input').scope().tagList.addText(tag);
+      const inputScope = element.find('input').scope();
+
+      inputScope.tagList.addText(tag);
+      inputScope.$digest();
     }
 
     it('should define $scope.search from searchService.searchRecipients', function(done) {
@@ -657,12 +660,12 @@ describe('The linagora.esn.unifiedinbox Main module directives', function() {
       expectTagsFromTextInput('name1 <email@lin.com>  name2 <email2@lin.com>', [{ name: 'name1', email: 'email@lin.com' }, { name: 'name2', email: 'email2@lin.com' }]);
     });
 
-     it('should make sure input is defined like this "name <email@lin.com> <lin@gora.com>"', function() {
-       expectTagsFromTextInput('name1 <email@lin.com>  <email2@lin.com>', [{ name: 'name1', email: 'email@lin.com' }, { name: 'email2@lin.com', email: 'email2@lin.com' }]);
+    it('should make sure input is defined like this "name <email@lin.com> <lin@gora.com>"', function() {
+      expectTagsFromTextInput('name1 <email@lin.com>  <email2@lin.com>', [{ name: 'name1', email: 'email@lin.com' }, { name: 'email2@lin.com', email: 'email2@lin.com' }]);
     });
 
     it('should make sure input is defined like this "name   <   email@lin.com > name2   <  email2@lin.com  >"', function() {
-       expectTagsFromTextInput('name1   <   email@lin.com >    name2   <  email2@lin.com  >', [{ name: 'name1', email: 'email@lin.com' }, { name: 'name2', email: 'email2@lin.com' }]);
+      expectTagsFromTextInput('name1   <   email@lin.com >    name2   <  email2@lin.com  >', [{ name: 'name1', email: 'email@lin.com' }, { name: 'name2', email: 'email2@lin.com' }]);
     });
 
     it('should initialize the model if none given', function() {
