@@ -10,7 +10,9 @@ describe('The inboxComposerMobileController controller', function() {
 
   beforeEach(angular.mock.module('linagora.esn.unifiedinbox', function($provide) {
     $provide.value('esnPreviousPage', {
-      back: sinon.spy()
+      back: sinon.spy(),
+      // The below line must not be removed or it will yield "esnPreviousPage.init is not a function" when the run block of 'esn.previous-page' is executed
+      init: sinon.spy()
     });
     $provide.value('newComposerService', {
       open: sinon.spy()
