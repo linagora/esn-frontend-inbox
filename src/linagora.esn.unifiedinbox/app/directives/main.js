@@ -479,8 +479,8 @@ require('../services.js');
         ) {
           var self = this;
 
-          self.shouldDisplayCalendarInvitationMessageIndicator = $scope.item.headers[INVITATION_MESSAGE_HEADERS.UID];
-          self.shouldDisplayCalendarResourceManagementIndicator = $scope.item.headers[X_OPENPAAS_CAL_HEADERS.ACTION];
+          self.shouldDisplayCalendarInvitationMessageIndicator = $scope.item && $scope.item.headers && $scope.item.headers[INVITATION_MESSAGE_HEADERS.UID];
+          self.shouldDisplayCalendarResourceManagementIndicator = $scope.item && $scope.item.headers && $scope.item.headers[X_OPENPAAS_CAL_HEADERS.ACTION];
         }
       };
     })

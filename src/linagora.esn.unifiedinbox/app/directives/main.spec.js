@@ -358,7 +358,7 @@ describe('The linagora.esn.unifiedinbox Main module directives', function() {
       });
 
       it('should be droppable element', function() {
-        expect(element.attr('esn-droppable')).to.equal('esn-droppable');
+        expect(element.attr('esn-droppable')).to.exist;
       });
 
       describe('The onDrop function', function() {

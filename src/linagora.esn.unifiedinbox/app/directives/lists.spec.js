@@ -142,7 +142,7 @@ describe('The linagora.esn.unifiedinbox List module directives', function() {
 
       it('should call newComposerService.openDraft if message is a draft', function() {
         compileDirective('<inbox-thread-list-item />');
-        newComposerService.openDraft = sinon.spy();
+        newComposerService.openDraft = sinon.stub();
 
         openDraft('id');
 
@@ -162,7 +162,7 @@ describe('The linagora.esn.unifiedinbox List module directives', function() {
 
             return $q.when();
           },
-           lastEmail: {}
+          lastEmail: {}
         };
 
         $scope.groups = {
@@ -210,7 +210,7 @@ describe('The linagora.esn.unifiedinbox List module directives', function() {
       it('should be draggable element', function() {
         compileDirective('<inbox-thread-list-item />');
 
-        expect(element.find('.clickable').attr('esn-draggable')).to.equal('esn-draggable');
+        expect(element.find('.clickable').attr('esn-draggable')).to.exist;
       });
 
       describe('The getDragData function', function() {
@@ -501,7 +501,7 @@ describe('The linagora.esn.unifiedinbox List module directives', function() {
       it('should be draggable element', function() {
         compileDirective('<inbox-message-list-item />');
 
-        expect(element.find('.clickable').attr('esn-draggable')).to.equal('esn-draggable');
+        expect(element.find('.clickable').attr('esn-draggable')).to.exist;
       });
 
       describe('The getDragData function', function() {
@@ -594,7 +594,7 @@ describe('The linagora.esn.unifiedinbox List module directives', function() {
       });
 
       it('should return an array of mailboxes', function() {
-         $scope.item = { mailboxIds: ['123', '456'] };
+        $scope.item = { mailboxIds: ['123', '456'] };
 
         compileDirective('<inbox-search-message-list-item  />');
 
