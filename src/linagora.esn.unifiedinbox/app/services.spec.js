@@ -797,7 +797,7 @@ describe('The Unified Inbox Angular module services', function() {
           bcc: [{displayName: '3', email: '3@linagora.com'}],
           subject: 'Re: my subject',
           quoted: {
-            htmlBody: '<p><br/></p><cite>On August 21, 2015 2:10 AM, from sender@linagora.com</cite><blockquote><p>my body</p></blockquote>'
+            htmlBody: '<p><br></p><cite>On August 21, 2015 2:10 AM, from sender@linagora.com</cite><blockquote><p>my body</p></blockquote>'
           },
           quoteTemplate: 'default',
           isQuoting: false
@@ -1088,7 +1088,7 @@ describe('The Unified Inbox Angular module services', function() {
           to: [{email: 'from@linagora.com', name: 'linagora'}],
           subject: 'Re: my subject',
           quoted: {
-            htmlBody: '<p><br/></p><cite>On August 21, 2015 2:10 AM, from from@linagora.com</cite><blockquote><p>my body</p></blockquote>'
+            htmlBody: '<p><br></p><cite>On August 21, 2015 2:10 AM, from from@linagora.com</cite><blockquote><p>my body</p></blockquote>'
           },
           quoteTemplate: 'default',
           isQuoting: false
@@ -1306,13 +1306,13 @@ describe('The Unified Inbox Angular module services', function() {
         expectedAnswer = {
           from: 'sender@linagora.com',
           subject: 'Fwd: my subject',
-          htmlBody: '<p><br/></p>' +
+          htmlBody: '<p><br></p>' +
           '<cite>' +
-          '------- Forwarded message -------<br/>' +
-          'Subject: my subject<br/>' +
-          'Date: August 21, 2015 2:10 AM<br/>' +
-          'From: from@linagora.com<br/>' +
-          'To: first &lt;first@linagora.com&gt;, second &lt;second@linagora.com&gt;<br/>' +
+          '------- Forwarded message -------<br>' +
+          'Subject: my subject<br>' +
+          'Date: August 21, 2015 2:10 AM<br>' +
+          'From: from@linagora.com<br>' +
+          'To: first &lt;first@linagora.com&gt;, second &lt;second@linagora.com&gt;<br>' +
           'Cc: third &lt;third@linagora.com&gt;' +
           '</cite>' +
           '<blockquote><p>my body</p></blockquote>',
@@ -1344,7 +1344,7 @@ describe('The Unified Inbox Angular module services', function() {
           from: 'sender@linagora.com',
           subject: 'Fwd: my subject',
           quoted: {
-            htmlBody: '<p><br/></p><cite>------- Forwarded message -------<br/>Subject: my subject<br/>Date: August 21, 2015 2:10 AM<br/>From: from@linagora.com<br/>To: first <first@linagora.com>, second <second@linagora.com><br/>Cc: third <third@linagora.com></cite><blockquote><p>my body</p></blockquote>'
+            htmlBody: '<p><br></p><cite>------- Forwarded message -------<br>Subject: my subject<br>Date: August 21, 2015 2:10 AM<br>From: from@linagora.com<br>To: first <first@linagora.com>, second <second@linagora.com><br>Cc: third <third@linagora.com></cite><blockquote><p>my body</p></blockquote>'
           },
           quoteTemplate: 'forward',
           isQuoting: false

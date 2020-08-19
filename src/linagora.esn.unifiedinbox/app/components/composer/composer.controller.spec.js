@@ -541,7 +541,7 @@ describe('The inboxComposerController controller', function() {
       sendMessage();
 
       expect(sendEmail).to.have.been.calledWith(sinon.match({
-        htmlBody: '<pre>The actual reply</pre><br/><div><cite>On Aug 21, 2015 12:10:00 AM, from test@open-paas.org</cite><blockquote><p>HtmlBody</p></blockquote></div>'
+        htmlBody: '<pre>The actual reply</pre><br><div><cite>On Aug 21, 2015 12:10:00 AM, from test@open-paas.org</cite><blockquote><p>HtmlBody</p></blockquote></div>'
       }));
     });
 

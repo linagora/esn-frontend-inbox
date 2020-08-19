@@ -25,7 +25,7 @@ angular.module('esn.inbox.libs')
     }
 
     function htmlToText(html) {
-      return angular.element('<div />').html(html.replace(/<br\/>/g, '\n')).text();
+      return angular.element('<div />').html(html.replace(/(<br\/>|<br>)/g, '\n')).text();
     }
 
     function interpolate(email, template) {

@@ -9,6 +9,7 @@ describe('The emailBodyService factory', function() {
   var $rootScope, emailBodyService, isMobile;
 
   beforeEach(function() {
+    angular.mock.module('esn.inbox.libs');
     angular.mock.module('linagora.esn.unifiedinbox', function($provide) {
       isMobile = false;
 
@@ -58,7 +59,7 @@ describe('The emailBodyService factory', function() {
     it('should quote htmlBody using a richtext template if not on mobile', function(done) {
       emailBodyService.quote(quotedMessage(email))
         .then(function(text) {
-          expect(text).to.equal('<p><br/></p><cite>On August 21, 2015 2:10 AM, from test@open-paas.org</cite><blockquote><p>HtmlBody</p></blockquote>');
+          expect(text).to.equal('<p><br></p><cite>On August 21, 2015 2:10 AM, from test@open-paas.org</cite><blockquote><p>HtmlBody</p></blockquote>');
         })
         .then(done, done);
 
@@ -68,7 +69,7 @@ describe('The emailBodyService factory', function() {
     it('should quote textBody using a richtext template if not on mobile and htmlBody is not available', function(done) {
       emailBodyService.quote(quotedMessage(_.omit(email, 'htmlBody')))
         .then(function(text) {
-          expect(text).to.equal('<p><br/></p><cite>On August 21, 2015 2:10 AM, from test@open-paas.org</cite><blockquote>TextBody</blockquote>');
+          expect(text).to.equal('<p><br></p><cite>On August 21, 2015 2:10 AM, from test@open-paas.org</cite><blockquote>TextBody</blockquote>');
         })
         .then(done, done);
 
@@ -90,7 +91,7 @@ describe('The emailBodyService factory', function() {
       isMobile = true;
       emailBodyService.quote(quotedMessage(_.omit(email, 'htmlBody')), 'default', true)
         .then(function(text) {
-          expect(text).to.equal('<p><br/></p><cite>On August 21, 2015 2:10 AM, from test@open-paas.org</cite><blockquote>TextBody</blockquote>');
+          expect(text).to.equal('<p><br></p><cite>On August 21, 2015 2:10 AM, from test@open-paas.org</cite><blockquote>TextBody</blockquote>');
         })
         .then(done, done);
 
@@ -100,7 +101,7 @@ describe('The emailBodyService factory', function() {
     it('should leverage the rich mode of forward template if specified', function(done) {
       emailBodyService.quote(quotedMessage(email), 'forward')
         .then(function(text) {
-          expect(text).to.equal('<p><br/></p><cite>------- Forwarded message -------<br/>Subject: Heya<br/>Date: August 21, 2015 2:10 AM<br/>From: test@open-paas.org<br/><br/></cite><blockquote><p>HtmlBody</p></blockquote>');
+          expect(text).to.equal('<p><br></p><cite>------- Forwarded message -------<br>Subject: Heya<br>Date: August 21, 2015 2:10 AM<br>From: test@open-paas.org<br><br></cite><blockquote><p>HtmlBody</p></blockquote>');
         })
         .then(done, done);
 
@@ -122,7 +123,7 @@ describe('The emailBodyService factory', function() {
       isMobile = true;
       emailBodyService.quote(quotedMessage(_.omit(email, 'htmlBody')), 'forward', true)
         .then(function(text) {
-          expect(text).to.equal('<p><br/></p><cite>------- Forwarded message -------<br/>Subject: Heya<br/>Date: August 21, 2015 2:10 AM<br/>From: test@open-paas.org<br/><br/></cite><blockquote>TextBody</blockquote>');
+          expect(text).to.equal('<p><br></p><cite>------- Forwarded message -------<br>Subject: Heya<br>Date: August 21, 2015 2:10 AM<br>From: test@open-paas.org<br><br></cite><blockquote>TextBody</blockquote>');
         })
         .then(done, done);
 
@@ -142,7 +143,7 @@ describe('The emailBodyService factory', function() {
 
       emailBodyService.quote(quotedMessage(email))
         .then(function(text) {
-          expect(text).to.equal('<p><br/></p><cite>On August 21, 2015 2:10 AM, from test@open-paas.org</cite><blockquote>Text<br/>Body<br/>Test</blockquote>');
+          expect(text).to.equal('<p><br></p><cite>On August 21, 2015 2:10 AM, from test@open-paas.org</cite><blockquote>Text<br/>Body<br/>Test</blockquote>');
         })
         .then(done, done);
 
@@ -162,7 +163,7 @@ describe('The emailBodyService factory', function() {
 
       emailBodyService.quote(quotedMessage(email))
         .then(function(text) {
-          expect(text).to.equal('<p><br/></p><cite>On August 21, 2015 2:10 AM, from test@open-paas.org</cite><blockquote><p><div>Test\nTest</div\n></p></blockquote>');
+          expect(text).to.equal('<p><br></p><cite>On August 21, 2015 2:10 AM, from test@open-paas.org</cite><blockquote><p><div>Test\nTest</div\n></p></blockquote>');
         })
         .then(done, done);
 
@@ -182,7 +183,7 @@ describe('The emailBodyService factory', function() {
 
       emailBodyService.quote(quotedMessage(email), 'forward')
         .then(function(text) {
-          expect(text).to.equal('<p><br/></p><cite>------- Forwarded message -------<br/>Subject: Heya<br/>Date: August 21, 2015 2:10 AM<br/>From: test@open-paas.org<br/><br/></cite><blockquote>Text<br/>Body<br/>Test</blockquote>');
+          expect(text).to.equal('<p><br></p><cite>------- Forwarded message -------<br>Subject: Heya<br>Date: August 21, 2015 2:10 AM<br>From: test@open-paas.org<br><br></cite><blockquote>Text<br/>Body<br/>Test</blockquote>');
         })
         .then(done, done);
 
@@ -202,7 +203,7 @@ describe('The emailBodyService factory', function() {
 
       emailBodyService.quote(quotedMessage(email), 'forward')
         .then(function(text) {
-          expect(text).to.equal('<p><br/></p><cite>------- Forwarded message -------<br/>Subject: Heya<br/>Date: August 21, 2015 2:10 AM<br/>From: test@open-paas.org<br/><br/></cite><blockquote><p><div>Test\nTest</div\n></p></blockquote>');
+          expect(text).to.equal('<p><br></p><cite>------- Forwarded message -------<br>Subject: Heya<br>Date: August 21, 2015 2:10 AM<br>From: test@open-paas.org<br><br></cite><blockquote><p><div>Test\nTest</div\n></p></blockquote>');
         })
         .then(done, done);
 
@@ -246,7 +247,7 @@ describe('The emailBodyService factory', function() {
     it('should quote the original email, using htmlBody', function(done) {
       emailBodyService.quoteOriginalEmail(email)
         .then(function(text) {
-          expect(text).to.equal('<pre></pre><br/><div><p>HtmlBody</p></div>');
+          expect(text).to.equal('<pre></pre><br><div><p>HtmlBody</p></div>');
         })
         .then(done, done);
 
@@ -258,7 +259,7 @@ describe('The emailBodyService factory', function() {
 
       emailBodyService.quoteOriginalEmail(email)
         .then(function(text) {
-          expect(text).to.equal('<pre>I was previously typed</pre><br/><div><p>HtmlBody</p></div>');
+          expect(text).to.equal('<pre>I was previously typed</pre><br><div><p>HtmlBody</p></div>');
         })
         .then(done, done);
 
