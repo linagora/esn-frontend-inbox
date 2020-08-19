@@ -26,6 +26,10 @@ describe('The linagora.esn.unifiedinbox List module directives', function() {
 
       return $delegate;
     });
+
+    $provide.value('esnI18nService', {
+      translate: text => text
+    });
   }));
 
   beforeEach(angular.mock.inject(function(_$compile_, _$rootScope_, _inboxJmapItemService_, _infiniteListService_, _inboxSelectionService_) {

@@ -50,6 +50,9 @@ describe('The inboxJmapItemService service', function() {
     $provide.value('inboxConfig', function(key, defaultValue) {
       return $q.when(angular.isDefined(inboxConfigMock[key]) ? inboxConfigMock[key] : defaultValue);
     });
+    $provide.value('esnI18nService', {
+      translate: text => text
+    });
   }));
 
   beforeEach(angular.mock.inject(function(_$rootScope_, _jmapDraft_, _inboxJmapItemService_, _notificationFactory_,
@@ -226,7 +229,7 @@ describe('The inboxJmapItemService service', function() {
       });
 
       inboxJmapItemService.moveToMailbox(newEmail(), mailbox).catch(function() {
-        expect(notificationFactory.weakError).to.have.been.calledWith('Error', sinon.match({text: 'Cannot move "%s" to "%s"'}));
+        expect(notificationFactory.weakError).to.have.been.calledWith('Error', 'Cannot move "%s" to "%s"');
 
         done();
       });
@@ -244,7 +247,7 @@ describe('The inboxJmapItemService service', function() {
       });
 
       inboxJmapItemService.moveToMailbox([newEmail(), newEmail()], mailbox).catch(function() {
-        expect(notificationFactory.weakError).to.have.been.calledWith('Error', sinon.match({text: 'Some items could not be moved to "%s"'}));
+        expect(notificationFactory.weakError).to.have.been.calledWith('Error', 'Some items could not be moved to "%s"');
 
         done();
       });
@@ -522,7 +525,7 @@ describe('The inboxJmapItemService service', function() {
       });
 
       inboxJmapItemService.setFlag(newEmail(), 'isUnread', true).catch(function() {
-        expect(notificationFactory.weakError).to.have.been.calledWith('Error', sinon.match({text: 'Could not update "%s"'}));
+        expect(notificationFactory.weakError).to.have.been.calledWith('Error', 'Could not update "%s"');
 
         done();
       });
