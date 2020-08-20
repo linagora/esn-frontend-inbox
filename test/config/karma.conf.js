@@ -24,7 +24,7 @@ module.exports = function(config) {
       '/images/': '/base/frontend/images/'
     },
 
-    reporters: singleRun ? ['coverage', 'spec'] : ['spec'],
+    reporters: ['spec'],
 
     preprocessors: {
       'src/index.test.js': ['webpack']
@@ -35,7 +35,6 @@ module.exports = function(config) {
       'karma-firefox-launcher',
       'karma-mocha',
       'karma-webpack',
-      'karma-coverage',
       'karma-spec-reporter',
       'karma-sinon-chai'
     ],

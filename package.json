@@ -47,7 +47,6 @@
     "ignore-loader": "^0.1.2",
     "jquery-mockjax": "2.2.1",
     "karma": "4.2.0",
-    "karma-coverage": "1.1.2",
     "karma-firefox-launcher": "1.1.0",
     "karma-mocha": "1.1.1",
     "karma-sinon-chai": "^2.0.2",
