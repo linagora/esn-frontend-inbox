@@ -36,7 +36,7 @@ angular.module('linagora.esn.unifiedinbox')
           return {};
         }
       };
-      state.onEnter = function($modal, modalHolder) {
+      state.onEnter = /* @ngInject */ function($modal, modalHolder) {
         modalHolder.modal = $modal({
           templateUrl: templateUrl,
           controller: controller,
