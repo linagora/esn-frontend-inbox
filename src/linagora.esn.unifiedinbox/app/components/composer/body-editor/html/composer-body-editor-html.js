@@ -1,21 +1,18 @@
-(function(angular) {
-  'use strict';
+'use strict';
 
-  angular.module('linagora.esn.unifiedinbox')
+angular.module('linagora.esn.unifiedinbox')
 
-    .component('inboxComposerBodyEditorHtml', {
-      template: require("./composer-body-editor-html.pug"),
-      controller: 'inboxComposerBodyEditorHtmlController',
-      bindings: {
-        message: '<',
-        identity: '<',
-        isCollapsed: '<',
-        send: '&',
-        upload: '&',
-        removeAttachment: '&',
-        onBodyUpdate: '&',
-        onAttachmentsUpload: '&'
-      }
-    });
-
-})(angular);
+  .component('inboxComposerBodyEditorHtml', {
+    template: require("./composer-body-editor-html.pug"),
+    controller: 'inboxComposerBodyEditorHtmlController',
+    bindings: {
+      message: '<',
+      identity: '<',
+      isCollapsed: '<',
+      send: '&',
+      upload: '&',
+      removeAttachment: '&',
+      onBodyUpdate: '&',
+      onAttachmentsUpload: '&'
+    }
+  });

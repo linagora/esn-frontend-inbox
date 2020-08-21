@@ -1,12 +1,10 @@
-(function(angular) {
-  'use strict';
+'use strict';
 
-  angular.module('linagora.esn.james')
+angular.module('linagora.esn.james')
 
-    .component('jamesQuotaDisplayer', {
-      template: require("./james-quota-displayer.pug"),
-      bindings: {
-        quota: '<'
-      }
-    });
-})(angular);
+  .component('jamesQuotaDisplayer', {
+    template: require("./james-quota-displayer.pug"),
+    bindings: {
+      quota: '<'
+    }
+  });

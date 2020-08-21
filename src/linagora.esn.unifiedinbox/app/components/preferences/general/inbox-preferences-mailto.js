@@ -1,14 +1,11 @@
-(function(angular) {
-  'use strict';
+'use strict';
 
-  angular
-    .module('linagora.esn.unifiedinbox')
-    .component('inboxPreferencesMailto', {
-      template: require("./inbox-preferences-mailto.pug"),
-      controller: 'inboxPreferencesMailtoController',
-      require: {
-        parent: '^controlcenterGeneral'
-      }
-    });
-
-})(angular);
+angular
+  .module('linagora.esn.unifiedinbox')
+  .component('inboxPreferencesMailto', {
+    template: require("./inbox-preferences-mailto.pug"),
+    controller: 'inboxPreferencesMailtoController',
+    require: {
+      parent: '^controlcenterGeneral'
+    }
+  });

@@ -1,13 +1,11 @@
-(function(angular) {
-  'use strict';
+'use strict';
 
-  angular.module('linagora.esn.james')
+angular.module('linagora.esn.james')
 
-  .component('jamesQuotaForm', {
-    template: require("./james-quota-form.pug"),
-    bindings: {
-      quota: '='
-    },
-    controller: 'jamesQuotaFormController'
-  });
-})(angular);
+.component('jamesQuotaForm', {
+  template: require("./james-quota-form.pug"),
+  bindings: {
+    quota: '='
+  },
+  controller: 'jamesQuotaFormController'
+});

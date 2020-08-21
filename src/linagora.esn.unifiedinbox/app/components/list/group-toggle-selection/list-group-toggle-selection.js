@@ -1,11 +1,8 @@
-(function(angular) {
-  'use strict';
+'use strict';
 
-  angular.module('linagora.esn.unifiedinbox')
+angular.module('linagora.esn.unifiedinbox')
 
-    .component('inboxListGroupToggleSelection', {
-      template: require("./list-group-toggle-selection.pug"),
-      controller: 'inboxListGroupToggleSelectionController'
-    });
-
-})(angular);
+  .component('inboxListGroupToggleSelection', {
+    template: require("./list-group-toggle-selection.pug"),
+    controller: 'inboxListGroupToggleSelectionController'
+  });

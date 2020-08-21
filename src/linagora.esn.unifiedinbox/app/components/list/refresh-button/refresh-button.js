@@ -1,14 +1,11 @@
-(function(angular) {
-  'use strict';
+'use strict';
 
-  angular.module('linagora.esn.unifiedinbox')
+angular.module('linagora.esn.unifiedinbox')
 
-    .component('inboxRefreshButton', {
-      template: require("./refresh-button.pug"),
-      bindings: {
-        refresh: '&',
-        loading: '<'
-      }
-    });
-
-})(angular);
+  .component('inboxRefreshButton', {
+    template: require("./refresh-button.pug"),
+    bindings: {
+      refresh: '&',
+      loading: '<'
+    }
+  });

@@ -1,17 +1,15 @@
+'use strict';
+
 const _ = require('lodash');
 
-(function(angular) {
-  'use strict';
+angular.module('linagora.esn.unifiedinbox').controller('inboxSearchFormController', inboxSearchFormController);
 
-  angular.module('linagora.esn.unifiedinbox').controller('inboxSearchFormController', inboxSearchFormController);
+function inboxSearchFormController() {
+  var self = this;
 
-  function inboxSearchFormController() {
-    var self = this;
+  self.$onInit = $onInit;
 
-    self.$onInit = $onInit;
-
-    function $onInit() {
-      (!_.isEmpty(self.query.text) && _.isEmpty(self.query.advanced.contains)) && (self.query.advanced.contains = self.query.text);
-    }
+  function $onInit() {
+    (!_.isEmpty(self.query.text) && _.isEmpty(self.query.advanced.contains)) && (self.query.advanced.contains = self.query.text);
   }
-})(angular);
+}

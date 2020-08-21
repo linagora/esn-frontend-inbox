@@ -1,10 +1,7 @@
-(function(angular) {
-  'use strict';
+'use strict';
 
-  angular.module('linagora.esn.unifiedinbox')
-    .component('inboxVacationBanner', {
-      template: require("./vacation-banner.pug"),
-      controller: 'inboxVacationBannerController'
-    });
-
-})(angular);
+angular.module('linagora.esn.unifiedinbox')
+  .component('inboxVacationBanner', {
+    template: require("./vacation-banner.pug"),
+    controller: 'inboxVacationBannerController'
+  });

@@ -1,14 +1,11 @@
-(function(angular) {
-  'use strict';
+'use strict';
 
-  angular.module('linagora.esn.unifiedinbox')
+angular.module('linagora.esn.unifiedinbox')
 
-    .component('inboxReadReceipt', {
-      template: require("./read-receipt.pug"),
-      controller: 'inboxReadReceiptController',
-      bindings: {
-        message: '<'
-      }
-    });
-
-})(angular);
+  .component('inboxReadReceipt', {
+    template: require("./read-receipt.pug"),
+    controller: 'inboxReadReceiptController',
+    bindings: {
+      message: '<'
+    }
+  });

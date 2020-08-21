@@ -1,35 +1,33 @@
-(function(angular) {
-  'use strict';
+'use strict';
 
-  angular.module('linagora.esn.james')
-    .controller('JamesDomainAliasItemController', JamesDomainAliasItemController);
+angular.module('linagora.esn.james')
+  .controller('JamesDomainAliasItemController', JamesDomainAliasItemController);
 
-  function JamesDomainAliasItemController(
-    asyncAction,
-    jamesApiClient
-  ) {
-    var self = this;
+function JamesDomainAliasItemController(
+  asyncAction,
+  jamesApiClient
+) {
+  var self = this;
 
-    self.$onInit = $onInit;
+  self.$onInit = $onInit;
 
-    function $onInit() {
-      self.removeAlias = removeAlias;
-    }
-
-    function _removeAlias() {
-      return jamesApiClient.removeDomainAlias(self.domain.id, self.alias).then(function() {
-        self.aliases = self.aliases.filter(function(alias) {
-          return alias !== self.alias;
-        });
-      });
-    }
-
-    function removeAlias() {
-      asyncAction({
-        progressing: 'Removing alias...',
-        success: 'Alias removed',
-        failure: 'Failed to remove alias'
-      }, _removeAlias);
-    }
+  function $onInit() {
+    self.removeAlias = removeAlias;
   }
-})(angular);
+
+  function _removeAlias() {
+    return jamesApiClient.removeDomainAlias(self.domain.id, self.alias).then(function() {
+      self.aliases = self.aliases.filter(function(alias) {
+        return alias !== self.alias;
+      });
+    });
+  }
+
+  function removeAlias() {
+    asyncAction({
+      progressing: 'Removing alias...',
+      success: 'Alias removed',
+      failure: 'Failed to remove alias'
+    }, _removeAlias);
+  }
+}

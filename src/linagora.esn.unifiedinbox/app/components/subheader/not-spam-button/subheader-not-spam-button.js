@@ -1,10 +1,7 @@
-(function(angular) {
-  'use strict';
+'use strict';
 
-  angular.module('linagora.esn.unifiedinbox')
+angular.module('linagora.esn.unifiedinbox')
 
-    .component('inboxSubheaderNotSpamButton', {
-      template: require("./subheader-not-spam-button.pug")
-    });
-
-})(angular);
+  .component('inboxSubheaderNotSpamButton', {
+    template: require("./subheader-not-spam-button.pug")
+  });

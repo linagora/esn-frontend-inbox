@@ -1,13 +1,10 @@
-(function(angular) {
-  'use strict';
+'use strict';
 
-  angular.module('linagora.esn.unifiedinbox')
+angular.module('linagora.esn.unifiedinbox')
 
-    .component('inboxSharedMailbox', {
-      template: require("./shared-mailbox.pug"),
-       bindings: {
-         mailbox: '='
-      }
-    });
-
-})(angular);
+  .component('inboxSharedMailbox', {
+    template: require("./shared-mailbox.pug"),
+      bindings: {
+        mailbox: '='
+    }
+  });

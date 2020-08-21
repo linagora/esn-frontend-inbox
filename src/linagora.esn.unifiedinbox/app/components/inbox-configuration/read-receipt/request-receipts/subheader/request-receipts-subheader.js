@@ -1,13 +1,10 @@
-(function(angular) {
-  'use strict';
+'use strict';
 
-  angular.module('linagora.esn.unifiedinbox')
+angular.module('linagora.esn.unifiedinbox')
 
-    .component('inboxRequestReadReceiptsSubheader', {
-      template: require("./request-receipts-subheader.pug"),
-      bindings: {
-         onSave: '&'
-      }
-    });
-
-})(angular);
+  .component('inboxRequestReadReceiptsSubheader', {
+    template: require("./request-receipts-subheader.pug"),
+    bindings: {
+        onSave: '&'
+    }
+  });
