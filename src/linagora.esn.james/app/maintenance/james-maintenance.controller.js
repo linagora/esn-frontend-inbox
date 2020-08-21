@@ -1,29 +1,27 @@
+'use strict';
+
 require('../common/james-api-client.service.js');
 
-(function(angular) {
-  'use strict';
+angular.module('linagora.esn.james')
+  .controller('jamesMaintenanceController', jamesMaintenanceController);
 
-  angular.module('linagora.esn.james')
-    .controller('jamesMaintenanceController', jamesMaintenanceController);
+function jamesMaintenanceController(
+  asyncAction,
+  jamesApiClient
+) {
+  var self = this;
 
-  function jamesMaintenanceController(
-    asyncAction,
-    jamesApiClient
-  ) {
-    var self = this;
+  self.synchronizeDomains = synchronizeDomains;
 
-    self.synchronizeDomains = synchronizeDomains;
+  function synchronizeDomains() {
+    var notificationMessages = {
+      progressing: 'Synchronizing domains...',
+      success: 'Domains synchronized',
+      failure: 'Failed to synchronize domains'
+    };
 
-    function synchronizeDomains() {
-      var notificationMessages = {
-        progressing: 'Synchronizing domains...',
-        success: 'Domains synchronized',
-        failure: 'Failed to synchronize domains'
-      };
-
-      return asyncAction(notificationMessages, function() {
-        return jamesApiClient.syncDomains();
-      });
-    }
+    return asyncAction(notificationMessages, function() {
+      return jamesApiClient.syncDomains();
+    });
   }
-})(angular);
+}

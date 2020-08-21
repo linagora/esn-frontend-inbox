@@ -1,56 +1,53 @@
+'use strict';
+
 require('../synchronizer/james-synchronizer.service.js');
 
+angular.module('linagora.esn.james')
 
-(function(angular) {
-  'use strict';
+.controller('JamesSyncStatusIndicatorController', JamesSyncStatusIndicatorController);
 
-  angular.module('linagora.esn.james')
+function JamesSyncStatusIndicatorController(
+  asyncAction,
+  jamesSynchronizerService
+) {
+  var self = this;
+  var synchronizer;
+  var notificationMessages = {
+    progressing: 'Synchronizing group...',
+    success: 'Group synchronized',
+    failure: 'Failed to synchronize group'
+  };
 
-  .controller('JamesSyncStatusIndicatorController', JamesSyncStatusIndicatorController);
+  self.$onInit = $onInit;
+  self.sync = sync;
 
-  function JamesSyncStatusIndicatorController(
-    asyncAction,
-    jamesSynchronizerService
-  ) {
-    var self = this;
-    var synchronizer;
-    var notificationMessages = {
-      progressing: 'Synchronizing group...',
-      success: 'Group synchronized',
-      failure: 'Failed to synchronize group'
-    };
+  function $onInit() {
+    self.syncError = false;
+    synchronizer = jamesSynchronizerService.get(self.resourceType);
 
-    self.$onInit = $onInit;
-    self.sync = sync;
-
-    function $onInit() {
-      self.syncError = false;
-      synchronizer = jamesSynchronizerService.get(self.resourceType);
-
-      if (!synchronizer) {
-        throw new Error('No such resourceType:', self.resourceType);
-      }
-
-      self.errorMessage = synchronizer.errorMessage;
-      _checkStatus();
+    if (!synchronizer) {
+      throw new Error('No such resourceType:', self.resourceType);
     }
 
-    function sync() {
-      return asyncAction(notificationMessages, function() {
-        return synchronizer.sync(self.resourceId).then(function() {
-          self.syncError = false;
-        });
-      });
-    }
-
-    function _checkStatus() {
-      return synchronizer.getStatus(self.resourceId)
-        .then(function(status) {
-          self.syncError = !status.ok;
-        })
-        .catch(function() {
-          self.syncError = true;
-        });
-    }
+    self.errorMessage = synchronizer.errorMessage;
+    _checkStatus();
   }
-})(angular);
+
+  function sync() {
+    return asyncAction(notificationMessages, function() {
+      return synchronizer.sync(self.resourceId).then(function() {
+        self.syncError = false;
+      });
+    });
+  }
+
+  function _checkStatus() {
+    return synchronizer.getStatus(self.resourceId)
+      .then(function(status) {
+        self.syncError = !status.ok;
+      })
+      .catch(function() {
+        self.syncError = true;
+      });
+  }
+}

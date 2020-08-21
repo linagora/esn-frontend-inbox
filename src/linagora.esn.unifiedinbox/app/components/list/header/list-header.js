@@ -1,17 +1,14 @@
-(function(angular) {
-  'use strict';
+'use strict';
 
-  angular.module('linagora.esn.unifiedinbox')
+angular.module('linagora.esn.unifiedinbox')
 
-    .component('inboxListHeader', {
-      template: require("./list-header.pug"),
-      bindings: {
-        item: '<',
-        filters: '<',
-        refresh: '&',
-        loading: '<'
-      },
-      controller: 'inboxListHeaderController'
-    });
-
-})(angular);
+  .component('inboxListHeader', {
+    template: require("./list-header.pug"),
+    bindings: {
+      item: '<',
+      filters: '<',
+      refresh: '&',
+      loading: '<'
+    },
+    controller: 'inboxListHeaderController'
+  });

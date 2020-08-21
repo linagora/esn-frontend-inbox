@@ -1,92 +1,89 @@
+'use strict';
+
 require('../quota/james-quota-helpers.service.js');
 require('../common/james-api-client.service.js');
 
+angular.module('linagora.esn.james')
+  .controller('jamesConfigFormController', jamesConfigFormController);
 
-(function(angular) {
-  'use strict';
+var CONNECTION_STATUS = {
+  connecting: 'connecting',
+  connected: 'connected',
+  error: 'error'
+};
 
-  angular.module('linagora.esn.james')
-    .controller('jamesConfigFormController', jamesConfigFormController);
+function jamesConfigFormController(
+  $q,
+  session,
+  jamesQuotaHelpers,
+  jamesApiClient
+) {
+  var self = this;
 
-  var CONNECTION_STATUS = {
-    connecting: 'connecting',
-    connected: 'connected',
-    error: 'error'
-  };
+  self.$onInit = $onInit;
+  self.onServerUrlChange = onServerUrlChange;
 
-  function jamesConfigFormController(
-    $q,
-    session,
-    jamesQuotaHelpers,
-    jamesApiClient
-  ) {
-    var self = this;
+  function $onInit() {
+    self.adminModulesDisplayerController.registerPostSaveHandler(_saveJamesConfigurations);
 
-    self.$onInit = $onInit;
-    self.onServerUrlChange = onServerUrlChange;
+    _connect();
+  }
 
-    function $onInit() {
-      self.adminModulesDisplayerController.registerPostSaveHandler(_saveJamesConfigurations);
+  function onServerUrlChange(configForm) {
+    configForm.$setPristine();
+    _connect();
+  }
 
-      _connect();
+  function _connect() {
+    if (!self.configurations.webadminApiFrontend.value) {
+      return;
     }
 
-    function onServerUrlChange(configForm) {
-      configForm.$setPristine();
-      _connect();
-    }
+    self.connectionStatus = CONNECTION_STATUS.connecting;
+    self.config = {};
 
-    function _connect() {
-      if (!self.configurations.webadminApiFrontend.value) {
-        return;
-      }
-
-      self.connectionStatus = CONNECTION_STATUS.connecting;
-      self.config = {};
-
-      return _getJamesConfigurations()
-        .then(function(config) {
-          self.config = config;
-          self.connectionStatus = CONNECTION_STATUS.connected;
-        })
-        .catch(function() {
-          self.connectionStatus = CONNECTION_STATUS.error;
-        });
-    }
-
-    function _getJamesConfigurations() {
-      var getQuota;
-
-      if (self.mode === self.availableModes.domain) {
-        getQuota = jamesApiClient.getDomainQuota(session.domain._id);
-      } else {
-        getQuota = jamesApiClient.getPlatformQuota();
-      }
-
-      return getQuota.then(function(data) {
-        var config = {
-          quota: data.domain ? jamesQuotaHelpers.qualifyGet(data.domain) : jamesQuotaHelpers.qualifyGet(data),
-          computedQuota: jamesQuotaHelpers.qualifyGet(data.computed)
-        };
-
-        return config;
+    return _getJamesConfigurations()
+      .then(function(config) {
+        self.config = config;
+        self.connectionStatus = CONNECTION_STATUS.connected;
+      })
+      .catch(function() {
+        self.connectionStatus = CONNECTION_STATUS.error;
       });
+  }
+
+  function _getJamesConfigurations() {
+    var getQuota;
+
+    if (self.mode === self.availableModes.domain) {
+      getQuota = jamesApiClient.getDomainQuota(session.domain._id);
+    } else {
+      getQuota = jamesApiClient.getPlatformQuota();
     }
 
-    function _saveJamesConfigurations() {
-      if (self.connectionStatus !== CONNECTION_STATUS.connected) {
-        return $q.when();
-      }
-
+    return getQuota.then(function(data) {
       var config = {
-        quota: jamesQuotaHelpers.qualifySet(self.config.quota)
+        quota: data.domain ? jamesQuotaHelpers.qualifyGet(data.domain) : jamesQuotaHelpers.qualifyGet(data),
+        computedQuota: jamesQuotaHelpers.qualifyGet(data.computed)
       };
 
-      if (self.mode === self.availableModes.domain) {
-        return jamesApiClient.setDomainQuota(session.domain._id, config.quota);
-      }
-
-      return jamesApiClient.setPlatformQuota(config.quota);
-    }
+      return config;
+    });
   }
-})(angular);
+
+  function _saveJamesConfigurations() {
+    if (self.connectionStatus !== CONNECTION_STATUS.connected) {
+      return $q.when();
+    }
+
+    var config = {
+      quota: jamesQuotaHelpers.qualifySet(self.config.quota)
+    };
+
+    if (self.mode === self.availableModes.domain) {
+      return jamesApiClient.setDomainQuota(session.domain._id, config.quota);
+    }
+
+    return jamesApiClient.setPlatformQuota(config.quota);
+  }
+}

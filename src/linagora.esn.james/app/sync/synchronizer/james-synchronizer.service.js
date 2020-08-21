@@ -1,25 +1,23 @@
+'use strict';
+
 require('./james-group-synchronizer.service.js');
 
-(function(angular) {
-  'use strict';
+angular.module('linagora.esn.james')
 
-  angular.module('linagora.esn.james')
+.factory('jamesSynchronizerService', jamesSynchronizerService);
 
-  .factory('jamesSynchronizerService', jamesSynchronizerService);
+function jamesSynchronizerService(
+  jamesGroupSynchronizer
+) {
+  var synchronizers = {
+    group: jamesGroupSynchronizer
+  };
 
-  function jamesSynchronizerService(
-    jamesGroupSynchronizer
-  ) {
-    var synchronizers = {
-      group: jamesGroupSynchronizer
-    };
+  return {
+    get: get
+  };
 
-    return {
-      get: get
-    };
-
-    function get(resourceType) {
-      return synchronizers[resourceType];
-    }
+  function get(resourceType) {
+    return synchronizers[resourceType];
   }
-})(angular);
+}

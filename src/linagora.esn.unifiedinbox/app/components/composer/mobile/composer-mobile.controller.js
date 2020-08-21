@@ -1,31 +1,28 @@
+'use strict';
+
 require('../../../services/new-composer/new-composer.js');
 
-(function(angular) {
-  'use strict';
+angular.module('linagora.esn.unifiedinbox')
 
-  angular.module('linagora.esn.unifiedinbox')
+  .controller('inboxComposerMobileController', function($rootScope, $stateParams, esnPreviousPage, newComposerService) {
+    var self = this;
 
-    .controller('inboxComposerMobileController', function($rootScope, $stateParams, esnPreviousPage, newComposerService) {
-      var self = this;
+    self.$onInit = $onInit;
+    self.hide = hide;
+    self.show = show;
 
-      self.$onInit = $onInit;
-      self.hide = hide;
-      self.show = show;
+    /////
 
-      /////
+    function $onInit() {
+      self.message = $stateParams.email;
+    }
 
-      function $onInit() {
-        self.message = $stateParams.email;
-      }
+    function hide() {
+      esnPreviousPage.back('unifiedinbox');
+    }
 
-      function hide() {
-        esnPreviousPage.back('unifiedinbox');
-      }
+    function show() {
+      newComposerService.open(self.message);
+    }
 
-      function show() {
-        newComposerService.open(self.message);
-      }
-
-    });
-
-})(angular);
+  });

@@ -1,16 +1,13 @@
-(function(angular) {
-  'use strict';
+'use strict';
 
-  angular.module('linagora.esn.unifiedinbox')
+angular.module('linagora.esn.unifiedinbox')
 
-    .component('inboxComposerAttachments', {
-      template: require("./composer-attachments.pug"),
-      controller: 'inboxComposerAttachmentsController',
-      bindings: {
-        message: '<',
-        upload: '&',
-        removeAttachment: '&'
-      }
-    });
-
-})(angular);
+  .component('inboxComposerAttachments', {
+    template: require("./composer-attachments.pug"),
+    controller: 'inboxComposerAttachmentsController',
+    bindings: {
+      message: '<',
+      upload: '&',
+      removeAttachment: '&'
+    }
+  });

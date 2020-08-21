@@ -1,41 +1,37 @@
+'use strict';
+
 require('../../../services/filtering/filtering-service.js');
 
+angular.module('linagora.esn.unifiedinbox')
 
-(function(angular) {
-  'use strict';
+  .controller('inboxListHeaderController', function($scope, esnDatetimeService, inboxFilteringService, INBOX_EVENTS) {
+    var self = this;
 
-  angular.module('linagora.esn.unifiedinbox')
+    self.$onInit = initQuickFilter;
+    self.$onChanges = $onChanges;
+    self.setQuickFilter = setQuickFilter;
 
-    .controller('inboxListHeaderController', function($scope, esnDatetimeService, inboxFilteringService, INBOX_EVENTS) {
-      var self = this;
+    $scope.$on(INBOX_EVENTS.FILTER_CHANGED, initQuickFilter);
 
-      self.$onInit = initQuickFilter;
-      self.$onChanges = $onChanges;
-      self.setQuickFilter = setQuickFilter;
+    /////
 
-      $scope.$on(INBOX_EVENTS.FILTER_CHANGED, initQuickFilter);
+    function initQuickFilter() {
+      self.quickFilter = inboxFilteringService.getQuickFilter();
+    }
 
-      /////
-
-      function initQuickFilter() {
-        self.quickFilter = inboxFilteringService.getQuickFilter();
+    function $onChanges(bindings) {
+      if (!bindings || !bindings.item) {
+        return;
       }
 
-      function $onChanges(bindings) {
-        if (!bindings || !bindings.item) {
-          return;
-        }
+      self.group = bindings.item.currentValue && esnDatetimeService.getHumanTimeGrouping(bindings.item.currentValue.date);
+    }
 
-        self.group = bindings.item.currentValue && esnDatetimeService.getHumanTimeGrouping(bindings.item.currentValue.date);
+    function setQuickFilter(filter) {
+      if (!filter && !self.quickFilter) {
+        return;
       }
 
-      function setQuickFilter(filter) {
-        if (!filter && !self.quickFilter) {
-          return;
-        }
-
-        inboxFilteringService.setQuickFilter(self.quickFilter = filter);
-      }
-    });
-
-})(angular);
+      inboxFilteringService.setQuickFilter(self.quickFilter = filter);
+    }
+  });

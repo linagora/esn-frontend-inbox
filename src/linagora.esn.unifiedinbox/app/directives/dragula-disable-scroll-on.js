@@ -1,35 +1,33 @@
-(function(angular) {
-  'use strict';
+'use strict';
 
-  angular.module('linagora.esn.unifiedinbox').directive('dragulaDisableScrollOn', function(touchscreenDetectorService) {
-    return {
-      restrict: 'A',
-      link: function(scope, elm, attrs) {
-        var scrollable = true;
-        var bagName = attrs.dragulaDisableScrollOn;
+angular.module('linagora.esn.unifiedinbox').directive('dragulaDisableScrollOn', function(touchscreenDetectorService) {
+  return {
+    restrict: 'A',
+    link: function(scope, elm, attrs) {
+      var scrollable = true;
+      var bagName = attrs.dragulaDisableScrollOn;
 
-        if (touchscreenDetectorService.hasTouchscreen()) {
-          document.addEventListener('touchmove', listener, {passive: false});
+      if (touchscreenDetectorService.hasTouchscreen()) {
+        document.addEventListener('touchmove', listener, {passive: false});
 
-          scope.$on(bagName + '.drag', function() {
-            scrollable = false;
-          });
-        }
-
-        scope.$on(bagName + '.drop-model', function() {
-          scrollable = true;
+        scope.$on(bagName + '.drag', function() {
+          scrollable = false;
         });
+      }
 
-        scope.$on('$destroy', function() {
-          document.removeEventListener('touchmove', listener);
-        });
+      scope.$on(bagName + '.drop-model', function() {
+        scrollable = true;
+      });
 
-        function listener(e) {
-          if (!scrollable) {
-            e.preventDefault();
-          }
+      scope.$on('$destroy', function() {
+        document.removeEventListener('touchmove', listener);
+      });
+
+      function listener(e) {
+        if (!scrollable) {
+          e.preventDefault();
         }
       }
-    };
-  });
-})(angular);
+    }
+  };
+});

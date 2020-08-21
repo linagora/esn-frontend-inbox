@@ -1,17 +1,14 @@
+'use strict';
+
 require('../../providers.js');
 require('../../search/provider/search-submit.service.js');
 
-(function(angular) {
-  'use strict';
+angular.module('linagora.esn.unifiedinbox').factory('inboxSearchResultsProvider', inboxSearchResultsProvider);
 
-  angular.module('linagora.esn.unifiedinbox').factory('inboxSearchResultsProvider', inboxSearchResultsProvider);
+function inboxSearchResultsProvider(inboxNewMessageProvider, computeUniqueSetOfRecipients, inboxSearchResultsProviderSubmit) {
+  var provider = inboxNewMessageProvider('/unifiedinbox/app/search/provider/search-results-provider.html', computeUniqueSetOfRecipients);
 
-  function inboxSearchResultsProvider(inboxNewMessageProvider, computeUniqueSetOfRecipients, inboxSearchResultsProviderSubmit) {
-    var provider = inboxNewMessageProvider('/unifiedinbox/app/search/provider/search-results-provider.html', computeUniqueSetOfRecipients);
+  provider.onSubmit = inboxSearchResultsProviderSubmit;
 
-    provider.onSubmit = inboxSearchResultsProviderSubmit;
-
-    return provider;
-  }
-
-})(angular);
+  return provider;
+}

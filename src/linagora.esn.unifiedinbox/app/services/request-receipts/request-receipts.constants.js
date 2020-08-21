@@ -1,8 +1,5 @@
-(function(angular) {
-  'use strict';
+'use strict';
 
-  angular.module('linagora.esn.unifiedinbox')
+angular.module('linagora.esn.unifiedinbox')
 
-    .constant('INBOX_RECEIPTS_CONFIG_KEY', 'requestReceipts');
-
-})(angular);
+  .constant('INBOX_RECEIPTS_CONFIG_KEY', 'requestReceipts');

@@ -1,13 +1,10 @@
-(function(angular) {
-  'use strict';
+'use strict';
 
-  angular.module('linagora.esn.unifiedinbox')
+angular.module('linagora.esn.unifiedinbox')
 
-    .component('inboxSharedMailboxesSubheader', {
-      template: require("./shared-mailboxes-subheader.pug"),
-      bindings: {
-         onSave: '&'
-      }
-    });
-
-})(angular);
+  .component('inboxSharedMailboxesSubheader', {
+    template: require("./shared-mailboxes-subheader.pug"),
+    bindings: {
+        onSave: '&'
+    }
+  });

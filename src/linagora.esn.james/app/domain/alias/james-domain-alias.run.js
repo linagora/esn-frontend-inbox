@@ -1,16 +1,14 @@
-(function(angular) {
-  'use strict';
+'use strict';
 
-  angular.module('linagora.esn.james')
-    .run(injectDomainAliasDirective);
+angular.module('linagora.esn.james')
+  .run(injectDomainAliasDirective);
 
-  function injectDomainAliasDirective(dynamicDirectiveService) {
-    var domainQuotaSetAction = new dynamicDirectiveService.DynamicDirective(
-      true,
-      'james-domain-alias',
-      { attributes: [{ name: 'domain', value: '$ctrl.domain' }] }
-    );
+function injectDomainAliasDirective(dynamicDirectiveService) {
+  var domainQuotaSetAction = new dynamicDirectiveService.DynamicDirective(
+    true,
+    'james-domain-alias',
+    { attributes: [{ name: 'domain', value: '$ctrl.domain' }] }
+  );
 
-    dynamicDirectiveService.addInjection('admin-domains-list-menu-items', domainQuotaSetAction);
-  }
-})(angular);
+  dynamicDirectiveService.addInjection('admin-domains-list-menu-items', domainQuotaSetAction);
+}

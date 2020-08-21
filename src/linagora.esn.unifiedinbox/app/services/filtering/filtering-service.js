@@ -1,108 +1,106 @@
+'use strict';
+
 const _ = require('lodash');
+
 require('../filtering/filters.js');
 
-(function(angular) {
-  'use strict';
+angular.module('linagora.esn.unifiedinbox')
 
-  angular.module('linagora.esn.unifiedinbox')
+  .factory('inboxFilteringService', function($rootScope, inboxMailboxesService, inboxFilters, INBOX_EVENTS) {
+    var providerFilters = {}, quickFilter = null;
 
-    .factory('inboxFilteringService', function($rootScope, inboxMailboxesService, inboxFilters, INBOX_EVENTS) {
-      var providerFilters = {}, quickFilter = null;
+    return {
+      getAvailableFilters: getAvailableFilters,
+      isFilteringActive: isFilteringActive,
+      clearFilters: clearFilters,
+      setProviderFilters: setProviderFilters,
+      getAllProviderFilters: getAllProviderFilters,
+      getQuickFilter: getQuickFilter,
+      setQuickFilter: setQuickFilter
+    };
 
-      return {
-        getAvailableFilters: getAvailableFilters,
-        isFilteringActive: isFilteringActive,
-        clearFilters: clearFilters,
-        setProviderFilters: setProviderFilters,
-        getAllProviderFilters: getAllProviderFilters,
-        getQuickFilter: getQuickFilter,
-        setQuickFilter: setQuickFilter
-      };
+    /////
 
-      /////
+    function clearFilters() {
+      inboxFilters.forEach(function(filter) {
+        filter.checked = false;
+      });
 
-      function clearFilters() {
-        inboxFilters.forEach(function(filter) {
+      setQuickFilter(null);
+    }
+
+    function getAvailableFilters() {
+      return _.filter(inboxFilters, function(filter) {
+        var available = providerFilters.types ? _.contains(providerFilters.types, filter.type) : filter.isGlobal;
+
+        // When switching context, filters that become unavailble must be unchecked, to avoid side effects
+        if (!available) {
           filter.checked = false;
-        });
-
-        setQuickFilter(null);
-      }
-
-      function getAvailableFilters() {
-        return _.filter(inboxFilters, function(filter) {
-          var available = providerFilters.types ? _.contains(providerFilters.types, filter.type) : filter.isGlobal;
-
-          // When switching context, filters that become unavailble must be unchecked, to avoid side effects
-          if (!available) {
-            filter.checked = false;
-          }
-
-          return available;
-        });
-      }
-
-      function isFilteringActive() {
-        return _.some(inboxFilters, { checked: true }) || !!quickFilter;
-      }
-
-      function getAcceptedTypesFilter() {
-        if (providerFilters.types) {
-          return providerFilters.types;
         }
 
-        return _anyFilterOrNull(_(inboxFilters).filter({ checked: true }).map('type').uniq().value());
+        return available;
+      });
+    }
+
+    function isFilteringActive() {
+      return _.some(inboxFilters, { checked: true }) || !!quickFilter;
+    }
+
+    function getAcceptedTypesFilter() {
+      if (providerFilters.types) {
+        return providerFilters.types;
       }
 
-      function setProviderFilters(filters) {
-        providerFilters = filters;
-        quickFilter = null;
+      return _anyFilterOrNull(_(inboxFilters).filter({ checked: true }).map('type').uniq().value());
+    }
 
-        $rootScope.$broadcast(INBOX_EVENTS.FILTER_CHANGED);
-      }
+    function setProviderFilters(filters) {
+      providerFilters = filters;
+      quickFilter = null;
 
-      function getQuickFilter() {
-        return quickFilter;
-      }
+      $rootScope.$broadcast(INBOX_EVENTS.FILTER_CHANGED);
+    }
 
-      function setQuickFilter(filter) {
-        quickFilter = filter;
+    function getQuickFilter() {
+      return quickFilter;
+    }
 
-        $rootScope.$broadcast(INBOX_EVENTS.FILTER_CHANGED);
-      }
+    function setQuickFilter(filter) {
+      quickFilter = filter;
 
-      function getAllFiltersByType() {
-        return _(inboxFilters).groupBy('type').reduce(function(result, filters, type) {
-          result[type] = _.reduce(filters, function(result, filter) {
-            if (filter.checked) {
-              result[filter.id] = true;
-            }
+      $rootScope.$broadcast(INBOX_EVENTS.FILTER_CHANGED);
+    }
 
-            return result;
-          }, {});
+    function getAllFiltersByType() {
+      return _(inboxFilters).groupBy('type').reduce(function(result, filters, type) {
+        result[type] = _.reduce(filters, function(result, filter) {
+          if (filter.checked) {
+            result[filter.id] = true;
+          }
 
           return result;
         }, {});
-      }
 
-      function getAcceptedIdsFilter() {
-        return _anyFilterOrNull(_(inboxFilters).filter({ checked: true, selectionById: true }).map('id').value());
-      }
+        return result;
+      }, {});
+    }
 
-      function getAllProviderFilters() {
-        return {
-          acceptedIds: getAcceptedIdsFilter(),
-          acceptedTypes: getAcceptedTypesFilter(),
-          acceptedAccounts: providerFilters.accounts,
-          filterByType: getAllFiltersByType(),
-          context: providerFilters.context,
-          quickFilter: quickFilter
-        };
-      }
+    function getAcceptedIdsFilter() {
+      return _anyFilterOrNull(_(inboxFilters).filter({ checked: true, selectionById: true }).map('id').value());
+    }
 
-      function _anyFilterOrNull(filters) {
-        return filters.length > 0 ? filters : null;
-      }
-    });
+    function getAllProviderFilters() {
+      return {
+        acceptedIds: getAcceptedIdsFilter(),
+        acceptedTypes: getAcceptedTypesFilter(),
+        acceptedAccounts: providerFilters.accounts,
+        filterByType: getAllFiltersByType(),
+        context: providerFilters.context,
+        quickFilter: quickFilter
+      };
+    }
 
-})(angular);
+    function _anyFilterOrNull(filters) {
+      return filters.length > 0 ? filters : null;
+    }
+  });

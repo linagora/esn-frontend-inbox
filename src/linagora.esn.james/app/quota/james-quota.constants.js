@@ -1,6 +1,4 @@
-(function(angular) {
-  'use strict';
+'use strict';
 
-  angular.module('linagora.esn.james')
-    .constant('JAMES_UNLIMITED_QUOTA', -1);
-})(angular);
+angular.module('linagora.esn.james')
+  .constant('JAMES_UNLIMITED_QUOTA', -1);

@@ -1,17 +1,14 @@
-(function(angular) {
-  'use strict';
+'use strict';
 
-  angular.module('linagora.esn.unifiedinbox')
+angular.module('linagora.esn.unifiedinbox')
 
-    .component('inboxComposerBodyEditorText', {
-      template: require("./composer-body-editor-text.pug"),
-      controller: 'inboxComposerBodyEditorTextController',
-      bindings: {
-        message: '<',
-        identity: '<',
-        isCollapsed: '<',
-        onBodyUpdate: '&'
-      }
-    });
-
-})(angular);
+  .component('inboxComposerBodyEditorText', {
+    template: require("./composer-body-editor-text.pug"),
+    controller: 'inboxComposerBodyEditorTextController',
+    bindings: {
+      message: '<',
+      identity: '<',
+      isCollapsed: '<',
+      onBodyUpdate: '&'
+    }
+  });

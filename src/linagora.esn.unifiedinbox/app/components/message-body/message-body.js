@@ -1,13 +1,10 @@
-(function(angular) {
-  'use strict';
+'use strict';
 
-  angular.module('linagora.esn.unifiedinbox')
+angular.module('linagora.esn.unifiedinbox')
 
-    .component('inboxMessageBody', {
-      template: require("./message-body.pug"),
-      bindings: {
-        message: '<'
-      }
-    });
-
-})(angular);
+  .component('inboxMessageBody', {
+    template: require("./message-body.pug"),
+    bindings: {
+      message: '<'
+    }
+  });

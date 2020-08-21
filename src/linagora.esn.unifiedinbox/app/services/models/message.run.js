@@ -1,36 +1,33 @@
+'use strict';
+
 require('./make-selectable.js');
 require('../../services.js');
 
-(function(angular) {
-  'use strict';
+angular.module('linagora.esn.unifiedinbox')
 
-  angular.module('linagora.esn.unifiedinbox')
-
-    .run(function(jmapDraft, inboxMakeSelectable, inboxMailboxesService, emailSendingService) {
-      Object.defineProperties(jmapDraft.Message.prototype, {
-        isUnread: {
-          configurable: true,
-          get: function() { return this._isUnread; },
-          set: function(isUnread) {
-            if (this._isUnread !== isUnread) {
-              if (angular.isDefined(this._isUnread)) {
-                inboxMailboxesService.flagIsUnreadChanged(this, isUnread);
-              }
-
-              this._isUnread = isUnread;
+  .run(function(jmapDraft, inboxMakeSelectable, inboxMailboxesService, emailSendingService) {
+    Object.defineProperties(jmapDraft.Message.prototype, {
+      isUnread: {
+        configurable: true,
+        get: function() { return this._isUnread; },
+        set: function(isUnread) {
+          if (this._isUnread !== isUnread) {
+            if (angular.isDefined(this._isUnread)) {
+              inboxMailboxesService.flagIsUnreadChanged(this, isUnread);
             }
-          }
-        },
-        hasReplyAll: {
-          enumerable: true,
-          configurable: true,
-          get: function() {
-            return emailSendingService.showReplyAllButton(this);
+
+            this._isUnread = isUnread;
           }
         }
-      });
-
-      inboxMakeSelectable(jmapDraft.Message.prototype);
+      },
+      hasReplyAll: {
+        enumerable: true,
+        configurable: true,
+        get: function() {
+          return emailSendingService.showReplyAllButton(this);
+        }
+      }
     });
 
-})(angular);
+    inboxMakeSelectable(jmapDraft.Message.prototype);
+  });
