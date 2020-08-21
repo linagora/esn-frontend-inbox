@@ -58,6 +58,7 @@ angular.module('linagora.esn.unifiedinbox', [
   'esn.inbox.libs',
   'esn.inbox-calendar',
   'linagora.esn.unifiedinbox.linshare',
+  'angular-clockpicker',
   angularDragula(angular) // eslint-disable-line no-undef
 ]);
 
