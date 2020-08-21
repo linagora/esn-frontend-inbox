@@ -28,8 +28,8 @@ sub-header
           input.input.form-control.from-date(type='text', ng-model="vacation.fromDate", autoclose="1", start-week="1", date-format="{{::dateFormat}}", placeholder="{{ 'Start date' | translate }}", ng-change="ctrl.updateDateAndTime('fromDate')", bs-datepicker)
         .separator
         .fg-line
-          input.input.form-control(ng-if="!is24HourFormat" type="text", ng-model="vacation.fromDate", autoclose="0", time-format= "shortTime", placeholder="{{ 'No end time' | translate }}", aria-expanded="false", ng-change="ctrl.fixTime('fromDate'); ctrl.updateDateAndTime('fromDate')", lng-clockpicker)
-          input.input.form-control(ng-if="is24HourFormat" type="text", ng-model="vacation.fromDate", autoclose="0", time-format= "shortTime", placeholder="{{ 'No end time' | translate }}", aria-expanded="false", ng-change="ctrl.fixTime('fromDate'); ctrl.updateDateAndTime('fromDate')", lng-clockpicker lng-clockpicker-options="{twelvehour: false}")
+          input.input.form-control(ng-if="!is24HourFormat" type="text", ng-model="vacation.fromDate", autoclose="0", time-format= "shortTime", placeholder="{{ 'No start time' | translate }}", aria-expanded="false", ng-change="ctrl.fixTime('fromDate'); ctrl.updateDateAndTime('fromDate')", lng-clockpicker)
+          input.input.form-control(ng-if="is24HourFormat" type="text", ng-model="vacation.fromDate", autoclose="0", time-format= "shortTime", placeholder="{{ 'No start time' | translate }}", aria-expanded="false", ng-change="ctrl.fixTime('fromDate'); ctrl.updateDateAndTime('fromDate')", lng-clockpicker lng-clockpicker-options="{twelvehour: false}")
       .checkbox.checkbox-styled
         label
           input(type="checkbox", ng-model='vacation.hasToDate')
