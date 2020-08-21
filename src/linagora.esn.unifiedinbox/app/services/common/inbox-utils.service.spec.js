@@ -10,9 +10,9 @@ describe('The inboxUtils service', function() {
   var INBOX_DEFAULT_MAILBOX_NAMES;
 
   beforeEach(function() {
-    module('linagora.esn.unifiedinbox');
+    angular.mock.module('linagora.esn.unifiedinbox');
 
-    inject(function(
+    angular.mock.inject(function(
       _inboxUtils_,
       _INBOX_DEFAULT_MAILBOX_NAMES_
     ) {

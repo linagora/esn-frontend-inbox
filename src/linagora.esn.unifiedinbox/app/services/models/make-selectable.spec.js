@@ -9,10 +9,10 @@ describe('The inboxMakeSelectable factory', function() {
   var $rootScope, inboxMakeSelectable, INBOX_EVENTS;
 
   beforeEach(function() {
-    module('linagora.esn.unifiedinbox');
+    angular.mock.module('linagora.esn.unifiedinbox');
   });
 
-  beforeEach(inject(function(_$rootScope_, _inboxMakeSelectable_, _INBOX_EVENTS_) {
+  beforeEach(angular.mock.inject(function(_$rootScope_, _inboxMakeSelectable_, _INBOX_EVENTS_) {
     $rootScope = _$rootScope_;
     inboxMakeSelectable = _inboxMakeSelectable_;
     INBOX_EVENTS = _INBOX_EVENTS_;

@@ -13,7 +13,7 @@ describe('The inboxComposerController controller', function() {
 
   function InboxDraftMock() {}
 
-  beforeEach(module('jadeTemplates', 'linagora.esn.unifiedinbox', function($provide) {
+  beforeEach(angular.mock.module('linagora.esn.unifiedinbox', function($provide) {
     $provide.constant('DRAFT_SAVING_DEBOUNCE_DELAY', 0);
     $provide.value('InboxDraft', InboxDraftMock);
     $provide.value('sendEmail', sinon.stub());
@@ -34,7 +34,7 @@ describe('The inboxComposerController controller', function() {
 
   }));
 
-  beforeEach(inject(function(
+  beforeEach(angular.mock.inject(function(
     _$rootScope_,
     _$componentController_,
     _$q_,
@@ -541,7 +541,7 @@ describe('The inboxComposerController controller', function() {
       sendMessage();
 
       expect(sendEmail).to.have.been.calledWith(sinon.match({
-        htmlBody: '<pre>The actual reply</pre><br/><div><cite>On Aug 21, 2015 12:10:00 AM, from test@open-paas.org</cite><blockquote><p>HtmlBody</p></blockquote></div>'
+        htmlBody: '<pre>The actual reply</pre><br><div><cite>On Aug 21, 2015 12:10:00 AM, from test@open-paas.org</cite><blockquote><p>HtmlBody</p></blockquote></div>'
       }));
     });
 

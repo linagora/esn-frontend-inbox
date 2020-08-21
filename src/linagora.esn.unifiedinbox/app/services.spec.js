@@ -13,13 +13,12 @@ describe('The Unified Inbox Angular module services', function() {
     angular.mock.module('esn.session');
     angular.mock.module('esn.core');
     angular.mock.module('linagora.esn.unifiedinbox');
-    angular.mock.module('jadeTemplates');
     angular.mock.module('esn.datetime', function($provide) {
       $provide.constant('ESN_DATETIME_DEFAULT_TIMEZONE', 'UTC');
     });
   });
 
-  beforeEach(module(function($provide) {
+  beforeEach(angular.mock.module(function($provide) {
     isMobile = false;
     config = config || {};
 
@@ -496,7 +495,7 @@ describe('The Unified Inbox Angular module services', function() {
       var session;
 
       beforeEach(function() {
-        inject(function(_session_) {
+        angular.mock.inject(function(_session_) {
           session = _session_;
         });
 
@@ -798,7 +797,7 @@ describe('The Unified Inbox Angular module services', function() {
           bcc: [{displayName: '3', email: '3@linagora.com'}],
           subject: 'Re: my subject',
           quoted: {
-            htmlBody: '<p><br/></p><cite>On August 21, 2015 2:10 AM, from sender@linagora.com</cite><blockquote><p>my body</p></blockquote>'
+            htmlBody: '<p><br></p><cite>On August 21, 2015 2:10 AM, from sender@linagora.com</cite><blockquote><p>my body</p></blockquote>'
           },
           quoteTemplate: 'default',
           isQuoting: false
@@ -1089,7 +1088,7 @@ describe('The Unified Inbox Angular module services', function() {
           to: [{email: 'from@linagora.com', name: 'linagora'}],
           subject: 'Re: my subject',
           quoted: {
-            htmlBody: '<p><br/></p><cite>On August 21, 2015 2:10 AM, from from@linagora.com</cite><blockquote><p>my body</p></blockquote>'
+            htmlBody: '<p><br></p><cite>On August 21, 2015 2:10 AM, from from@linagora.com</cite><blockquote><p>my body</p></blockquote>'
           },
           quoteTemplate: 'default',
           isQuoting: false
@@ -1290,7 +1289,7 @@ describe('The Unified Inbox Angular module services', function() {
       var email, sender, expectedAnswer;
       var INBOX_ATTACHMENT_TYPE_JMAP;
 
-      beforeEach(inject(function(_INBOX_ATTACHMENT_TYPE_JMAP_) {
+      beforeEach(angular.mock.inject(function(_INBOX_ATTACHMENT_TYPE_JMAP_) {
         INBOX_ATTACHMENT_TYPE_JMAP = _INBOX_ATTACHMENT_TYPE_JMAP_;
       }));
 
@@ -1307,13 +1306,13 @@ describe('The Unified Inbox Angular module services', function() {
         expectedAnswer = {
           from: 'sender@linagora.com',
           subject: 'Fwd: my subject',
-          htmlBody: '<p><br/></p>' +
+          htmlBody: '<p><br></p>' +
           '<cite>' +
-          '------- Forwarded message -------<br/>' +
-          'Subject: my subject<br/>' +
-          'Date: August 21, 2015 2:10 AM<br/>' +
-          'From: from@linagora.com<br/>' +
-          'To: first &lt;first@linagora.com&gt;, second &lt;second@linagora.com&gt;<br/>' +
+          '------- Forwarded message -------<br>' +
+          'Subject: my subject<br>' +
+          'Date: August 21, 2015 2:10 AM<br>' +
+          'From: from@linagora.com<br>' +
+          'To: first &lt;first@linagora.com&gt;, second &lt;second@linagora.com&gt;<br>' +
           'Cc: third &lt;third@linagora.com&gt;' +
           '</cite>' +
           '<blockquote><p>my body</p></blockquote>',
@@ -1345,7 +1344,7 @@ describe('The Unified Inbox Angular module services', function() {
           from: 'sender@linagora.com',
           subject: 'Fwd: my subject',
           quoted: {
-            htmlBody: '<p><br/></p><cite>------- Forwarded message -------<br/>Subject: my subject<br/>Date: August 21, 2015 2:10 AM<br/>From: from@linagora.com<br/>To: first <first@linagora.com>, second <second@linagora.com><br/>Cc: third <third@linagora.com></cite><blockquote><p>my body</p></blockquote>'
+            htmlBody: '<p><br></p><cite>------- Forwarded message -------<br>Subject: my subject<br>Date: August 21, 2015 2:10 AM<br>From: from@linagora.com<br>To: first <first@linagora.com>, second <second@linagora.com><br>Cc: third <third@linagora.com></cite><blockquote><p>my body</p></blockquote>'
           },
           quoteTemplate: 'forward',
           isQuoting: false
@@ -1587,13 +1586,13 @@ describe('The Unified Inbox Angular module services', function() {
 
     var $rootScope, backgroundAction, asyncAction, backgroundProcessorService;
 
-    beforeEach(module(function($provide) {
+    beforeEach(angular.mock.module(function($provide) {
       $provide.value('asyncAction', asyncAction = sinon.spy(function(message, action) {
         return action();
       }));
     }));
 
-    beforeEach(inject(function(_$rootScope_, _backgroundAction_, _backgroundProcessorService_) {
+    beforeEach(angular.mock.inject(function(_$rootScope_, _backgroundAction_, _backgroundProcessorService_) {
       $rootScope = _$rootScope_;
       backgroundAction = _backgroundAction_;
       backgroundProcessorService = _backgroundProcessorService_;
@@ -1645,12 +1644,12 @@ describe('The Unified Inbox Angular module services', function() {
 
     var asyncJmapAction, backgroundAction, withJmapClient;
 
-    beforeEach(module(function($provide) {
+    beforeEach(angular.mock.module(function($provide) {
       $provide.value('backgroundAction', sinon.spy(function(message, action) { return action(); }));
       $provide.value('withJmapClient', sinon.spy(function(callback) { return callback; }));
     }));
 
-    beforeEach(inject(function(_asyncJmapAction_, _backgroundAction_, _withJmapClient_) {
+    beforeEach(angular.mock.inject(function(_asyncJmapAction_, _backgroundAction_, _withJmapClient_) {
       backgroundAction = _backgroundAction_;
       withJmapClient = _withJmapClient_;
       asyncJmapAction = _asyncJmapAction_;
@@ -1669,7 +1668,7 @@ describe('The Unified Inbox Angular module services', function() {
 
     var $rootScope, searchService;
 
-    beforeEach(inject(function(_$rootScope_, _searchService_) {
+    beforeEach(angular.mock.inject(function(_$rootScope_, _searchService_) {
       $rootScope = _$rootScope_;
       searchService = _searchService_;
     }));
@@ -1768,7 +1767,7 @@ describe('The Unified Inbox Angular module services', function() {
 
     var $rootScope, jmapClientProviderMock = {}, jmapClientMock, backgroundProcessorService, attachmentUploadService, file = { name: 'n', size: 1, type: 'type'};
 
-    beforeEach(module(function($provide) {
+    beforeEach(angular.mock.module(function($provide) {
       $provide.value('withJmapClient', function(callback) {
         return callback(null);
       });
@@ -1778,7 +1777,7 @@ describe('The Unified Inbox Angular module services', function() {
       $.mockjaxSettings.logging = false;
     }));
 
-    beforeEach(inject(function(_$rootScope_, _attachmentUploadService_, _backgroundProcessorService_) {
+    beforeEach(angular.mock.inject(function(_$rootScope_, _attachmentUploadService_, _backgroundProcessorService_) {
       $rootScope = _$rootScope_;
       attachmentUploadService = _attachmentUploadService_;
       backgroundProcessorService = _backgroundProcessorService_;
@@ -1921,7 +1920,7 @@ describe('The Unified Inbox Angular module services', function() {
 
     var $rootScope, waitUntilMessageIsComplete;
 
-    beforeEach(inject(function(_$rootScope_, _waitUntilMessageIsComplete_) {
+    beforeEach(angular.mock.inject(function(_$rootScope_, _waitUntilMessageIsComplete_) {
       $rootScope = _$rootScope_;
       waitUntilMessageIsComplete = _waitUntilMessageIsComplete_;
     }));
@@ -2003,7 +2002,7 @@ describe('The Unified Inbox Angular module services', function() {
 
     var $rootScope, $timeout, inboxSwipeHelper;
 
-    beforeEach(inject(function(_$rootScope_, _$timeout_, _inboxSwipeHelper_) {
+    beforeEach(angular.mock.inject(function(_$rootScope_, _$timeout_, _inboxSwipeHelper_) {
       $rootScope = _$rootScope_;
       $timeout = _$timeout_;
       inboxSwipeHelper = _inboxSwipeHelper_;
@@ -2058,7 +2057,7 @@ describe('The Unified Inbox Angular module services', function() {
       return $q.reject('WTF');
     }
 
-    beforeEach(inject(function(_$rootScope_, _inboxAsyncHostedMailControllerHelper_, session, _INBOX_CONTROLLER_LOADING_STATES_) {
+    beforeEach(angular.mock.inject(function(_$rootScope_, _inboxAsyncHostedMailControllerHelper_, session, _INBOX_CONTROLLER_LOADING_STATES_) {
       session.user = {
         preferredEmail: 'user@example.org'
       };

@@ -13,9 +13,9 @@ cite
   br
   | {{ 'From' | translate }}: {{ email.quoted.from.email }}
   br
-  | {{ email.quoted.to | emailerList:'{{ 'To' | translate }}: '}}
+  | {{ email.quoted.to | emailerList:toPrefix }}
   br
-  | {{ email.quoted.cc | emailerList:'{{ 'Cc' | translate }}: '}}
+  | {{ email.quoted.cc | emailerList:ccPrefix }}
 br
 br
 

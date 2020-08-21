@@ -9,7 +9,7 @@ describe('The inboxItemDate filter', function() {
   var inboxItemDateFilter;
 
   beforeEach(function() {
-    module('linagora.esn.unifiedinbox', function($provide) {
+    angular.mock.module('linagora.esn.unifiedinbox', function($provide) {
       $provide.value('esnConfig', function(key) {
         if (key === 'core.language') {
           return {then: function(cb) { cb('en'); }};
@@ -22,7 +22,7 @@ describe('The inboxItemDate filter', function() {
     });
   });
 
-  beforeEach(inject(function(_inboxItemDateFilter_) {
+  beforeEach(angular.mock.inject(function(_inboxItemDateFilter_) {
     inboxItemDateFilter = _inboxItemDateFilter_;
   }));
 

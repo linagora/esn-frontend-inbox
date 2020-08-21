@@ -8,8 +8,8 @@
 
     var $rootScope, inboxRequestReceiptsService, inboxConfigMock, INBOX_RECEIPTS_CONFIG_KEY, requestReceiptsConfigCalls, esnUserConfigurationServiceMock;
 
-    beforeEach(module('linagora.esn.unifiedinbox'));
-    beforeEach(module(function($provide) {
+    beforeEach(angular.mock.module('linagora.esn.unifiedinbox'));
+    beforeEach(angular.mock.module(function($provide) {
       inboxConfigMock = {};
       requestReceiptsConfigCalls = 0;
       $provide.value('inboxConfig', function(key, defaultValue) {
@@ -30,7 +30,7 @@
       $provide.value('esnUserConfigurationService', esnUserConfigurationServiceMock);
     }));
 
-    beforeEach(inject(function(_$rootScope_, _inboxRequestReceiptsService_, _INBOX_RECEIPTS_CONFIG_KEY_) {
+    beforeEach(angular.mock.inject(function(_$rootScope_, _inboxRequestReceiptsService_, _INBOX_RECEIPTS_CONFIG_KEY_) {
       $rootScope = _$rootScope_;
       inboxRequestReceiptsService = _inboxRequestReceiptsService_;
       INBOX_RECEIPTS_CONFIG_KEY = _INBOX_RECEIPTS_CONFIG_KEY_;

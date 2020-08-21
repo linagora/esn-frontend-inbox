@@ -8,16 +8,16 @@
 
     var $rootScope, inboxUserQuotaService, mailboxesServiceMock, mockPromise, $q;
 
-    beforeEach(module('linagora.esn.unifiedinbox'));
+    beforeEach(angular.mock.module('linagora.esn.unifiedinbox'));
     beforeEach(function() {
     mailboxesServiceMock = { getUserInbox: sinon.spy() };
 
-      module(function($provide) {
+      angular.mock.module(function($provide) {
         $provide.value('inboxMailboxesService', mailboxesServiceMock);
       });
     });
 
-    beforeEach(inject(function(_$rootScope_, _inboxUserQuotaService_, _$q_) {
+    beforeEach(angular.mock.inject(function(_$rootScope_, _inboxUserQuotaService_, _$q_) {
       $rootScope = _$rootScope_;
       inboxUserQuotaService = _inboxUserQuotaService_;
       $q = _$q_;

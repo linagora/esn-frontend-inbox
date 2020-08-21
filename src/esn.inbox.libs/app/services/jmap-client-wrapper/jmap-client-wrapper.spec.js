@@ -6,13 +6,13 @@ var expect = chai.expect;
 
 describe('The jmap client wrapper services', function() {
   beforeEach(function() {
-    module('linagora.esn.unifiedinbox');
+    angular.mock.module('linagora.esn.unifiedinbox');
   });
 
   describe('The dollarHttpTransport factory', function() {
     var $httpBackend, dollarHttpTransport;
 
-    beforeEach(inject(function(_$httpBackend_, _dollarHttpTransport_) {
+    beforeEach(angular.mock.inject(function(_$httpBackend_, _dollarHttpTransport_) {
       $httpBackend = _$httpBackend_;
       dollarHttpTransport = _dollarHttpTransport_;
     }));

@@ -8,12 +8,7 @@ describe('The inboxConfigurationFilterDefinitionController', function() {
   var $controller, $scope, $state, $rootScope, inboxMailboxesService, inboxMailboxesFilterService, JMAP_FILTER, userAPI;
 
   beforeEach(function() {
-    module('esn.i18n', function($translateProvider) {
-      $translateProvider.useInterpolation('esnI18nInterpolator');
-    });
-
-    module('jadeTemplates');
-    module('linagora.esn.unifiedinbox', function($provide) {
+    angular.mock.module('linagora.esn.unifiedinbox', function($provide) {
       $provide.value('inboxMailboxesService', {
         assignMailboxesList: angular.noop
       });
@@ -35,7 +30,7 @@ describe('The inboxConfigurationFilterDefinitionController', function() {
     });
   });
 
-  beforeEach(inject(function(
+  beforeEach(angular.mock.inject(function(
     _$controller_,
     _$rootScope_,
     _$state_,

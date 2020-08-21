@@ -6,13 +6,13 @@ var expect = chai.expect;
 
 describe('The inboxJmapItemService service', function() {
 
-  var $rootScope, _, jmapDraft, inboxJmapItemService, newComposerService, emailSendingService, quoteEmail, jmapClientMock,
+  var $rootScope, jmapDraft, inboxJmapItemService, newComposerService, emailSendingService, quoteEmail, jmapClientMock,
       notificationFactory, counter, infiniteListService, inboxSelectionService, INFINITE_LIST_EVENTS, INBOX_EVENTS,
       inboxConfigMock, inboxMailboxesService, inboxFilteredList;
 
-  beforeEach(module('linagora.esn.unifiedinbox'));
+  beforeEach(angular.mock.module('linagora.esn.unifiedinbox'));
 
-  beforeEach(module(function($provide) {
+  beforeEach(angular.mock.module(function($provide) {
     counter = 0;
     jmapClientMock = {
       setMessages: sinon.spy(function() {
@@ -50,14 +50,16 @@ describe('The inboxJmapItemService service', function() {
     $provide.value('inboxConfig', function(key, defaultValue) {
       return $q.when(angular.isDefined(inboxConfigMock[key]) ? inboxConfigMock[key] : defaultValue);
     });
+    $provide.value('esnI18nService', {
+      translate: text => text
+    });
   }));
 
-  beforeEach(inject(function(_$rootScope_, _jmapDraft_, ___, _inboxJmapItemService_, _notificationFactory_,
+  beforeEach(angular.mock.inject(function(_$rootScope_, _jmapDraft_, _inboxJmapItemService_, _notificationFactory_,
                              _infiniteListService_, _inboxSelectionService_, _INFINITE_LIST_EVENTS_, _INBOX_EVENTS_,
                              _inboxMailboxesService_, _inboxMailboxesCache_, _inboxFilteredList_) {
     $rootScope = _$rootScope_;
     jmapDraft = _jmapDraft_;
-    _ = ___;
     inboxJmapItemService = _inboxJmapItemService_;
     notificationFactory = _notificationFactory_;
     infiniteListService = _infiniteListService_;
@@ -212,7 +214,7 @@ describe('The inboxJmapItemService service', function() {
 
     var inboxMailboxesService, mailbox;
 
-    beforeEach(inject(function(_inboxMailboxesService_) {
+    beforeEach(angular.mock.inject(function(_inboxMailboxesService_) {
       inboxMailboxesService = _inboxMailboxesService_;
 
       inboxMailboxesService.updateCountersWhenMovingMessage = sinon.spy(inboxMailboxesService.updateCountersWhenMovingMessage);
@@ -227,7 +229,7 @@ describe('The inboxJmapItemService service', function() {
       });
 
       inboxJmapItemService.moveToMailbox(newEmail(), mailbox).catch(function() {
-        expect(notificationFactory.weakError).to.have.been.calledWith('Error', sinon.match({text: 'Cannot move "%s" to "%s"'}));
+        expect(notificationFactory.weakError).to.have.been.calledWith('Error', 'Cannot move "%s" to "%s"');
 
         done();
       });
@@ -245,7 +247,7 @@ describe('The inboxJmapItemService service', function() {
       });
 
       inboxJmapItemService.moveToMailbox([newEmail(), newEmail()], mailbox).catch(function() {
-        expect(notificationFactory.weakError).to.have.been.calledWith('Error', sinon.match({text: 'Some items could not be moved to "%s"'}));
+        expect(notificationFactory.weakError).to.have.been.calledWith('Error', 'Some items could not be moved to "%s"');
 
         done();
       });
@@ -523,7 +525,7 @@ describe('The inboxJmapItemService service', function() {
       });
 
       inboxJmapItemService.setFlag(newEmail(), 'isUnread', true).catch(function() {
-        expect(notificationFactory.weakError).to.have.been.calledWith('Error', sinon.match({text: 'Could not update "%s"'}));
+        expect(notificationFactory.weakError).to.have.been.calledWith('Error', 'Could not update "%s"');
 
         done();
       });
@@ -655,7 +657,7 @@ describe('The inboxJmapItemService service', function() {
     var inboxMailboxesService, inboxMailboxesCache, inboxFilteredList, notificationFactory,
         perPage, messageIdsList, mailboxId;
 
-    beforeEach(inject(function(_inboxMailboxesService_, _inboxMailboxesCache_, _inboxFilteredList_) {
+    beforeEach(angular.mock.inject(function(_inboxMailboxesService_, _inboxMailboxesCache_, _inboxFilteredList_) {
       inboxMailboxesService = _inboxMailboxesService_;
       inboxMailboxesCache = _inboxMailboxesCache_;
       inboxFilteredList = _inboxFilteredList_;
@@ -731,14 +733,13 @@ describe('The inboxJmapItemService service', function() {
 
   describe('The mark all as read function', function() {
 
-    var _, unreadFlag, state, inboxMailboxesService, inboxMailboxesCache, inboxFilteredList,
+    var unreadFlag, state, inboxMailboxesService, inboxMailboxesCache, inboxFilteredList,
     perPage, messageIdsList, mailboxId;
 
-    beforeEach(inject(function(___, _inboxMailboxesService_, _inboxMailboxesCache_, _inboxFilteredList_) {
+    beforeEach(angular.mock.inject(function(_inboxMailboxesService_, _inboxMailboxesCache_, _inboxFilteredList_) {
       inboxMailboxesService = _inboxMailboxesService_;
       inboxMailboxesCache = _inboxMailboxesCache_;
       inboxFilteredList = _inboxFilteredList_;
-       _ = ___;
 
       perPage = 30;
       inboxConfigMock.numberItemsPerPageOnBulkReadOperations = perPage;

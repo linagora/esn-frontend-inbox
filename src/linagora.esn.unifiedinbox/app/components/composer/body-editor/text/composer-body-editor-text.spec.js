@@ -26,7 +26,7 @@ describe('The inboxComposerBodyEditorText component', function() {
     }
   });
 
-  beforeEach(module('jadeTemplates', 'linagora.esn.unifiedinbox', function($provide) {
+  beforeEach(angular.mock.module('linagora.esn.unifiedinbox', function($provide) {
     function autosizeMock() {}
 
     autosizeMock.update = sinon.spy();
@@ -51,7 +51,7 @@ describe('The inboxComposerBodyEditorText component', function() {
     $provide.constant('ESN_DATETIME_DEFAULT_TIMEZONE', 'UTC');
   }));
 
-  beforeEach(inject(function(_$compile_, _$timeout_, _$rootScope_, _autosize_) {
+  beforeEach(angular.mock.inject(function(_$compile_, _$timeout_, _$rootScope_, _autosize_) {
     $compile = _$compile_;
     $timeout = _$timeout_;
     $rootScope = _$rootScope_;

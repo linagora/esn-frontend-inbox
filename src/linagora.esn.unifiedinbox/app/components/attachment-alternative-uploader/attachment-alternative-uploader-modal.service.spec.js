@@ -11,14 +11,14 @@ describe('The inboxAttachmentAlternativeUploaderModal', function() {
   beforeEach(function() {
     modalOptions = null;
 
-    module('linagora.esn.unifiedinbox', function($provide) {
+    angular.mock.module('linagora.esn.unifiedinbox', function($provide) {
       $provide.value('$modal', function(options) {
         modalOptions = options;
       });
     });
   });
 
-  beforeEach(inject(function(_inboxAttachmentAlternativeUploaderModal_, _inboxAttachmentProviderRegistry_) {
+  beforeEach(angular.mock.inject(function(_inboxAttachmentAlternativeUploaderModal_, _inboxAttachmentProviderRegistry_) {
     inboxAttachmentAlternativeUploaderModal = _inboxAttachmentAlternativeUploaderModal_;
     inboxAttachmentProviderRegistry = _inboxAttachmentProviderRegistry_;
   }));

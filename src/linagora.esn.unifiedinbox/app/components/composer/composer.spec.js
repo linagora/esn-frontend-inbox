@@ -26,7 +26,7 @@ describe('The inboxComposer component', function() {
     }
   });
 
-  beforeEach(module('jadeTemplates', 'linagora.esn.unifiedinbox', function($provide) {
+  beforeEach(angular.mock.module('linagora.esn.unifiedinbox', function($provide) {
     $provide.value('inboxIdentitiesService', {
       getAllIdentities: function() {
         return $q.when([]);
@@ -34,7 +34,7 @@ describe('The inboxComposer component', function() {
     });
   }));
 
-  beforeEach(inject(function(_$compile_, _$rootScope_, _$timeout_) {
+  beforeEach(angular.mock.inject(function(_$compile_, _$rootScope_, _$timeout_) {
     $compile = _$compile_;
     $rootScope = _$rootScope_;
     $timeout = _$timeout_;

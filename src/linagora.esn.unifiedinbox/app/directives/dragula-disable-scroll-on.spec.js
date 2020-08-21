@@ -8,8 +8,7 @@ describe('dragulaDisableScrollOn', function() {
   var $scope, $compile, $rootScope, element, touchscreenDetectorService;
 
   beforeEach(function() {
-    module('jadeTemplates');
-    module('linagora.esn.unifiedinbox', function($provide) {
+    angular.mock.module('linagora.esn.unifiedinbox', function($provide) {
       touchscreenDetectorService = {
         hasTouchscreen: function() {
           return false;
@@ -20,7 +19,7 @@ describe('dragulaDisableScrollOn', function() {
     });
   });
 
-  beforeEach(inject(function(
+  beforeEach(angular.mock.inject(function(
     _$compile_,
     _$rootScope_
   ) {

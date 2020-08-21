@@ -8,8 +8,8 @@ describe('The inboxEmailResolverService factory', function() {
   var $rootScope, inboxEmailResolverService, esnPeopleAPI, ESN_PEOPLE_FIELDS;
 
   beforeEach(function() {
-    module('linagora.esn.unifiedinbox');
-    module('esn.people', function($provide) {
+    angular.mock.module('linagora.esn.unifiedinbox');
+    angular.mock.module('esn.people', function($provide) {
       ESN_PEOPLE_FIELDS = {
         EMAIL_ADDRESS: 'email'
       };
@@ -21,7 +21,7 @@ describe('The inboxEmailResolverService factory', function() {
     });
   });
 
-  beforeEach(inject(function(_$rootScope_, _inboxEmailResolverService_) {
+  beforeEach(angular.mock.inject(function(_$rootScope_, _inboxEmailResolverService_) {
     $rootScope = _$rootScope_;
     inboxEmailResolverService = _inboxEmailResolverService_;
   }));

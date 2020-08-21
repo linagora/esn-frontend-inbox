@@ -433,7 +433,7 @@ describe('The Unified Inbox Angular module providers', function() {
   describe('The inboxJmapProviderFilterBuilder', function() {
     var inboxJmapProviderFilterBuilder;
 
-    beforeEach(inject(function(_inboxJmapProviderFilterBuilder_) {
+    beforeEach(angular.mock.inject(function(_inboxJmapProviderFilterBuilder_) {
       inboxJmapProviderFilterBuilder = _inboxJmapProviderFilterBuilder_;
     }));
 
@@ -500,7 +500,7 @@ describe('The Unified Inbox Angular module providers', function() {
 
     var inboxJmapProviderContextBuilder;
 
-    beforeEach(inject(function(_inboxJmapProviderContextBuilder_) {
+    beforeEach(angular.mock.inject(function(_inboxJmapProviderContextBuilder_) {
       inboxJmapProviderContextBuilder = _inboxJmapProviderContextBuilder_;
     }));
 

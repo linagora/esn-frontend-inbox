@@ -10,7 +10,7 @@ describe('The inboxConfigurationController', function() {
   beforeEach(function() {
     config = {};
 
-    module('linagora.esn.unifiedinbox', function($provide) {
+    angular.mock.module('linagora.esn.unifiedinbox', function($provide) {
       $provide.value('touchscreenDetectorService', touchscreenDetectorService = {});
       $provide.value('esnConfig', function(key, defaultValue) {
         return $q.when().then(function() {

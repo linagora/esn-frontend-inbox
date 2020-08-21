@@ -11,9 +11,16 @@ describe('The jamesMaintenanceController', function() {
   var jamesApiClient;
 
   beforeEach(function() {
-    module('linagora.esn.james');
+    angular.mock.module('linagora.esn.james');
+    angular.mock.module(function($provide) {
+      $provide.factory('asyncAction', function() {
+        return function(message, action) {
+          action();
+        }
+      })
+    });
 
-    inject(function(
+    angular.mock.inject(function(
       _$controller_,
       _$rootScope_,
       _jamesApiClient_
@@ -36,7 +43,7 @@ describe('The jamesMaintenanceController', function() {
 
   describe('The synchronizeDomains fn', function() {
     it('should call James client to synchronize domains', function() {
-      jamesApiClient.syncDomains = sinon.spy();
+      jamesApiClient.syncDomains = sinon.stub();
 
       var controller = initController();
 

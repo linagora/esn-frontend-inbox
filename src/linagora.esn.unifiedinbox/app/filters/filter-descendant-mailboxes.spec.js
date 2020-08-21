@@ -6,16 +6,15 @@ var expect = chai.expect;
 
 describe('The inboxFilterDescendantMailboxes filter', function() {
 
-  var _, filter, cache;
+  var filter, cache;
 
   beforeEach(function() {
-    module('linagora.esn.unifiedinbox');
+    angular.mock.module('linagora.esn.unifiedinbox');
   });
 
-  beforeEach(inject(function(inboxFilterDescendantMailboxesFilter, inboxMailboxesCache, jmapDraft, ___) {
+  beforeEach(angular.mock.inject(function(inboxFilterDescendantMailboxesFilter, inboxMailboxesCache, jmapDraft) {
     filter = inboxFilterDescendantMailboxesFilter;
     cache = inboxMailboxesCache;
-    _ = ___;
 
     [
       new jmapDraft.Mailbox(null, '1', '1'),

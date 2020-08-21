@@ -20,13 +20,12 @@ describe('The inboxComposerIdentitySelector component', function() {
   }
 
   beforeEach(function() {
-    module('jadeTemplates');
-    module('linagora.esn.unifiedinbox');
+    angular.mock.module('linagora.esn.unifiedinbox');
 
     defaultIdentity = { default: true, uuid: 'default', name: 'identity1', email: 'identity1', usable: true };
     identity = { uuid: 'identity2', name: 'identity2', email: 'identity2', usable: true };
 
-    inject(function(_$compile_, _$rootScope_, _inboxIdentitiesService_) {
+    angular.mock.inject(function(_$compile_, _$rootScope_, _inboxIdentitiesService_) {
       $compile = _$compile_;
       $rootScope = _$rootScope_;
       inboxIdentitiesService = _inboxIdentitiesService_;

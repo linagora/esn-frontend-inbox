@@ -10,11 +10,11 @@ describe('The InboxForwardingsUserController controller', function() {
   var inboxForwardingsService, inboxForwardingClient;
 
   beforeEach(function() {
-    module('linagora.esn.unifiedinbox');
+    angular.mock.module('linagora.esn.unifiedinbox');
   });
 
   beforeEach(function() {
-    inject(function(
+    angular.mock.inject(function(
       _$rootScope_,
       _$controller_,
       _inboxForwardingClient_,

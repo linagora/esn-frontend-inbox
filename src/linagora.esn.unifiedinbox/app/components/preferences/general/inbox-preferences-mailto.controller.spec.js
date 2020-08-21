@@ -11,9 +11,9 @@ describe('The inboxPreferencesMailtoController', function() {
       INBOX_MODULE_NAME;
 
   beforeEach(function() {
-    module('linagora.esn.unifiedinbox');
+    angular.mock.module('linagora.esn.unifiedinbox');
 
-    inject(function(_$q_, _$window_, _$controller_, _$rootScope_, _esnUserConfigurationService_, _INBOX_MODULE_NAME_) {
+    angular.mock.inject(function(_$q_, _$window_, _$controller_, _$rootScope_, _esnUserConfigurationService_, _INBOX_MODULE_NAME_) {
       $q = _$q_;
       $window = _$window_;
       $controller = _$controller_;

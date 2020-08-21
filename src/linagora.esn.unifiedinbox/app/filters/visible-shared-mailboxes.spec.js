@@ -9,10 +9,10 @@ describe('The inboxFilterVisibleSharedMailboxes filter', function() {
   var inboxFilterVisibleSharedMailboxes;
 
   beforeEach(function() {
-    module('linagora.esn.unifiedinbox');
+    angular.mock.module('linagora.esn.unifiedinbox');
   });
 
-  beforeEach(inject(function(_inboxFilterVisibleSharedMailboxesFilter_) {
+  beforeEach(angular.mock.inject(function(_inboxFilterVisibleSharedMailboxesFilter_) {
     inboxFilterVisibleSharedMailboxes = _inboxFilterVisibleSharedMailboxesFilter_;
   }));
 

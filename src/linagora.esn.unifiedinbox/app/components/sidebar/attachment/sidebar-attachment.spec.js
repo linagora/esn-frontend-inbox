@@ -11,7 +11,7 @@ describe('The inboxListSidebarAttachmentController controller', function() {
   // Mocked
   var $stateParams, PROVIDER_TYPES;
 
-  beforeEach(module('linagora.esn.unifiedinbox', function($provide) {
+  beforeEach(angular.mock.module('linagora.esn.unifiedinbox', function($provide) {
     $stateParams = {
       context: 'chosenMailbox'
     };
@@ -21,7 +21,7 @@ describe('The inboxListSidebarAttachmentController controller', function() {
     $provide.constant('PROVIDER_TYPES', PROVIDER_TYPES);
   }));
 
-  beforeEach(inject(function(_$rootScope_, _$controller_) {
+  beforeEach(angular.mock.inject(function(_$rootScope_, _$controller_) {
     scope = _$rootScope_.$new();
     $controller = _$controller_;
   }));

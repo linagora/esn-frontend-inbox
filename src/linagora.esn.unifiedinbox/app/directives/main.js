@@ -479,8 +479,8 @@ require('../services.js');
         ) {
           var self = this;
 
-          self.shouldDisplayCalendarInvitationMessageIndicator = $scope.item.headers[INVITATION_MESSAGE_HEADERS.UID];
-          self.shouldDisplayCalendarResourceManagementIndicator = $scope.item.headers[X_OPENPAAS_CAL_HEADERS.ACTION];
+          self.shouldDisplayCalendarInvitationMessageIndicator = $scope.item && $scope.item.headers && $scope.item.headers[INVITATION_MESSAGE_HEADERS.UID];
+          self.shouldDisplayCalendarResourceManagementIndicator = $scope.item && $scope.item.headers && $scope.item.headers[X_OPENPAAS_CAL_HEADERS.ACTION];
         }
       };
     })
@@ -521,7 +521,7 @@ require('../services.js');
 
           function updateDropdownList() {
             var checkedItems = _.filter($scope.filters, { checked: true });
-            var numberFilterSelected = esnI18nService.translate('%s selected', checkedItems.length).toString();
+            var numberFilterSelected = esnI18nService.translate('%s selected', { items: checkedItems }).toString();
 
             if (checkedItems.length > 0) {
               $scope.dropdownList.filtered = true;

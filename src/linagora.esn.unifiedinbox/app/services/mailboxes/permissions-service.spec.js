@@ -9,14 +9,14 @@
     var $rootScope, sharingRolesService, INBOX_MAILBOX_SHARING_PERMISSIONS, mailboxesServiceMock;
     var firstSharingRole, firstSharingPermissions, mailboxToShare, mockPromise;
 
-    beforeEach(module('linagora.esn.unifiedinbox'));
-    beforeEach(module(function($provide) {
+    beforeEach(angular.mock.module('linagora.esn.unifiedinbox'));
+    beforeEach(angular.mock.module(function($provide) {
       mockPromise = undefined;
       mailboxesServiceMock = { updateMailbox: sinon.spy(function() { return mockPromise || $q.when();}) };
       $provide.value('inboxMailboxesService', mailboxesServiceMock);
     }));
 
-    beforeEach(inject(function(_$rootScope_, _inboxSharedMailboxesPermissionsService_, _INBOX_MAILBOX_SHARING_PERMISSIONS_) {
+    beforeEach(angular.mock.inject(function(_$rootScope_, _inboxSharedMailboxesPermissionsService_, _INBOX_MAILBOX_SHARING_PERMISSIONS_) {
       $rootScope = _$rootScope_;
       sharingRolesService = _inboxSharedMailboxesPermissionsService_;
       INBOX_MAILBOX_SHARING_PERMISSIONS = _INBOX_MAILBOX_SHARING_PERMISSIONS_;

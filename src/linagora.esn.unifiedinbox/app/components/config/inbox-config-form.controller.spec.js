@@ -10,9 +10,9 @@ describe('The InboxConfigFormController controller', function() {
   var INBOX_CONFIG_EVENTS, inboxForwardingClient;
 
   beforeEach(function() {
-    module('linagora.esn.unifiedinbox');
+    angular.mock.module('linagora.esn.unifiedinbox');
 
-    inject(function(
+    angular.mock.inject(function(
       _$rootScope_,
       _$controller_,
       _$stateParams_,

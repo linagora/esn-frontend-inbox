@@ -8,9 +8,11 @@ describe('The inboxComposerMobileController controller', function() {
 
   var $componentController, newComposerService, esnPreviousPage, ctrl;
 
-  beforeEach(module('jadeTemplates', 'linagora.esn.unifiedinbox', function($provide) {
+  beforeEach(angular.mock.module('linagora.esn.unifiedinbox', function($provide) {
     $provide.value('esnPreviousPage', {
-      back: sinon.spy()
+      back: sinon.spy(),
+      // The below line must not be removed or it will yield "esnPreviousPage.init is not a function" when the run block of 'esn.previous-page' is executed
+      init: sinon.spy()
     });
     $provide.value('newComposerService', {
       open: sinon.spy()
@@ -22,7 +24,7 @@ describe('The inboxComposerMobileController controller', function() {
     });
   }));
 
-  beforeEach(inject(function(_$componentController_, _newComposerService_, _esnPreviousPage_) {
+  beforeEach(angular.mock.inject(function(_$componentController_, _newComposerService_, _esnPreviousPage_) {
     $componentController = _$componentController_;
 
     newComposerService = _newComposerService_;

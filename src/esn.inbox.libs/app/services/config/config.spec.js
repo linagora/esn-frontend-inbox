@@ -32,7 +32,7 @@ describe('The inboxConfig factory', function() {
     $rootScope.$digest();
   }
 
-  beforeEach(inject(function(_$rootScope_, _inboxConfig_) {
+  beforeEach(angular.mock.inject(function(_$rootScope_, _inboxConfig_) {
     inboxConfig = _inboxConfig_;
     $rootScope = _$rootScope_;
 

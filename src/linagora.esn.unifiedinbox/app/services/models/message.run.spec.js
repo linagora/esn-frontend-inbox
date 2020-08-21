@@ -7,13 +7,13 @@ var expect = chai.expect;
 describe('The Message run block', function() {
   var jmapDraft, inboxMailboxesService;
 
-  beforeEach(module('linagora.esn.unifiedinbox', function($provide) {
+  beforeEach(angular.mock.module('linagora.esn.unifiedinbox', function($provide) {
     $provide.value('inboxMailboxesService', inboxMailboxesService = {
       flagIsUnreadChanged: sinon.spy()
     });
   }));
 
-  beforeEach(inject(function(_jmapDraft_, session) {
+  beforeEach(angular.mock.inject(function(_jmapDraft_, session) {
     jmapDraft = _jmapDraft_;
 
     session.user = {

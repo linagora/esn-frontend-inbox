@@ -16,7 +16,7 @@ describe('The withJmapClient factory', function() {
     });
   });
 
-  beforeEach(inject(function(_$rootScope_, _withJmapClient_) {
+  beforeEach(angular.mock.inject(function(_$rootScope_, _withJmapClient_) {
     $rootScope = _$rootScope_;
 
     withJmapClient = _withJmapClient_;

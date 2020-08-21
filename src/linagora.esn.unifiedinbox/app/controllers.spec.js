@@ -9,7 +9,7 @@ describe('The linagora.esn.unifiedinbox module controllers', function() {
   var $stateParams, $rootScope, scope, $controller, $timeout, $interval,
       jmapClient, jmapDraft, notificationFactory, Offline = {},
       newComposerService = {}, $state, $modal, $hide, navigateTo, inboxPlugins, inboxFilteredList,
-      inboxMailboxesService, inboxJmapItemService, _, fileUploadMock, config, moment, inboxMailboxesCache,
+      inboxMailboxesService, inboxJmapItemService, fileUploadMock, config, moment, inboxMailboxesCache,
       esnPreviousPage, inboxFilterDescendantMailboxesFilter, inboxSelectionService,
       inboxUserQuotaService, inboxUnavailableAccountNotifier, inboxUtils;
   var JMAP_GET_MESSAGES_VIEW, INBOX_EVENTS, DEFAULT_MAX_SIZE_UPLOAD, INFINITE_LIST_POLLING_INTERVAL;
@@ -37,7 +37,7 @@ describe('The linagora.esn.unifiedinbox module controllers', function() {
     angular.mock.module('esn.notification');
     angular.mock.module('esn.previous-page');
 
-    module('linagora.esn.unifiedinbox', function($provide) {
+    angular.mock.module('linagora.esn.unifiedinbox', function($provide) {
       jmapClient = {
         getVacationResponse: function() {
           return $q.when(new jmapDraft.SetResponse(jmapClient));
@@ -100,7 +100,7 @@ describe('The linagora.esn.unifiedinbox module controllers', function() {
   });
 
   beforeEach(angular.mock.inject(function(_$rootScope_, _$controller_, _$timeout_, _$interval_, _jmapDraft_, _inboxPlugins_, _inboxFilteredList_,
-                                          _inboxMailboxesService_, ___, _JMAP_GET_MESSAGES_VIEW_,
+                                          _inboxMailboxesService_, _JMAP_GET_MESSAGES_VIEW_,
                                           _DEFAULT_FILE_TYPE_, _moment_, _DEFAULT_MAX_SIZE_UPLOAD_, _inboxJmapItemService_,
                                           _INBOX_EVENTS_, _inboxMailboxesCache_, _esnPreviousPage_, _inboxSelectionService_, _inboxUnavailableAccountNotifier_,
                                           _INFINITE_LIST_POLLING_INTERVAL_, _inboxUtils_) {
@@ -113,7 +113,6 @@ describe('The linagora.esn.unifiedinbox module controllers', function() {
     inboxJmapItemService = _inboxJmapItemService_;
     inboxMailboxesCache = _inboxMailboxesCache_;
     inboxUnavailableAccountNotifier = _inboxUnavailableAccountNotifier_;
-    _ = ___;
     JMAP_GET_MESSAGES_VIEW = _JMAP_GET_MESSAGES_VIEW_;
     DEFAULT_MAX_SIZE_UPLOAD = _DEFAULT_MAX_SIZE_UPLOAD_;
     INBOX_EVENTS = _INBOX_EVENTS_;
@@ -146,7 +145,7 @@ describe('The linagora.esn.unifiedinbox module controllers', function() {
 
     var INBOX_CONTROLLER_LOADING_STATES, inboxFilters, inboxFilteringService, inboxProviders, folder;
 
-    beforeEach(inject(function(_inboxProviders_, _inboxFilteringService_, _inboxFilters_, _inboxMailboxesCache_, _INBOX_CONTROLLER_LOADING_STATES_, _inboxJmapItemService_, _inboxUserQuotaService_) {
+    beforeEach(angular.mock.inject(function(_inboxProviders_, _inboxFilteringService_, _inboxFilters_, _inboxMailboxesCache_, _INBOX_CONTROLLER_LOADING_STATES_, _inboxJmapItemService_, _inboxUserQuotaService_) {
       inboxProviders = _inboxProviders_;
       inboxFilters = _inboxFilters_;
       inboxFilteringService = _inboxFilteringService_;
@@ -1809,7 +1808,7 @@ describe('The linagora.esn.unifiedinbox module controllers', function() {
 
     var inboxSpecialMailboxes, session, inboxSharedMailboxesService;
 
-    beforeEach(inject(function(_inboxSpecialMailboxes_, _session_, _inboxSharedMailboxesService_) {
+    beforeEach(angular.mock.inject(function(_inboxSpecialMailboxes_, _session_, _inboxSharedMailboxesService_) {
       inboxSpecialMailboxes = _inboxSpecialMailboxes_;
       session = _session_;
       inboxSharedMailboxesService = _inboxSharedMailboxesService_;

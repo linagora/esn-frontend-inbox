@@ -40,7 +40,7 @@ describe('The InboxMailboxSharedSettingsController controller', function() {
   });
 
   beforeEach(function() {
-    angular.mock.module('linagora.esn.unifiedinbox', 'jadeTemplates');
+    angular.mock.module('linagora.esn.unifiedinbox');
     angular.mock.module(function($provide) {
       $provide.value('userAPI', userAPIMock);
     });

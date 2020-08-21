@@ -20,14 +20,14 @@ describe('The inboxListHeader component', function() {
   }
 
   beforeEach(function() {
-    module('jadeTemplates', 'linagora.esn.unifiedinbox', function($provide) {
+    angular.mock.module('linagora.esn.unifiedinbox', function($provide) {
       $provide.constant('moment', function(argument) {
         return moment.tz(argument || nowDate, 'UTC');
       });
     });
   });
 
-  beforeEach(inject(function(_$controller_, _$rootScope_, _inboxFilteringService_) {
+  beforeEach(angular.mock.inject(function(_$controller_, _$rootScope_, _inboxFilteringService_) {
     $rootScope = _$rootScope_;
     $controller = _$controller_;
     inboxFilteringService = _inboxFilteringService_;

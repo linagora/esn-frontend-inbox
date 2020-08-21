@@ -8,10 +8,10 @@ describe('The EMailer run block', function() {
   var $rootScope, jmapDraft, inboxCacheService, INBOX_AVATAR_SIZE;
 
   beforeEach(function() {
-    module('linagora.esn.unifiedinbox');
+    angular.mock.module('linagora.esn.unifiedinbox');
   });
 
-  beforeEach(inject(function(_$rootScope_, _jmapDraft_, _inboxCacheService_, _INBOX_AVATAR_SIZE_) {
+  beforeEach(angular.mock.inject(function(_$rootScope_, _jmapDraft_, _inboxCacheService_, _INBOX_AVATAR_SIZE_) {
     $rootScope = _$rootScope_;
     jmapDraft = _jmapDraft_;
     inboxCacheService = sinon.mock(_inboxCacheService_);

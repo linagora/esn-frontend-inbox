@@ -136,7 +136,7 @@ describe('The Unified Inbox Angular module filters', function() {
 
     var inboxFilterRestrictedMailboxesFilter, inboxMailboxesCache;
 
-    beforeEach(inject(function(_inboxFilterRestrictedMailboxesFilter_, _inboxMailboxesCache_) {
+    beforeEach(angular.mock.inject(function(_inboxFilterRestrictedMailboxesFilter_, _inboxMailboxesCache_) {
       inboxFilterRestrictedMailboxesFilter = _inboxFilterRestrictedMailboxesFilter_;
       inboxMailboxesCache = _inboxMailboxesCache_;
     }));
