@@ -45,7 +45,7 @@ angular.module('linagora.esn.unifiedinbox')
           placement: 'center'
         });
       };
-      state.onExit = function(modalHolder) {
+      state.onExit = /* @ngInject */ function(modalHolder) {
         modalHolder.modal.hide();
       };
 
