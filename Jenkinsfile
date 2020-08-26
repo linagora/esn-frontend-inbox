@@ -1,7 +1,10 @@
 pipeline {
 
   agent { 
-    docker {image 'node:10-buster' }
+    dockerfile {
+      filename 'Dockerfile'
+      dir 'test'
+    }
   }
 
   stages {
