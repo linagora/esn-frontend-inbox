@@ -19,5 +19,19 @@ pipeline {
         sh 'npm run test'
       }
     }
+
+    stage('Deliver Docker images') {
+      when { branch 'main' }
+      steps {
+        echo "Delivery"
+      }
+    }
+
+    stage('Deploy new version') {
+      when { branch 'main' }
+      steps {
+        echo "Deploy"
+      }
+    }
   }
 }
