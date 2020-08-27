@@ -168,6 +168,15 @@ angular.module('linagora.esn.unifiedinbox')
       _.forEach(self.message.attachments, _cancelAttachment);
 
       self.draft.destroy(options).then(self.onDiscard, self.onShow);
+
+      if (typeof self.onDiscarding !== 'function') return;
+
+      self.onDiscarding({
+        reopenDraft: () => {
+          self.draft.cancelDestroy();
+          self.onShow();
+        }
+      });
     }
 
     function _cancelAttachment(attachment) {

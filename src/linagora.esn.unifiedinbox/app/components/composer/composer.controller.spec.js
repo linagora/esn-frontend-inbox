@@ -79,6 +79,7 @@ describe('The inboxComposerController controller', function() {
       },
       onSend: sinon.spy(),
       onSave: sinon.spy(),
+      onDiscarding: sinon.spy(),
       onDiscard: sinon.spy(),
       onHide: sinon.spy(),
       onShow: sinon.spy(),
@@ -734,6 +735,21 @@ describe('The inboxComposerController controller', function() {
       expect(ctrl.onShow).to.have.been.calledWith();
     });
 
+    it('should pass the function to reopen the draft before it is destroyed for good', function() {
+      ctrl.draft = {
+        destroy: () => $q.when(),
+        cancelDestroy: sinon.stub()
+      };
+
+      ctrl.onDiscarding = sinon.spy(function({ reopenDraft }) {
+        reopenDraft();
+
+        expect(ctrl.draft.cancelDestroy).to.have.been.called;
+        expect(ctrl.onShow).to.have.been.called;
+      });
+
+      ctrl.destroyDraft();
+    });
   });
 
   describe('onAttachmentsUpload', function() {

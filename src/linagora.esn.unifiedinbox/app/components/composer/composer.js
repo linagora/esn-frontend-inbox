@@ -11,6 +11,7 @@ angular.module('linagora.esn.unifiedinbox')
       onSend: '&',
       onFail: '&',
       onSave: '&',
+      onDiscarding: '&',
       onDiscard: '&',
       onHide: '&',
       onShow: '&',
