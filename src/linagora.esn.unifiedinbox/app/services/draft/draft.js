@@ -70,20 +70,28 @@ angular.module('linagora.esn.unifiedinbox')
     };
 
     InboxDraft.prototype.destroy = function(options) {
-      var self = this;
+      const self = this;
+      const deferred = $q.defer();
 
-      return _areDraftsEnabled()
+      _areDraftsEnabled()
         .then(function() {
+          self.isDestroyingDraft = true;
+          self.shouldDestroyDraft = true;
+
           if (!options || !options.silent) {
-            return gracePeriodService.askUserForCancel('This draft has been discarded', 'Reopen').promise
-              .then(function(result) {
-                if (result.cancelled) {
-                  return $q.reject();
-                }
-              });
+            const { notification, promise } = gracePeriodService.askUserForCancel('This draft has been discarded', 'Reopen');
+            self.destroyDraftNotification = notification;
+
+            return promise.then(function(result) {
+              if (!result.cancelled) return;
+
+              return $q.reject();
+            });
           }
         })
         .then(function() {
+          if (!self.shouldDestroyDraft) return $q.reject();
+
           if (self.original.id) {
             return asyncJmapAction('Destroying a draft', function(client) {
               return client.destroyMessage(self.original.id);
@@ -92,8 +100,22 @@ angular.module('linagora.esn.unifiedinbox')
         })
         .then(function() {
           $rootScope.$broadcast(INBOX_EVENTS.DRAFT_DESTROYED, self.original);
-        });
+
+          deferred.resolve();
+        })
+        .catch(deferred.reject);
+
+      return deferred.promise;
     };
+
+    InboxDraft.prototype.cancelDestroy = function() {
+      const self = this;
+
+      if (!self.isDestroyingDraft) return;
+
+      self.shouldDestroyDraft = false;
+      self.destroyDraftNotification && self.destroyDraftNotification.close();
+    }
 
     return InboxDraft;
 
