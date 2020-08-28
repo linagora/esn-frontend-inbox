@@ -57,3 +57,17 @@ Regarding **APP_GRID_ITEMS**, you can also provide it as a system variable for p
 ```sh
 APP_GRID_ITEMS="[{ \"name\": \"Calendar\", \"url\": \"https://dev.open-paas.org/calendar/\" }, { \"name\": \"Contacts\", \"url\": \"https://dev.open-paas.org/contacts/\" }, { \"name\": \"Inbox\", \"url\": \"http://dev.open-paas.org/inbox/\" }, { \"name\": \"Admin\", \"url\": \"https://dev.open-paas.org/admin/\" }, { \"name\": \"LinShare\", \"url\": \"https://user.linshare-4-0.integration-linshare.org/\" }]" npm run build:prod
 ```
+
+## Running tests
+
+You can run tests by executing the following command:
+
+```sh
+npm run test
+```
+
+Note that there is a 10000ms timeout by default. If you want to change that, simply pass the **TEST_TIMEOUT** environment variable:
+
+```sh
+TEST_TIMEOUT=2000 npm run test
+```
