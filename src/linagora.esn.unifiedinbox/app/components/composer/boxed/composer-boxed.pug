@@ -8,6 +8,7 @@ inbox-composer(
   on-send="onSend()",
   on-fail="onFail()"
   on-discard="onDiscard()",
+  on-discarding="onDiscarding(reopenDraft)",
   on-message-id-update="$setId($id)",
   on-title-update="$updateTitle($title)",
   on-try-close='$onTryClose(callback)',

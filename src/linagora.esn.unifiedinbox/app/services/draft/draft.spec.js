@@ -6,7 +6,7 @@ var expect = chai.expect;
 
 describe('The InboxDraft factory', function() {
 
-  var InboxDraft, notificationFactory, jmapClient, emailBodyService, $rootScope, INBOX_EVENTS;
+  var InboxDraft, notificationFactory, jmapClient, emailBodyService, $rootScope, INBOX_EVENTS, gracePeriodService;
 
   beforeEach(angular.mock.module('linagora.esn.unifiedinbox', function($provide) {
     jmapClient = {};
@@ -38,10 +38,11 @@ describe('The InboxDraft factory', function() {
     });
   }));
 
-  beforeEach(angular.mock.inject(function(_$rootScope_, _InboxDraft_, _INBOX_EVENTS_) {
+  beforeEach(angular.mock.inject(function(_$rootScope_, _InboxDraft_, _INBOX_EVENTS_, _gracePeriodService_) {
     InboxDraft = _InboxDraft_;
     $rootScope = _$rootScope_;
     INBOX_EVENTS = _INBOX_EVENTS_;
+    gracePeriodService = _gracePeriodService_;
   }));
 
   describe('The needToBeSaved method', function() {
@@ -592,6 +593,93 @@ describe('The InboxDraft factory', function() {
       expect(eventCatcher).to.have.been.calledOnce;
     });
 
+    it('should set shouldDestroyDraft and isDestroyingDraft to true and destroyDraftNotification to the notification object', function() {
+      const destroyDraftNotification = {};
+
+      gracePeriodService.askUserForCancel = sinon.stub().returns({
+        notification: destroyDraftNotification,
+        promise: $q.reject()
+      });
+
+      const draft = new InboxDraft({});
+
+      draft.destroy();
+
+      $rootScope.$digest();
+
+      expect(draft.destroyDraftNotification).to.equal(destroyDraftNotification);
+      expect(draft.shouldDestroyDraft).to.be.true;
+      expect(draft.isDestroyingDraft).to.be.true;
+    });
+
+    it('should not destroy the draft when the user chooses to cancel destroying the draft within grace period', function() {
+      const eventCatcher = sinon.stub();
+
+      gracePeriodService.askUserForCancel = sinon.stub().returns({
+        promise: $q.resolve({ cancelled: true })
+      });
+      jmapClient.destroyMessage = sinon.stub();
+      $rootScope.$on(INBOX_EVENTS.DRAFT_DESTROYED, eventCatcher);
+
+      const draft = new InboxDraft({});
+
+      draft.destroy();
+
+      $rootScope.$digest();
+
+      expect(jmapClient.destroyMessage).to.have.not.been.called;
+      expect(eventCatcher).to.have.not.been.called;
+    });
+
+    it('should not destroy the draft when the shouldDestroyDraft flag is set to false', function() {
+      const eventCatcher = sinon.stub();
+      const deferred = $q.defer();
+
+      gracePeriodService.askUserForCancel = sinon.stub().returns({
+        promise: deferred.promise
+      });
+      jmapClient.destroyMessage = sinon.stub();
+      $rootScope.$on(INBOX_EVENTS.DRAFT_DESTROYED, eventCatcher);
+
+      const draft = new InboxDraft({});
+
+      draft.destroy();
+
+      $rootScope.$digest();
+
+      draft.shouldDestroyDraft = false;
+
+      deferred.resolve({ cancelled: false });
+
+      expect(jmapClient.destroyMessage).to.have.not.been.called;
+      expect(eventCatcher).to.have.not.been.called;
+    });
   });
 
+  describe('The cancelDestroy method', function() {
+    let draft;
+
+    beforeEach(function() {
+      draft = new InboxDraft({});
+    });
+
+    it('should do nothing if the draft is not being destroyed', function() {
+      draft.destroyDraftNotification = { close: sinon.stub() };
+
+      draft.cancelDestroy();
+
+      expect(draft.shouldDestroyDraft).to.not.be.false;
+      expect(draft.destroyDraftNotification.close).to.not.have.been.called;
+    });
+
+    it('should set a flag to prevent the draft from being destroyed and close the "destroy draft" notification', function() {
+      draft.isDestroyingDraft = true;
+      draft.destroyDraftNotification = { close: sinon.stub() };
+
+      draft.cancelDestroy();
+
+      expect(draft.shouldDestroyDraft).to.be.false;
+      expect(draft.destroyDraftNotification.close).to.have.been.called;
+    });
+  });
 });
