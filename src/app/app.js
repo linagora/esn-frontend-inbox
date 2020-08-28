@@ -3,12 +3,14 @@ angular.module('esnApp', [
   'linagora.esn.unifiedinbox',
   'linagora.esn.james',
   'esn.session',
+  'esn.login',
   'esn.websocket',
   'esn.inbox.libs'
 ]);
 
 require('esn-frontend-common-libs/src/frontend/js/modules/session');
 require('esn-frontend-common-libs/src/frontend/js/modules/websocket');
+require('esn-frontend-common-libs/src/frontend/js/modules/login');
 
 require('./app.config');
 require('./app.run');
