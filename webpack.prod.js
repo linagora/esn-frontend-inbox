@@ -11,6 +11,7 @@ module.exports = merge(commons, {
   output: {
     filename: '[name].[hash].min.js',
     path: path.resolve(__dirname, 'dist'),
+    publicPath: '/inbox/'
   },
   module: {
     rules: [
