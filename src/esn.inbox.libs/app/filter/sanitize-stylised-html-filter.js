@@ -1,8 +1,8 @@
 'use strict';
 
 const _ = require('lodash');
+const sanitizeHtml = require('sanitize-html');
 
-/* global sanitizeHtml: false */
 angular.module('esn.inbox.libs').filter('sanitizeStylisedHtml', function ($sce) {
   return function (dirty) {
     // sanitize-html's default options are available here: https://www.npmjs.com/package/sanitize-html#what-are-the-default-options
