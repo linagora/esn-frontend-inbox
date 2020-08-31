@@ -56,7 +56,8 @@ angular.module('esn.inbox.libs')
     DRAFT_DESTROYED: 'inbox:draftDestroyed',
     DRAFT_CREATED: 'inbox:draftCreated',
     PERSONAL_FOLDERS_UPDATED: 'inbox:personalFoldersUpdated',
-    SHARED_FOLDERS_UPDATED: 'inbox:sharedFoldersUpdated'
+    SHARED_FOLDERS_UPDATED: 'inbox:sharedFoldersUpdated',
+    CLOSE_COMPOSER_WARNING: 'inbox:closeComposerWarning'
   })
   .constant('INBOX_SUMMERNOTE_OPTIONS', {
     focus: false,

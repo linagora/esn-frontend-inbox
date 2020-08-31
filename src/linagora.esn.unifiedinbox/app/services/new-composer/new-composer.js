@@ -12,7 +12,7 @@ angular.module('linagora.esn.unifiedinbox')
     /////
 
     function choseByPlatform(mobile, others) {
-      deviceDetector.isMobile() ? mobile() : others();
+      return deviceDetector.isMobile() ? mobile() : others();
     }
 
     function newMobileComposer(email) {
@@ -22,7 +22,7 @@ angular.module('linagora.esn.unifiedinbox')
     }
 
     function newBoxedComposerCustomTitle(email, boxConfig) {
-      boxOverlayOpener.open(angular.extend({}, {
+      return boxOverlayOpener.open(angular.extend({}, {
         id: email && email.id,
         title: esnI18nService.translate('New message').toString(),
         templateUrl: '/unifiedinbox/app/components/composer/boxed/composer-boxed.html',
@@ -31,7 +31,7 @@ angular.module('linagora.esn.unifiedinbox')
     }
 
     function open(email, boxConfig) {
-      choseByPlatform(
+      return choseByPlatform(
         newMobileComposer.bind(null, email),
         newBoxedComposerCustomTitle.bind(null, email, boxConfig)
       );

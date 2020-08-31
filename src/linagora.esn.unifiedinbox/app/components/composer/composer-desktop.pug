@@ -6,13 +6,13 @@ form.form-horizontal.compose.ng-cloak(ng-submit="$ctrl.send()")
     .fields
       .form-group
         label.control-label {{ 'To' | translate }}
-        recipients-auto-complete.inbox-recipients.recipients-to(ng-model="$ctrl.message.to", template="recipients-auto-complete")
+        recipients-auto-complete.inbox-recipients.recipients-to(ng-model="$ctrl.message.to", on-email-added="$ctrl.onRecipientUpdate({ to: $ctrl.message.to })", template="recipients-auto-complete")
       .form-group.ng-hide(ng-hide="$ctrl.isCollapsed")
         label.control-label {{ 'Cc' | translate }}
-        recipients-auto-complete.inbox-recipients.recipients-cc(ng-model="$ctrl.message.cc", template="recipients-auto-complete")
+        recipients-auto-complete.inbox-recipients.recipients-cc(ng-model="$ctrl.message.cc", on-email-added="$ctrl.onRecipientUpdate({ cc: $ctrl.message.cc })", template="recipients-auto-complete")
       .form-group.ng-hide(ng-hide="$ctrl.isCollapsed")
         label.control-label {{ 'Bcc' | translate }}
-        recipients-auto-complete.inbox-recipients.recipients-bcc(ng-model="$ctrl.message.bcc", template="recipients-auto-complete")
+        recipients-auto-complete.inbox-recipients.recipients-bcc(ng-model="$ctrl.message.bcc", on-email-added="$ctrl.onRecipientUpdate({ bcc: $ctrl.message.bcc })", template="recipients-auto-complete")
     .inbox-more-recipients(ng-click="$ctrl.isCollapsed = !$ctrl.isCollapsed", ng-class="{ 'isCollapsed': $ctrl.isCollapsed }")
       i.mdi(ng-class="$ctrl.isCollapsed ? 'mdi-chevron-down' : 'mdi-chevron-up'")
 
@@ -25,10 +25,12 @@ form.form-horizontal.compose.ng-cloak(ng-submit="$ctrl.send()")
     send="$ctrl.send()",
     upload="$ctrl.upload($attachment)",
     remove-attachment="$ctrl.removeAttachment($attachment)",
-    on-body-update="$ctrl.message.htmlBody = $body"
+    on-body-update="$ctrl.onBodyUpdate($body)",
     on-attachments-upload="$ctrl.onAttachmentsUpload(attachments)")
 
   .compose-footer.flex-space-between(attachment-drag-and-drop-handler="$ctrl.onAttachmentsUpload(attachments).then($ctrl.attachmentHolder.onAttachmentsUpdate)")
+    button.btn.btn-link.btn-icon(feature-flag="linagora.esn.unifiedinbox.drafts", ng-if="$ctrl.displaySaveButton" ng-click="$ctrl.saveDraft()", type="button", ng-disabled="!$ctrl.needsSave || $ctrl.saving", title="{{ 'Save' | translate }}")
+      i.mdi.mdi-content-save
     button.btn.btn-link.btn-icon(feature-flag="linagora.esn.unifiedinbox.drafts", ng-click="$ctrl.destroyDraft()", type="button", title="{{ 'Delete' | translate }}")
       i.mdi.mdi-delete
 

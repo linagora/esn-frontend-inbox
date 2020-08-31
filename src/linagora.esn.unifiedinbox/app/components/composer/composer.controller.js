@@ -12,6 +12,8 @@ angular.module('linagora.esn.unifiedinbox')
 
   .controller('inboxComposerController', function(
     $q,
+    $log,
+    $rootScope,
     notificationFactory,
     emailSendingService,
     inboxRequestReceiptsService,
@@ -25,12 +27,16 @@ angular.module('linagora.esn.unifiedinbox')
     inboxAttachmentProviderRegistry,
     inboxEmailComposingHookService,
     DRAFT_SAVING_DEBOUNCE_DELAY,
-    INBOX_ATTACHMENT_TYPE_JMAP
+    INBOX_ATTACHMENT_TYPE_JMAP,
+    INBOX_EVENTS
   ) {
     var self = this,
-      skipAutoSaveOnDestroy = false;
+    skipAutoSaveOnDestroy = false;
 
     self.$onInit = $onInit;
+    self.$onDestroy = $onDestroy;
+    self.onRecipientUpdate = onRecipientUpdate;
+    self.onBodyUpdate = onBodyUpdate;
     self.tryClose = tryClose;
     self.saveDraft = _.debounce(saveDraft, DRAFT_SAVING_DEBOUNCE_DELAY);
     self.onAttachmentsUpload = onAttachmentsUpload;
@@ -38,6 +44,8 @@ angular.module('linagora.esn.unifiedinbox')
     self.send = send;
     self.destroyDraft = destroyDraft;
     self.toggleReadReceiptRequest = toggleReadReceiptRequest;
+    self.saving = false;
+    self.needsSave = false;
 
     /////
 
@@ -66,6 +74,29 @@ angular.module('linagora.esn.unifiedinbox')
         onAttachmentsUpdate: _setMessageAttachments,
         uploadAttachments: inboxAttachmentUploadService.uploadAttachments
       });
+
+      self.unregisterDraftListener = $rootScope.$on(INBOX_EVENTS.CLOSE_COMPOSER_WARNING, warnSaveDraft);
+    }
+
+    function $onDestroy() {
+      self.unregisterDraftListener();
+    }
+
+    function warnSaveDraft() {
+      self.needsSave && notificationFactory.weakError('Note', 'You should save your email to not loose it');
+    }
+
+    function updateSaveFlag() {
+      self.needsSave = self.draft.hasBeenUpdated(self.message);
+    }
+
+    function onRecipientUpdate() {
+      updateSaveFlag();
+    }
+
+    function onBodyUpdate(data) {
+      self.message.htmlBody = data;
+      updateSaveFlag();
     }
 
     function tryClose() {
@@ -77,6 +108,7 @@ angular.module('linagora.esn.unifiedinbox')
     }
 
     function saveDraft() {
+      self.saving = true;
       var options = {
         persist: true,
         silent: true,
@@ -94,7 +126,12 @@ angular.module('linagora.esn.unifiedinbox')
           self.message = _.assign({}, self.message, self.draft.original);
           self.onMessageIdUpdate({ $id: self.message.id });
         })
-        .then(self.onSave);
+        .then(self.onSave)
+        .catch(err => {
+          $log.error('Can not save draft', err);
+          self.onSaveFailure && self.onSaveFailure(err);
+        })
+        .finally(() => self.saving = false);
     }
 
     function onAttachmentsUpload(attachments) {
