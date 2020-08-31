@@ -27,7 +27,8 @@ module.exports = {
   resolve: {
     alias: {
       'moment/moment.js': momentPath,
-      'moment$': momentPath
+      'moment$': momentPath,
+      'esn-frontend-inbox': path.resolve(__dirname) // A dirty fix to the circular dependency problem caused by esn-frontend-inbox-linshare
     },
   },
   plugins: [
