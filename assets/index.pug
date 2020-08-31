@@ -18,7 +18,7 @@ html.loading.full-height
         animation: bounce 2s;
         animation-iteration-count: infinite;
       }
-      
+
       @keyframes bounce {
         0%,
         25%,
@@ -39,3 +39,4 @@ html.loading.full-height
   body.container-fluid(ng-app="esnApp", ng-controller="sessionInitESNController", device-detector, ng-class="{ 'grabbable': esnIsDragging }")
     #wrap(ng-include='session.template')
       include ../src/app/app-loading.pug
+    script(src="/inbox/env/openpaas.js")
