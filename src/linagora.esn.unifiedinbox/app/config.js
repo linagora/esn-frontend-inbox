@@ -1,7 +1,12 @@
 'use strict';
 
 angular.module('linagora.esn.unifiedinbox')
+  .config(setDefaultIcon)
   .config(registerI18N);
+
+function setDefaultIcon($mdIconProvider) {
+  $mdIconProvider.defaultIconSet('images/mdi/mdi.svg', 24);
+}
 
 function registerI18N($translateProvider) {
   $translateProvider.translations('en', require('../i18n/en.json'));
