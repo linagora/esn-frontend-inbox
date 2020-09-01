@@ -6,7 +6,7 @@ inbox-composer(
   on-show="$show()",
   on-sending="onSending()",
   on-send="onSend()",
-  on-fail="onFail()"
+  on-fail="onFail(reopenComposer)"
   on-discard="onDiscard()",
   on-discarding="onDiscarding(reopenDraft)",
   on-message-id-update="$setId($id)",

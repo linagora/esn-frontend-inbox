@@ -8,8 +8,6 @@ require('../../services/attachment-upload/inbox-attachment-upload.service.js');
 require('../../services/draft/draft.js');
 require('../../services/attachment-provider-registry/attachment-provider-registry.service.js');
 
-// TODO: Write tests for this (https://github.com/OpenPaaS-Suite/esn-frontend-mailto/issues/2)
-
 angular.module('linagora.esn.unifiedinbox')
 
   .controller('inboxComposerController', function(
@@ -133,7 +131,7 @@ angular.module('linagora.esn.unifiedinbox')
           progressing: 'Your message is being sent...',
           success: 'Message sent',
           failure: function() {
-            if (typeof self.onFail === 'function') self.onFail();
+            if (typeof self.onFail === 'function') self.onFail({ reopenComposer: self.onShow });
 
             if (!Offline.state || Offline.state === 'down') {
               return 'You have been disconnected. Please check if the message was sent before retrying';

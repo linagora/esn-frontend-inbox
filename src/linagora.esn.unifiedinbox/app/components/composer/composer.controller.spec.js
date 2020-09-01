@@ -77,7 +77,9 @@ describe('The inboxComposerController controller', function() {
           email: 'email'
         }]
       },
+      onSending: sinon.spy(),
       onSend: sinon.spy(),
+      onFail: sinon.spy(),
       onSave: sinon.spy(),
       onDiscarding: sinon.spy(),
       onDiscard: sinon.spy(),
@@ -475,6 +477,12 @@ describe('The inboxComposerController controller', function() {
       expect(sendEmail).to.have.not.been.calledWith();
     });
 
+    it('should notify caller when email is being sent', function() {
+      ctrl.send();
+
+      expect(ctrl.onSending).to.have.been.called;
+    });
+
     it('should deduplicate recipients', function() {
       ctrl.message.cc = [{
         name: 'name',
@@ -596,6 +604,9 @@ describe('The inboxComposerController controller', function() {
 
       sendMessage();
 
+      expect(ctrl.onFail).to.have.been.calledWith(sinon.match({
+        reopenComposer: ctrl.onShow
+      }));
       expect(notificationFactory.strongError).to.have.been.calledWith('Error', 'Your message cannot be sent');
     });
 
@@ -608,6 +619,9 @@ describe('The inboxComposerController controller', function() {
 
       $rootScope.$digest();
 
+      expect(ctrl.onFail).to.have.been.calledWith(sinon.match({
+        reopenComposer: ctrl.onShow
+      }));
       expect(notificationFactory.strongError).to.have.been.calledWith('Error', 'You have been disconnected. Please check if the message was sent before retrying');
     });
 
