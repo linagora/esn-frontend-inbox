@@ -1,7 +1,6 @@
 'use strict';
 
 require('./inbox-config-form.constants.js');
-require('../../services/forwardings/inbox-forwardings-api-client.service.js');
 
 angular.module('linagora.esn.unifiedinbox')
   .controller('InboxConfigFormController', InboxConfigFormController);

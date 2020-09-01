@@ -229,7 +229,6 @@ require('./services/email-resolver/inbox-email-resolver.service.js');
 require('./services/filtered-list/filtered-list.js');
 require('./services/filtering/filtering-service.js');
 require('./services/filtering/filters.js');
-require('./services/forwardings/inbox-forwardings-api-client.service.js');
 require('./services/forwardings/inbox-forwardings.service.js');
 require('./services/jmap-item/jmap-item-service.js');
 require('./services/mailboxes-filter/mailboxes-filter-service.constants.js');

@@ -49,3 +49,4 @@ require('./services/jmap-client-provider/jmap-client-provider.js');
 require('./services/jmap-client-provider/jmap-client-provider.run.js');
 require('./services/jmap-helper/jmap-helper.js');
 require('./filter/sanitize-stylised-html-filter.js');
+require('./services/forwarding/inbox-forwardings-api-client.service.js');

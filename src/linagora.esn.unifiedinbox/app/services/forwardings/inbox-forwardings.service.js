@@ -1,6 +1,5 @@
 'use strict';
 
-require('./inbox-forwardings-api-client.service.js');
 
 angular.module('linagora.esn.unifiedinbox')
   .factory('inboxForwardingsService', function($q, inboxForwardingClient) {

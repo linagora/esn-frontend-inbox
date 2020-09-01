@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('linagora.esn.unifiedinbox')
+angular.module('esn.inbox.libs')
   .factory('inboxForwardingClient', inboxForwardingClient);
 
 function inboxForwardingClient(inboxRestangular) {
