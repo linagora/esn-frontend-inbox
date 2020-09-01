@@ -604,7 +604,9 @@ describe('The inboxComposerController controller', function() {
 
       sendMessage();
 
-      expect(ctrl.onFail).to.have.been.called;
+      expect(ctrl.onFail).to.have.been.calledWith(sinon.match({
+        reopenComposer: ctrl.onShow
+      }));
       expect(notificationFactory.strongError).to.have.been.calledWith('Error', 'Your message cannot be sent');
     });
 
@@ -617,7 +619,9 @@ describe('The inboxComposerController controller', function() {
 
       $rootScope.$digest();
 
-      expect(ctrl.onFail).to.have.been.called;
+      expect(ctrl.onFail).to.have.been.calledWith(sinon.match({
+        reopenComposer: ctrl.onShow
+      }));
       expect(notificationFactory.strongError).to.have.been.calledWith('Error', 'You have been disconnected. Please check if the message was sent before retrying');
     });
 
