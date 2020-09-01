@@ -8,8 +8,6 @@ require('../../services/attachment-upload/inbox-attachment-upload.service.js');
 require('../../services/draft/draft.js');
 require('../../services/attachment-provider-registry/attachment-provider-registry.service.js');
 
-// TODO: Write tests for this (https://github.com/OpenPaaS-Suite/esn-frontend-mailto/issues/2)
-
 angular.module('linagora.esn.unifiedinbox')
 
   .controller('inboxComposerController', function(
