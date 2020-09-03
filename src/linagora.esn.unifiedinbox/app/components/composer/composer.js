@@ -1,5 +1,7 @@
 'use strict';
 
+require('./composer-desktop.pug');
+
 angular.module('linagora.esn.unifiedinbox')
 
   .component('inboxComposer', {
@@ -11,6 +13,7 @@ angular.module('linagora.esn.unifiedinbox')
       onSend: '&',
       onFail: '&',
       onSave: '&',
+      onSaveFailure: '&',
       onDiscarding: '&',
       onDiscard: '&',
       onHide: '&',
@@ -18,6 +21,7 @@ angular.module('linagora.esn.unifiedinbox')
       onMessageIdUpdate: '&',
       onTitleUpdate: '&',
       onTryClose: '&',
-      forceClose: '&'
+      forceClose: '&',
+      displaySaveButton: '<'
     }
   });

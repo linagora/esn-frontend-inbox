@@ -7,10 +7,13 @@ inbox-composer(
   on-sending="onSending()",
   on-send="onSend()",
   on-fail="onFail(reopenComposer)"
+  on-save="onSave()",
+  on-save-failure="onSaveFailure()"
   on-discard="onDiscard()",
   on-discarding="onDiscarding(reopenDraft)",
   on-message-id-update="$setId($id)",
   on-title-update="$updateTitle($title)",
   on-try-close='$onTryClose(callback)',
-  force-close='$forceClose()'
+  force-close='$forceClose()',
+  display-save-button="displaySaveButton"
 )

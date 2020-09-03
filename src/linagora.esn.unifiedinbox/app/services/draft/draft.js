@@ -13,24 +13,20 @@ angular.module('linagora.esn.unifiedinbox')
       this.original = original ? angular.copy(original) : {};
     }
 
-    InboxDraft.prototype.needToBeSaved = function(newEmailState) {
-      var original = this.original,
-          newest = newEmailState || {};
+    InboxDraft.prototype.hasBeenUpdated = function(newEmailState) {
+      const original = this.original;
+      const newest = newEmailState || {};
 
-      return $q(function(resolve, reject) {
-        if (
-          trim(original.subject) !== trim(newest.subject) ||
+      return trim(original.subject) !== trim(newest.subject) ||
           haveDifferentBodies(original, newest) ||
           haveDifferentRecipients(original.to, newest.to) ||
           haveDifferentRecipients(original.cc, newest.cc) ||
           haveDifferentRecipients(original.bcc, newest.bcc) ||
-          haveDifferentAttachments(original.attachments, newest.attachments)
-        ) {
-          return resolve();
-        }
+          haveDifferentAttachments(original.attachments, newest.attachments);
+    }
 
-        reject();
-      });
+    InboxDraft.prototype.needToBeSaved = function(newEmailState) {
+      return $q((resolve, reject) => this.hasBeenUpdated(newEmailState) ? resolve() : reject());
     };
 
     InboxDraft.prototype.save = function(email, options) {
