@@ -51,6 +51,7 @@ require('./services/jmap-client-provider/jmap-client-provider.js');
 require('./services/jmap-client-provider/jmap-client-provider.run.js');
 require('./services/jmap-helper/jmap-helper.js');
 require('./services/models/mailbox.run.js');
+require('./services/forwarding/inbox-forwardings-api-client.service.js');
 require('./filter/sanitize-stylised-html-filter.js');
 require('./filters.js');
 require('./filters/filter-descendant-mailboxes.js');
