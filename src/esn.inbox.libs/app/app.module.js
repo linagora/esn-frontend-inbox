@@ -49,3 +49,8 @@ require('./services/jmap-client-provider/jmap-client-provider.js');
 require('./services/jmap-client-provider/jmap-client-provider.run.js');
 require('./services/jmap-helper/jmap-helper.js');
 require('./filter/sanitize-stylised-html-filter.js');
+require('./filters.js');
+require('./filters/filter-descendant-mailboxes.js');
+require('./filters/item-date.js');
+require('./filters/quote/quote.js');
+require('./filters/visible-shared-mailboxes.js');
