@@ -7,7 +7,7 @@ var expect = chai.expect;
 describe('The quote filter', function() {
   var inboxQuote, emailTextBody;
 
-  beforeEach(angular.mock.module('linagora.esn.unifiedinbox'));
+  beforeEach(angular.mock.module('esn.inbox.libs'));
 
   beforeEach(angular.mock.inject(function(inboxQuoteFilter) {
     inboxQuote = inboxQuoteFilter;

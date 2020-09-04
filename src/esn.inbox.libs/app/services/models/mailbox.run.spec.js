@@ -8,7 +8,7 @@ describe('The Mailbox run block', function() {
 
   var jmapDraft, inboxMailboxesCache;
 
-  beforeEach(angular.mock.module('linagora.esn.unifiedinbox', function($provide) {
+  beforeEach(angular.mock.module('esn.inbox.libs', function($provide) {
     $provide.constant('INBOX_DISPLAY_NAME_SIZE', 10);
   }));
 

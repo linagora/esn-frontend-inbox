@@ -9,7 +9,7 @@ describe('The inboxItemDate filter', function() {
   var inboxItemDateFilter;
 
   beforeEach(function() {
-    angular.mock.module('linagora.esn.unifiedinbox', function($provide) {
+    angular.mock.module('esn.inbox.libs', function($provide) {
       $provide.value('esnConfig', function(key) {
         if (key === 'core.language') {
           return {then: function(cb) { cb('en'); }};

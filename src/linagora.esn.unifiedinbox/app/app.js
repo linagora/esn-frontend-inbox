@@ -234,7 +234,6 @@ require('./services/mailboxes/permissions-service.js');
 require('./services/mailto-parser/mailto-parser.js');
 require('./services/models/emailer.run.js');
 require('./services/models/emailer.service.js');
-require('./services/models/mailbox.run.js');
 require('./services/models/make-selectable.js');
 require('./services/models/message.run.js');
 require('./services/models/thread.run.js');

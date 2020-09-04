@@ -2,7 +2,7 @@ const _ = require('lodash');
 
 (function (angular) {
   'use strict';
-  angular.module('linagora.esn.unifiedinbox')
+  angular.module('esn.inbox.libs')
 
     .filter('emailer', function (emailBodyService) {
       return function (recipient) {
