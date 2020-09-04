@@ -2,7 +2,7 @@ pipeline {
   agent none
 
   stages {
-    stage('Install packages & run tests') {
+    stage('Install packages & lint & run tests') {
       agent { 
         dockerfile {
           filename 'Dockerfile'
@@ -12,6 +12,7 @@ pipeline {
 
       steps {
         sh 'npm install'
+        sh 'npm run lint'
         sh 'npm run test'
       }
     }
