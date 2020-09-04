@@ -2,6 +2,6 @@
 
 angular.module('linagora.esn.james')
   .component('jamesMaintenance', {
-    template: require("./james-maintenance.pug"),
+    template: require('./james-maintenance.pug'),
     controller: 'jamesMaintenanceController'
   });

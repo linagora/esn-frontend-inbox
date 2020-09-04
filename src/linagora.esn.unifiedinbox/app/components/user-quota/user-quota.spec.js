@@ -1,10 +1,8 @@
 'use strict';
 
-/* global chai: false */
-/* global sinon: false */
-/* global $q: false */
+/* global chai, sinon: false */
 
-var expect = chai.expect;
+const { expect } = chai;
 
 describe('The inboxSidebarUserQuota component', function() {
 
@@ -28,7 +26,7 @@ describe('The inboxSidebarUserQuota component', function() {
 
   beforeEach(angular.mock.module(function($provide) {
     serviceMock = {
-      getUserQuotaInfo: sinon.spy(function() { return $q.when({usedStorage: 1e9, maxStorage: 2e9, storageRatio: 0.5}); })
+      getUserQuotaInfo: sinon.spy(function() { return $q.when({ usedStorage: 1e9, maxStorage: 2e9, storageRatio: 0.5 }); })
     };
     $provide.value('inboxUserQuotaService', serviceMock);
   }));

@@ -1,8 +1,8 @@
 (function() {
   'use strict';
 
-  /* global chai: false, sinon: false, jmapDraft: false, $q: false */
-  var expect = chai.expect;
+  /* global chai: false, sinon: false, jmapDraft: false */
+  const { expect } = chai;
 
   describe('The inboxUserQuotaService service', function() {
 
@@ -10,7 +10,7 @@
 
     beforeEach(angular.mock.module('linagora.esn.unifiedinbox'));
     beforeEach(function() {
-    mailboxesServiceMock = { getUserInbox: sinon.spy() };
+      mailboxesServiceMock = { getUserInbox: sinon.spy() };
 
       angular.mock.module(function($provide) {
         $provide.value('inboxMailboxesService', mailboxesServiceMock);
@@ -24,7 +24,7 @@
     }));
 
     function mockInboxQuota(defaultQuotas) {
-      var fakeInbox = new jmapDraft.Mailbox({}, 'id', 'INBOX', { role: { value: 'inbox' }, quotas: {'private#...': defaultQuotas}});
+      var fakeInbox = new jmapDraft.Mailbox({}, 'id', 'INBOX', { role: { value: 'inbox' }, quotas: { 'private#...': defaultQuotas } });
 
       mailboxesServiceMock.getUserInbox = sinon.spy(function() { return mockPromise || $q.when(fakeInbox);});
       mockPromise = undefined;
@@ -32,25 +32,25 @@
 
     describe('The getUserQuotaInfo function', function() {
       it('should return INBOX\'s first defined quota when set', function(done) {
-        var defaultQuotas = { STORAGE: {used: 120000000, max: 150000000}, MESSAGE: {used: 3000000000, max: 4000000000 }};
+        var defaultQuotas = { STORAGE: { used: 120000000, max: 150000000 }, MESSAGE: { used: 3000000000, max: 4000000000 } };
 
         mockInboxQuota(defaultQuotas);
 
         inboxUserQuotaService.getUserQuotaInfo().then(function(quota) {
-            expect(quota).to.deep.equal({
-              usedStorage: 120000000,
-              maxStorage: 150000000,
-              storageRatio: 80,
-              quotaLevel: 'critical'
-            });
-            expect(mailboxesServiceMock.getUserInbox).to.have.been.calledOnce;
-            done();
+          expect(quota).to.deep.equal({
+            usedStorage: 120000000,
+            maxStorage: 150000000,
+            storageRatio: 80,
+            quotaLevel: 'critical'
           });
+          expect(mailboxesServiceMock.getUserInbox).to.have.been.calledOnce;
+          done();
+        });
         $rootScope.$digest();
       });
 
       it('should reject when missing INBOX', function(done) {
-        var defaultQuotas = { STORAGE: {used: 120000000, max: 150000000}, MESSAGE: {used: 3000000000, max: 4000000000 }};
+        var defaultQuotas = { STORAGE: { used: 120000000, max: 150000000 }, MESSAGE: { used: 3000000000, max: 4000000000 } };
 
         mockInboxQuota(defaultQuotas);
 
@@ -66,7 +66,7 @@
       describe('User quota level property', function() {
 
         it('should return quotaLevel critical if quota status is critical', function(done) {
-          var criticalQuotas = { STORAGE: {used: 120000000, max: 150000000}, MESSAGE: {used: 3000000000, max: 4000000000 }};
+          var criticalQuotas = { STORAGE: { used: 120000000, max: 150000000 }, MESSAGE: { used: 3000000000, max: 4000000000 } };
 
           mockInboxQuota(criticalQuotas);
 
@@ -78,7 +78,7 @@
         });
 
         it('should return quotaLevel major if quota status is major', function(done) {
-          var majorQuotas = { STORAGE: {used: 120000000, max: 125000000}, MESSAGE: {used: 3000000000, max: 4000000000 }};
+          var majorQuotas = { STORAGE: { used: 120000000, max: 125000000 }, MESSAGE: { used: 3000000000, max: 4000000000 } };
 
           mockInboxQuota(majorQuotas);
 

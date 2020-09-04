@@ -2,7 +2,7 @@
 
 /* global chai: false */
 
-var expect = chai.expect;
+const { expect } = chai;
 
 describe('The InboxForwardingsFormController controller', function() {
   var $rootScope, $controller, $scope;
@@ -35,7 +35,7 @@ describe('The InboxForwardingsFormController controller', function() {
 
     var controller = $controller('InboxForwardingsFormController', { $scope: $scope });
 
-    controller.user = { preferredEmail: 'my-email@op.org'};
+    controller.user = { preferredEmail: 'my-email@op.org' };
     $scope.$digest();
 
     return controller;

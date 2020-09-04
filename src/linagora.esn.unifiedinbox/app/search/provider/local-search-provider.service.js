@@ -1,8 +1,7 @@
 'use strict';
 
-require('../../search/provider/search-results-provider.service.js');
-require('../../search/search.constants.js');
-
+require('./search-results-provider.service.js');
+require('../search.constants.js');
 
 angular.module('linagora.esn.unifiedinbox').factory('inboxLocalSearchProvider', inboxLocalSearchProvider);
 
@@ -16,7 +15,7 @@ function inboxLocalSearchProvider($stateParams, $q, esnSearchQueryService, inbox
     localProvider.options.itemMatches = function() { return $q.when(true); };
 
     localProvider.buildFetchContext({ query: esnSearchQueryService.buildFromState($stateParams) })
-        .then(toAggregatorSource.bind(null, localProvider), angular.noop);
+      .then(toAggregatorSource.bind(null, localProvider), angular.noop);
 
     return localProvider;
   };

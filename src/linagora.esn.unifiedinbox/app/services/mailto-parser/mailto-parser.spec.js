@@ -2,7 +2,7 @@
 
 /* global chai: false */
 
-var expect = chai.expect;
+const { expect } = chai;
 
 // PhantomJS does not support window.URL... Tests pass in Chrome and Firefox
 describe.skip('The inboxMailtoParser factory', function() {

@@ -1,8 +1,8 @@
 'use strict';
 
-/* global chai: false */
+/* global chai, _: false */
 
-var expect = chai.expect;
+const { expect } = chai;
 
 describe('The Thread run block', function() {
   var jmapDraft;
@@ -29,12 +29,12 @@ describe('The Thread run block', function() {
 
   it('should have id, mailboxIds, subject, date, hasAttachment and emails properties', function() {
     var emails = [
-          newMessage(['1'], { subject: 'firstSubject' }),
-          newMessage(['1', '2'], { subject: 'secondSubject' }),
-          newMessage(['2', '3', '4'], { subject: 'secondSubject', date: '2017-01-01T00:00:00Z', hasAttachment: false }),
-          newMessage(['3'], { subject: 'subject', date: '2017-01-02T00:00:00Z', hasAttachment: true })
-        ],
-        thread = newThread(emails);
+        newMessage(['1'], { subject: 'firstSubject' }),
+        newMessage(['1', '2'], { subject: 'secondSubject' }),
+        newMessage(['2', '3', '4'], { subject: 'secondSubject', date: '2017-01-01T00:00:00Z', hasAttachment: false }),
+        newMessage(['3'], { subject: 'subject', date: '2017-01-02T00:00:00Z', hasAttachment: true })
+      ],
+      thread = newThread(emails);
 
     expect(thread).to.shallowDeepEqual({
       id: 'threadId',

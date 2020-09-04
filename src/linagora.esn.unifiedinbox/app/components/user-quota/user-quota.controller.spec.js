@@ -1,10 +1,8 @@
 'use strict';
 
-/* global chai: false */
-/* global sinon: false */
-/* global $q: false */
+/* global chai, sinon: false */
 
-var expect = chai.expect;
+const { expect } = chai;
 
 describe('The inboxSidebarUserQuotaController controller', function() {
   var $rootScope, scope, $controller, ctrl, serviceMock, fakeQuotaInfo;

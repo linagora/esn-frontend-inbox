@@ -1,6 +1,7 @@
 'use strict';
 
 const _ = require('lodash');
+
 require('./mailboxes-filter-service.constants.js');
 require('../../services.js');
 
@@ -70,7 +71,7 @@ angular.module('linagora.esn.unifiedinbox')
     }
 
     function editFilter(id, type, name, conditionValue, actionDefinition) {
-      var idx = _.findIndex(self.filters, {id: id});
+      var idx = _.findIndex(self.filters, { id: id });
 
       if (idx < 0) {
         return false;
@@ -155,22 +156,22 @@ angular.module('linagora.esn.unifiedinbox')
         .HUMAN_REPRESENTATION;
 
       switch (filter.condition.field) {
-        case JMAP_FILTER.CONDITIONS.FROM.JMAP_KEY:
-        case JMAP_FILTER.CONDITIONS.TO.JMAP_KEY:
-        case JMAP_FILTER.CONDITIONS.CC.JMAP_KEY:
-        case JMAP_FILTER.CONDITIONS.RECIPIENT.JMAP_KEY:
-          // &#65279; is a zero width non-breaking space (and invisible char),
-          // it forces the browser to respect the preceding space
-          text = '&#65279;<b>' + $sanitize(filter.condition.value) + '</b>&#65279;';
+      case JMAP_FILTER.CONDITIONS.FROM.JMAP_KEY:
+      case JMAP_FILTER.CONDITIONS.TO.JMAP_KEY:
+      case JMAP_FILTER.CONDITIONS.CC.JMAP_KEY:
+      case JMAP_FILTER.CONDITIONS.RECIPIENT.JMAP_KEY:
+        // &#65279; is a zero width non-breaking space (and invisible char),
+        // it forces the browser to respect the preceding space
+        text = '&#65279;<b>' + $sanitize(filter.condition.value) + '</b>&#65279;';
 
-          return esnI18nService.translate(message, { text }, true).toString();
-        case JMAP_FILTER.CONDITIONS.SUBJECT.JMAP_KEY:
-          // &#65279; is a zero width non-breaking space (and invisible char),
-          // it forces the browser to respect the preceding space
-          text = esnI18nService.translate('"%s"', { value: $sanitize(filter.condition.value) }).toString();
-          text = '&#65279;<b>' + text + '</b>&#65279;';
+        return esnI18nService.translate(message, { text }, true).toString();
+      case JMAP_FILTER.CONDITIONS.SUBJECT.JMAP_KEY:
+        // &#65279; is a zero width non-breaking space (and invisible char),
+        // it forces the browser to respect the preceding space
+        text = esnI18nService.translate('"%s"', { value: $sanitize(filter.condition.value) }).toString();
+        text = '&#65279;<b>' + text + '</b>&#65279;';
 
-          return esnI18nService.translate(message, { text }, true).toString();
+        return esnI18nService.translate(message, { text }, true).toString();
       }
 
       return message;
@@ -181,25 +182,25 @@ angular.module('linagora.esn.unifiedinbox')
         JMAP_FILTER.ACTIONS_MAPPING[Object.keys(filter.action)[0]]].HUMAN_REPRESENTATION;
 
       switch (Object.keys(filter.action)[0]) {
-        case JMAP_FILTER.ACTIONS.MOVE_TO.JMAP_KEY:
-          var text = '';
+      case JMAP_FILTER.ACTIONS.MOVE_TO.JMAP_KEY:
+        var text = '';
 
-          var mailbox = _.find(self.mailboxes, {id: filter.action.appendIn.mailboxIds[0]});
+        var mailbox = _.find(self.mailboxes, { id: filter.action.appendIn.mailboxIds[0] });
 
-          if (mailbox) {
-            // &#65279; is a zero width non-breaking space (and invisible char)
-            // it forces the browser to respect the preceding space
-            text = '&#65279;<b>' + $sanitize(mailbox.qualifiedName) + '</b>&#65279;';
-          }
-          message = esnI18nService.translate(message, { text }, true).toString();
-          break;
+        if (mailbox) {
+          // &#65279; is a zero width non-breaking space (and invisible char)
+          // it forces the browser to respect the preceding space
+          text = '&#65279;<b>' + $sanitize(mailbox.qualifiedName) + '</b>&#65279;';
+        }
+        message = esnI18nService.translate(message, { text }, true).toString();
+        break;
       }
 
       return message;
     }
 
     function _setFiltersOnServer(filters) {
-      return asyncJmapAction({success: 'Filters set', failure: 'Error setting filters'}, function(client) {
+      return asyncJmapAction({ success: 'Filters set', failure: 'Error setting filters' }, function(client) {
         return client.setFilter(filters);
       });
     }
@@ -208,31 +209,31 @@ angular.module('linagora.esn.unifiedinbox')
       var filter;
 
       switch (type) {
-        case JMAP_FILTER.CONDITIONS.FROM.JMAP_KEY:
-          filter = new jmapDraft.FilterRule(null, name).when.from
-            .value(conditionValue).comparator(jmapDraft.FilterRule.Comparator.EXACTLY_EQUALS);
-          break;
-        case JMAP_FILTER.CONDITIONS.TO.JMAP_KEY:
-          filter = new jmapDraft.FilterRule(null, name).when.to
-            .value(conditionValue).comparator(jmapDraft.FilterRule.Comparator.EXACTLY_EQUALS);
-          break;
-        case JMAP_FILTER.CONDITIONS.CC.JMAP_KEY:
-          filter = new jmapDraft.FilterRule(null, name).when.cc
-            .value(conditionValue).comparator(jmapDraft.FilterRule.Comparator.EXACTLY_EQUALS);
-          break;
-        case JMAP_FILTER.CONDITIONS.RECIPIENT.JMAP_KEY:
-          filter = new jmapDraft.FilterRule(null, name).when.recipient
-            .value(conditionValue).comparator(jmapDraft.FilterRule.Comparator.EXACTLY_EQUALS);
-          break;
-        case JMAP_FILTER.CONDITIONS.SUBJECT.JMAP_KEY:
-          filter = new jmapDraft.FilterRule(null, name).when.subject
-            .value(conditionValue).comparator(jmapDraft.FilterRule.Comparator.CONTAINS);
+      case JMAP_FILTER.CONDITIONS.FROM.JMAP_KEY:
+        filter = new jmapDraft.FilterRule(null, name).when.from
+          .value(conditionValue).comparator(jmapDraft.FilterRule.Comparator.EXACTLY_EQUALS);
+        break;
+      case JMAP_FILTER.CONDITIONS.TO.JMAP_KEY:
+        filter = new jmapDraft.FilterRule(null, name).when.to
+          .value(conditionValue).comparator(jmapDraft.FilterRule.Comparator.EXACTLY_EQUALS);
+        break;
+      case JMAP_FILTER.CONDITIONS.CC.JMAP_KEY:
+        filter = new jmapDraft.FilterRule(null, name).when.cc
+          .value(conditionValue).comparator(jmapDraft.FilterRule.Comparator.EXACTLY_EQUALS);
+        break;
+      case JMAP_FILTER.CONDITIONS.RECIPIENT.JMAP_KEY:
+        filter = new jmapDraft.FilterRule(null, name).when.recipient
+          .value(conditionValue).comparator(jmapDraft.FilterRule.Comparator.EXACTLY_EQUALS);
+        break;
+      case JMAP_FILTER.CONDITIONS.SUBJECT.JMAP_KEY:
+        filter = new jmapDraft.FilterRule(null, name).when.subject
+          .value(conditionValue).comparator(jmapDraft.FilterRule.Comparator.CONTAINS);
       }
 
       switch (actionDefinition.action) {
-        case JMAP_FILTER.ACTIONS.MOVE_TO.JMAP_KEY:
-          filter.then.moveTo.mailboxId(String(actionDefinition.mailboxId));
-          break;
+      case JMAP_FILTER.ACTIONS.MOVE_TO.JMAP_KEY:
+        filter.then.moveTo.mailboxId(String(actionDefinition.mailboxId));
+        break;
       }
 
       return filter.toJSONObject();

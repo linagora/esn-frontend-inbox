@@ -11,10 +11,10 @@ require('../filtered-list/filtered-list.js');
 angular.module('linagora.esn.unifiedinbox')
 
   .service('inboxJmapItemService', function($q, $rootScope, session, newComposerService, emailSendingService,
-                                            withJmapClient,
-                                            jmapDraft, inboxMailboxesService, infiniteListService, inboxSelectionService, asyncJmapAction, notificationFactory, esnI18nService,
-                                            INBOX_EVENTS, INBOX_DISPLAY_NAME_SIZE, inboxFilteredList, inboxConfig, uuid4, INBOX_DEFAULT_NUMBER_ITEMS_PER_PAGE_ON_BULK_READ_OPERATIONS,
-                                            INBOX_DEFAULT_NUMBER_ITEMS_PER_PAGE_ON_BULK_DELETE_OPERATIONS, INBOX_DEFAULT_NUMBER_ITEMS_PER_PAGE_ON_BULK_UPDATE_OPERATIONS) {
+    withJmapClient,
+    jmapDraft, inboxMailboxesService, infiniteListService, inboxSelectionService, asyncJmapAction, notificationFactory, esnI18nService,
+    INBOX_EVENTS, INBOX_DISPLAY_NAME_SIZE, inboxFilteredList, inboxConfig, uuid4, INBOX_DEFAULT_NUMBER_ITEMS_PER_PAGE_ON_BULK_READ_OPERATIONS,
+    INBOX_DEFAULT_NUMBER_ITEMS_PER_PAGE_ON_BULK_DELETE_OPERATIONS, INBOX_DEFAULT_NUMBER_ITEMS_PER_PAGE_ON_BULK_UPDATE_OPERATIONS) {
 
     return {
       reply: reply,
@@ -127,8 +127,8 @@ angular.module('linagora.esn.unifiedinbox')
               }, function() {
                 return inboxConfig('numberItemsPerPageOnBulkDeleteOperations', INBOX_DEFAULT_NUMBER_ITEMS_PER_PAGE_ON_BULK_DELETE_OPERATIONS)
                   .then(function(numberItemsPerPageOnBulkDeleteOperations) {
-                  return _destroyAllMessages(messageIds, numberItemsPerPageOnBulkDeleteOperations);
-                });
+                    return _destroyAllMessages(messageIds, numberItemsPerPageOnBulkDeleteOperations);
+                  });
               });
             })
             .catch(function() {
@@ -372,9 +372,9 @@ angular.module('linagora.esn.unifiedinbox')
               return updateObject;
             }, {})
           }).then(function() {
-              inboxFilteredList.updateFlagFromList(idsOfTheMessageBatch, flag, state);
+            inboxFilteredList.updateFlagFromList(idsOfTheMessageBatch, flag, state);
 
-              return loop();
+            return loop();
           }).catch(loop);
         });
       }
@@ -403,10 +403,10 @@ angular.module('linagora.esn.unifiedinbox')
                     $rootScope.$broadcast(INBOX_EVENTS.BADGE_LOADING_ACTIVATED, false);
                     inboxMailboxesService.markAllAsRead(mailboxId);
                   });
-                });
               });
             });
         });
+      });
     }
 
     function getVacationActivated() {

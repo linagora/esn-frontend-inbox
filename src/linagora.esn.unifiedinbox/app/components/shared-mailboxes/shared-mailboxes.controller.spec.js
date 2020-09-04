@@ -2,7 +2,7 @@
 
 /* global chai, sinon: false */
 
-var expect = chai.expect;
+const { expect } = chai;
 
 describe('The inboxSharedMailboxesController controller', function() {
   var $rootScope,
@@ -68,7 +68,9 @@ describe('The inboxSharedMailboxesController controller', function() {
 
       expectedMailboxes = [
         { id: 1, namespace: { type: 'delegated' }, isDisplayed: false },
-        { id: 2, name: '3', namespace: { type: 'personal' }, isDisplayed: true }
+        {
+          id: 2, name: '3', namespace: { type: 'personal' }, isDisplayed: true
+        }
       ];
 
       expect(controller.mailboxes).to.deep.equal(expectedMailboxes);

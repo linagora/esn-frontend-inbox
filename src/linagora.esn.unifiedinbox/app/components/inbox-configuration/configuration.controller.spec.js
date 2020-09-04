@@ -2,7 +2,7 @@
 
 /* global chai, sinon: false */
 
-var expect = chai.expect;
+const { expect } = chai;
 
 describe('The inboxConfigurationController', function() {
   var $rootScope, $controller, scope, touchscreenDetectorService, config;

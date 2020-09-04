@@ -1,6 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
-const { merge } = require('webpack-merge');
+const { merge } = require('webpack-merge');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const commons = require('./webpack.commons.js');
@@ -18,18 +18,18 @@ module.exports = merge(commons, {
       {
         test: /\.js$/,
         include: [
-          path.resolve(__dirname, "src"),
-          path.resolve(__dirname, "node_modules/esn-frontend-common-libs"),
-          path.resolve(__dirname, "node_modules/esn-frontend-inbox-calendar"),
-          path.resolve(__dirname, "node_modules/esn-frontend-calendar/src/esn.calendar.libs"),
-          path.resolve(__dirname, "node_modules/esn-frontend-calendar/src/esn.resource.libs"),
-          path.resolve(__dirname, "node_modules/esn-frontend-mailto-handler"),
-          path.resolve(__dirname, "node_modules/esn-frontend-linshare"),
-          path.resolve(__dirname, "node_modules/esn-frontend-inbox-linshare"),
-          path.resolve(__dirname, "node_modules/esn-frontend-videoconference-calendar")
+          path.resolve(__dirname, 'src'),
+          path.resolve(__dirname, 'node_modules/esn-frontend-common-libs'),
+          path.resolve(__dirname, 'node_modules/esn-frontend-inbox-calendar'),
+          path.resolve(__dirname, 'node_modules/esn-frontend-calendar/src/esn.calendar.libs'),
+          path.resolve(__dirname, 'node_modules/esn-frontend-calendar/src/esn.resource.libs'),
+          path.resolve(__dirname, 'node_modules/esn-frontend-mailto-handler'),
+          path.resolve(__dirname, 'node_modules/esn-frontend-linshare'),
+          path.resolve(__dirname, 'node_modules/esn-frontend-inbox-linshare'),
+          path.resolve(__dirname, 'node_modules/esn-frontend-videoconference-calendar')
         ],
         exclude: [
-          path.resolve(__dirname, "node_modules/esn-frontend-common-libs/src/frontend/components"),
+          path.resolve(__dirname, 'node_modules/esn-frontend-common-libs/src/frontend/components')
         ],
         use: [
           {

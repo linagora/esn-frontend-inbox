@@ -8,7 +8,7 @@ angular.module('linagora.esn.unifiedinbox').directive('dragulaDisableScrollOn', 
       var bagName = attrs.dragulaDisableScrollOn;
 
       if (touchscreenDetectorService.hasTouchscreen()) {
-        document.addEventListener('touchmove', listener, {passive: false});
+        document.addEventListener('touchmove', listener, { passive: false });
 
         scope.$on(bagName + '.drag', function() {
           scrollable = false;

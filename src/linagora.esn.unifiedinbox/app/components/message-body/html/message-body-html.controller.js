@@ -41,7 +41,7 @@ angular.module('linagora.esn.unifiedinbox')
         }
 
         return $q
-          .when(_.find(self.message.attachments, {cid: dataAsyncSrc.replace('cid:', '')}))
+          .when(_.find(self.message.attachments, { cid: dataAsyncSrc.replace('cid:', '') }))
           .then(getUrlFromAttachment)
           .then(function(url) { el.src = url; });
       });

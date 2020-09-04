@@ -1,20 +1,22 @@
 const _ = require('lodash');
+
 require('../services/selection/selection.service.js');
 require('../services/new-composer/new-composer.js');
 require('../services/jmap-item/jmap-item-service.js');
 require('../services.js');
 
-(function (angular) {
+(function(angular) {
   'use strict';
+
   angular.module('linagora.esn.unifiedinbox')
 
-    .directive('inboxDraggableListItem', function (inboxSelectionService, esnI18nService) {
+    .directive('inboxDraggableListItem', function(inboxSelectionService, esnI18nService) {
       return {
         restrict: 'A',
-        link: function (scope) {
-          scope.getDragData = function () {
+        link: function(scope) {
+          scope.getDragData = function() {
             if (inboxSelectionService.isSelecting()) {
-              scope.$apply(function () {
+              scope.$apply(function() {
                 inboxSelectionService.toggleItemSelection(scope.item, true);
               });
 
@@ -24,7 +26,7 @@ require('../services.js');
             return [scope.item];
           };
 
-          scope.getDragMessage = function ($dragData) {
+          scope.getDragMessage = function($dragData) {
             if ($dragData.length > 1) {
               return esnI18nService.translate('%s items', $dragData);
             }
@@ -35,12 +37,12 @@ require('../services.js');
       };
     })
 
-    .directive('inboxSwipeableListItem', function (inboxConfig) {
+    .directive('inboxSwipeableListItem', function(inboxConfig) {
       return {
         restrict: 'A',
-        controller: function ($scope, $element) {
-          $scope.onSwipeLeft = function () {
-            var unregisterActionListCloseListener = $scope.$on('action-list.hide', function () {
+        controller: function($scope, $element) {
+          $scope.onSwipeLeft = function() {
+            var unregisterActionListCloseListener = $scope.$on('action-list.hide', function() {
               $scope.swipeClose();
               unregisterActionListCloseListener();
             });
@@ -48,15 +50,15 @@ require('../services.js');
             $element.controller('actionList').open();
           };
         },
-        link: function (scope) {
-          inboxConfig('swipeRightAction', 'markAsRead').then(function (action) {
+        link: function(scope) {
+          inboxConfig('swipeRightAction', 'markAsRead').then(function(action) {
             scope.leftTemplate = '/unifiedinbox/views/partials/swipe/left-template-' + action + '.html';
           });
         }
       };
     })
 
-    .directive('inboxMessageListItem', function (
+    .directive('inboxMessageListItem', function(
       $state,
       $stateParams,
       newComposerService,
@@ -67,7 +69,7 @@ require('../services.js');
     ) {
       return {
         restrict: 'E',
-        controller: /* @ngInject */ function (
+        controller: /* @ngInject */ function(
           $scope,
           INVITATION_MESSAGE_HEADERS,
           X_OPENPAAS_CAL_HEADERS
@@ -79,7 +81,7 @@ require('../services.js');
           // need this scope value for action list
           $scope.email = $scope.item;
 
-          self.select = function (item, $event) {
+          self.select = function(item, $event) {
             $event.stopPropagation();
             $event.preventDefault();
 
@@ -90,18 +92,18 @@ require('../services.js');
             }
           };
 
-          self.openDraft = function (emailId) {
+          self.openDraft = function(emailId) {
             newComposerService.openDraft(emailId);
           };
 
           ['reply', 'replyAll', 'forward', 'markAsUnread', 'markAsRead', 'markAsFlagged',
-            'unmarkAsFlagged', 'moveToTrash', 'moveToSpam', 'unSpam'].forEach(function (action) {
-              self[action] = function () {
-                inboxJmapItemService[action]($scope.item);
-              };
-            });
+            'unmarkAsFlagged', 'moveToTrash', 'moveToSpam', 'unSpam'].forEach(function(action) {
+            self[action] = function() {
+              inboxJmapItemService[action]($scope.item);
+            };
+          });
 
-          self.move = function () {
+          self.move = function() {
             $state.go('.move', { item: $scope.item });
           };
 
@@ -121,37 +123,37 @@ require('../services.js');
             }
 
             // unified inbox does not have any context. In that case, we get mailbox from the selected email.
-            return !message || message.mailboxIds.every(function (mailboxId) {
+            return !message || message.mailboxIds.every(function(mailboxId) {
               return checkFunction(mailboxId);
             });
           }
 
-          self.canTrashMessages = function () {
+          self.canTrashMessages = function() {
             return _canActionBeDone(inboxMailboxesService.canTrashMessages);
           };
 
-          self.canMoveMessagesOutOfMailbox = function () {
+          self.canMoveMessagesOutOfMailbox = function() {
             return _canActionBeDone(inboxMailboxesService.canMoveMessagesOutOfMailbox);
           };
 
-          self.canMoveMessageToSpam = function () {
+          self.canMoveMessageToSpam = function() {
             return _canActionBeDone(inboxMailboxesService.canMoveMessagesOutOfMailbox);
           };
 
-          self.canUnSpamMessages = function () {
+          self.canUnSpamMessages = function() {
             return _canActionBeDone(inboxMailboxesService.canUnSpamMessages);
           };
         },
         controllerAs: 'ctrl',
-        template: require("../../views/email/list/list-item.pug")
+        template: require('../../views/email/list/list-item.pug')
       };
     })
 
-    .directive('inboxThreadListItem', function ($state, $stateParams, newComposerService, inboxJmapItemService,
+    .directive('inboxThreadListItem', function($state, $stateParams, newComposerService, inboxJmapItemService,
       inboxSwipeHelper, inboxSelectionService) {
       return {
         restrict: 'E',
-        controller: /* @ngInject */ function (
+        controller: /* @ngInject */ function(
           $scope,
           INVITATION_MESSAGE_HEADERS,
           X_OPENPAAS_CAL_HEADERS
@@ -165,24 +167,24 @@ require('../services.js');
           self.shouldDisplayCalendarInvitationMessageIndicator = $scope.item && $scope.item.headers && $scope.item.headers[INVITATION_MESSAGE_HEADERS.UID];
           self.shouldDisplayCalendarResourceManagementIndicator = $scope.item && $scope.item.headers && $scope.item.headers[X_OPENPAAS_CAL_HEADERS.ACTION];
 
-          self.select = function (item, $event) {
+          self.select = function(item, $event) {
             $event.stopPropagation();
             $event.preventDefault();
 
             inboxSelectionService.toggleItemSelection(item);
           };
 
-          self.openDraft = function (threadId) {
+          self.openDraft = function(threadId) {
             newComposerService.openDraft(threadId);
           };
 
-          ['markAsUnread', 'markAsRead', 'markAsFlagged', 'unmarkAsFlagged', 'moveToTrash'].forEach(function (action) {
-            self[action] = function () {
+          ['markAsUnread', 'markAsRead', 'markAsFlagged', 'unmarkAsFlagged', 'moveToTrash'].forEach(function(action) {
+            self[action] = function() {
               inboxJmapItemService[action]($scope.item);
             };
           });
 
-          self.move = function () {
+          self.move = function() {
             $state.go('.move', { item: $scope.item });
           };
 
@@ -192,7 +194,7 @@ require('../services.js');
           });
         },
         controllerAs: 'ctrl',
-        template: require("../../views/thread/list/list-item.pug")
+        template: require('../../views/thread/list/list-item.pug')
       };
     });
-})(angular)
+})(angular);

@@ -1,7 +1,7 @@
 'use strict';
 
 require('../../common/james-api-client.service.js');
-require('../../quota/james-quota-helpers.service.js');
+require('../james-quota-helpers.service.js');
 
 angular.module('linagora.esn.james')
   .controller('jamesQuotaUserController', jamesUserQuotaController);

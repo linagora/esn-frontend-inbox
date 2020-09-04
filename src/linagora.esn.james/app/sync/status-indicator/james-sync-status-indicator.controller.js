@@ -4,7 +4,7 @@ require('../synchronizer/james-synchronizer.service.js');
 
 angular.module('linagora.esn.james')
 
-.controller('JamesSyncStatusIndicatorController', JamesSyncStatusIndicatorController);
+  .controller('JamesSyncStatusIndicatorController', JamesSyncStatusIndicatorController);
 
 function JamesSyncStatusIndicatorController(
   asyncAction,

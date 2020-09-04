@@ -1,6 +1,7 @@
 'use strict';
 
 const _ = require('lodash');
+
 require('./inbox-users-identities-api-client.service.js');
 
 angular.module('esn.inbox.libs')

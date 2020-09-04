@@ -3,6 +3,6 @@
 angular.module('linagora.esn.unifiedinbox')
 
   .component('inboxRequestReadReceipts', {
-    template: require("./request-receipts.pug"),
+    template: require('./request-receipts.pug'),
     controller: 'inboxRequestReadReceiptsController'
   });

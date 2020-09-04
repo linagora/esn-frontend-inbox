@@ -2,7 +2,7 @@
 
 /* global chai */
 
-var expect = chai.expect;
+const { expect } = chai;
 
 describe('The jamesQuotaFormController', function() {
 

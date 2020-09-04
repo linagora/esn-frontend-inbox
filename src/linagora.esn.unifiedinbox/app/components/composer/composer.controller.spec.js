@@ -1,8 +1,8 @@
 'use strict';
 
-/* global chai: false, sinon: false, angular: false */
+/* global chai: false, sinon: false */
 
-var expect = chai.expect;
+const { expect } = chai;
 
 describe('The inboxComposerController controller', function() {
 
@@ -202,7 +202,7 @@ describe('The inboxComposerController controller', function() {
 
         it('getter should return the message attachments', function() {
           ctrl.$onInit();
-          ctrl.message = {attachments: ['mkj', 'ùmkj']};
+          ctrl.message = { attachments: ['mkj', 'ùmkj'] };
 
           expect(ctrl.attachmentHolder.attachments).to.equal(ctrl.message.attachments);
         });
@@ -218,7 +218,7 @@ describe('The inboxComposerController controller', function() {
 
         it('setter should append provided attachments to existing ones', function() {
           ctrl.$onInit();
-          ctrl.message = {attachments: ['mkj', 'ùmkj']};
+          ctrl.message = { attachments: ['mkj', 'ùmkj'] };
 
           ctrl.attachmentHolder.attachments = ['mlkj', 'mkhj'];
 
@@ -227,11 +227,11 @@ describe('The inboxComposerController controller', function() {
 
         it('setter should not create duplicates', function() {
           ctrl.$onInit();
-          ctrl.message = {attachments: [{a: 'a'}, {b: 'b'}]};
+          ctrl.message = { attachments: [{ a: 'a' }, { b: 'b' }] };
 
-          ctrl.attachmentHolder.attachments = [{a: 'a'}, {b: 'b'}, ctrl.message.attachments[0], ctrl.message.attachments[1]];
+          ctrl.attachmentHolder.attachments = [{ a: 'a' }, { b: 'b' }, ctrl.message.attachments[0], ctrl.message.attachments[1]];
 
-          expect(ctrl.message.attachments).to.eql([{a: 'a'}, {b: 'b'}, {a: 'a'}, {b: 'b'}]);
+          expect(ctrl.message.attachments).to.eql([{ a: 'a' }, { b: 'b' }, { a: 'a' }, { b: 'b' }]);
         });
       });
 
@@ -247,7 +247,7 @@ describe('The inboxComposerController controller', function() {
 
         it('setter should append provided attachments to existing ones', function() {
           ctrl.$onInit();
-          ctrl.message = {attachments: ['mkj', 'ùmkj']};
+          ctrl.message = { attachments: ['mkj', 'ùmkj'] };
 
           ctrl.attachmentHolder.onAttachmentsUpdate(['mlkj', 'mkhj']);
 
@@ -256,11 +256,11 @@ describe('The inboxComposerController controller', function() {
 
         it('setter should not create duplicates', function() {
           ctrl.$onInit();
-          ctrl.message = {attachments: [{a: 'a'}, {b: 'b'}]};
+          ctrl.message = { attachments: [{ a: 'a' }, { b: 'b' }] };
 
-          ctrl.attachmentHolder.onAttachmentsUpdate([{a: 'a'}, {b: 'b'}, ctrl.message.attachments[0], ctrl.message.attachments[1]]);
+          ctrl.attachmentHolder.onAttachmentsUpdate([{ a: 'a' }, { b: 'b' }, ctrl.message.attachments[0], ctrl.message.attachments[1]]);
 
-          expect(ctrl.message.attachments).to.eql([{a: 'a'}, {b: 'b'}, {a: 'a'}, {b: 'b'}]);
+          expect(ctrl.message.attachments).to.eql([{ a: 'a' }, { b: 'b' }, { a: 'a' }, { b: 'b' }]);
         });
       });
 
@@ -667,7 +667,7 @@ describe('The inboxComposerController controller', function() {
     it('should NOT any header when no read receipt were requested', function() {
       ctrl.message = {
         to: [{ email: 'A@A.com' }],
-        headers: {name: 'value'},
+        headers: { name: 'value' },
         textBody: 'Body'
       };
 
@@ -677,13 +677,13 @@ describe('The inboxComposerController controller', function() {
         return !(message.headers && INBOX_MESSAGE_HEADERS.READ_RECEIPT in message.headers);
       }, 'missingReceiptRequestHeaderInMessage');
 
-      expect(sendEmail).to.have.been.calledWith(missingReceiptHeaderMatcher.and(sinon.match({textBody: 'Body'})));
+      expect(sendEmail).to.have.been.calledWith(missingReceiptHeaderMatcher.and(sinon.match({ textBody: 'Body' })));
     });
 
     it('should remove read reciept request header if read receipt were not requested', function() {
       ctrl.message = {
         to: [{ email: 'A@A.com' }],
-        headers: {name: 'value'},
+        headers: { name: 'value' },
         textBody: 'Body'
       };
       ctrl.message.headers[INBOX_MESSAGE_HEADERS.READ_RECEIPT] = 'user@linagora.com';
@@ -768,13 +768,13 @@ describe('The inboxComposerController controller', function() {
 
   describe('onAttachmentsUpload', function() {
     it('should set the atachments and retursn them', function(done) {
-      ctrl.message = {attachments: [{a: 'a'}, {b: 'b'}]};
+      ctrl.message = { attachments: [{ a: 'a' }, { b: 'b' }] };
       sinon.stub(inboxAttachmentUploadService, 'uploadAttachments').callsFake(function(attachments) {
         return $q.when(attachments);
       });
 
-      ctrl.onAttachmentsUpload([{c: 'c'}, {d: 'd'}]).then(function(attachments) {
-        expect(attachments).to.eql([{a: 'a'}, {b: 'b'}, {c: 'c'}, {d: 'd'}]);
+      ctrl.onAttachmentsUpload([{ c: 'c' }, { d: 'd' }]).then(function(attachments) {
+        expect(attachments).to.eql([{ a: 'a' }, { b: 'b' }, { c: 'c' }, { d: 'd' }]);
         expect(attachments).to.equal(ctrl.message.attachments);
         done();
       });

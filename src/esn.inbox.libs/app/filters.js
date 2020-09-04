@@ -1,11 +1,12 @@
 const _ = require('lodash');
 
-(function (angular) {
+(function(angular) {
   'use strict';
+
   angular.module('esn.inbox.libs')
 
-    .filter('emailer', function (emailBodyService) {
-      return function (recipient) {
+    .filter('emailer', function(emailBodyService) {
+      return function(recipient) {
         if (!recipient) {
           return;
         }
@@ -18,8 +19,8 @@ const _ = require('lodash');
       };
     })
 
-    .filter('emailerList', function ($filter) {
-      return function (array, prefix) {
+    .filter('emailerList', function($filter) {
+      return function(array, prefix) {
         array = array || [];
 
         if (array.length === 0) {
@@ -36,8 +37,8 @@ const _ = require('lodash');
       };
     })
 
-    .filter('nl2br', function () {
-      return function (text) {
+    .filter('nl2br', function() {
+      return function(text) {
         if (text && text.trim) {
           return text.trim().replace(/([^>\r\n]?)(\r\n|\r|\n)/gm, '$1<br/>');
         }
@@ -46,17 +47,17 @@ const _ = require('lodash');
       };
     })
 
-    .filter('loadImagesAsync', function (absoluteUrl) {
+    .filter('loadImagesAsync', function(absoluteUrl) {
       var throbberUrl = absoluteUrl('/images/throbber-amber.svg');
 
-      return function (text) {
+      return function(text) {
         return text.replace(/<img([^]*?)src=["']([^]+?)["']/gim, '<img$1src="' + throbberUrl + '" data-async-src="$2"');
       };
     })
 
-    .filter('inboxFilterRestrictedMailboxes', function (inboxMailboxesService) {
-      return function (mailboxes) {
-        return _.filter(mailboxes, function (mailbox) {
+    .filter('inboxFilterRestrictedMailboxes', function(inboxMailboxesService) {
+      return function(mailboxes) {
+        return _.filter(mailboxes, function(mailbox) {
           return inboxMailboxesService.canMoveMessagesIntoMailbox(mailbox.id);
         });
       };

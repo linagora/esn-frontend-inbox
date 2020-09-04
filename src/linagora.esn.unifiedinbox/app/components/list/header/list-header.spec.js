@@ -2,7 +2,7 @@
 
 /* global chai: false, sinon: false, moment: false */
 
-var expect = chai.expect;
+const { expect } = chai;
 
 describe('The inboxListHeader component', function() {
 

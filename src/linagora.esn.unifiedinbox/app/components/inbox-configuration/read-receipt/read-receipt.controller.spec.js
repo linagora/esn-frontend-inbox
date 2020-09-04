@@ -1,8 +1,8 @@
 'use strict';
 
-/* global chai, sinon: false, $q: false */
+/* global chai, sinon: false */
 
-var expect = chai.expect;
+const { expect } = chai;
 
 describe('The inboxReadReceiptController controller', function() {
   var $rootScope,

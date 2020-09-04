@@ -1,30 +1,30 @@
 const _ = require('lodash');
 
-(function (angular) {
+(function(angular) {
   'use strict';
 
   angular.module('linagora.esn.unifiedinbox')
 
-    .factory('waitUntilMessageIsComplete', function ($q) {
+    .factory('waitUntilMessageIsComplete', function($q) {
       function attachmentsAreReady(message) {
         return _.size(message.attachments) === 0 ||
-          _.every(message.attachments, function (attachment) {
+          _.every(message.attachments, function(attachment) {
             return attachment.status === 'uploaded' || (!attachment.upload || !attachment.upload.promise) && !attachment.status;
           });
       }
 
-      return function (message) {
+      return function(message) {
         if (attachmentsAreReady(message)) {
           return $q.when(message);
         }
 
-        return $q.all(message.attachments.map(function (attachment) {
+        return $q.all(message.attachments.map(function(attachment) {
           return attachment.upload && attachment.upload.promise || $q.when();
         })).then(_.constant(message));
       };
     })
 
-    .factory('inboxCacheService', function (Cache, inboxEmailResolverService, INBOX_CACHE_TTL) {
+    .factory('inboxCacheService', function(Cache, inboxEmailResolverService, INBOX_CACHE_TTL) {
       var cache = new Cache({
         loader: inboxEmailResolverService.resolve,
         ttl: INBOX_CACHE_TTL
@@ -39,16 +39,16 @@ const _ = require('lodash');
       }
     })
 
-    .service('searchService', function (attendeeService, INBOX_AUTOCOMPLETE_LIMIT, INBOX_AUTOCOMPLETE_OBJECT_TYPES) {
+    .service('searchService', function(attendeeService, INBOX_AUTOCOMPLETE_LIMIT, INBOX_AUTOCOMPLETE_OBJECT_TYPES) {
       return {
         searchRecipients: searchRecipients
       };
 
       function searchRecipients(query, excludes) {
-        return attendeeService.getAttendeeCandidates(query, INBOX_AUTOCOMPLETE_LIMIT, INBOX_AUTOCOMPLETE_OBJECT_TYPES, excludes).then(function (recipients) {
+        return attendeeService.getAttendeeCandidates(query, INBOX_AUTOCOMPLETE_LIMIT, INBOX_AUTOCOMPLETE_OBJECT_TYPES, excludes).then(function(recipients) {
           return recipients
             .filter(_.property('email'))
-            .map(function (recipient) {
+            .map(function(recipient) {
               recipient.name = recipient.name || recipient.displayName || recipient.email;
 
               return recipient;
@@ -57,14 +57,14 @@ const _ = require('lodash');
       }
     })
 
-    .service('attachmentUploadService', function ($q, $rootScope, inboxConfig, jmapClientProvider, inBackground, xhrWithUploadProgress) {
+    .service('attachmentUploadService', function($q, $rootScope, inboxConfig, jmapClientProvider, inBackground, xhrWithUploadProgress) {
       function in$Apply(fn) {
-        return function (value) {
+        return function(value) {
           if ($rootScope.$$phase) {
             return fn(value);
           }
 
-          return $rootScope.$apply(function () {
+          return $rootScope.$apply(function() {
             fn(value);
           });
         };
@@ -75,7 +75,7 @@ const _ = require('lodash');
         return $q.all([
           jmapClientProvider.get(),
           inboxConfig('uploadUrl')
-        ]).then(function (data) {
+        ]).then(function(data) {
           var authToken = data[0].authToken,
             url = data[1],
             defer = $q.defer(),
@@ -90,7 +90,7 @@ const _ = require('lodash');
               processData: false,
               dataType: 'json',
               success: in$Apply(defer.resolve),
-              error: function (xhr, status, error) {
+              error: function(xhr, status, error) {
                 in$Apply(defer.reject)({
                   xhr: xhr,
                   status: status,
@@ -113,7 +113,7 @@ const _ = require('lodash');
       };
     })
 
-    .factory('inboxSwipeHelper', function ($timeout, $q, inboxConfig, INBOX_SWIPE_DURATION) {
+    .factory('inboxSwipeHelper', function($timeout, $q, inboxConfig, INBOX_SWIPE_DURATION) {
       function _autoCloseSwipeHandler(scope) {
         $timeout(scope.swipeClose, INBOX_SWIPE_DURATION, false);
 
@@ -121,10 +121,10 @@ const _ = require('lodash');
       }
 
       function createSwipeRightHandler(scope, handlers) {
-        return function () {
+        return function() {
           return _autoCloseSwipeHandler(scope)
             .then(inboxConfig.bind(null, 'swipeRightAction', 'markAsRead'))
-            .then(function (action) {
+            .then(function(action) {
               return handlers[action]();
             });
         };
@@ -135,26 +135,26 @@ const _ = require('lodash');
       };
     })
 
-    .factory('inboxUnavailableAccountNotifier', function ($rootScope, INBOX_EVENTS) {
-      return function (account) {
+    .factory('inboxUnavailableAccountNotifier', function($rootScope, INBOX_EVENTS) {
+      return function(account) {
         $rootScope.$broadcast(INBOX_EVENTS.UNAVAILABLE_ACCOUNT_DETECTED, account);
       };
     })
 
-    .factory('inboxAsyncHostedMailControllerHelper', function ($q, session, INBOX_CONTROLLER_LOADING_STATES) {
-      return function (controller, action, errorHandler) {
+    .factory('inboxAsyncHostedMailControllerHelper', function($q, session, INBOX_CONTROLLER_LOADING_STATES) {
+      return function(controller, action, errorHandler) {
         controller.account = {
           name: session.user.preferredEmail
         };
 
-        controller.load = function () {
+        controller.load = function() {
           controller.state = INBOX_CONTROLLER_LOADING_STATES.LOADING;
 
-          return action().then(function (value) {
+          return action().then(function(value) {
             controller.state = INBOX_CONTROLLER_LOADING_STATES.LOADED;
 
             return value;
-          }, function (err) {
+          }, function(err) {
             controller.state = INBOX_CONTROLLER_LOADING_STATES.ERROR;
             errorHandler && errorHandler(session.user.preferredEmail);
 

@@ -2,7 +2,7 @@
 
 /* global chai: false, sinon: false */
 
-var expect = chai.expect;
+const { expect } = chai;
 
 describe('The inboxConfigurationFiltersController', function() {
   var $q, $controller, $scope, $rootScope, inboxMailboxesFilterService, touchscreenDetectorService;
@@ -35,7 +35,7 @@ describe('The inboxConfigurationFiltersController', function() {
   function initController() {
     $scope = $rootScope.$new();
 
-    var controller = $controller('inboxConfigurationFiltersController', {$scope: $scope});
+    var controller = $controller('inboxConfigurationFiltersController', { $scope: $scope });
 
     $scope.$digest();
 

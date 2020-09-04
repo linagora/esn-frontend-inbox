@@ -1,6 +1,6 @@
 'use strict';
 
-require('../search/provider/search-results-provider.service.js');
+require('./provider/search-results-provider.service.js');
 
 angular.module('linagora.esn.unifiedinbox')
   .run(addInboxSearchProvider)

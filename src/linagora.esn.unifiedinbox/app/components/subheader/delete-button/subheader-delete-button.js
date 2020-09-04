@@ -3,5 +3,5 @@
 angular.module('linagora.esn.unifiedinbox')
 
   .component('inboxSubheaderDeleteButton', {
-    template: require("./subheader-delete-button.pug")
+    template: require('./subheader-delete-button.pug')
   });

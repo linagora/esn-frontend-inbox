@@ -3,7 +3,7 @@
 angular.module('linagora.esn.unifiedinbox')
 
   .component('inboxComposerAttachments', {
-    template: require("./composer-attachments.pug"),
+    template: require('./composer-attachments.pug'),
     controller: 'inboxComposerAttachmentsController',
     bindings: {
       message: '<',

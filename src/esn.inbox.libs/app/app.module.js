@@ -1,16 +1,16 @@
 'use strict';
 
 angular.module('esn.inbox.libs', [
-   'restangular',
-   'esn.async-action',
-   'esn.background',
-   'esn.configuration',
-   'esn.http',
-   'esn.i18n',
-   'esn.datetime',
-   'esn.session',
-   'esn.user-configuration',
-   'ng.deviceDetector'
+  'restangular',
+  'esn.async-action',
+  'esn.background',
+  'esn.configuration',
+  'esn.http',
+  'esn.i18n',
+  'esn.datetime',
+  'esn.session',
+  'esn.user-configuration',
+  'ng.deviceDetector'
 ]);
 
 require('esn-frontend-common-libs/src/frontend/js/modules/async-action.js');

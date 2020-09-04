@@ -1,15 +1,16 @@
 'use strict';
 
 const _ = require('lodash');
-require('../config/config.js')
+
+require('../config/config.js');
 require('./shared-mailboxes.constants.js');
 require('../../app.constants');
 
 angular.module('esn.inbox.libs')
 
   .service('inboxSharedMailboxesService', function($q, inboxConfig, esnUserConfigurationService,
-                                                    INBOX_MODULE_NAME, INBOX_HIDDEN_SHAREDMAILBOXES_CONFIG_KEY, INBOX_ROLE_NAMESPACE_TYPES,
-                                                    INBOX_MAILBOXES_NON_SHAREABLE, INBOX_DEFAULT_FOLDERS_SHARING_CONFIG, INBOX_FOLDERS_SHARING_CONFIG_KEY) {
+    INBOX_MODULE_NAME, INBOX_HIDDEN_SHAREDMAILBOXES_CONFIG_KEY, INBOX_ROLE_NAMESPACE_TYPES,
+    INBOX_MAILBOXES_NON_SHAREABLE, INBOX_DEFAULT_FOLDERS_SHARING_CONFIG, INBOX_FOLDERS_SHARING_CONFIG_KEY) {
     let hiddenSharedMaiboxesConfig;
     let foldersSharingConfig = null;
 
@@ -25,11 +26,11 @@ angular.module('esn.inbox.libs')
     function getHiddenMaiboxesConfig() {
       if (!hiddenSharedMaiboxesConfig) {
         return inboxConfig(INBOX_HIDDEN_SHAREDMAILBOXES_CONFIG_KEY, {})
-        .then(function(results) {
-          hiddenSharedMaiboxesConfig = results;
+          .then(function(results) {
+            hiddenSharedMaiboxesConfig = results;
 
-          return hiddenSharedMaiboxesConfig;
-        });
+            return hiddenSharedMaiboxesConfig;
+          });
       }
 
       return $q.when(hiddenSharedMaiboxesConfig);
@@ -49,7 +50,7 @@ angular.module('esn.inbox.libs')
     }
 
     function _appendMissingMailboxes(oldList, newList) {
-      let cleanOldList = _.zipObject(_.filter(_.pairs(oldList), function(pair) {return !!pair[1];}));
+      const cleanOldList = _.zipObject(_.filter(_.pairs(oldList), function(pair) {return !!pair[1];}));
 
       return _.isEmpty(newList) ? $q.when({}) : _storeHiddenSharedMailboxes(_.assign(cleanOldList, newList));
     }
@@ -59,11 +60,11 @@ angular.module('esn.inbox.libs')
         return $q.reject('no mailboxes provided');
       }
       mailboxes = angular.isArray(mailboxes) ? mailboxes : [mailboxes];
-      let mailboxesToHide = _.filter(mailboxes, { isDisplayed: false });
+      const mailboxesToHide = _.filter(mailboxes, { isDisplayed: false });
 
-      let idsToHide = _.map(_.compact(_.pluck(mailboxesToHide, 'id')), String);
-      let rangeOfTrueFor = _.compose(_.partialRight(_.map, _.constant(true)), _.range, _.size);
-      let updatesHiddenConfig = _.zipObject(idsToHide, rangeOfTrueFor(idsToHide));
+      const idsToHide = _.map(_.compact(_.pluck(mailboxesToHide, 'id')), String);
+      const rangeOfTrueFor = _.compose(_.partialRight(_.map, _.constant(true)), _.range, _.size);
+      const updatesHiddenConfig = _.zipObject(idsToHide, rangeOfTrueFor(idsToHide));
 
       return getHiddenMaiboxesConfig()
         .then(function(currentConfig) {
@@ -72,7 +73,7 @@ angular.module('esn.inbox.libs')
     }
 
     function isShareableMailbox(mailbox) {
-      let mailboxRole = mailbox.role.value;
+      const mailboxRole = mailbox.role.value;
 
       if (mailboxRole !== null) {
         return !_.contains(INBOX_MAILBOXES_NON_SHAREABLE, mailboxRole.toLowerCase());

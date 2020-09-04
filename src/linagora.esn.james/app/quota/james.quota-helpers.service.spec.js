@@ -2,7 +2,7 @@
 
 /* global chai: false */
 
-var expect = chai.expect;
+const { expect } = chai;
 
 describe('The jamesQuotaHelpers service', function() {
   var jamesQuotaHelpers, JAMES_UNLIMITED_QUOTA;

@@ -11,7 +11,7 @@ angular.module('esn.inbox.libs')
       }
 
       var parent = _.find(mailboxes, { id: id }),
-          descendants;
+        descendants;
 
       if (!parent) {
         return mailboxes;

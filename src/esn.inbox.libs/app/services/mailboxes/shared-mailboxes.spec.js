@@ -2,7 +2,7 @@
   'use strict';
 
   /* global chai: false, sinon: false, jmapDraft: false */
-  var expect = chai.expect;
+  const { expect } = chai;
 
   describe('The inboxSharedMailboxesService service', function() {
 
@@ -51,7 +51,7 @@
       });
 
       it('should return true when mailbox is shared', function() {
-        var sharedMailbox = new jmapDraft.Mailbox({}, 'id_shared', 'shared_mailbox', { namespace: { type: 'dElEgAtEd'} });
+        var sharedMailbox = new jmapDraft.Mailbox({}, 'id_shared', 'shared_mailbox', { namespace: { type: 'dElEgAtEd' } });
 
         expect(inboxSharedMailboxesService.isShared(sharedMailbox)).to.equal(true);
       });
@@ -199,7 +199,7 @@
 
       it('should only store provided hidden mailboxes list, overriding current list', function(done) {
         inboxConfigMock[INBOX_HIDDEN_SHAREDMAILBOXES_CONFIG_KEY] = { '#2': true };
-        inboxSharedMailboxesService.setHiddenMailboxes([{ id: '#1', name: 'Shared #1', isDisplayed: false}, { id: '#3', name: 'Shared #3', isDisplayed: false }])
+        inboxSharedMailboxesService.setHiddenMailboxes([{ id: '#1', name: 'Shared #1', isDisplayed: false }, { id: '#3', name: 'Shared #3', isDisplayed: false }])
           .then(function() {
             expect(esnUserConfigurationServiceMock.set).to.have.been.calledOnce;
             expect(esnUserConfigurationServiceMock.set).to.have.been.calledWith([{
@@ -229,7 +229,7 @@
     describe('The isShareableMailbox function', function() {
 
       it('should return true if mailbox is allow to be share', function() {
-        var mailboxAllow = { role: { value: 'inbox' }};
+        var mailboxAllow = { role: { value: 'inbox' } };
 
         var result = inboxSharedMailboxesService.isShareableMailbox(mailboxAllow);
 
@@ -237,7 +237,7 @@
       });
 
       it('should return false if mailbox is NOT allow to be share', function() {
-        var mailboxNotAllow = { role: { value: 'trash' }};
+        var mailboxNotAllow = { role: { value: 'trash' } };
 
         var result = inboxSharedMailboxesService.isShareableMailbox(mailboxNotAllow);
 

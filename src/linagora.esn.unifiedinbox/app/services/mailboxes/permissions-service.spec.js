@@ -1,8 +1,8 @@
 (function() {
   'use strict';
 
-  /* global chai: false, sinon: false, jmapDraft: false, $q: false */
-  var expect = chai.expect;
+  /* global chai: false, sinon: false, jmapDraft: false */
+  const { expect } = chai;
 
   describe('The inboxSharedMailboxesPermissionsService service', function() {
 
@@ -25,7 +25,7 @@
     beforeEach(function() {
       firstSharingRole = sharingRolesService.getDefaultRole();
       firstSharingPermissions = INBOX_MAILBOX_SHARING_PERMISSIONS[firstSharingRole];
-      mailboxToShare = new jmapDraft.Mailbox({}, 'id', 'share #1', { namespace: { type: 'Personal'} });
+      mailboxToShare = new jmapDraft.Mailbox({}, 'id', 'share #1', { namespace: { type: 'Personal' } });
     });
 
     describe('The grantAndUpdate function', function() {
@@ -49,7 +49,7 @@
       });
 
       it('should reject when invalid mailbox is provided', function(done) {
-        sharingRolesService.grantAndUpdate(firstSharingRole, {name: 'fake share'}, 'user2@open-paas.org')
+        sharingRolesService.grantAndUpdate(firstSharingRole, { name: 'fake share' }, 'user2@open-paas.org')
           .catch(function(error) {
             expect(error.message).to.have.string('invalid mailbox');
             done();
@@ -59,7 +59,7 @@
 
       it('should reject when not performed by mailbox\'s owner', function(done) {
         var shareOwner = 'user1@open-paas.org';
-        var share = new jmapDraft.Mailbox({}, 'id', 'share #1', { namespace: { type: 'Delegated', owner: shareOwner}});
+        var share = new jmapDraft.Mailbox({}, 'id', 'share #1', { namespace: { type: 'Delegated', owner: shareOwner } });
 
         sharingRolesService.grantAndUpdate(firstSharingRole, share, 'user2@open-paas.org')
           .catch(function(m) {
@@ -84,8 +84,9 @@
         sharingRolesService.grantAndUpdate(firstSharingRole, mailboxToShare, shareeEmail)
           .then(function() {
             expect(mailboxesServiceMock.updateMailbox).to.have.been.calledWithExactly(
-              sinon.match({sharedWith: {}}),
-              sinon.match({sharedWith: {'user2@open-paas.org': firstSharingPermissions}}));
+              sinon.match({ sharedWith: {} }),
+              sinon.match({ sharedWith: { 'user2@open-paas.org': firstSharingPermissions } })
+            );
             done();
           });
         $rootScope.$digest();
@@ -127,7 +128,7 @@
       });
 
       it('should reject when invalid mailbox is provided', function(done) {
-        sharingRolesService.grant(firstSharingRole, {name: 'fake share'}, 'user2@open-paas.org')
+        sharingRolesService.grant(firstSharingRole, { name: 'fake share' }, 'user2@open-paas.org')
           .catch(function(error) {
             expect(error.message).to.have.string('invalid mailbox');
             done();
@@ -137,7 +138,7 @@
 
       it('should reject when not performed by mailbox\'s owner', function(done) {
         var shareOwner = 'user1@open-paas.org';
-        var share = new jmapDraft.Mailbox({}, 'id', 'share #1', { namespace: { type: 'Delegated', owner: shareOwner}});
+        var share = new jmapDraft.Mailbox({}, 'id', 'share #1', { namespace: { type: 'Delegated', owner: shareOwner } });
 
         sharingRolesService.grant(firstSharingRole, share, 'user2@open-paas.org')
           .catch(function(m) {
@@ -161,7 +162,7 @@
 
         sharingRolesService.grant(firstSharingRole, mailboxToShare, shareeEmail)
           .then(function(updatedMailbox) {
-            expect(updatedMailbox.sharedWith).to.deep.equal({'user2@open-paas.org': firstSharingPermissions});
+            expect(updatedMailbox.sharedWith).to.deep.equal({ 'user2@open-paas.org': firstSharingPermissions });
             done();
           });
         $rootScope.$digest();
@@ -172,7 +173,7 @@
     describe('The revoke function', function() {
 
       it('should reject when invalid mailbox is provided', function(done) {
-        sharingRolesService.revoke({name: 'fake share'}, 'user2@open-paas.org')
+        sharingRolesService.revoke({ name: 'fake share' }, 'user2@open-paas.org')
           .catch(function(error) {
             expect(error.message).to.have.string('invalid mailbox');
             done();
@@ -182,7 +183,7 @@
 
       it('should reject when not performed by mailbox\'s owner', function(done) {
         var shareOwner = 'user1@open-paas.org';
-        var share = new jmapDraft.Mailbox({}, 'id', 'share #1', { namespace: { type: 'Delegated', owner: shareOwner}});
+        var share = new jmapDraft.Mailbox({}, 'id', 'share #1', { namespace: { type: 'Delegated', owner: shareOwner } });
 
         sharingRolesService.revoke(share, 'user2@open-paas.org')
           .catch(function(m) {
@@ -218,7 +219,7 @@
     describe('The revokeAndUpdate function', function() {
 
       it('should reject when invalid mailbox is provided', function(done) {
-        sharingRolesService.revokeAndUpdate({name: 'fake share'}, 'user2@open-paas.org')
+        sharingRolesService.revokeAndUpdate({ name: 'fake share' }, 'user2@open-paas.org')
           .catch(function(error) {
             expect(error.message).to.have.string('invalid mailbox');
             done();
@@ -228,7 +229,7 @@
 
       it('should reject when not performed by mailbox\'s owner', function(done) {
         var shareOwner = 'user1@open-paas.org';
-        var share = new jmapDraft.Mailbox({}, 'id', 'share #1', { namespace: { type: 'Delegated', owner: shareOwner}});
+        var share = new jmapDraft.Mailbox({}, 'id', 'share #1', { namespace: { type: 'Delegated', owner: shareOwner } });
 
         sharingRolesService.revokeAndUpdate(share, 'user2@open-paas.org')
           .catch(function(m) {
@@ -258,8 +259,9 @@
           .then(function(updatedMailbox) {
             expect(updatedMailbox.sharedWith).to.deep.equal({});
             expect(mailboxesServiceMock.updateMailbox).to.have.been.calledWithExactly(
-              sinon.match({sharedWith: originalSharedWith}),
-              sinon.match({sharedWith: {}}));
+              sinon.match({ sharedWith: originalSharedWith }),
+              sinon.match({ sharedWith: {} })
+            );
             done();
           });
         $rootScope.$digest();
@@ -284,7 +286,7 @@
     describe('The getRole function', function() {
 
       it('should reject when invalid mailbox is provided', function(done) {
-        sharingRolesService.getRole({name: 'fake share'}, 'user2@open-paas.org')
+        sharingRolesService.getRole({ name: 'fake share' }, 'user2@open-paas.org')
           .catch(function(error) {
             expect(error.message).to.have.string('invalid mailbox');
             done();
@@ -293,7 +295,7 @@
       });
 
       it('should reject when provided email is undefined', function(done) {
-        sharingRolesService.getRole({id: 'id', name: 'fake share'})
+        sharingRolesService.getRole({ id: 'id', name: 'fake share' })
           .catch(function(error) {
             expect(error.message).to.have.string('email not provided');
             done();
@@ -302,7 +304,7 @@
       });
 
       it('should return role matching permissions provided with mailbox', function(done) {
-        var sharedMailbox = {id: 'id', name: 'fake share', sharedWith: {'user1@open-paas.org': firstSharingPermissions}};
+        var sharedMailbox = { id: 'id', name: 'fake share', sharedWith: { 'user1@open-paas.org': firstSharingPermissions } };
 
         sharingRolesService.getRole(sharedMailbox, 'user1@open-paas.org')
           .then(function(role) {
@@ -313,7 +315,7 @@
       });
 
       it('should reject when provided permissions do not match any defined role', function(done) {
-        var sharedMailbox = {id: 'id', name: 'fake share', sharedWith: {'user1@open-paas.org': ['w']}};
+        var sharedMailbox = { id: 'id', name: 'fake share', sharedWith: { 'user1@open-paas.org': ['w'] } };
 
         sharingRolesService.getRole(sharedMailbox, 'user1@open-paas.org')
           .catch(function(error) {
@@ -324,10 +326,12 @@
       });
 
       it('should reject when mailbox is not shared with provided email', function(done) {
-        var sharedMailbox = {id: 'id', name: 'fake share', sharedWith: {
-          'user0@open-paas.org': firstSharingPermissions,
-          'user1@open-paas.org': firstSharingPermissions
-        }};
+        var sharedMailbox = {
+          id: 'id', name: 'fake share', sharedWith: {
+            'user0@open-paas.org': firstSharingPermissions,
+            'user1@open-paas.org': firstSharingPermissions
+          }
+        };
 
         sharingRolesService.getRole(sharedMailbox, 'unknown@open-paas.org')
           .catch(function(error) {

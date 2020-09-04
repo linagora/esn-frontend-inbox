@@ -2,7 +2,7 @@
 
 angular.module('linagora.esn.james')
   .component('jamesConfigForm', {
-    template: require("./james-config-form.pug"),
+    template: require('./james-config-form.pug'),
     controller: 'jamesConfigFormController',
     bindings: {
       configurations: '=',

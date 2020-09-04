@@ -2,6 +2,6 @@
 
 angular.module('linagora.esn.unifiedinbox')
   .component('inboxQuotaBanner', {
-    template: require("./quota-banner.pug"),
+    template: require('./quota-banner.pug'),
     controller: 'inboxQuotaBannerController'
   });

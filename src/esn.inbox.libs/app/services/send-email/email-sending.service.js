@@ -1,12 +1,14 @@
 'use strict';
 
+const _ = require('lodash');
+
 require('../email-body/email-body');
 require('../jmap-helper/jmap-helper');
 require('../../app.constants');
 
 angular.module('esn.inbox.libs')
-  .factory('emailSendingService', function ($q, emailService, jmapDraft, session, emailBodyService, sendEmail, inboxJmapHelper, INBOX_ATTACHMENT_TYPE_JMAP, INBOX_MESSAGE_HEADERS) {
-    let referencingEmailOptions = {
+  .factory('emailSendingService', function($q, emailService, jmapDraft, session, emailBodyService, sendEmail, inboxJmapHelper, INBOX_ATTACHMENT_TYPE_JMAP, INBOX_MESSAGE_HEADERS) {
+    const referencingEmailOptions = {
       reply: {
         subjectPrefix: 'Re: ',
         recipients: getReplyRecipients,
@@ -56,7 +58,7 @@ angular.module('esn.inbox.libs')
         return false;
       }
 
-      return [].concat(email.to || [], email.cc || [], email.bcc || []).every(function (recipient) {
+      return [].concat(email.to || [], email.cc || [], email.bcc || []).every(function(recipient) {
         return emailService.isValidEmail(recipient.email);
       });
     }
@@ -70,8 +72,8 @@ angular.module('esn.inbox.libs')
      * @param {Object} email
      */
     function removeDuplicateRecipients(email) {
-      let notIn = function (array) {
-        return function (item) {
+      const notIn = function(array) {
+        return function(item) {
           return !_.find(array, { email: item.email });
         };
       };
@@ -86,7 +88,7 @@ angular.module('esn.inbox.libs')
     }
 
     function addReadReceiptRequest(message) {
-      let senderAddress = getEmailAddress(session.user);
+      const senderAddress = getEmailAddress(session.user);
 
       message.headers = message.headers || {};
       message.headers[INBOX_MESSAGE_HEADERS.READ_RECEIPT] = senderAddress;
@@ -104,7 +106,7 @@ angular.module('esn.inbox.libs')
       if (!message || !message.headers || !message.headers[INBOX_MESSAGE_HEADERS.READ_RECEIPT]) {
         return false;
       }
-      let recipient = message.headers[INBOX_MESSAGE_HEADERS.READ_RECEIPT];
+      const recipient = message.headers[INBOX_MESSAGE_HEADERS.READ_RECEIPT];
 
       return options.asCurrentUser ?
         session.user.emails.indexOf(recipient) > -1 :
@@ -150,7 +152,7 @@ angular.module('esn.inbox.libs')
     }
 
     function showReplyAllButton(email) {
-      let nbRecipients = countRecipients(email);
+      const nbRecipients = countRecipients(email);
 
       return nbRecipients > 1 || nbRecipients === 1 && getEmailAddress(getFirstRecipient(email)) !== getEmailAddress(session.user);
     }
@@ -162,15 +164,15 @@ angular.module('esn.inbox.libs')
     }
 
     function getAllRecipientsExceptSender(email) {
-      let sender = session.user;
+      const sender = session.user;
 
-      return [].concat(email.to || [], email.cc || [], email.bcc || []).filter(function (recipient) {
+      return [].concat(email.to || [], email.cc || [], email.bcc || []).filter(function(recipient) {
         return recipient.email !== getEmailAddress(sender);
       });
     }
 
     function getReplyToRecipients(email) {
-      let replyTo = _.reject(email.replyTo, { email: jmapDraft.EMailer.unknown().email });
+      const replyTo = _.reject(email.replyTo, { email: jmapDraft.EMailer.unknown().email });
 
       return replyTo.length > 0 ? replyTo : [email.from];
     }
@@ -224,7 +226,7 @@ angular.module('esn.inbox.libs')
         return email;
       }
 
-      email.mappingsUrlAndCid.forEach(function (mapping) {
+      email.mappingsUrlAndCid.forEach(function(mapping) {
         email.htmlBody = email.htmlBody.replace(mapping.url, 'cid:' + mapping.cid);
       });
 
@@ -237,7 +239,7 @@ angular.module('esn.inbox.libs')
       if (!parentMessage.headers || !referencedMessageIdsHeaderName) {
         return;
       }
-      let quotedId = parentMessage.headers['Message-ID'],
+      const quotedId = parentMessage.headers['Message-ID'],
         parentReferences = parentMessage.headers.References || '',
         parentReferencesAsArray = parentReferences && parentReferences.split(' ')
           .map(Function.prototype.call, String.prototype.trim).filter(Boolean),
@@ -249,8 +251,8 @@ angular.module('esn.inbox.libs')
     }
 
     function _createQuotedEmail(opts, messageId, sender) {
-      return inboxJmapHelper.getMessageById(messageId).then(function (message) {
-        let newRecipients = opts.recipients ? opts.recipients(message, sender) : {},
+      return inboxJmapHelper.getMessageById(messageId).then(function(message) {
+        const newRecipients = opts.recipients ? opts.recipients(message, sender) : {},
           newEmail = {
             from: getEmailAddress(sender),
             to: newRecipients.to || [],
@@ -263,15 +265,15 @@ angular.module('esn.inbox.libs')
             headers: _addReferenceToOriginalMessage(opts.referenceIdHeader, message)
           };
 
-        let handleAttachment = opts.includeAttachments ?
+        const handleAttachment = opts.includeAttachments ?
           _handleAttachmentInQuoteOfForwardMail : _handleAttachmentInQuoteOfReplyMail;
 
         return handleAttachment(message, newEmail)
-          .then(function () {
+          .then(function() {
             // We do not automatically quote the message if we're using a plain text editor and the message
             // has a HTML body. In this case the "Edit Quoted Mail" button will show
             if (!emailBodyService.supportsRichtext() && message.htmlBody) {
-              return emailBodyService.quote(newEmail, opts.templateName, true).then(function (body) {
+              return emailBodyService.quote(newEmail, opts.templateName, true).then(function(body) {
                 newEmail.quoted.htmlBody = body;
 
                 return newEmail;
@@ -279,7 +281,7 @@ angular.module('esn.inbox.libs')
             }
 
             return emailBodyService.quote(newEmail, opts.templateName)
-              .then(function (body) {
+              .then(function(body) {
                 return _enrichWithQuote(newEmail, body);
               });
           });
@@ -291,15 +293,15 @@ angular.module('esn.inbox.libs')
         return $q.when();
       }
 
-      let inlineAttachments = _getInlineAttachments(message.attachments);
-      let nonInlineAttachments = message.attachments.filter(function (attachment) {
+      const inlineAttachments = _getInlineAttachments(message.attachments);
+      const nonInlineAttachments = message.attachments.filter(function(attachment) {
         return !attachment.isInline;
       });
 
       newEmail.attachments = [];
 
       if (nonInlineAttachments.length) {
-        nonInlineAttachments.forEach(function (attachment) {
+        nonInlineAttachments.forEach(function(attachment) {
           attachment.attachmentType = INBOX_ATTACHMENT_TYPE_JMAP;
           attachment.status = 'uploaded';
 
@@ -319,7 +321,7 @@ angular.module('esn.inbox.libs')
         return $q.when();
       }
 
-      let inlineAttachments = _getInlineAttachments(message.attachments);
+      const inlineAttachments = _getInlineAttachments(message.attachments);
 
       if (!inlineAttachments.length) {
         return $q.when();
@@ -331,35 +333,35 @@ angular.module('esn.inbox.libs')
     }
 
     function _handleInlineAttachment(newEmail, attachments) {
-      let inlineCids = _getCidFromImageSources(newEmail.quoted.htmlBody);
+      const inlineCids = _getCidFromImageSources(newEmail.quoted.htmlBody);
 
-      attachments.forEach(function (attachment) {
+      attachments.forEach(function(attachment) {
         newEmail.attachments.push(attachment);
       });
 
       return _getInlineImageMappingsUrlAndCid(inlineCids, attachments)
-        .then(function (mappings) {
+        .then(function(mappings) {
           newEmail.mappingsUrlAndCid = mappings;
-          mappings.forEach(function (mapping) {
+          mappings.forEach(function(mapping) {
             newEmail.quoted.htmlBody = newEmail.quoted.htmlBody.replace('cid:' + mapping.cid, mapping.url);
           });
         });
     }
 
     function _getInlineAttachments(attachments) {
-      return attachments.filter(function (attachment) {
+      return attachments.filter(function(attachment) {
         return attachment.isInline;
       });
     }
 
     function _getCidFromImageSources(messageBody) {
-      let document = new DOMParser().parseFromString(messageBody, 'text/html');
-      let elements = document.getElementsByTagName('img');
+      const document = new DOMParser().parseFromString(messageBody, 'text/html');
+      const elements = document.getElementsByTagName('img');
 
       // elements is a HTMLCollection and isn't a 'true' array,
       // elements doesn't have 'forEach', 'map' function like an array. Therefore, we have to convert it to array.
-      return [].map.call(elements, function (element) {
-        let cidMatch = element &&
+      return [].map.call(elements, function(element) {
+        const cidMatch = element &&
           element.src &&
           element.src.match(/^cid:(\S+)/);
 
@@ -368,15 +370,15 @@ angular.module('esn.inbox.libs')
     }
 
     function _getInlineImageMappingsUrlAndCid(cids, attachments) {
-      let mappingPromises = [];
+      const mappingPromises = [];
 
-      cids.forEach(function (cid) {
-        let inlineAttachment = _.find(attachments, function (attachment) {
+      cids.forEach(function(cid) {
+        const inlineAttachment = _.find(attachments, function(attachment) {
           return attachment.cid === cid;
         });
 
         if (inlineAttachment && inlineAttachment.getSignedDownloadUrl) {
-          mappingPromises.push(inlineAttachment.getSignedDownloadUrl().then(function (url) {
+          mappingPromises.push(inlineAttachment.getSignedDownloadUrl().then(function(url) {
             return { url: url, cid: inlineAttachment.cid };
           }));
         }

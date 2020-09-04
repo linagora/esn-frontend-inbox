@@ -3,7 +3,7 @@
 /* global chai: false */
 /* global sinon: false */
 
-var expect = chai.expect;
+const { expect } = chai;
 
 describe('The InboxForwardingsController controller', function() {
   var $rootScope, $controller, $scope;

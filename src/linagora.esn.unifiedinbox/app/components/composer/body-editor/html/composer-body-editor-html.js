@@ -3,7 +3,7 @@
 angular.module('linagora.esn.unifiedinbox')
 
   .component('inboxComposerBodyEditorHtml', {
-    template: require("./composer-body-editor-html.pug"),
+    template: require('./composer-body-editor-html.pug'),
     controller: 'inboxComposerBodyEditorHtmlController',
     bindings: {
       message: '<',

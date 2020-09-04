@@ -5,7 +5,6 @@ const _ = require('lodash');
 require('../../../services/forwardings/inbox-forwardings.service.js');
 require('../../../services/forwardings/inbox-forwardings-api-client.service.js');
 
-
 angular.module('linagora.esn.unifiedinbox')
   .controller('InboxForwardingsController', InboxForwardingsController);
 

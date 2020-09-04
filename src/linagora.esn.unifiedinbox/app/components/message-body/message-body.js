@@ -3,7 +3,7 @@
 angular.module('linagora.esn.unifiedinbox')
 
   .component('inboxMessageBody', {
-    template: require("./message-body.pug"),
+    template: require('./message-body.pug'),
     bindings: {
       message: '<'
     }

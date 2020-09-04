@@ -4,7 +4,7 @@
 /* global chai: false */
 /* global sinon: false */
 
-var expect = chai.expect;
+const { expect } = chai;
 
 describe('The inboxSelectionService factory', function() {
   var inboxSelectionService, inboxFilteredList;
@@ -72,7 +72,7 @@ describe('The inboxSelectionService factory', function() {
 
     it('should unselect all items', function() {
       var item1 = { id: 1 },
-          item2 = { id: 2 };
+        item2 = { id: 2 };
 
       inboxSelectionService.toggleItemSelection(item1);
       inboxSelectionService.toggleItemSelection(item2);
@@ -189,11 +189,11 @@ describe('The inboxSelectionService factory', function() {
         );
         inboxSelectionService.groupSelection({ id: 1, selected: true });
 
-      expect(inboxFilteredList.list).to.have.been.called;
-      expect(inboxSelectionService.getSelectedItems()).to.deep.equals([
-        { id: 2, selected: true }
-      ]);
-      expect(inboxSelectionService.isSelecting()).to.be.true;
+        expect(inboxFilteredList.list).to.have.been.called;
+        expect(inboxSelectionService.getSelectedItems()).to.deep.equals([
+          { id: 2, selected: true }
+        ]);
+        expect(inboxSelectionService.isSelecting()).to.be.true;
 
       });
 
@@ -207,12 +207,12 @@ describe('The inboxSelectionService factory', function() {
         );
         inboxSelectionService.groupSelection({ id: 1, selected: false });
 
-      expect(inboxFilteredList.list).to.have.been.called;
-      expect(inboxSelectionService.getSelectedItems()).to.deep.equals([
-        { id: 2, selected: true },
-        { id: 1, selected: true }
-      ]);
-      expect(inboxSelectionService.isSelecting()).to.be.true;
+        expect(inboxFilteredList.list).to.have.been.called;
+        expect(inboxSelectionService.getSelectedItems()).to.deep.equals([
+          { id: 2, selected: true },
+          { id: 1, selected: true }
+        ]);
+        expect(inboxSelectionService.isSelecting()).to.be.true;
       });
     });
 

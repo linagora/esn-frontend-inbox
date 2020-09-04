@@ -78,7 +78,7 @@ angular.module('linagora.esn.unifiedinbox')
     $stateProvider
       .state('unifiedinbox', {
         url: '/unifiedinbox',
-        template: require("../views/home.pug"),
+        template: require('../views/home.pug'),
         deepStateRedirect: {
           default: 'unifiedinbox.inbox',
           fn: function() {
@@ -113,7 +113,7 @@ angular.module('linagora.esn.unifiedinbox')
         url: '/vacation',
         views: {
           'configuration@unifiedinbox.configuration': {
-            template: require("../views/configuration/vacation/index.pug"),
+            template: require('../views/configuration/vacation/index.pug'),
             controller: 'inboxConfigurationVacationController as ctrl'
           }
         },
@@ -240,7 +240,7 @@ angular.module('linagora.esn.unifiedinbox')
         views: {
           'main@unifiedinbox': {
             controller: 'unifiedInboxController as ctrl',
-            template: require("../views/unified-inbox/index.pug")
+            template: require('../views/unified-inbox/index.pug')
           }
         }
       })
@@ -256,7 +256,7 @@ angular.module('linagora.esn.unifiedinbox')
         url: '/:emailId',
         views: {
           'preview-pane@unifiedinbox.inbox': {
-            template: require("../views/email/view/index.pug"),
+            template: require('../views/email/view/index.pug'),
             controller: 'viewEmailController as ctrl'
           }
         }
@@ -272,7 +272,7 @@ angular.module('linagora.esn.unifiedinbox')
         url: '/:emailId',
         views: {
           'preview-pane@unifiedinbox.inbox': {
-            template: require("../views/email/view/index.pug"),
+            template: require('../views/email/view/index.pug'),
             controller: 'viewEmailController as ctrl'
           }
         }

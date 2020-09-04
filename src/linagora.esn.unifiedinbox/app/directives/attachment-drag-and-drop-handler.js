@@ -7,7 +7,7 @@ angular.module('linagora.esn.unifiedinbox').directive('attachmentDragAndDropHand
 function attachmentDragAndDropHandler($compile, esnI18nService) {
   return {
     restrict: 'A',
-    scope: {attachmentUploadCallback: '&attachmentDragAndDropHandler'},
+    scope: { attachmentUploadCallback: '&attachmentDragAndDropHandler' },
     link: function(scope, elmt) {
       var eventDefinitions = [
         [elmt[0], 'dragover', cancel],
@@ -30,7 +30,7 @@ function attachmentDragAndDropHandler($compile, esnI18nService) {
 
       function onDragStart(evt) {
         cancel(evt);
-        dragzoneHelpText.css({height: elmt.height()});
+        dragzoneHelpText.css({ height: elmt.height() });
         scope.isHelpTextVisible = true;
         collection.push(evt.target);
       }
@@ -70,7 +70,7 @@ function attachmentDragAndDropHandler($compile, esnI18nService) {
           attachments.push(evt.dataTransfer.files.item(i));
         }
 
-        scope.attachmentUploadCallback({attachments: attachments});
+        scope.attachmentUploadCallback({ attachments: attachments });
       }
 
       function _init() {

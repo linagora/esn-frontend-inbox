@@ -1,8 +1,8 @@
 'use strict';
 
-/* global chai: false */
+/* global chai, _: false */
 
-var expect = chai.expect;
+const { expect } = chai;
 
 describe('The inboxFilterDescendantMailboxes filter', function() {
 

@@ -1,17 +1,17 @@
 'use strict';
 
-/* global chai, sinon: false */
+/* global chai, sinon, _: false */
 
-var expect = chai.expect;
+const { expect } = chai;
 
 describe('The linagora.esn.unifiedinbox module controllers', function() {
 
   var $stateParams, $rootScope, scope, $controller, $timeout, $interval,
-      jmapClient, jmapDraft, notificationFactory, Offline = {},
-      newComposerService = {}, $state, $modal, $hide, navigateTo, inboxPlugins, inboxFilteredList,
-      inboxMailboxesService, inboxJmapItemService, fileUploadMock, config, moment, inboxMailboxesCache,
-      esnPreviousPage, inboxFilterDescendantMailboxesFilter, inboxSelectionService,
-      inboxUserQuotaService, inboxUnavailableAccountNotifier, inboxUtils;
+    jmapClient, jmapDraft, notificationFactory, Offline = {},
+    newComposerService = {}, $state, $modal, $hide, navigateTo, inboxPlugins, inboxFilteredList,
+    inboxMailboxesService, inboxJmapItemService, fileUploadMock, config, moment, inboxMailboxesCache,
+    esnPreviousPage, inboxFilterDescendantMailboxesFilter, inboxSelectionService,
+    inboxUserQuotaService, inboxUnavailableAccountNotifier, inboxUtils;
   var JMAP_GET_MESSAGES_VIEW, INBOX_EVENTS, DEFAULT_MAX_SIZE_UPLOAD, INFINITE_LIST_POLLING_INTERVAL;
 
   beforeEach(function() {
@@ -50,7 +50,7 @@ describe('The linagora.esn.unifiedinbox module controllers', function() {
       inboxFilterDescendantMailboxesFilter = sinon.spy();
       config['linagora.esn.unifiedinbox.uploadUrl'] = 'http://jmap';
       config['linagora.esn.unifiedinbox.maxSizeUpload'] = DEFAULT_MAX_SIZE_UPLOAD;
-      config['core.datetime'] = {use24hourFormat: true};
+      config['core.datetime'] = { use24hourFormat: true };
       fileUploadMock = {
         addFile: function() {
           return {
@@ -82,7 +82,7 @@ describe('The linagora.esn.unifiedinbox module controllers', function() {
         });
       });
       $provide.value('filter', { filter: 'condition' });
-      $provide.value('searchService', { searchByEmail: function() { return $q.when(); }});
+      $provide.value('searchService', { searchByEmail: function() { return $q.when(); } });
       $provide.value('navigateTo', navigateTo = sinon.spy());
       $provide.value('inboxFilterDescendantMailboxesFilter', inboxFilterDescendantMailboxesFilter);
       $provide.decorator('inboxFilteredList', function($delegate) {
@@ -100,10 +100,10 @@ describe('The linagora.esn.unifiedinbox module controllers', function() {
   });
 
   beforeEach(angular.mock.inject(function(_$rootScope_, _$controller_, _$timeout_, _$interval_, _jmapDraft_, _inboxPlugins_, _inboxFilteredList_,
-                                          _inboxMailboxesService_, _JMAP_GET_MESSAGES_VIEW_,
-                                          _DEFAULT_FILE_TYPE_, _moment_, _DEFAULT_MAX_SIZE_UPLOAD_, _inboxJmapItemService_,
-                                          _INBOX_EVENTS_, _inboxMailboxesCache_, _esnPreviousPage_, _inboxSelectionService_, _inboxUnavailableAccountNotifier_,
-                                          _INFINITE_LIST_POLLING_INTERVAL_, _inboxUtils_) {
+    _inboxMailboxesService_, _JMAP_GET_MESSAGES_VIEW_,
+    _DEFAULT_FILE_TYPE_, _moment_, _DEFAULT_MAX_SIZE_UPLOAD_, _inboxJmapItemService_,
+    _INBOX_EVENTS_, _inboxMailboxesCache_, _esnPreviousPage_, _inboxSelectionService_, _inboxUnavailableAccountNotifier_,
+    _INFINITE_LIST_POLLING_INTERVAL_, _inboxUtils_) {
     $rootScope = _$rootScope_;
     $controller = _$controller_;
     $timeout = _$timeout_;
@@ -195,7 +195,7 @@ describe('The linagora.esn.unifiedinbox module controllers', function() {
     });
 
     it('should call our inbox provider as expected', function() {
-      folder = _.assign(new jmapDraft.Mailbox(null, 'id_inbox', 'name_inbox'), {role: jmapDraft.MailboxRole.INBOX});
+      folder = _.assign(new jmapDraft.Mailbox(null, 'id_inbox', 'name_inbox'), { role: jmapDraft.MailboxRole.INBOX });
       inboxMailboxesCache.push(folder);
 
       jmapClient.getMailboxes = sinon.spy(function() {
@@ -217,7 +217,7 @@ describe('The linagora.esn.unifiedinbox module controllers', function() {
     });
 
     it('should forward filters to our jmap provider', function() {
-      folder = _.assign(new jmapDraft.Mailbox(null, 'id_inbox', 'name_inbox'), {role: jmapDraft.MailboxRole.INBOX});
+      folder = _.assign(new jmapDraft.Mailbox(null, 'id_inbox', 'name_inbox'), { role: jmapDraft.MailboxRole.INBOX });
       inboxMailboxesCache.push(folder);
 
       _.find(inboxFilters, { id: 'isUnread' }).checked = true; // This simulated the selection of isUnread
@@ -303,7 +303,7 @@ describe('The linagora.esn.unifiedinbox module controllers', function() {
     });
 
     it('should update inboxFilteredList upon DRAFT_CREATED received, when browsing drafts folders', function() {
-      folder = _.assign(new jmapDraft.Mailbox(null, 'id', 'DRAFTS'), {role: jmapDraft.MailboxRole.DRAFTS});
+      folder = _.assign(new jmapDraft.Mailbox(null, 'id', 'DRAFTS'), { role: jmapDraft.MailboxRole.DRAFTS });
       inboxMailboxesCache.push(folder);
 
       initController('unifiedInboxController');
@@ -321,7 +321,7 @@ describe('The linagora.esn.unifiedinbox module controllers', function() {
     });
 
     it('should only increment unread drafts counter upon DRAFT_CREATED received, when browsing from anywhere but drafts', function() {
-      folder = _.assign(new jmapDraft.Mailbox(null, 'id', 'DRAFTS'), {role: jmapDraft.MailboxRole.DRAFTS});
+      folder = _.assign(new jmapDraft.Mailbox(null, 'id', 'DRAFTS'), { role: jmapDraft.MailboxRole.DRAFTS });
       inboxMailboxesCache.push(folder);
 
       initController('unifiedInboxController');
@@ -431,7 +431,9 @@ describe('The linagora.esn.unifiedinbox module controllers', function() {
       initController('viewEmailController');
 
       scope.$watch('email', function(before, after) {
-        expect(after).to.shallowDeepEqual({ isUnread: false, property: 'property', mailboxIds: [], loaded: true });
+        expect(after).to.shallowDeepEqual({
+          isUnread: false, property: 'property', mailboxIds: [], loaded: true
+        });
 
         done();
       });
@@ -445,13 +447,17 @@ describe('The linagora.esn.unifiedinbox module controllers', function() {
         isFlagged: false
       });
       jmapClient.getMessages = function() {
-        return $q.when([{ isFlagged: true, textBody: 'textBody', htmlBody: 'htmlBody', attachments: [] }]);
+        return $q.when([{
+          isFlagged: true, textBody: 'textBody', htmlBody: 'htmlBody', attachments: []
+        }]);
       };
 
       initController('viewEmailController');
 
       scope.$watch('email', function(before, after) {
-        expect(after).to.shallowDeepEqual({ id: 'messageId1', isUnread: false, isFlagged: true, textBody: 'textBody', htmlBody: 'htmlBody', attachments: [], loaded: true });
+        expect(after).to.shallowDeepEqual({
+          id: 'messageId1', isUnread: false, isFlagged: true, textBody: 'textBody', htmlBody: 'htmlBody', attachments: [], loaded: true
+        });
 
         done();
       });
@@ -789,7 +795,7 @@ describe('The linagora.esn.unifiedinbox module controllers', function() {
   describe('The viewThreadController', function() {
 
     var jmapThread,
-        threadId = 'thread1';
+      threadId = 'thread1';
 
     function mockGetThreadAndMessages(messages) {
       jmapThread.getMessages = function() {
@@ -823,7 +829,7 @@ describe('The linagora.esn.unifiedinbox module controllers', function() {
     it('should search for message ids of the given thread id', function(done) {
       $stateParams.threadId = 'expectedThreadId';
       jmapClient.getThreads = function(options) {
-        expect(options).to.deep.equal({ids: ['expectedThreadId'] });
+        expect(options).to.deep.equal({ ids: ['expectedThreadId'] });
 
         done();
       };
@@ -859,7 +865,9 @@ describe('The linagora.esn.unifiedinbox module controllers', function() {
       initController('viewThreadController');
 
       expect(scope.thread.emails).to.shallowDeepEqual([
-        { mailboxIds: ['inbox'], id: 'email1', subject: 'thread subject', loaded: true }
+        {
+          mailboxIds: ['inbox'], id: 'email1', subject: 'thread subject', loaded: true
+        }
       ]);
     });
 
@@ -877,8 +885,12 @@ describe('The linagora.esn.unifiedinbox module controllers', function() {
       initController('viewThreadController');
 
       expect(scope.thread.emails).to.shallowDeepEqual([
-        { mailboxIds: ['inbox'], id: 'email1', subject: 'thread subject', loaded: true },
-        { mailboxIds: ['inbox'], id: 'email2', subject: 'thread subject', loaded: true }
+        {
+          mailboxIds: ['inbox'], id: 'email1', subject: 'thread subject', loaded: true
+        },
+        {
+          mailboxIds: ['inbox'], id: 'email2', subject: 'thread subject', loaded: true
+        }
       ]);
     });
 
@@ -919,7 +931,7 @@ describe('The linagora.esn.unifiedinbox module controllers', function() {
 
     it('should set isCollapsed=false for the only one email in a thread', function() {
       mockGetThreadAndMessages([
-        { id: 'email1', mailboxIds: [threadId], subject: 'thread subject1'}
+        { id: 'email1', mailboxIds: [threadId], subject: 'thread subject1' }
       ]);
 
       initController('viewThreadController');
@@ -929,9 +941,15 @@ describe('The linagora.esn.unifiedinbox module controllers', function() {
 
     it('should set isCollapsed=false for unread emails along with the last email', function() {
       mockGetThreadAndMessages([
-        {id: 'email1', mailboxIds: [threadId], subject: 'thread subject1', isUnread: false },
-        {id: 'email2', mailboxIds: [threadId], subject: 'thread subject2', isUnread: true },
-        {id: 'email3', mailboxIds: [threadId], subject: 'thread subject3', isUnread: false }
+        {
+          id: 'email1', mailboxIds: [threadId], subject: 'thread subject1', isUnread: false
+        },
+        {
+          id: 'email2', mailboxIds: [threadId], subject: 'thread subject2', isUnread: true
+        },
+        {
+          id: 'email3', mailboxIds: [threadId], subject: 'thread subject3', isUnread: false
+        }
       ]);
 
       initController('viewThreadController');
@@ -941,9 +959,15 @@ describe('The linagora.esn.unifiedinbox module controllers', function() {
 
     it('should set isCollapsed=true for all read emails except the last one', function() {
       mockGetThreadAndMessages([
-        {id: 'email1', mailboxIds: [threadId], subject: 'thread subject1', isUnread: false },
-        {id: 'email2', mailboxIds: [threadId], subject: 'thread subject2', isUnread: false },
-        {id: 'email3', mailboxIds: [threadId], subject: 'thread subject3', isUnread: false }
+        {
+          id: 'email1', mailboxIds: [threadId], subject: 'thread subject1', isUnread: false
+        },
+        {
+          id: 'email2', mailboxIds: [threadId], subject: 'thread subject2', isUnread: false
+        },
+        {
+          id: 'email3', mailboxIds: [threadId], subject: 'thread subject3', isUnread: false
+        }
       ]);
 
       initController('viewThreadController');
@@ -953,9 +977,15 @@ describe('The linagora.esn.unifiedinbox module controllers', function() {
 
     it('should set isCollapsed=false for all emails except, when all emails are unread', function() {
       mockGetThreadAndMessages([
-        {id: 'email1', mailboxIds: [threadId], subject: 'thread subject1', isUnread: true },
-        {id: 'email2', mailboxIds: [threadId], subject: 'thread subject2', isUnread: true },
-        {id: 'email3', mailboxIds: [threadId], subject: 'thread subject3', isUnread: true }
+        {
+          id: 'email1', mailboxIds: [threadId], subject: 'thread subject1', isUnread: true
+        },
+        {
+          id: 'email2', mailboxIds: [threadId], subject: 'thread subject2', isUnread: true
+        },
+        {
+          id: 'email3', mailboxIds: [threadId], subject: 'thread subject3', isUnread: true
+        }
       ]);
 
       initController('viewThreadController');
@@ -1015,7 +1045,9 @@ describe('The linagora.esn.unifiedinbox module controllers', function() {
 
       initController('inboxConfigurationFolderController');
 
-      expect(scope.mailboxes).to.deep.equal([{ id: 2, name: '2', qualifiedName: '2', level: 1, role: {} }]);
+      expect(scope.mailboxes).to.deep.equal([{
+        id: 2, name: '2', qualifiedName: '2', level: 1, role: {}
+      }]);
     });
 
   });
@@ -1033,8 +1065,12 @@ describe('The linagora.esn.unifiedinbox module controllers', function() {
       initController('addFolderController');
 
       expect(scope.mailboxes).to.deep.equal([
-        { id: 1, name: '1', qualifiedName: '1', level: 1, role: { value: 'inbox' } },
-        { id: 2, name: '2', qualifiedName: '2', level: 1, role: {} }
+        {
+          id: 1, name: '1', qualifiedName: '1', level: 1, role: { value: 'inbox' }
+        },
+        {
+          id: 2, name: '2', qualifiedName: '2', level: 1, role: {}
+        }
       ]);
     });
 
@@ -1139,7 +1175,7 @@ describe('The linagora.esn.unifiedinbox module controllers', function() {
           { id: 2, name: '2', role: {} }
         ]);
       };
-      scope.mailbox = { id: 'chosenMailbox', name: '1', role: { value: 'inbox' }};
+      scope.mailbox = { id: 'chosenMailbox', name: '1', role: { value: 'inbox' } };
 
       initController('editFolderController');
 
@@ -1148,8 +1184,12 @@ describe('The linagora.esn.unifiedinbox module controllers', function() {
 
     it('should set $scope.mailboxes to the qualified list of mailboxes', function() {
       expect(scope.mailboxes).to.deep.equal([
-        { id: 'chosenMailbox', name: '1', qualifiedName: '1', level: 1, role: { value: 'inbox' } },
-        { id: 2, name: '2', qualifiedName: '2', level: 1, role: {} }
+        {
+          id: 'chosenMailbox', name: '1', qualifiedName: '1', level: 1, role: { value: 'inbox' }
+        },
+        {
+          id: 2, name: '2', qualifiedName: '2', level: 1, role: {}
+        }
       ]);
     });
 
@@ -1342,7 +1382,8 @@ describe('The linagora.esn.unifiedinbox module controllers', function() {
     var vacation, ctrl;
 
     beforeEach(function() {
-      vacation = ctrl = {};
+      vacation = {};
+      ctrl = vacation;
 
       jmapClient.getVacationResponse = sinon.spy(function() {
         return $q.when(vacation);
@@ -2092,7 +2133,7 @@ describe('The linagora.esn.unifiedinbox module controllers', function() {
 
         it('should return true when all selected email belong to mailboxes that allow moving', function() {
           var message1 = new jmapDraft.Message(jmapClient, 'messageId1', 'blobId', 'threadId1', ['1234']),
-              message2 = new jmapDraft.Message(jmapClient, 'messageId2', 'blobId', 'threadId2', ['1235']);
+            message2 = new jmapDraft.Message(jmapClient, 'messageId2', 'blobId', 'threadId2', ['1235']);
 
           selectedItemsMock = [message1, message2];
           $stateParams.context = null;
@@ -2106,7 +2147,7 @@ describe('The linagora.esn.unifiedinbox module controllers', function() {
 
         it('should return false when emails belong to mailboxes that forbid moving', function() {
           var message1 = new jmapDraft.Message(jmapClient, 'messageId1', 'blobId', 'threadId1', ['1234']),
-              message2 = new jmapDraft.Message(jmapClient, 'messageId2', 'blobId', 'threadId2', ['1235']);
+            message2 = new jmapDraft.Message(jmapClient, 'messageId2', 'blobId', 'threadId2', ['1235']);
 
           selectedItemsMock = [message1, message2];
           $stateParams.context = null;
@@ -2120,7 +2161,7 @@ describe('The linagora.esn.unifiedinbox module controllers', function() {
 
         it('should return true when selected emails belong to multiple mailboxes that all allow moving', function() {
           var message1 = new jmapDraft.Message(jmapClient, 'messageId1', 'blobId', 'threadId1', ['1', '2']),
-              message2 = new jmapDraft.Message(jmapClient, 'messageId2', 'blobId', 'threadId2', ['3', '4', '5']);
+            message2 = new jmapDraft.Message(jmapClient, 'messageId2', 'blobId', 'threadId2', ['3', '4', '5']);
 
           selectedItemsMock = [message1, message2];
           $stateParams.context = null;

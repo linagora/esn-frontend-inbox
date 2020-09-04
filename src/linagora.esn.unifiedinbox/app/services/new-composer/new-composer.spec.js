@@ -2,7 +2,7 @@
 
 /* global chai: false, sinon: false */
 
-var expect = chai.expect;
+const { expect } = chai;
 
 describe.skip('The newComposerService ', function() {
 
@@ -139,17 +139,17 @@ describe.skip('The newComposerService ', function() {
 
     it('should delegate to deviceDetector to know if the device is mobile', function(done) {
       deviceDetector.isMobile = done;
-      newComposerService.open({id: 'value'}, 'title');
+      newComposerService.open({ id: 'value' }, 'title');
     });
 
     it('should update the location with the email id if deviceDetector returns true', function() {
       deviceDetector.isMobile = sinon.stub().returns(true);
 
-      newComposerService.open({expected: 'field'});
+      newComposerService.open({ expected: 'field' });
       $timeout.flush();
 
       expect($state.go).to.have.been.calledWith('unifiedinbox.compose', {
-        email: {expected: 'field'}
+        email: { expected: 'field' }
       });
     });
 
@@ -184,11 +184,11 @@ describe.skip('The newComposerService ', function() {
     it('should not forward the boxOptions when "open" is called and is on mobile', function() {
       deviceDetector.isMobile = sinon.stub().returns(true);
 
-      newComposerService.open({expected: 'field'}, { expected: 'options' });
+      newComposerService.open({ expected: 'field' }, { expected: 'options' });
       $timeout.flush();
 
       expect($state.go).to.have.been.calledWith('unifiedinbox.compose', {
-        email: {expected: 'field'}
+        email: { expected: 'field' }
       });
     });
 
@@ -201,7 +201,7 @@ describe.skip('The newComposerService ', function() {
       expect(boxOverlayOpener.open).to.have.been.calledWith({
         id: '1234',
         templateUrl: '/unifiedinbox/app/components/composer/boxed/composer-boxed.html',
-        email: {id: '1234', subject: 'object'},
+        email: { id: '1234', subject: 'object' },
         title: 'New message',
         expected: 'options'
       });

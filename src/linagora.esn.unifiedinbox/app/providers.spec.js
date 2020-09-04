@@ -2,12 +2,12 @@
 
 /* global chai: false, sinon: false */
 
-var expect = chai.expect;
+const { expect } = chai;
 
 describe('The Unified Inbox Angular module providers', function() {
 
   var $rootScope, inboxProviders, inboxHostedMailMessagesProvider, inboxHostedMailAttachmentProvider, inboxHostedMailThreadsProvider, inboxSearchResultsProvider,
-      jmapClient, inboxMailboxesService, inboxConfigMock, jmapDraft, computeUniqueSetOfRecipients, ELEMENTS_PER_REQUEST;
+    jmapClient, inboxMailboxesService, inboxConfigMock, jmapDraft, computeUniqueSetOfRecipients, ELEMENTS_PER_REQUEST;
 
   function elements(id, length, offset) {
     var array = [], start = offset || 0;
@@ -68,8 +68,8 @@ describe('The Unified Inbox Angular module providers', function() {
   });
 
   beforeEach(angular.mock.inject(function(_$rootScope_, _inboxProviders_, _inboxHostedMailMessagesProvider_, _inboxSearchResultsProvider_,
-                                          _inboxHostedMailAttachmentProvider_, _inboxHostedMailThreadsProvider_, _inboxMailboxesService_, _jmapDraft_,
-                                          _computeUniqueSetOfRecipients_, _ELEMENTS_PER_REQUEST_) {
+    _inboxHostedMailAttachmentProvider_, _inboxHostedMailThreadsProvider_, _inboxMailboxesService_, _jmapDraft_,
+    _computeUniqueSetOfRecipients_, _ELEMENTS_PER_REQUEST_) {
     $rootScope = _$rootScope_;
     inboxProviders = _inboxProviders_;
     inboxHostedMailMessagesProvider = _inboxHostedMailMessagesProvider_;
@@ -256,7 +256,7 @@ describe('The Unified Inbox Angular module providers', function() {
 
   });
 
-   describe('The inboxSearchResultsProvider factory', function() {
+  describe('The inboxSearchResultsProvider factory', function() {
 
     it('should request the backend using the JMAP client, and return pages of messages', function(done) {
       var filter = { inMailboxes: ['id_inbox'] };
@@ -286,10 +286,11 @@ describe('The Unified Inbox Angular module providers', function() {
   describe('The computeUniqueSetOfRecipients factory', function() {
 
     it('should dedupe and sort email message recipients', function() {
-      var item = { id: 'id',
-        to: [{email: '1@linagora.com'}, {displayName: 'deux', email: '2@linagora.com'}],
-        cc: [{displayName: '3', email: '3@linagora.com'}, {displayName: '1', email: '1@linagora.com'}],
-        bcc: [{displayName: '3', email: '3@linagora.com'}, {displayName: 'six', email: '6@linagora.com'}]
+      var item = {
+        id: 'id',
+        to: [{ email: '1@linagora.com' }, { displayName: 'deux', email: '2@linagora.com' }],
+        cc: [{ displayName: '3', email: '3@linagora.com' }, { displayName: '1', email: '1@linagora.com' }],
+        bcc: [{ displayName: '3', email: '3@linagora.com' }, { displayName: 'six', email: '6@linagora.com' }]
       };
 
       var result = computeUniqueSetOfRecipients(item);
@@ -379,16 +380,16 @@ describe('The Unified Inbox Angular module providers', function() {
 
       it('should return an array of providers, with the "loadNextItems" property initialized', function(done) {
         var provider1 = {
-              buildFetchContext: sinon.spy(function() { return $q.when('container'); }),
-              fetch: sinon.spy(function(container) {
-                expect(container).to.equal('container');
+            buildFetchContext: sinon.spy(function() { return $q.when('container'); }),
+            fetch: sinon.spy(function(container) {
+              expect(container).to.equal('container');
 
-                return function() {
-                  return $q.when(elements('id', 2));
-                };
-              }),
-              templateUrl: 'templateUrl'
-            },
+              return function() {
+                return $q.when(elements('id', 2));
+              };
+            }),
+            templateUrl: 'templateUrl'
+          },
           provider2 = {
             buildFetchContext: sinon.spy(function() { return $q.when('container_2'); }),
             fetch: sinon.spy(function(container) {
@@ -447,7 +448,7 @@ describe('The Unified Inbox Angular module providers', function() {
 
     it('should build a filter on sender/from when query has some', function() {
       var searchOpts = { from: ['MAILERDAEMON', 'noreply'] };
-      var expected = {operator: 'AND', conditions: [{from: 'MAILERDAEMON'}, {from: 'noreply'}]};
+      var expected = { operator: 'AND', conditions: [{ from: 'MAILERDAEMON' }, { from: 'noreply' }] };
       var jmapFilter = inboxJmapProviderFilterBuilder(searchOpts);
 
       expect(jmapFilter).to.deep.equal(expected);
@@ -455,7 +456,7 @@ describe('The Unified Inbox Angular module providers', function() {
 
     it('should build a filter on subject when query includes some', function() {
       var searchOpts = { subject: ['Failure', 'Error'] };
-      var expected = {operator: 'AND', conditions: [{subject: 'Failure'}, {subject: 'Error'}]};
+      var expected = { operator: 'AND', conditions: [{ subject: 'Failure' }, { subject: 'Error' }] };
       var jmapFilter = inboxJmapProviderFilterBuilder(searchOpts);
 
       expect(jmapFilter).to.deep.equal(expected);
@@ -463,7 +464,7 @@ describe('The Unified Inbox Angular module providers', function() {
 
     it('should build a filter with hasAttachment filter', function() {
       var searchOpts = { from: ['noreply'], hasAttachment: [true] };
-      var expected = {operator: 'AND', conditions: [{from: 'noreply'}, {hasAttachment: true}]};
+      var expected = { operator: 'AND', conditions: [{ from: 'noreply' }, { hasAttachment: true }] };
       var jmapFilter = inboxJmapProviderFilterBuilder(searchOpts);
 
       expect(jmapFilter).to.deep.equal(expected);
@@ -471,24 +472,32 @@ describe('The Unified Inbox Angular module providers', function() {
 
     it('should build a filter that excludes keywords', function() {
       var searchOpts = { from: ['noreply'], excluded: ['spam', 'trump'] };
-      var expected = {operator: 'AND', conditions: [{from: 'noreply'}, {operator: 'NOT', conditions: [{ text: 'spam'}, {text: 'trump'}]}]};
+      var expected = { operator: 'AND', conditions: [{ from: 'noreply' }, { operator: 'NOT', conditions: [{ text: 'spam' }, { text: 'trump' }] }] };
       var jmapFilter = inboxJmapProviderFilterBuilder(searchOpts);
 
       expect(jmapFilter).to.deep.equal(expected);
     });
 
     it('should build a filter on multiple conditions', function() {
-      var searchOpts = { from: ['MAILERDAEMON', 'noreply'], subject: ['Failure'], excluded: ['f_ck'], hasAttachment: [true]};
-      var expected = {operator: 'AND', conditions: [
-        {operator: 'AND', conditions: [
-          {from: 'MAILERDAEMON'},
-          {from: 'noreply'}
-        ]},
-        {subject: 'Failure'}, {hasAttachment: true},
-        {operator: 'NOT', conditions: [
-          {text: 'f_ck'}
-        ]}
-      ]};
+      var searchOpts = {
+        from: ['MAILERDAEMON', 'noreply'], subject: ['Failure'], excluded: ['f_ck'], hasAttachment: [true]
+      };
+      var expected = {
+        operator: 'AND', conditions: [
+          {
+            operator: 'AND', conditions: [
+              { from: 'MAILERDAEMON' },
+              { from: 'noreply' }
+            ]
+          },
+          { subject: 'Failure' }, { hasAttachment: true },
+          {
+            operator: 'NOT', conditions: [
+              { text: 'f_ck' }
+            ]
+          }
+        ]
+      };
       var jmapFilter = inboxJmapProviderFilterBuilder(searchOpts);
 
       expect(jmapFilter).to.deep.equal(expected);
@@ -549,7 +558,7 @@ describe('The Unified Inbox Angular module providers', function() {
     });
 
     it('should build search context when query is passed as an option', function() {
-      inboxJmapProviderContextBuilder({query: {text: 'query'}}).then(function(context) {
+      inboxJmapProviderContextBuilder({ query: { text: 'query' } }).then(function(context) {
         expect(context).to.deep.equal({
           text: 'query'
         });
@@ -564,7 +573,7 @@ describe('The Unified Inbox Angular module providers', function() {
         query: {
           advanced: {
             to: [],
-            from: [{email: 'user2'}],
+            from: [{ email: 'user2' }],
             subject: 'subject',
             contains: 'a set of keywords',
             excluded: 'some ignored terms',
@@ -617,7 +626,7 @@ describe('The Unified Inbox Angular module providers', function() {
       inboxJmapProviderContextBuilder({
         filterByType: {},
         query: {
-            advanced: {
+          advanced: {
             to: ['this should be an object with an email property'],
             from: ['this should be an object with an email property'],
             subject: ['should not be included within an array'],

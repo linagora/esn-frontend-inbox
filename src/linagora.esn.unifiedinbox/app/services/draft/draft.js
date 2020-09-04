@@ -7,8 +7,8 @@ require('../../services.js');
 angular.module('linagora.esn.unifiedinbox')
 
   .factory('InboxDraft', function($rootScope, $q, emailBodyService, asyncJmapAction, inboxJmapHelper,
-                                  waitUntilMessageIsComplete, inboxConfig, gracePeriodService,
-                                  INBOX_EVENTS, ATTACHMENTS_ATTRIBUTES) {
+    waitUntilMessageIsComplete, inboxConfig, gracePeriodService,
+    INBOX_EVENTS, ATTACHMENTS_ATTRIBUTES) {
     function InboxDraft(original) {
       this.original = original ? angular.copy(original) : {};
     }
@@ -23,10 +23,10 @@ angular.module('linagora.esn.unifiedinbox')
           haveDifferentRecipients(original.cc, newest.cc) ||
           haveDifferentRecipients(original.bcc, newest.bcc) ||
           haveDifferentAttachments(original.attachments, newest.attachments);
-    }
+    };
 
     InboxDraft.prototype.needToBeSaved = function(newEmailState) {
-      return $q((resolve, reject) => this.hasBeenUpdated(newEmailState) ? resolve() : reject());
+      return $q((resolve, reject) => (this.hasBeenUpdated(newEmailState) ? resolve() : reject()));
     };
 
     InboxDraft.prototype.save = function(email, options) {
@@ -76,6 +76,7 @@ angular.module('linagora.esn.unifiedinbox')
 
           if (!options || !options.silent) {
             const { notification, promise } = gracePeriodService.askUserForCancel('This draft has been discarded', 'Reopen');
+
             self.destroyDraftNotification = notification;
 
             return promise.then(function(result) {
@@ -111,7 +112,7 @@ angular.module('linagora.esn.unifiedinbox')
 
       self.shouldDestroyDraft = false;
       self.destroyDraftNotification && self.destroyDraftNotification.close();
-    }
+    };
 
     return InboxDraft;
 

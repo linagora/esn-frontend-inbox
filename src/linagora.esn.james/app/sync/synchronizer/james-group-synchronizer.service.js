@@ -4,7 +4,7 @@ require('../../common/james-api-client.service.js');
 
 angular.module('linagora.esn.james')
 
-.factory('jamesGroupSynchronizer', jamesGroupSynchronizer);
+  .factory('jamesGroupSynchronizer', jamesGroupSynchronizer);
 
 function jamesGroupSynchronizer(
   $q,

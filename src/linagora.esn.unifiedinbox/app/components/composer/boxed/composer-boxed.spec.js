@@ -2,7 +2,7 @@
 
 /* global chai: false */
 
-var expect = chai.expect;
+const { expect } = chai;
 
 describe.skip('The inboxComposerBoxed directive', function() {
 
@@ -63,7 +63,7 @@ describe.skip('The inboxComposerBoxed directive', function() {
 
     it('should focus on note editing field when To field is not empty', function() {
       $rootScope.message = {
-        to: [{email: 'SOMEONE', name: 'SOMEONE'}]
+        to: [{ email: 'SOMEONE', name: 'SOMEONE' }]
       };
       compileComponent();
 

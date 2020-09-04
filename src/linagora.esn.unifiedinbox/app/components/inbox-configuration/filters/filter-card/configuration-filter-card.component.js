@@ -2,7 +2,7 @@
 
 angular.module('linagora.esn.unifiedinbox')
   .component('inboxConfigurationFilterCard', {
-    template: require("./configuration-filter-card.pug"),
+    template: require('./configuration-filter-card.pug'),
     controller: 'inboxConfigurationFilterCardController',
     bindings: {
       filter: '<',

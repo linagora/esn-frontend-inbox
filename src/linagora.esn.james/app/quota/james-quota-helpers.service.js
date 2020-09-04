@@ -4,7 +4,7 @@ require('./james-quota.constants.js');
 
 angular.module('linagora.esn.james')
 
-.factory('jamesQuotaHelpers', jamesQuotaHelpers);
+  .factory('jamesQuotaHelpers', jamesQuotaHelpers);
 
 function jamesQuotaHelpers(JAMES_UNLIMITED_QUOTA) {
   var ACTION_DEFAULT_VALUE = { get: null, set: null };

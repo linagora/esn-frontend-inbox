@@ -289,7 +289,7 @@ describe('The jamesApiClient service', function() {
           '/james/api/domains/' + domainId +
           '/mailRepositories/' + mailRepository +
           '/mails'
-        ).respond(201, {taskId: '1'});
+        ).respond(201, { taskId: '1' });
 
       jamesApiClient.removeAllMailsFromMailRepository(domainId, mailRepository);
       $httpBackend.flush();
@@ -309,7 +309,7 @@ describe('The jamesApiClient service', function() {
           '/mailRepositories/' + mailRepository +
           '/mails/' + mailKey +
           '?processor=' + options.processor
-        ).respond(201, {taskId: '1'});
+        ).respond(201, { taskId: '1' });
 
       jamesApiClient.reprocessMailFromMailRepository(domainId, mailRepository, mailKey, options);
       $httpBackend.flush();
@@ -328,7 +328,7 @@ describe('The jamesApiClient service', function() {
           '/mailRepositories/' + mailRepository +
           '/mails' +
           '?processor=' + options.processor
-        ).respond(201, {taskId: '1'});
+        ).respond(201, { taskId: '1' });
 
       jamesApiClient.reprocessAllMailsFromMailRepository(domainId, mailRepository, options);
       $httpBackend.flush();
