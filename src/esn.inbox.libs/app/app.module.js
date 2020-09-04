@@ -7,6 +7,7 @@ angular.module('esn.inbox.libs', [
    'esn.configuration',
    'esn.http',
    'esn.i18n',
+   'esn.datetime',
    'esn.session',
    'esn.user-configuration',
    'ng.deviceDetector'
@@ -19,6 +20,7 @@ require('esn-frontend-common-libs/src/frontend/js/modules/http.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/i18n/i18n.module.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/session.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/user-configuration/user-configuration.module.js');
+require('esn-frontend-common-libs/src/frontend/js/modules/datetime/datetime.module.js');
 require('jmap-draft-client/dist/jmap-draft-client.js');
 
 require('./app.config');
@@ -48,6 +50,7 @@ require('./services/identities/inbox-users-identities-api-client.service.js');
 require('./services/jmap-client-provider/jmap-client-provider.js');
 require('./services/jmap-client-provider/jmap-client-provider.run.js');
 require('./services/jmap-helper/jmap-helper.js');
+require('./services/models/mailbox.run.js');
 require('./filter/sanitize-stylised-html-filter.js');
 require('./filters.js');
 require('./filters/filter-descendant-mailboxes.js');

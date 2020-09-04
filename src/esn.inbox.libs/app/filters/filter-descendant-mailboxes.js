@@ -2,7 +2,7 @@
 
 const _ = require('lodash');
 
-angular.module('linagora.esn.unifiedinbox')
+angular.module('esn.inbox.libs')
 
   .filter('inboxFilterDescendantMailboxes', function() {
     return function(mailboxes, id, filterOnlyParentMailbox) {

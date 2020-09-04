@@ -2,7 +2,7 @@
 
 const _ = require('lodash');
 
-angular.module('linagora.esn.unifiedinbox')
+angular.module('esn.inbox.libs')
 
   .filter('inboxFilterVisibleSharedMailboxes', function(inboxSharedMailboxesService) {
     return function(mailboxes) {

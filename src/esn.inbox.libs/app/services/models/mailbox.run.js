@@ -2,9 +2,7 @@
 
 const _ = require('lodash');
 
-require('../../services.js');
-
-angular.module('linagora.esn.unifiedinbox')
+angular.module('esn.inbox.libs')
 
   .run(function(limitToFilter, jmapDraft, inboxMailboxesCache, INBOX_DISPLAY_NAME_SIZE) {
     function getMailboxDescendants(mailboxId) {
