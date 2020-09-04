@@ -1,9 +1,6 @@
 'use strict';
 
-const _ = require('lodash');
-
 require('../../../../services/request-receipts/request-receipts-service.js');
-
 
 angular.module('linagora.esn.unifiedinbox')
 
@@ -34,7 +31,7 @@ angular.module('linagora.esn.unifiedinbox')
     }
 
     function onSave() {
-      return inboxRequestReceiptsService.setDefaultReceipts({isRequestingReadReceiptsByDefault: self.isAlwaysSendingRequest});
+      return inboxRequestReceiptsService.setDefaultReceipts({ isRequestingReadReceiptsByDefault: self.isAlwaysSendingRequest });
     }
 
   });

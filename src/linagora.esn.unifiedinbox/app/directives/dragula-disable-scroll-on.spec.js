@@ -2,7 +2,7 @@
 
 /* global chai: false, sinon: false */
 
-var expect = chai.expect;
+const { expect } = chai;
 
 describe('dragulaDisableScrollOn', function() {
   var $scope, $compile, $rootScope, element, touchscreenDetectorService;

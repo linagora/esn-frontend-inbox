@@ -7,7 +7,7 @@ require('./permissions-service.constants.js');
 angular.module('linagora.esn.unifiedinbox')
 
   .service('inboxSharedMailboxesPermissionsService', function($q, inboxMailboxesService,
-                                                              INBOX_PERSONAL_MAILBOX_NAMESPACE_TYPE, INBOX_MAILBOX_SHARING_ROLES, INBOX_MAILBOX_SHARING_PERMISSIONS) {
+    INBOX_PERSONAL_MAILBOX_NAMESPACE_TYPE, INBOX_MAILBOX_SHARING_ROLES, INBOX_MAILBOX_SHARING_PERMISSIONS) {
 
     var mapOfRolesByPermission = buildMapOfRolesIndexedByPermissions();
 

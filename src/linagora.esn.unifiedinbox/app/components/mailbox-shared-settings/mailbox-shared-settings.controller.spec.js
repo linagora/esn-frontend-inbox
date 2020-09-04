@@ -2,7 +2,7 @@
 
 /* global chai, sinon: false */
 
-var expect = chai.expect;
+const { expect } = chai;
 
 describe('The InboxMailboxSharedSettingsController controller', function() {
   var $rootScope,
@@ -21,9 +21,15 @@ describe('The InboxMailboxSharedSettingsController controller', function() {
     INBOX_MAILBOX_SHARING_ROLES;
 
   beforeEach(function() {
-    user = {_id: '1', firstname: 'user1', lastname: 'user1', preferredEmail: 'user1@test.com'};
-    otheruser = {_id: '2', firstname: 'user2', lastname: 'user2', preferredEmail: 'user2@test.com'};
-    anotheruser = {_id: '3', firstname: 'user3', lastname: 'user3', preferredEmail: 'user3@test.com'};
+    user = {
+      _id: '1', firstname: 'user1', lastname: 'user1', preferredEmail: 'user1@test.com'
+    };
+    otheruser = {
+      _id: '2', firstname: 'user2', lastname: 'user2', preferredEmail: 'user2@test.com'
+    };
+    anotheruser = {
+      _id: '3', firstname: 'user3', lastname: 'user3', preferredEmail: 'user3@test.com'
+    };
 
     var result = {
       data: [user]
@@ -58,8 +64,8 @@ describe('The InboxMailboxSharedSettingsController controller', function() {
       $q = _$q_;
     });
 
-    mailbox = {_id: '1', namespace: {owner: 'user2@test.com'}, sharedWith: {'user1@test.com': INBOX_MAILBOX_SHARING_ROLES.READ_AND_UPDATE}};
-    anothermailbox = {_id: '2', namespace: {owner: 'user2@test.com'}, sharedWith: {}};
+    mailbox = { _id: '1', namespace: { owner: 'user2@test.com' }, sharedWith: { 'user1@test.com': INBOX_MAILBOX_SHARING_ROLES.READ_AND_UPDATE } };
+    anothermailbox = { _id: '2', namespace: { owner: 'user2@test.com' }, sharedWith: {} };
     scope.mailbox = mailbox;
 
     inboxMailboxesService.shareMailbox = sinon.spy();
@@ -87,7 +93,7 @@ describe('The InboxMailboxSharedSettingsController controller', function() {
 
   describe('$onInit', function() {
     beforeEach(function() {
-      mailbox = {_id: '1', namespace: {owner: 'user1@test.com'}, sharedWith: {}};
+      mailbox = { _id: '1', namespace: { owner: 'user1@test.com' }, sharedWith: {} };
       scope.mailbox = mailbox;
     });
 
@@ -109,7 +115,9 @@ describe('The InboxMailboxSharedSettingsController controller', function() {
 
         $rootScope.$digest();
 
-        var owner = {_id: '1', firstname: 'user1', lastname: 'user1', preferredEmail: 'user1@test.com', displayName: 'user1 user1'};
+        var owner = {
+          _id: '1', firstname: 'user1', lastname: 'user1', preferredEmail: 'user1@test.com', displayName: 'user1 user1'
+        };
 
         expect($controller.owner).to.be.deep.equal(owner);
       });

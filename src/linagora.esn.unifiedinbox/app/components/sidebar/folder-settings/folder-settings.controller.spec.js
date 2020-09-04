@@ -3,7 +3,7 @@
 /* global chai: false */
 /* global sinon: false */
 
-var expect = chai.expect;
+const { expect } = chai;
 
 describe('The inboxFolderSettings controller', function() {
   var $rootScope, scope, $controller, mailbox, inboxJmapItemService, inboxSharedMailboxesService;

@@ -5,7 +5,6 @@ const _ = require('lodash');
 require('../../services/mailboxes/permissions-service.js');
 require('../../services/mailboxes/permissions-service.constants.js');
 
-
 angular.module('linagora.esn.unifiedinbox')
   .controller('InboxMailboxSharedSettingsController', InboxMailboxSharedSettingsController);
 

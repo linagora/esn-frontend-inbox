@@ -2,11 +2,11 @@
 
 angular.module('linagora.esn.james')
 
-.component('jamesSyncStatusIndicator', {
-  template: require("./james-sync-status-indicator.pug"),
-  bindings: {
-    resourceType: '@',
-    resourceId: '@'
-  },
-  controller: 'JamesSyncStatusIndicatorController'
-});
+  .component('jamesSyncStatusIndicator', {
+    template: require('./james-sync-status-indicator.pug'),
+    bindings: {
+      resourceType: '@',
+      resourceId: '@'
+    },
+    controller: 'JamesSyncStatusIndicatorController'
+  });

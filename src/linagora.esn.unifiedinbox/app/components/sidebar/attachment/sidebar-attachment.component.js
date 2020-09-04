@@ -6,7 +6,7 @@ angular
 
 function inboxListSidebarAttachment() {
   return {
-    template: require("./sidebar-attachment.pug"),
+    template: require('./sidebar-attachment.pug'),
     controllerAs: 'ctrl',
     controller: 'inboxListSidebarAttachmentController'
   };

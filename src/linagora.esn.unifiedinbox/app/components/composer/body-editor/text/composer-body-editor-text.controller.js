@@ -41,9 +41,9 @@ angular.module('linagora.esn.unifiedinbox')
       }
 
       var text = self.message.textBody || '',
-          startOfSignature = new RegExp('^' + INBOX_SIGNATURE_SEPARATOR, 'm').exec(text),
-          /* eslint-disable no-control-regex */ startOfQuote = /^\x00/m.exec(text),
-          newText = '';
+        startOfSignature = new RegExp('^' + INBOX_SIGNATURE_SEPARATOR, 'm').exec(text),
+        /* eslint-disable no-control-regex */ startOfQuote = /^\x00/m.exec(text),
+        newText = '';
 
       // The code currently only supports placing the signature before the quote, this will be improved
       // when we later implement the option to place it after the quote.

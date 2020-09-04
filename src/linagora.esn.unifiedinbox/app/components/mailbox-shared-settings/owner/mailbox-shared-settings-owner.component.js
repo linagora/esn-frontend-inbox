@@ -6,5 +6,5 @@ angular.module('linagora.esn.unifiedinbox')
       owner: '<'
     },
     controllerAs: 'ctrl',
-    template: require("./mailbox-shared-settings-owner.pug")
+    template: require('./mailbox-shared-settings-owner.pug')
   });

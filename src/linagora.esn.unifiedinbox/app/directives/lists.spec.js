@@ -3,7 +3,7 @@
 /* global chai: false */
 /* global sinon: false */
 
-var expect = chai.expect;
+const { expect } = chai;
 
 describe('The linagora.esn.unifiedinbox List module directives', function() {
 
@@ -226,7 +226,7 @@ describe('The linagora.esn.unifiedinbox List module directives', function() {
 
         it('should return an array containing the selected items _including_ the item, if there is a selection', function() {
           var item1 = { id: 1, lastEmail: {} },
-              item2 = { id: 2, lastEmail: {} };
+            item2 = { id: 2, lastEmail: {} };
 
           $scope.item = { id: 3, lastEmail: {} };
           inboxSelectionService.toggleItemSelection(item1);
@@ -517,7 +517,7 @@ describe('The linagora.esn.unifiedinbox List module directives', function() {
 
         it('should return an array containing the selected items _including_ the item, if there is a selection', function() {
           var item1 = { id: 1, lastEmail: {} },
-              item2 = { id: 2, lastEmail: {} };
+            item2 = { id: 2, lastEmail: {} };
 
           $scope.item = { id: 3, lastEmail: {} };
           inboxSelectionService.toggleItemSelection(item1);
@@ -584,13 +584,13 @@ describe('The linagora.esn.unifiedinbox List module directives', function() {
       });
 
       it('should call assignMailbox with an array of items', function() {
-          $scope.item = { mailboxIds: ['123', '456'] };
+        $scope.item = { mailboxIds: ['123', '456'] };
 
-          compileDirective('<inbox-search-message-list-item  />');
+        compileDirective('<inbox-search-message-list-item  />');
 
-          $scope.item.mailboxIds.map(function(mailboxId) {
-            expect(inboxMailboxesService.assignMailbox).to.have.been.calledWith(mailboxId, $scope, true);
-          });
+        $scope.item.mailboxIds.map(function(mailboxId) {
+          expect(inboxMailboxesService.assignMailbox).to.have.been.calledWith(mailboxId, $scope, true);
+        });
       });
 
       it('should return an array of mailboxes', function() {

@@ -1,6 +1,7 @@
 'use strict';
 
 const _ = require('lodash');
+
 require('../with-jmap-client/with-jmap-client.js');
 require('../jmap-client-wrapper/jmap-client-wrapper.service.js');
 require('../action/async-jmap-action.service.js');
@@ -16,8 +17,8 @@ angular.module('esn.inbox.libs')
   ])
 
   .factory('inboxMailboxesService', function($q, $state, $rootScope, withJmapClient, jmapDraft, asyncJmapAction,
-                                              inboxSpecialMailboxes, inboxMailboxesCache, inboxSharedMailboxesService,
-                                              esnI18nService, INBOX_EVENTS, MAILBOX_LEVEL_SEPARATOR, INBOX_RESTRICTED_MAILBOXES) {
+    inboxSpecialMailboxes, inboxMailboxesCache, inboxSharedMailboxesService,
+    esnI18nService, INBOX_EVENTS, MAILBOX_LEVEL_SEPARATOR, INBOX_RESTRICTED_MAILBOXES) {
 
     let mailboxesListAlreadyFetched = false;
 
@@ -113,7 +114,7 @@ angular.module('esn.inbox.libs')
       }
 
       mailboxIds.forEach(function(id) {
-        let mailbox = _findMailboxInCache(id);
+        const mailbox = _findMailboxInCache(id);
 
         if (mailbox) {
           mailbox.unreadMessages = Math.max(mailbox.unreadMessages + adjust, 0);
@@ -127,7 +128,7 @@ angular.module('esn.inbox.libs')
       }
 
       mailboxIds.forEach(function(id) {
-        let mailbox = _findMailboxInCache(id);
+        const mailbox = _findMailboxInCache(id);
 
         if (mailbox) {
           mailbox.totalMessages = Math.max(mailbox.totalMessages + adjust, 0);
@@ -141,7 +142,7 @@ angular.module('esn.inbox.libs')
       }
 
       mailboxes.forEach(function(mailbox) {
-        let targetIndexInCache = _getMailboxIndexInCache(mailbox.id);
+        const targetIndexInCache = _getMailboxIndexInCache(mailbox.id);
 
         inboxMailboxesCache[targetIndexInCache] = mailbox;
       });
@@ -184,7 +185,7 @@ angular.module('esn.inbox.libs')
     }
 
     function assignMailbox(id, dst, useCache) {
-      let localMailbox = inboxSpecialMailboxes.get(id) || (useCache && _findMailboxInCache(id));
+      const localMailbox = inboxSpecialMailboxes.get(id) || (useCache && _findMailboxInCache(id));
 
       if (localMailbox) {
         return $q.when(_assignToObject(dst, 'mailbox')(localMailbox));
@@ -223,8 +224,8 @@ angular.module('esn.inbox.libs')
             return _addSharedMailboxVisibility(_getSharedMailboxes(mailboxList));
           })
           .then(function(sharedMailboxList) {
-            let sharedMailboxCache = _getSharedMailboxes(inboxMailboxesCache);
-            let removedSharedFoldersIds = _getDifferenceById(sharedMailboxCache, sharedMailboxList);
+            const sharedMailboxCache = _getSharedMailboxes(inboxMailboxesCache);
+            const removedSharedFoldersIds = _getDifferenceById(sharedMailboxCache, sharedMailboxList);
 
             if (!_.isEmpty(removedSharedFoldersIds)) {
 
@@ -292,7 +293,7 @@ angular.module('esn.inbox.libs')
     }
 
     function canMoveMessagesOutOfMailbox(mailboxObjectOrId) {
-      let mailbox = _getMailboxFromId(mailboxObjectOrId);
+      const mailbox = _getMailboxFromId(mailboxObjectOrId);
 
       if (mailbox && (_isRestrictedMailbox(mailbox) || !mailbox.mayRemoveItems)) {
         return false;
@@ -302,7 +303,7 @@ angular.module('esn.inbox.libs')
     }
 
     function canMoveMessagesIntoMailbox(mailboxObjectOrId) {
-      let mailbox = _getMailboxFromId(mailboxObjectOrId);
+      const mailbox = _getMailboxFromId(mailboxObjectOrId);
 
       if (mailbox && (_isSpecialMailbox(mailbox.id) || _isRestrictedMailbox(mailbox) || !mailbox.mayAddItems)) {
         return false;
@@ -312,7 +313,7 @@ angular.module('esn.inbox.libs')
     }
 
     function canTrashMessages(fromMailboxObjectOrId) {
-      let mailbox = _getMailboxFromId(fromMailboxObjectOrId);
+      const mailbox = _getMailboxFromId(fromMailboxObjectOrId);
 
       if (mailbox) {
         if (mailbox.role === jmapDraft.MailboxRole.DRAFTS) {
@@ -328,7 +329,7 @@ angular.module('esn.inbox.libs')
     }
 
     function canUnSpamMessages(fromMailboxObjectOrId) {
-      let mailbox = _getMailboxFromId(fromMailboxObjectOrId);
+      const mailbox = _getMailboxFromId(fromMailboxObjectOrId);
 
       return !!mailbox && mailbox.role === jmapDraft.MailboxRole.SPAM;
     }
@@ -365,8 +366,8 @@ angular.module('esn.inbox.libs')
         });
       }
 
-      let filter,
-          specialMailbox = inboxSpecialMailboxes.get(mailboxId);
+      let filter;
+      const specialMailbox = inboxSpecialMailboxes.get(mailboxId);
 
       if (specialMailbox) {
         filter = specialMailbox.filter;
@@ -380,7 +381,7 @@ angular.module('esn.inbox.libs')
             .then(function(results) {
               delete filter.unprocessed;
 
-              let sharedFolderIdsNotInMailboxes = _.map(results[2], 'id');
+              const sharedFolderIdsNotInMailboxes = _.map(results[2], 'id');
 
               filter.notInMailboxes = results[0].concat(sharedFolderIdsNotInMailboxes);
               filter.inMailboxes = results[1];
@@ -425,7 +426,7 @@ angular.module('esn.inbox.libs')
     }
 
     function destroyMailbox(mailbox) {
-      let ids = _(mailbox.descendants)
+      const ids = _(mailbox.descendants)
         .map(_.property('id'))
         .reverse()
         .push(mailbox.id)
@@ -449,7 +450,7 @@ angular.module('esn.inbox.libs')
     }
 
     function _updateMailboxProperties(oldMailbox, propertiesToUpdate, messages) {
-      let actionMessages = messages || {};
+      const actionMessages = messages || {};
 
       return asyncJmapAction({
         success: esnI18nService.translate(actionMessages.success || 'Folder updated'),
@@ -493,7 +494,7 @@ angular.module('esn.inbox.libs')
     }
 
     function markAllAsRead(mailboxId) {
-      let targetIndexInCache = _getMailboxIndexInCache(mailboxId);
+      const targetIndexInCache = _getMailboxIndexInCache(mailboxId);
 
       inboxMailboxesCache[targetIndexInCache].unreadMessages = 0;
 
@@ -501,7 +502,7 @@ angular.module('esn.inbox.libs')
     }
 
     function emptyMailbox(mailboxId) {
-      let targetIndexInCache = _getMailboxIndexInCache(mailboxId);
+      const targetIndexInCache = _getMailboxIndexInCache(mailboxId);
 
       inboxMailboxesCache[targetIndexInCache].unreadMessages = 0;
       inboxMailboxesCache[targetIndexInCache].totalMessages = 0;
@@ -510,21 +511,21 @@ angular.module('esn.inbox.libs')
     }
 
     function _getMailboxIndexInCache(mailboxId) {
-      let index = _.findIndex(inboxMailboxesCache, { id: mailboxId });
+      const index = _.findIndex(inboxMailboxesCache, { id: mailboxId });
 
       return index > -1 ? index : inboxMailboxesCache.length;
     }
 
     function updateUnreadDraftsCount(currentInboxListId, updateDraftsList) {
-      let draftsFolder = _.find(inboxMailboxesCache, {role: jmapDraft.MailboxRole.DRAFTS}),
-          isBrowsingDrafts = currentInboxListId && currentInboxListId === draftsFolder.id;
+      const draftsFolder = _.find(inboxMailboxesCache, { role: jmapDraft.MailboxRole.DRAFTS }),
+        isBrowsingDrafts = currentInboxListId && currentInboxListId === draftsFolder.id;
 
       updateDraftsList = updateDraftsList || $q.when();
       if (isBrowsingDrafts) {
         return updateDraftsList();
       }
 
-      return $q.when(updateCountersWhenMovingMessage({isUnread: true}, draftsFolder ? [draftsFolder.id] : []));
+      return $q.when(updateCountersWhenMovingMessage({ isUnread: true }, draftsFolder ? [draftsFolder.id] : []));
     }
   });
 

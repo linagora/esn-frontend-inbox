@@ -1,6 +1,6 @@
 'use strict';
 
-require('../../quota/james-quota-helpers.service.js');
+require('../james-quota-helpers.service.js');
 
 angular.module('linagora.esn.james')
   .controller('jamesQuotaFormController', jamesQuotaFormController);

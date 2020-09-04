@@ -31,7 +31,7 @@ angular.module('linagora.esn.unifiedinbox')
     INBOX_EVENTS
   ) {
     var self = this,
-    skipAutoSaveOnDestroy = false;
+      skipAutoSaveOnDestroy = false;
 
     self.$onInit = $onInit;
     self.$onDestroy = $onDestroy;
@@ -51,11 +51,11 @@ angular.module('linagora.esn.unifiedinbox')
 
     function $onInit() {
       inboxEmailComposingHookService.preComposing(self.message);
-      self.onTryClose({callback: self.tryClose});
+      self.onTryClose({ callback: self.tryClose });
       self.draft = new InboxDraft(self.message);
       self.isCollapsed = !self.message || (_.isEmpty(self.message.cc) && _.isEmpty(self.message.bcc));
 
-      self.onTitleUpdate({$title: self.message && self.message.subject});
+      self.onTitleUpdate({ $title: self.message && self.message.subject });
       inboxRequestReceiptsService.getDefaultReceipts().then(function(sendingReceiptsConfig) {
         self.hasRequestedReadReceipt = sendingReceiptsConfig.isRequestingReadReceiptsByDefault || emailSendingService.getReadReceiptRequest(self.message, {
           asCurrentUser: true
@@ -70,7 +70,7 @@ angular.module('linagora.esn.unifiedinbox')
           _setMessageAttachments(values);
         },
         attachmentType: INBOX_ATTACHMENT_TYPE_JMAP,
-        attachmentFilter: {isInline: false},
+        attachmentFilter: { isInline: false },
         onAttachmentsUpdate: _setMessageAttachments,
         uploadAttachments: inboxAttachmentUploadService.uploadAttachments
       });
@@ -131,7 +131,11 @@ angular.module('linagora.esn.unifiedinbox')
           $log.error('Can not save draft', err);
           self.onSaveFailure && self.onSaveFailure(err);
         })
-        .finally(() => self.saving = false);
+        .finally(() => {
+          self.saving = false;
+
+          return self.saving;
+        });
     }
 
     function onAttachmentsUpload(attachments) {
@@ -189,7 +193,7 @@ angular.module('linagora.esn.unifiedinbox')
             action: self.onShow
           }
         })
-          .then(destroyDraft.bind(self, {silent: true}))
+          .then(destroyDraft.bind(self, { silent: true }))
           .then(self.onSend);
       }
 

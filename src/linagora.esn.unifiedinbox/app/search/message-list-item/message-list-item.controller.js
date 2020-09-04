@@ -19,9 +19,9 @@ function inboxSearchMessageListItemController(
 ) {
   var self = this,
 
-  account = $stateParams.account,
-  context = $stateParams.context || ($scope.item && _.first($scope.item.mailboxIds)),
-  plugin = inboxPlugins.get('jmap');
+    account = $stateParams.account,
+    context = $stateParams.context || ($scope.item && _.first($scope.item.mailboxIds)),
+    plugin = inboxPlugins.get('jmap');
 
   if (plugin) {
     plugin.resolveContextRole(account, context).then(function(role) {

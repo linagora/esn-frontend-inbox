@@ -1,0 +1,3 @@
+{
+  "extends": "@linagora/eslint-config-linagora-esn"
+}

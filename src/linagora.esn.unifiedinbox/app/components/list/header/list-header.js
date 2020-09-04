@@ -3,7 +3,7 @@
 angular.module('linagora.esn.unifiedinbox')
 
   .component('inboxListHeader', {
-    template: require("./list-header.pug"),
+    template: require('./list-header.pug'),
     bindings: {
       item: '<',
       filters: '<',

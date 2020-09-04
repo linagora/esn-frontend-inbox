@@ -7,8 +7,8 @@ angular.module('esn.inbox.libs')
   .run(function(limitToFilter, jmapDraft, inboxMailboxesCache, INBOX_DISPLAY_NAME_SIZE) {
     function getMailboxDescendants(mailboxId) {
       var descendants = [],
-          toScanMailboxIds = [mailboxId],
-          scannedMailboxIds = [];
+        toScanMailboxIds = [mailboxId],
+        scannedMailboxIds = [];
 
       function pushDescendant(mailbox) {
         descendants.push(mailbox);

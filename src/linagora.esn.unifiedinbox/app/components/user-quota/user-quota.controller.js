@@ -4,7 +4,6 @@ const _ = require('lodash');
 
 require('../../services/user-quota/user-quota-service.js');
 
-
 angular.module('linagora.esn.unifiedinbox')
   .controller('inboxSidebarUserQuotaController', inboxSidebarUserQuotaController);
 

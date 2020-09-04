@@ -2,7 +2,7 @@
 
 /* global chai: false, sinon: false */
 
-var expect = chai.expect;
+const { expect } = chai;
 
 describe('The InboxDraft factory', function() {
 
@@ -73,7 +73,7 @@ describe('The InboxDraft factory', function() {
 
     it('should resolve if there is a difference in subject, making a copy of the message', function(done) {
       var message = { subject: 'yo' },
-          draft = new InboxDraft(message);
+        draft = new InboxDraft(message);
 
       message.subject = 'lo';
 
@@ -82,13 +82,13 @@ describe('The InboxDraft factory', function() {
 
     it('should reject if original and new are equal', function(done) {
       var message = {
-        subject: 'yo',
-        htmlBody: 'text',
-        to: [{email: 'to@domain'}],
-        cc: [{email: 'cc@domain'}],
-        bcc: [{email: 'bcc@domain'}]
-      },
-          draft = new InboxDraft(message);
+          subject: 'yo',
+          htmlBody: 'text',
+          to: [{ email: 'to@domain' }],
+          cc: [{ email: 'cc@domain' }],
+          bcc: [{ email: 'bcc@domain' }]
+        },
+        draft = new InboxDraft(message);
 
       shouldReject(draft.needToBeSaved(message), done);
     });
@@ -97,17 +97,17 @@ describe('The InboxDraft factory', function() {
       var draft = new InboxDraft({
         subject: 'yo',
         htmlBody: 'text',
-        to: [{email: 'to1@domain'}, {email: 'to2@domain'}],
-        cc: [{email: 'cc1@domain'}, {email: 'cc2@domain'}],
-        bcc: [{email: 'bcc1@domain'}, {email: 'bcc2@domain'}]
+        to: [{ email: 'to1@domain' }, { email: 'to2@domain' }],
+        cc: [{ email: 'cc1@domain' }, { email: 'cc2@domain' }],
+        bcc: [{ email: 'bcc1@domain' }, { email: 'bcc2@domain' }]
       });
 
       shouldReject(draft.needToBeSaved({
         subject: 'yo',
         htmlBody: 'text',
-        to: [{email: 'to2@domain'}, {email: 'to1@domain'}],
-        cc: [{email: 'cc2@domain'}, {email: 'cc1@domain'}],
-        bcc: [{email: 'bcc1@domain'}, {email: 'bcc2@domain'}]
+        to: [{ email: 'to2@domain' }, { email: 'to1@domain' }],
+        cc: [{ email: 'cc2@domain' }, { email: 'cc1@domain' }],
+        bcc: [{ email: 'bcc1@domain' }, { email: 'bcc2@domain' }]
       }), done);
     });
 
@@ -115,13 +115,13 @@ describe('The InboxDraft factory', function() {
       var draft = new InboxDraft({
         subject: 'yo',
         htmlBody: 'text',
-        to: [{email: 'to@domain', name: 'before'}]
+        to: [{ email: 'to@domain', name: 'before' }]
       });
 
       shouldReject(draft.needToBeSaved({
         subject: 'yo',
         htmlBody: 'text',
-        to: [{email: 'to@domain', name: 'after'}]
+        to: [{ email: 'to@domain', name: 'after' }]
       }), done);
     });
 
@@ -157,7 +157,7 @@ describe('The InboxDraft factory', function() {
       shouldResolve(draft.needToBeSaved({
         subject: 'yo',
         htmlBody: 'text',
-        to: [{email: 'second@domain'}]
+        to: [{ email: 'second@domain' }]
       }), done);
     });
 
@@ -165,13 +165,13 @@ describe('The InboxDraft factory', function() {
       var draft = new InboxDraft({
         subject: 'yo',
         htmlBody: 'text',
-        to: [{email: 'first@domain'}]
+        to: [{ email: 'first@domain' }]
       });
 
       shouldResolve(draft.needToBeSaved({
         subject: 'yo',
         htmlBody: 'text',
-        to: [{email: 'second@domain'}]
+        to: [{ email: 'second@domain' }]
       }), done);
     });
 
@@ -184,7 +184,7 @@ describe('The InboxDraft factory', function() {
       shouldResolve(draft.needToBeSaved({
         subject: 'yo',
         htmlBody: 'text',
-        attachments: [{blobId: '1'}]
+        attachments: [{ blobId: '1' }]
       }), done);
     });
 
@@ -192,13 +192,13 @@ describe('The InboxDraft factory', function() {
       var draft = new InboxDraft({
         subject: 'yo',
         htmlBody: 'text',
-        attachments: [{blobId: '1'}]
+        attachments: [{ blobId: '1' }]
       });
 
       shouldResolve(draft.needToBeSaved({
         subject: 'yo',
         htmlBody: 'text',
-        attachments: [{blobId: '1'}, {blobId: '2'}]
+        attachments: [{ blobId: '1' }, { blobId: '2' }]
       }), done);
     });
 
@@ -206,13 +206,13 @@ describe('The InboxDraft factory', function() {
       var draft = new InboxDraft({
         subject: 'yo',
         htmlBody: 'text',
-        attachments: [{blobId: '1', name: 'name 1'}, {blobId: '2', name: 'name 2'}]
+        attachments: [{ blobId: '1', name: 'name 1' }, { blobId: '2', name: 'name 2' }]
       });
 
       shouldReject(draft.needToBeSaved({
         subject: 'yo',
         htmlBody: 'text',
-        attachments: [{blobId: '1', name: 'name 1'}, {blobId: '2', name: 'name 2', notTested: 'notTested'}]
+        attachments: [{ blobId: '1', name: 'name 1' }, { blobId: '2', name: 'name 2', notTested: 'notTested' }]
       }), done);
     });
 
@@ -220,13 +220,13 @@ describe('The InboxDraft factory', function() {
       var draft = new InboxDraft({
         subject: 'yo',
         htmlBody: 'text',
-        attachments: [{blobId: '1', name: 'name 1'}, {blobId: '2', name: 'name 2'}]
+        attachments: [{ blobId: '1', name: 'name 1' }, { blobId: '2', name: 'name 2' }]
       });
 
       shouldResolve(draft.needToBeSaved({
         subject: 'yo',
         htmlBody: 'text',
-        attachments: [{blobId: '1', name: 'name 1'}, {blobId: '2', name: 'name 2', size: 'new size'}]
+        attachments: [{ blobId: '1', name: 'name 1' }, { blobId: '2', name: 'name 2', size: 'new size' }]
       }), done);
     });
 
@@ -234,13 +234,13 @@ describe('The InboxDraft factory', function() {
       var draft = new InboxDraft({
         subject: 'yo',
         htmlBody: 'text',
-        cc: [{email: 'first@domain'}]
+        cc: [{ email: 'first@domain' }]
       });
 
       shouldResolve(draft.needToBeSaved({
         subject: 'yo',
         htmlBody: 'text',
-        cc: [{email: 'second@domain'}]
+        cc: [{ email: 'second@domain' }]
       }), done);
     });
 
@@ -248,13 +248,13 @@ describe('The InboxDraft factory', function() {
       var draft = new InboxDraft({
         subject: 'yo',
         htmlBody: 'text',
-        bcc: [{email: 'first@domain'}]
+        bcc: [{ email: 'first@domain' }]
       });
 
       shouldResolve(draft.needToBeSaved({
         subject: 'yo',
         htmlBody: 'text',
-        bcc: [{email: 'second@domain'}]
+        bcc: [{ email: 'second@domain' }]
       }), done);
     });
 
@@ -418,21 +418,21 @@ describe('The InboxDraft factory', function() {
     });
 
     it('should reset original message by the the new draft id after draft is saved', function(done) {
-        jmapClient.saveAsDraft = function() { return $q.when({ id: 'new-id' }); };
-        jmapClient.getMessages = sinon.stub().returns($q.when([{ id: 'new-id', subject: 'yolo' }]));
+      jmapClient.saveAsDraft = function() { return $q.when({ id: 'new-id' }); };
+      jmapClient.getMessages = sinon.stub().returns($q.when([{ id: 'new-id', subject: 'yolo' }]));
 
-        var draft = new InboxDraft({ subject: 'yo' });
+      var draft = new InboxDraft({ subject: 'yo' });
 
-        draft.save({}).then(function() {
-          expect(jmapClient.getMessages).to.have.been.calledWith(sinon.match({
-            ids: ['new-id']
-          }));
-          expect(draft.original.subject).to.eq('yolo');
-          expect(draft.original.id).to.eq('new-id');
-          done();
-        }).catch(done);
+      draft.save({}).then(function() {
+        expect(jmapClient.getMessages).to.have.been.calledWith(sinon.match({
+          ids: ['new-id']
+        }));
+        expect(draft.original.subject).to.eq('yolo');
+        expect(draft.original.id).to.eq('new-id');
+        done();
+      }).catch(done);
 
-        $rootScope.$digest();
+      $rootScope.$digest();
     });
 
     it('should call saveAsDraft with OutboundMessage filled with properties', function() {
@@ -442,21 +442,22 @@ describe('The InboxDraft factory', function() {
       new InboxDraft({}).save({
         subject: 'expected subject',
         htmlBody: 'expected htmlBody',
-        to: [{email: 'to@domain', name: 'to'}],
-        cc: [{email: 'cc@domain', name: 'cc'}],
-        bcc: [{email: 'bcc@domain', name: 'bcc'}]
+        to: [{ email: 'to@domain', name: 'to' }],
+        cc: [{ email: 'cc@domain', name: 'cc' }],
+        bcc: [{ email: 'bcc@domain', name: 'bcc' }]
       });
       $rootScope.$digest();
 
       expect(jmapClient.saveAsDraft).to.have.been.calledWithMatch(
         sinon.match({
-          from: {email: 'yo@lo', name: 'me me'},
+          from: { email: 'yo@lo', name: 'me me' },
           subject: 'expected subject',
           htmlBody: 'expected htmlBody',
-          to: [{email: 'to@domain', name: 'to'}],
-          cc: [{email: 'cc@domain', name: 'cc'}],
-          bcc: [{email: 'bcc@domain', name: 'bcc'}]
-        }));
+          to: [{ email: 'to@domain', name: 'to' }],
+          cc: [{ email: 'cc@domain', name: 'cc' }],
+          bcc: [{ email: 'bcc@domain', name: 'bcc' }]
+        })
+      );
     });
 
     it('should map all recipients to name-email tuple', function() {
@@ -466,19 +467,20 @@ describe('The InboxDraft factory', function() {
       new InboxDraft({}).save({
         subject: 'expected subject',
         htmlBody: 'expected htmlBody',
-        to: [{email: 'to@domain', name: 'to', other: 'value'}],
-        cc: [{email: 'cc@domain', name: 'cc'}, {email: 'cc2@domain', other: 'value', name: 'cc2'}]
+        to: [{ email: 'to@domain', name: 'to', other: 'value' }],
+        cc: [{ email: 'cc@domain', name: 'cc' }, { email: 'cc2@domain', other: 'value', name: 'cc2' }]
       });
       $rootScope.$digest();
 
       expect(jmapClient.saveAsDraft).to.have.been.calledWithMatch(
         sinon.match({
-          from: {email: 'yo@lo', name: 'me me'},
+          from: { email: 'yo@lo', name: 'me me' },
           subject: 'expected subject',
           htmlBody: 'expected htmlBody',
-          to: [{email: 'to@domain', name: 'to'}],
-          cc: [{email: 'cc@domain', name: 'cc'}, {email: 'cc2@domain', name: 'cc2'}]
-        }));
+          to: [{ email: 'to@domain', name: 'to' }],
+          cc: [{ email: 'cc@domain', name: 'cc' }, { email: 'cc2@domain', name: 'cc2' }]
+        })
+      );
     });
 
     it('should notify when has saved successfully', function() {
@@ -495,7 +497,7 @@ describe('The InboxDraft factory', function() {
 
     it('should notify when has not saved successfully', function(done) {
       var draft = new InboxDraft({}),
-          err = {message: 'rejected with err'};
+        err = { message: 'rejected with err' };
 
       jmapClient.saveAsDraft = function() {return $q.reject(err);};
       draft.save({ to: [{ email: 'yo@lo' }] }).catch(function(error) {
@@ -508,7 +510,7 @@ describe('The InboxDraft factory', function() {
     });
 
     it('should broadcast a draft destroyed event at the start of saving process', function() {
-      jmapClient.saveAsDraft = sinon.stub().returns($q.when({ id: 'new-draft'}));
+      jmapClient.saveAsDraft = sinon.stub().returns($q.when({ id: 'new-draft' }));
       jmapClient.getMessages = function() { return $q.when(); };
       var draft = new InboxDraft({}),
         eventCatcher = sinon.spy();
@@ -517,7 +519,7 @@ describe('The InboxDraft factory', function() {
 
       var unsubscriber = $rootScope.$on(INBOX_EVENTS.DRAFT_DESTROYED, eventCatcher);
 
-      draft.save({to: []});
+      draft.save({ to: [] });
 
       $rootScope.$digest();
       expect(eventCatcher).to.have.been.calledBefore(jmapClient.saveAsDraft);
@@ -534,7 +536,7 @@ describe('The InboxDraft factory', function() {
 
       var unsubscriber = $rootScope.$on(INBOX_EVENTS.DRAFT_CREATED, eventCatcher);
 
-      draft.save({to: []});
+      draft.save({ to: [] });
 
       $rootScope.$digest();
       expect(eventCatcher).to.have.been.calledOnce;
@@ -542,7 +544,7 @@ describe('The InboxDraft factory', function() {
     });
 
     it('should save the new message draft first then destroy the original message', function() {
-      jmapClient.saveAsDraft = sinon.stub().returns($q.when({ id: 'new-draft'}));
+      jmapClient.saveAsDraft = sinon.stub().returns($q.when({ id: 'new-draft' }));
       jmapClient.destroyMessage = sinon.stub().returns($q.when());
       jmapClient.getMessages = function() { return $q.when(); };
 

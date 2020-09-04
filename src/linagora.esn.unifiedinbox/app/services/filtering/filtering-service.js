@@ -2,7 +2,7 @@
 
 const _ = require('lodash');
 
-require('../filtering/filters.js');
+require('./filters.js');
 
 angular.module('linagora.esn.unifiedinbox')
 

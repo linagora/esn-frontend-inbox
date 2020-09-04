@@ -2,7 +2,7 @@
 
 /* global chai: false */
 
-var expect = chai.expect;
+const { expect } = chai;
 
 describe('The inboxComposerIdentitySelector component', function() {
   var $compile, $rootScope, element;
@@ -22,8 +22,12 @@ describe('The inboxComposerIdentitySelector component', function() {
   beforeEach(function() {
     angular.mock.module('linagora.esn.unifiedinbox');
 
-    defaultIdentity = { default: true, uuid: 'default', name: 'identity1', email: 'identity1', usable: true };
-    identity = { uuid: 'identity2', name: 'identity2', email: 'identity2', usable: true };
+    defaultIdentity = {
+      default: true, uuid: 'default', name: 'identity1', email: 'identity1', usable: true
+    };
+    identity = {
+      uuid: 'identity2', name: 'identity2', email: 'identity2', usable: true
+    };
 
     angular.mock.inject(function(_$compile_, _$rootScope_, _inboxIdentitiesService_) {
       $compile = _$compile_;
@@ -59,7 +63,9 @@ describe('The inboxComposerIdentitySelector component', function() {
       return $q.when([
         defaultIdentity,
         identity,
-        { uuid: 'identity3', name: 'identity3', email: 'identity3', usable: true }
+        {
+          uuid: 'identity3', name: 'identity3', email: 'identity3', usable: true
+        }
       ]);
     };
 

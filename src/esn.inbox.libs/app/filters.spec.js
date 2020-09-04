@@ -2,7 +2,7 @@
 
 /* global chai: false */
 
-var expect = chai.expect;
+const { expect } = chai;
 
 describe('The Unified Inbox Angular module filters', function() {
 
@@ -34,13 +34,13 @@ describe('The Unified Inbox Angular module filters', function() {
     });
 
     it('should return the recipient in richtext mode for desktop', function() {
-      recipient = {name: '1@linagora.com', email: '1@linagora.com'};
+      recipient = { name: '1@linagora.com', email: '1@linagora.com' };
       isMobile = false;
       expect($filter('emailer')(recipient)).to.equal('1@linagora.com &lt;1@linagora.com&gt;');
     });
 
     it('should return the recipient in text mode for desktop', function() {
-      recipient = {name: '1@linagora.com', email: '1@linagora.com'};
+      recipient = { name: '1@linagora.com', email: '1@linagora.com' };
       isMobile = true;
       expect($filter('emailer')(recipient)).to.equal('1@linagora.com <1@linagora.com>');
     });
@@ -54,19 +54,19 @@ describe('The Unified Inbox Angular module filters', function() {
     });
 
     it('should join an array in richtext mode for desktop', function() {
-      array = [{name: '1@linagora.com', email: '1@linagora.com'}, {name: '2@linagora.com', email: '2@linagora.com'}];
+      array = [{ name: '1@linagora.com', email: '1@linagora.com' }, { name: '2@linagora.com', email: '2@linagora.com' }];
       isMobile = false;
       expect($filter('emailerList')(array)).to.equal('1@linagora.com &lt;1@linagora.com&gt;, 2@linagora.com &lt;2@linagora.com&gt;');
     });
 
     it('should be able to join an array in text mode for mobile', function() {
-      array = [{name: '1@linagora.com', email: '1@linagora.com'}, {name: '2@linagora.com', email: '2@linagora.com'}];
+      array = [{ name: '1@linagora.com', email: '1@linagora.com' }, { name: '2@linagora.com', email: '2@linagora.com' }];
       isMobile = true;
       expect($filter('emailerList')(array)).to.equal('1@linagora.com <1@linagora.com>, 2@linagora.com <2@linagora.com>');
     });
 
     it('should prefix the joined array by the given prefix', function() {
-      array = [{name: '1@linagora.com', email: '1@linagora.com'}, {name: '2@linagora.com', email: '2@linagora.com'}];
+      array = [{ name: '1@linagora.com', email: '1@linagora.com' }, { name: '2@linagora.com', email: '2@linagora.com' }];
       isMobile = false;
       expect($filter('emailerList')(array, 'Prefix: ')).to.equal('Prefix: 1@linagora.com &lt;1@linagora.com&gt;, 2@linagora.com &lt;2@linagora.com&gt;');
     });
@@ -143,14 +143,14 @@ describe('The Unified Inbox Angular module filters', function() {
 
     it('should filter RestrictMailboxes', function() {
       var mailboxes = [
-          { id: 1, mayAddItems: true, role: { value: 'outbox' }},
-          { id: 2, mayAddItems: true, role: { value: 'drafts' }},
-          { id: 3, mayAddItems: true, role: { value: undefined }},
-          { id: 4, mayAddItems: true, role: { value: 'inbox' }}
+          { id: 1, mayAddItems: true, role: { value: 'outbox' } },
+          { id: 2, mayAddItems: true, role: { value: 'drafts' } },
+          { id: 3, mayAddItems: true, role: { value: undefined } },
+          { id: 4, mayAddItems: true, role: { value: 'inbox' } }
         ],
         expectedMailboxes = [
-          { id: 3, mayAddItems: true, role: { value: undefined }},
-          { id: 4, mayAddItems: true, role: { value: 'inbox' }}
+          { id: 3, mayAddItems: true, role: { value: undefined } },
+          { id: 4, mayAddItems: true, role: { value: 'inbox' } }
         ];
 
       mailboxes.forEach(function(mailbox) {

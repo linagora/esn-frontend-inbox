@@ -8,13 +8,14 @@ angular
 
       if (mailto) {
         var url = new URL(mailto),
-            queryString = url.searchParams;
+          queryString = url.searchParams;
 
         // A "mailto" URL (https://fr.wikipedia.org/wiki/Mailto) has the following syntax:
         //  mailto:<comma-separated recipient(s)>[?subject&body&cc&bcc]
         message.to = csvRecipientsToEMailerArray(url.pathname);
         message.subject = queryString.get('subject');
-        message.textBody = message.htmlBody = queryString.get('body');
+        message.textBody = queryString.get('body');
+        message.htmlBody = message.textBody;
         message.cc = csvRecipientsToEMailerArray(queryString.get('cc'));
         message.bcc = csvRecipientsToEMailerArray(queryString.get('bcc'));
       }

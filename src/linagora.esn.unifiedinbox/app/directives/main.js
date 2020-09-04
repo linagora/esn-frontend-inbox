@@ -1,4 +1,5 @@
 const _ = require('lodash');
+
 require('../services/new-composer/new-composer.js');
 require('../services/jmap-item/jmap-item-service.js');
 require('../services/shortcuts/shortcuts.constants.js');
@@ -6,26 +7,26 @@ require('../services/filtering/filtering-service.js');
 require('../services/plugins/plugins.js');
 require('../services.js');
 
-(function (angular) {
+(function(angular) {
   'use strict';
 
   angular.module('linagora.esn.unifiedinbox')
 
-    .directive('newComposer', function ($timeout, newComposerService) {
+    .directive('newComposer', function($timeout, newComposerService) {
       return {
         restrict: 'A',
-        link: function (scope, element) {
-          element.click(function () {
+        link: function(scope, element) {
+          element.click(function() {
             newComposerService.open({});
           });
         }
       };
     })
 
-    .directive('opInboxCompose', function ($parse, newComposerService) {
+    .directive('opInboxCompose', function($parse, newComposerService) {
       return {
         restrict: 'A',
-        link: function (scope, element, attrs) {
+        link: function(scope, element, attrs) {
           function _isEmailDefinedByOpInboxCompose() {
             return attrs.opInboxCompose && attrs.opInboxCompose !== 'op-inbox-compose';
           }
@@ -39,7 +40,7 @@ require('../services.js');
             }
           }
 
-          element.on('click', function (event) {
+          element.on('click', function(event) {
             var emails = _findRecipientEmails();
 
             if (emails || attrs.opInboxComposeUsers) {
@@ -51,7 +52,7 @@ require('../services.js');
               if (attrs.opInboxComposeUsers) {
                 var users = $parse(attrs.opInboxComposeUsers)(scope);
 
-                targets = users.map(function (target) {
+                targets = users.map(function(target) {
                   var targetToAdded = {
                     name: target.name || target.displayName || target.displayName() || target.firstname + ' ' + target.lastname || target.preferredEmail,
                     email: target.email || target.preferredEmail
@@ -61,7 +62,7 @@ require('../services.js');
                 });
 
               } else {
-                targets = emails.map(function (email) {
+                targets = emails.map(function(email) {
                   return {
                     email: email,
                     name: attrs.opInboxComposeDisplayName || email
@@ -76,11 +77,11 @@ require('../services.js');
       };
     })
 
-    .directive('inboxFab', function () {
+    .directive('inboxFab', function() {
       return {
         restrict: 'E',
-        template: require("../../views/partials/inbox-fab.pug"),
-        link: function (scope, element) {
+        template: require('../../views/partials/inbox-fab.pug'),
+        link: function(scope, element) {
 
           function findButton() {
             return element.children('button').first();
@@ -96,18 +97,18 @@ require('../services.js');
             scope.isDisabled = false;
           }
 
-          scope.$on('box-overlay:no-space-left-on-screen', function () {
+          scope.$on('box-overlay:no-space-left-on-screen', function() {
             disableFab();
           });
 
-          scope.$on('box-overlay:space-left-on-screen', function () {
+          scope.$on('box-overlay:space-left-on-screen', function() {
             enableFab();
           });
         }
       };
     })
 
-    .directive('mailboxDisplay', function (
+    .directive('mailboxDisplay', function(
       $rootScope,
       inboxCustomRoleMailboxService,
       inboxMailboxesService,
@@ -127,20 +128,20 @@ require('../services.js');
           isFolder: '=?',
           isShared: '=?'
         },
-        template: require("../../views/sidebar/email/menu-item.pug"),
-        link: function (scope) {
+        template: require('../../views/sidebar/email/menu-item.pug'),
+        link: function(scope) {
           scope.mailboxIcons = getMailboxIcon();
 
-          $rootScope.$on(INBOX_EVENTS.BADGE_LOADING_ACTIVATED, function (evt, data) {
+          $rootScope.$on(INBOX_EVENTS.BADGE_LOADING_ACTIVATED, function(evt, data) {
             scope.badgeLoadingActivated = data;
           });
 
-          scope.onDrop = function ($dragData) {
+          scope.onDrop = function($dragData) {
             return inboxJmapItemService.moveMultipleItems($dragData, scope.mailbox);
           };
 
-          scope.isDropZone = function ($dragData) {
-            return _.all($dragData, function (item) {
+          scope.isDropZone = function($dragData) {
+            return _.all($dragData, function(item) {
               return inboxMailboxesService.canMoveMessage(item, scope.mailbox);
             });
           };
@@ -154,7 +155,7 @@ require('../services.js');
       };
     })
 
-    .directive('inboxEmailer', function (session) {
+    .directive('inboxEmailer', function(session) {
       return {
         restrict: 'E',
         replace: true,
@@ -164,16 +165,16 @@ require('../services.js');
           hideEmail: '=?',
           highlight: '@?'
         },
-        template: require("../../views/partials/emailer/inbox-emailer.pug"),
-        link: function (scope) {
-          scope.$watch('emailer', function (emailer) {
+        template: require('../../views/partials/emailer/inbox-emailer.pug'),
+        link: function(scope) {
+          scope.$watch('emailer', function(emailer) {
             scope.me = emailer && emailer.email && emailer.email === session.user.preferredEmail;
           });
         }
       };
     })
 
-    .directive('inboxEmailerAvatar', function () {
+    .directive('inboxEmailerAvatar', function() {
       return {
         restrict: 'E',
         controller: 'resolveEmailerController',
@@ -181,11 +182,11 @@ require('../services.js');
         scope: {
           emailer: '='
         },
-        template: require("../../views/partials/emailer/inbox-emailer-avatar.pug")
+        template: require('../../views/partials/emailer/inbox-emailer-avatar.pug')
       };
     })
 
-    .directive('inboxEmailerAvatarPopover', function () {
+    .directive('inboxEmailerAvatarPopover', function() {
       return {
         restrict: 'E',
         controller: 'resolveEmailerController',
@@ -193,11 +194,11 @@ require('../services.js');
         scope: {
           emailer: '='
         },
-        template: require("../../views/partials/emailer/inbox-emailer-avatar-popover.pug")
+        template: require('../../views/partials/emailer/inbox-emailer-avatar-popover.pug')
       };
     })
 
-    .directive('inboxEmailerGroup', function () {
+    .directive('inboxEmailerGroup', function() {
       return {
         restrict: 'E',
         replace: true,
@@ -205,11 +206,11 @@ require('../services.js');
           group: '=',
           displayInline: '@?'
         },
-        template: require("../../views/partials/emailer/inbox-emailer-group.pug")
+        template: require('../../views/partials/emailer/inbox-emailer-group.pug')
       };
     })
 
-    .directive('inboxEmailerDisplay', function (emailSendingService) {
+    .directive('inboxEmailerDisplay', function(emailSendingService) {
       function link(scope) {
         var groupLabels = { to: 'To', cc: 'CC', bcc: 'BCC' },
           groups = _.keys(groupLabels);
@@ -244,20 +245,20 @@ require('../services.js');
         scope: {
           email: '='
         },
-        template: require("../../views/partials/emailer/inbox-emailer-display.pug"),
+        template: require('../../views/partials/emailer/inbox-emailer-display.pug'),
         link: link
       };
     })
 
-    .directive('attachmentDownloadAction', function () {
+    .directive('attachmentDownloadAction', function() {
       return {
         restrict: 'E',
         replace: true,
-        template: require("../../views/attachment/attachment-download-action.pug")
+        template: require('../../views/attachment/attachment-download-action.pug')
       };
     })
 
-    .directive('inboxAttachment', function () {
+    .directive('inboxAttachment', function() {
       return {
         restrict: 'E',
         replace: true,
@@ -266,11 +267,11 @@ require('../services.js');
         },
         controller: 'attachmentController',
         controllerAs: 'ctrl',
-        template: require("../../views/attachment/inbox-attachment.pug")
+        template: require('../../views/attachment/inbox-attachment.pug')
       };
     })
 
-    .directive('recipientsAutoComplete', function (elementScrollService, searchService, emailService) {
+    .directive('recipientsAutoComplete', function(elementScrollService, searchService, emailService) {
       return {
         restrict: 'E',
         scope: {
@@ -281,17 +282,17 @@ require('../services.js');
           onEmailRemoved: '=',
           ignoreEmailFormat: '=?'
         },
-        template: require("../../views/composer/recipients-auto-complete.pug"),
-        link: function (scope, element) {
+        template: require('../../views/composer/recipients-auto-complete.pug'),
+        link: function(scope, element) {
 
           function normalizeToEMailer(tag) {
-            Object.keys(tag).forEach(function (key) {
+            Object.keys(tag).forEach(function(key) {
 
               if (!tag.email) {
                 if (key === 'name') {
                   var foundTags = [];
 
-                  tag.name = tag.name.replace(/(.*?)<(.*?)>/g, function (match, name, email) {
+                  tag.name = tag.name.replace(/(.*?)<(.*?)>/g, function(match, name, email) {
                     name = name.trim();
                     email = email.trim();
 
@@ -305,10 +306,10 @@ require('../services.js');
                   });
 
                   /*The replace will match every "name <email>" or "<email>", and will push all in the foundTags array.
-  
+
                   But we don't want add the last match if anything left in tag.name,
                   so that ngTagsInput internal logic appends the last tag automatically.
-  
+
                   If there's some charaters left in tag.name, this will be added as a tag also. */
 
                   if (!tag.name) {
@@ -318,7 +319,7 @@ require('../services.js');
                     tag.name = lastTag.name;
                   }
 
-                  foundTags.forEach(function (newTag) {
+                  foundTags.forEach(function(newTag) {
                     scope.tags.push(newTag);
                   });
                 }
@@ -335,7 +336,7 @@ require('../services.js');
           }
 
           scope.tags = scope.tags || [];
-          scope.excludes = scope.tags.map(function (tag) {
+          scope.excludes = scope.tags.map(function(tag) {
             if (tag.id && tag.objectType) {
               return {
                 id: tag.id,
@@ -345,14 +346,14 @@ require('../services.js');
           }).filter(Boolean);
 
           scope.tags
-            .filter(function (tag) { return tag.email; })
+            .filter(function(tag) { return tag.email; })
             .forEach(normalizeToEMailer);
 
-          scope.search = function (query) {
+          scope.search = function(query) {
             return searchService.searchRecipients(query, scope.excludes);
           };
 
-          scope.onTagAdding = function ($tag) {
+          scope.onTagAdding = function($tag) {
             normalizeToEMailer($tag);
             if (!scope.ignoreEmailFormat && !emailService.isValidEmail($tag.email)) {
               return false;
@@ -365,7 +366,7 @@ require('../services.js');
             return !_.find(scope.tags, { email: $tag.email });
           };
 
-          scope.onTagAdded = function ($tag) {
+          scope.onTagAdded = function($tag) {
             if ($tag.id && $tag.objectType) {
               scope.excludes.push({
                 id: $tag.id,
@@ -377,8 +378,8 @@ require('../services.js');
             scope.onEmailAdded && scope.onEmailAdded($tag);
           };
 
-          scope.onTagRemoved = function ($tag) {
-            _.remove(scope.excludes, function (exclude) {
+          scope.onTagRemoved = function($tag) {
+            _.remove(scope.excludes, function(exclude) {
               return exclude.id === $tag.id;
             });
             scope.onEmailRemoved && scope.onEmailRemoved($tag);
@@ -387,24 +388,24 @@ require('../services.js');
       };
     })
 
-    .directive('emailBodyEditor', function (emailBodyService) {
+    .directive('emailBodyEditor', function(emailBodyService) {
       function template(name) {
         return '/unifiedinbox/views/composer/editor/' + name + '.html';
       }
 
       return {
         restrict: 'E',
-        templateUrl: function () {
+        templateUrl: function() {
           return emailBodyService.supportsRichtext() ? template('richtext') : template('plaintext');
         }
       };
     })
 
-    .directive('inboxStar', function (inboxJmapItemService) {
+    .directive('inboxStar', function(inboxJmapItemService) {
       return {
         restrict: 'E',
-        controller: function ($scope) {
-          this.setIsFlagged = function (state) {
+        controller: function($scope) {
+          this.setIsFlagged = function(state) {
             inboxJmapItemService.setFlag($scope.item, 'isFlagged', state);
           };
         },
@@ -412,43 +413,43 @@ require('../services.js');
         scope: {
           item: '='
         },
-        template: require("../../views/partials/inbox-star.pug")
+        template: require('../../views/partials/inbox-star.pug')
       };
     })
 
-    .directive('email', function (inboxJmapItemService, navigateTo) {
+    .directive('email', function(inboxJmapItemService, navigateTo) {
       return {
         restrict: 'E',
-        controller: /* @ngInject */ function (
+        controller: /* @ngInject */ function(
           $scope,
           INVITATION_MESSAGE_HEADERS,
           X_OPENPAAS_CAL_HEADERS,
           X_OPENPAAS_CAL_VALUES
         ) {
-          ['reply', 'replyAll', 'forward'].forEach(function (action) {
-            this[action] = function () {
+          ['reply', 'replyAll', 'forward'].forEach(function(action) {
+            this[action] = function() {
               inboxJmapItemService[action]($scope.email);
             };
           }.bind(this));
 
-          this.toggleIsCollapsed = function (email) {
+          this.toggleIsCollapsed = function(email) {
             if (angular.isDefined(email.isCollapsed)) {
               email.isCollapsed = !email.isCollapsed;
               $scope.$broadcast('email:collapse', email.isCollapsed);
             }
           };
 
-          this.download = function () {
+          this.download = function() {
             inboxJmapItemService.downloadEML($scope.email).then(navigateTo);
           };
 
-          this.shouldInjectCalendarInvitationMessageBlueBar = function () {
+          this.shouldInjectCalendarInvitationMessageBlueBar = function() {
             return $scope.email &&
               $scope.email.headers &&
               INVITATION_MESSAGE_HEADERS.UID in $scope.email.headers;
           };
 
-          this.shouldInjectCalendarResourceManagementBlueBar = function () {
+          this.shouldInjectCalendarResourceManagementBlueBar = function() {
             return $scope.email &&
               $scope.email.headers &&
               $scope.email.headers[X_OPENPAAS_CAL_HEADERS.ACTION] === X_OPENPAAS_CAL_VALUES.RESOURCE_REQUEST;
@@ -458,21 +459,21 @@ require('../services.js');
         scope: {
           email: '='
         },
-        template: require("../../views/partials/email.pug")
+        template: require('../../views/partials/email.pug')
       };
     })
 
-    .directive('inboxIndicators', function () {
+    .directive('inboxIndicators', function() {
       return {
         restrict: 'E',
         replace: true,
-        template: require("../../views/partials/inbox-indicators.pug"),
+        template: require('../../views/partials/inbox-indicators.pug'),
         scope: {
           item: '=',
           hiddenXl: '@'
         },
         controllerAs: 'ctrl',
-        controller: /* @ngInject */ function (
+        controller: /* @ngInject */ function(
           $scope,
           INVITATION_MESSAGE_HEADERS,
           X_OPENPAAS_CAL_HEADERS
@@ -485,16 +486,16 @@ require('../services.js');
       };
     })
 
-    .directive('inboxEmailFooter', function (inboxJmapItemService) {
+    .directive('inboxEmailFooter', function(inboxJmapItemService) {
       return {
         restrict: 'E',
-        template: require("../../views/partials/email-footer.pug"),
+        template: require('../../views/partials/email-footer.pug'),
         scope: {
           email: '='
         },
-        controller: function ($scope, esnShortcuts, INBOX_SHORTCUTS_ACTIONS_CATEGORY) {
-          ['reply', 'replyAll', 'forward'].forEach(function (action) {
-            this[action] = function () {
+        controller: function($scope, esnShortcuts, INBOX_SHORTCUTS_ACTIONS_CATEGORY) {
+          ['reply', 'replyAll', 'forward'].forEach(function(action) {
+            this[action] = function() {
               inboxJmapItemService[action]($scope.email);
             };
           }.bind(this));
@@ -507,16 +508,16 @@ require('../services.js');
       };
     })
 
-    .directive('inboxFilterButton', function ($rootScope, esnI18nService, INBOX_EVENTS) {
+    .directive('inboxFilterButton', function($rootScope, esnI18nService, INBOX_EVENTS) {
       return {
         restrict: 'E',
-        template: require("../../views/filter/filter-button.pug"),
+        template: require('../../views/filter/filter-button.pug'),
         scope: {
           filters: '=',
           placeholder: '@'
         },
         controllerAs: 'ctrl',
-        controller: function ($scope) {
+        controller: function($scope) {
           var defaultPlaceholder = $scope.placeholder || 'Filters';
 
           function updateDropdownList() {
@@ -535,7 +536,7 @@ require('../services.js');
           $scope.dropdownList = {};
           $scope.$on(INBOX_EVENTS.FILTER_CHANGED, updateDropdownList);
 
-          this.dropdownItemClicked = function () {
+          this.dropdownItemClicked = function() {
             updateDropdownList();
 
             $rootScope.$broadcast(INBOX_EVENTS.FILTER_CHANGED);
@@ -547,18 +548,18 @@ require('../services.js');
       };
     })
 
-    .directive('inboxEmptyContainerMessage', function ($stateParams, inboxFilteringService, inboxPlugins) {
+    .directive('inboxEmptyContainerMessage', function($stateParams, inboxFilteringService, inboxPlugins) {
       return {
         restrict: 'E',
         scope: {},
-        template: require("../../views/partials/empty-messages/index.pug"),
-        link: function (scope) {
+        template: require('../../views/partials/empty-messages/index.pug'),
+        link: function(scope) {
           var plugin = inboxPlugins.get($stateParams.type);
 
           scope.isFilteringActive = inboxFilteringService.isFilteringActive;
 
           if (plugin) {
-            plugin.getEmptyContextTemplateUrl($stateParams.account, $stateParams.context).then(function (templateUrl) {
+            plugin.getEmptyContextTemplateUrl($stateParams.account, $stateParams.context).then(function(templateUrl) {
               scope.containerTemplateUrl = templateUrl;
             });
           } else {
@@ -568,34 +569,34 @@ require('../services.js');
       };
     })
 
-    .directive('inboxClearFiltersButton', function (inboxFilteringService) {
+    .directive('inboxClearFiltersButton', function(inboxFilteringService) {
       return {
         restrict: 'E',
         scope: {},
-        controller: function () {
-          this.clearFilters = function () {
+        controller: function() {
+          this.clearFilters = function() {
             inboxFilteringService.clearFilters();
           };
         },
         controllerAs: 'ctrl',
-        template: require("../../views/filter/inbox-clear-filters-button.pug")
+        template: require('../../views/filter/inbox-clear-filters-button.pug')
       };
     })
 
-    .directive('inboxHomeButton', function () {
+    .directive('inboxHomeButton', function() {
       return {
         restrict: 'E',
-        template: require("../../views/partials/inbox-home-button.pug")
+        template: require('../../views/partials/inbox-home-button.pug')
       };
     })
 
-    .directive('inboxListAccountUnavailable', function () {
+    .directive('inboxListAccountUnavailable', function() {
       return {
         restrict: 'E',
         scope: {
           account: '='
         },
-        template: require("../../views/partials/empty-messages/inbox-list-account-unavailable.pug")
+        template: require('../../views/partials/empty-messages/inbox-list-account-unavailable.pug')
       };
     });
 })(angular);

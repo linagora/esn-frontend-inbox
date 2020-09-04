@@ -1,8 +1,8 @@
 'use strict';
 
-/* global chai: false, sinon: false */
+/* global chai, sinon, _: false */
 
-var expect = chai.expect;
+const { expect } = chai;
 
 describe('The inboxFilteredList factory', function() {
 
@@ -26,8 +26,8 @@ describe('The inboxFilteredList factory', function() {
   }));
 
   beforeEach(angular.mock.inject(function(_$rootScope_, _jmapDraft_, _inboxFilteringService_, _inboxFilters_, _inboxFilteredList_,
-                             _esnSearchProvider_,
-                             _inboxHostedMailMessagesProvider_, _INBOX_EVENTS_, _PROVIDER_TYPES_) {
+    _esnSearchProvider_,
+    _inboxHostedMailMessagesProvider_, _INBOX_EVENTS_, _PROVIDER_TYPES_) {
     $rootScope = _$rootScope_;
     jmapDraft = _jmapDraft_;
     inboxFilteringService = _inboxFilteringService_;
@@ -56,7 +56,7 @@ describe('The inboxFilteredList factory', function() {
 
   it('should render the list when filters change', function() {
     var unreadMessage = newMessage({ isFlagged: true, isUnread: true, date: 1 }),
-        readMessage = newMessage({ isFlagged: true, date: 0 });
+      readMessage = newMessage({ isFlagged: true, date: 0 });
 
     inboxFilteredList.addAll([
       readMessage,
@@ -128,7 +128,7 @@ describe('The inboxFilteredList factory', function() {
 
   it('should render the list when filters are cleared, removing items fetched when filtering was active', function() {
     var unreadMessage = newMessage({ isUnread: true, date: 1 }),
-        readMessage = newMessage({ date: 0 });
+      readMessage = newMessage({ date: 0 });
 
     inboxFilteredList.addAll([
       readMessage,
@@ -148,7 +148,7 @@ describe('The inboxFilteredList factory', function() {
 
   it('should render the list when item flags change', function() {
     var unreadMessage = newMessage({ isUnread: true, date: 1 }),
-        readMessage = newMessage({ date: 0 });
+      readMessage = newMessage({ date: 0 });
 
     inboxFilteredList.addAll([
       readMessage,
@@ -167,7 +167,7 @@ describe('The inboxFilteredList factory', function() {
 
   it('should render the list when item mailbox ids change', function() {
     var unreadMessage = newMessage({ isUnread: true, date: 1 }),
-        readMessage = newMessage({ date: 0 });
+      readMessage = newMessage({ date: 0 });
 
     inboxFilteredList.addAll([
       readMessage,
@@ -227,7 +227,7 @@ describe('The inboxFilteredList factory', function() {
           buildFetchContext: function() { },
           templateUrl: 'tada'
         });
-    };
+      };
 
     message.provider = fakeProvider();
     inboxFilteredList.addAll([message]);
@@ -302,7 +302,7 @@ describe('The inboxFilteredList factory', function() {
       $rootScope.$digest();
 
       var load = sinon.spy(),
-          model = inboxFilteredList.asMdVirtualRepeatModel(load);
+        model = inboxFilteredList.asMdVirtualRepeatModel(load);
 
       expect(model.getLength()).to.equal(1);
       expect(model.getItemAtIndex(0)).to.equal(message);

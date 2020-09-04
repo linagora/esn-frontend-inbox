@@ -2,7 +2,7 @@
 
 /* global chai: false, sinon: false */
 
-var expect = chai.expect;
+const { expect } = chai;
 
 describe('The EMailer run block', function() {
   var $rootScope, jmapDraft, inboxCacheService, INBOX_AVATAR_SIZE;

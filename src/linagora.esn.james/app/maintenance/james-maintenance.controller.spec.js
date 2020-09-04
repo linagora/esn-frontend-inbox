@@ -3,7 +3,7 @@
 /* global chai: false */
 /* global sinon: false */
 
-var expect = chai.expect;
+const { expect } = chai;
 
 describe('The jamesMaintenanceController', function() {
 
@@ -16,8 +16,8 @@ describe('The jamesMaintenanceController', function() {
       $provide.factory('asyncAction', function() {
         return function(message, action) {
           action();
-        }
-      })
+        };
+      });
     });
 
     angular.mock.inject(function(

@@ -3,8 +3,8 @@
 angular.module('linagora.esn.unifiedinbox')
 
   .component('inboxSharedMailbox', {
-    template: require("./shared-mailbox.pug"),
-      bindings: {
-        mailbox: '='
+    template: require('./shared-mailbox.pug'),
+    bindings: {
+      mailbox: '='
     }
   });

@@ -3,7 +3,7 @@
 /* global chai: false */
 /* global sinon: false */
 
-var expect = chai.expect;
+const { expect } = chai;
 
 describe('The InboxForwardingsUserController controller', function() {
   var $rootScope, $controller, $scope, $stateParams;
@@ -34,8 +34,10 @@ describe('The InboxForwardingsUserController controller', function() {
   function initController(scope, user) {
     $scope = scope || $rootScope.$new();
 
-    user = user || { firstname: 'firstname', lastname: 'lastname', preferredEmail: 'my@op.org', _id: 'uuid123' };
-    var controller = $controller('InboxForwardingsUserController', { $scope: $scope, user: user});
+    user = user || {
+      firstname: 'firstname', lastname: 'lastname', preferredEmail: 'my@op.org', _id: 'uuid123'
+    };
+    var controller = $controller('InboxForwardingsUserController', { $scope: $scope, user: user });
 
     $scope.$digest();
 

@@ -2,7 +2,7 @@
 
 /* global chai, sinon: false */
 
-var expect = chai.expect;
+const { expect } = chai;
 
 describe('The inboxQuotaBannerController controller', function() {
   var $rootScope,

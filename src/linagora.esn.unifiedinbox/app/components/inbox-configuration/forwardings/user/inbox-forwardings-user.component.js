@@ -2,7 +2,7 @@
 
 angular.module('linagora.esn.unifiedinbox')
   .component('inboxForwardingsUser', {
-    template: require("./inbox-forwardings-user.pug"),
+    template: require('./inbox-forwardings-user.pug'),
     bindings: {
       user: '<'
     }

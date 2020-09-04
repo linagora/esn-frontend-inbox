@@ -2,7 +2,7 @@
 
 /* global chai: false */
 
-var expect = chai.expect;
+const { expect } = chai;
 
 describe('The withJmapClient factory', function() {
 

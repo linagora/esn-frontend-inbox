@@ -2,7 +2,7 @@
 
 angular.module('linagora.esn.unifiedinbox')
   .component('inboxMessageBodyHtml', {
-    template: require("./message-body-html.pug"),
+    template: require('./message-body-html.pug'),
     controller: 'inboxMessageBodyHtmlController',
     bindings: {
       message: '<'

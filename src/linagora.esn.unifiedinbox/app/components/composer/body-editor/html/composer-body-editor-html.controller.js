@@ -1,7 +1,5 @@
 'use strict';
 
-const _ = require('lodash');
-
 angular.module('linagora.esn.unifiedinbox')
 
   .controller('inboxComposerBodyEditorHtmlController', function(
@@ -14,7 +12,7 @@ angular.module('linagora.esn.unifiedinbox')
     INBOX_SIGNATURE_SEPARATOR
   ) {
     var self = this,
-        summernoteIsReady = false;
+      summernoteIsReady = false;
 
     self.$onChanges = $onChanges;
     self.onSummernoteInit = onSummernoteInit;
@@ -68,8 +66,8 @@ angular.module('linagora.esn.unifiedinbox')
       }
 
       var editable = $element.find('.note-editable'),
-          signatureElement = editable.find('> div.openpaas-signature'),
-          citeElement = editable.find('> cite');
+        signatureElement = editable.find('> div.openpaas-signature'),
+        citeElement = editable.find('> cite');
 
       if (identity.htmlSignature) {
         if (!signatureElement.length) {
@@ -115,7 +113,7 @@ angular.module('linagora.esn.unifiedinbox')
       if (typeof self.onAttachmentsUpload === 'function') {
         // Enclose attachments
         if (attachments.other.length) {
-          var promise = self.onAttachmentsUpload({attachments: attachments.other}).catch(function() {
+          var promise = self.onAttachmentsUpload({ attachments: attachments.other }).catch(function() {
             // Handle error ?
           });
 

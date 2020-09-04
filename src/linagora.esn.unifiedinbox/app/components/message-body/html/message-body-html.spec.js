@@ -2,7 +2,7 @@
 
 /* global chai: false, sinon: false */
 
-var expect = chai.expect;
+const { expect } = chai;
 
 describe('The inboxMessageBodyHtml component', function() {
 
@@ -31,8 +31,8 @@ describe('The inboxMessageBodyHtml component', function() {
 
   beforeEach(function() {
     angular.mock.module('linagora.esn.unifiedinbox', function($provide) {
-      $provide.value('newComposerService', {open: sinon.spy()});
-      $provide.value('touchscreenDetectorService', {hasTouchscreen: function() { return false; }});
+      $provide.value('newComposerService', { open: sinon.spy() });
+      $provide.value('touchscreenDetectorService', { hasTouchscreen: function() { return false; } });
     });
   });
 
@@ -98,9 +98,9 @@ describe('The inboxMessageBodyHtml component', function() {
     it('should load images that are in attachments', function(done) {
       $rootScope.message.htmlBody = '<img src="remote.png" /><img id="one" src="cid:1" />';
       $rootScope.message.attachments = [{
-          cid: '1',
-          getSignedDownloadUrl: function() { return $q.when('signed-url'); }
-        }];
+        cid: '1',
+        getSignedDownloadUrl: function() { return $q.when('signed-url'); }
+      }];
 
       var ctrl = compile('<inbox-message-body-html message="message" />');
 

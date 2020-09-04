@@ -1,29 +1,30 @@
 require('./main.js');
 
-(function (angular) {
+(function(angular) {
   'use strict';
+
   angular.module('linagora.esn.unifiedinbox')
 
-    .directive('inboxSidebarEmail', function () {
+    .directive('inboxSidebarEmail', function() {
       return {
         restrict: 'E',
-        template: require("../../views/sidebar/email/menu.pug"),
+        template: require('../../views/sidebar/email/menu.pug'),
         controller: 'inboxSidebarEmailController',
         controllerAs: 'ctrl'
       };
     })
 
-    .directive('inboxSidebarConfigurationButton', function () {
+    .directive('inboxSidebarConfigurationButton', function() {
       return {
         restrict: 'E',
-        template: require("../../views/sidebar/configuration/configuration-button.pug")
+        template: require('../../views/sidebar/configuration/configuration-button.pug')
       };
     })
 
-    .directive('inboxSidebarNewFolderButton', function () {
+    .directive('inboxSidebarNewFolderButton', function() {
       return {
         restrict: 'E',
-        template: require("../../views/sidebar/configuration/new-folder-button.pug")
+        template: require('../../views/sidebar/configuration/new-folder-button.pug')
       };
     });
 })(angular);

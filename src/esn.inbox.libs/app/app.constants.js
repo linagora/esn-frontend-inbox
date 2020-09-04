@@ -70,8 +70,8 @@ angular.module('esn.inbox.libs')
       ['alignment', ['paragraph', 'ul', 'ol']]
     ],
     keyMap: {
-      pc: {'CTRL+ENTER': '', ENTER: 'insertParagraph'},
-      mac: {'CMD+ENTER': '', ENTER: 'insertParagraph'}
+      pc: { 'CTRL+ENTER': '', ENTER: 'insertParagraph' },
+      mac: { 'CMD+ENTER': '', ENTER: 'insertParagraph' }
     }
   })
   .constant('INBOX_CONTROLLER_LOADING_STATES', {

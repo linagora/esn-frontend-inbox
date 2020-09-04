@@ -3,8 +3,8 @@
 angular.module('linagora.esn.unifiedinbox')
 
   .component('inboxSharedMailboxesSubheader', {
-    template: require("./shared-mailboxes-subheader.pug"),
+    template: require('./shared-mailboxes-subheader.pug'),
     bindings: {
-        onSave: '&'
+      onSave: '&'
     }
   });

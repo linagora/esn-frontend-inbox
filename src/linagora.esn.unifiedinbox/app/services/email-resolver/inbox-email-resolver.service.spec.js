@@ -2,7 +2,7 @@
 
 /* global chai: false, sinon: false */
 
-var expect = chai.expect;
+const { expect } = chai;
 
 describe('The inboxEmailResolverService factory', function() {
   var $rootScope, inboxEmailResolverService, esnPeopleAPI, ESN_PEOPLE_FIELDS;

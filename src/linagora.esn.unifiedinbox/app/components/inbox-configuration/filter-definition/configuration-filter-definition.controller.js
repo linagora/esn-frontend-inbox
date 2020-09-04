@@ -88,25 +88,25 @@ function inboxConfigurationFilterDefinitionController(
 
       self.newFilter = {
         name: filter.name,
-        when: _.find(self.conditionsOptions, {key: filter.condition.field}),
-        then: _.find(self.actionOptions, {key: filterAction})
+        when: _.find(self.conditionsOptions, { key: filter.condition.field }),
+        then: _.find(self.actionOptions, { key: filterAction })
       };
 
       switch (filter.condition.field) {
-        case JMAP_FILTER.CONDITIONS.FROM.JMAP_KEY:
-        case JMAP_FILTER.CONDITIONS.TO.JMAP_KEY:
-        case JMAP_FILTER.CONDITIONS.CC.JMAP_KEY:
-        case JMAP_FILTER.CONDITIONS.RECIPIENT.JMAP_KEY:
-          _initStakeholdersField(filter);
-          break;
-        case JMAP_FILTER.CONDITIONS.SUBJECT.JMAP_KEY:
-          self.newFilter.subject = filter.condition.value;
+      case JMAP_FILTER.CONDITIONS.FROM.JMAP_KEY:
+      case JMAP_FILTER.CONDITIONS.TO.JMAP_KEY:
+      case JMAP_FILTER.CONDITIONS.CC.JMAP_KEY:
+      case JMAP_FILTER.CONDITIONS.RECIPIENT.JMAP_KEY:
+        _initStakeholdersField(filter);
+        break;
+      case JMAP_FILTER.CONDITIONS.SUBJECT.JMAP_KEY:
+        self.newFilter.subject = filter.condition.value;
       }
 
       switch (filterAction) {
-        case JMAP_FILTER.ACTIONS.MOVE_TO.JMAP_KEY:
-          _initMoveToField(filter);
-          break;
+      case JMAP_FILTER.ACTIONS.MOVE_TO.JMAP_KEY:
+        _initMoveToField(filter);
+        break;
       }
     });
   }
@@ -119,22 +119,22 @@ function inboxConfigurationFilterDefinitionController(
     var conditionValue;
 
     switch (self.newFilter.when.key) {
-      case JMAP_FILTER.CONDITIONS.FROM.JMAP_KEY:
-      case JMAP_FILTER.CONDITIONS.TO.JMAP_KEY:
-      case JMAP_FILTER.CONDITIONS.CC.JMAP_KEY:
-      case JMAP_FILTER.CONDITIONS.RECIPIENT.JMAP_KEY:
-        conditionValue = self.newFilter.stakeholders[0].email;
-        break;
-      case JMAP_FILTER.CONDITIONS.SUBJECT.JMAP_KEY:
-        conditionValue = self.newFilter.subject;
-        break;
+    case JMAP_FILTER.CONDITIONS.FROM.JMAP_KEY:
+    case JMAP_FILTER.CONDITIONS.TO.JMAP_KEY:
+    case JMAP_FILTER.CONDITIONS.CC.JMAP_KEY:
+    case JMAP_FILTER.CONDITIONS.RECIPIENT.JMAP_KEY:
+      conditionValue = self.newFilter.stakeholders[0].email;
+      break;
+    case JMAP_FILTER.CONDITIONS.SUBJECT.JMAP_KEY:
+      conditionValue = self.newFilter.subject;
+      break;
     }
 
     return fn(
       self.newFilter.when.key,
       self.newFilter.name,
       conditionValue,
-      {action: self.newFilter.then.key, mailboxId: self.newFilter.moveTo.id}
+      { action: self.newFilter.then.key, mailboxId: self.newFilter.moveTo.id }
     ).then(function() {
       $state.go('unifiedinbox.configuration.filters');
     });
@@ -157,11 +157,11 @@ function inboxConfigurationFilterDefinitionController(
   }
 
   function _initConditionOptions() {
-    return _.find(self.conditionsOptions, {key: JMAP_FILTER.CONDITIONS.FROM.JMAP_KEY});
+    return _.find(self.conditionsOptions, { key: JMAP_FILTER.CONDITIONS.FROM.JMAP_KEY });
   }
 
   function _initActionOptions() {
-    return _.find(self.actionOptions, {key: JMAP_FILTER.ACTIONS.MOVE_TO.JMAP_KEY});
+    return _.find(self.actionOptions, { key: JMAP_FILTER.ACTIONS.MOVE_TO.JMAP_KEY });
   }
 
   function _initStakeholdersField(filter) {
@@ -197,7 +197,7 @@ function inboxConfigurationFilterDefinitionController(
 
   function _initMoveToField(filter) {
     self.assignMailboxesListPromise.then(function() {
-      self.newFilter.moveTo = _.find(self.mailboxes, {id: filter.action.appendIn.mailboxIds[0]});
+      self.newFilter.moveTo = _.find(self.mailboxes, { id: filter.action.appendIn.mailboxIds[0] });
     });
   }
 }

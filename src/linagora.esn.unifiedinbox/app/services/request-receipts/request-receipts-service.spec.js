@@ -1,8 +1,8 @@
 (function() {
   'use strict';
 
-  /* global chai: false, sinon: false, $q: false */
-  var expect = chai.expect;
+  /* global chai: false, sinon: false */
+  const { expect } = chai;
 
   describe('The inboxRequestReceiptsService service', function() {
 
@@ -118,7 +118,7 @@
           .then(function() { return inboxRequestReceiptsService.setDefaultReceipts({ toto: true }); })
           .then(function() { return inboxRequestReceiptsService.getDefaultReceipts(); })
           .then(function(result) {
-            expect(result).to.deep.equal({ toto: true, isRequestingReadReceiptsByDefault: false});
+            expect(result).to.deep.equal({ toto: true, isRequestingReadReceiptsByDefault: false });
             done();
           });
 

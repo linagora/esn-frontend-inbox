@@ -3,7 +3,7 @@
 /* global chai: false */
 /* global sinon: false */
 
-var expect = chai.expect;
+const { expect } = chai;
 
 describe('The inboxAttachmentUploadService service', function() {
   var $rootScope;
@@ -56,7 +56,7 @@ describe('The inboxAttachmentUploadService service', function() {
         promise: $q.defer().promise
       });
 
-      var attachment = {attachmentType: 'jmap'};
+      var attachment = { attachmentType: 'jmap' };
 
       inboxAttachmentUploadService._upload(attachment);
 
@@ -72,7 +72,7 @@ describe('The inboxAttachmentUploadService service', function() {
         };
       };
 
-      var attachment = {attachmentType: 'jmap'};
+      var attachment = { attachmentType: 'jmap' };
 
       inboxAttachmentUploadService._upload(attachment);
 
@@ -87,7 +87,7 @@ describe('The inboxAttachmentUploadService service', function() {
         };
       };
 
-      var attachment = {attachmentType: 'jmap'};
+      var attachment = { attachmentType: 'jmap' };
 
       inboxAttachmentUploadService._upload(attachment);
 
@@ -106,7 +106,7 @@ describe('The inboxAttachmentUploadService service', function() {
 
       attachmentProviderMock.handleErrorOnUploading = sinon.spy();
 
-      var attachment = {attachmentType: 'provider'};
+      var attachment = { attachmentType: 'provider' };
 
       inboxAttachmentUploadService._upload(attachment);
       $rootScope.$digest();
@@ -124,7 +124,7 @@ describe('The inboxAttachmentUploadService service', function() {
         };
       };
 
-      var attachment = {attachmentType: 'jmap'};
+      var attachment = { attachmentType: 'jmap' };
 
       inboxAttachmentUploadService._upload(attachment);
 
@@ -139,7 +139,7 @@ describe('The inboxAttachmentUploadService service', function() {
     it('should set upload status error when there is no corresponding attachment provider', function() {
       attachmentProviderMock = null;
 
-      var attachment = {attachmentType: 'jmap'};
+      var attachment = { attachmentType: 'jmap' };
 
       inboxAttachmentUploadService._upload(attachment);
 
@@ -183,9 +183,9 @@ describe('The inboxAttachmentUploadService service', function() {
         type: DEFAULT_FILE_TYPE
       };
 
-      inboxAttachmentUploadService.uploadAttachments([{name: 'name', size: 1}]).then(function(attachments) {
+      inboxAttachmentUploadService.uploadAttachments([{ name: 'name', size: 1 }]).then(function(attachments) {
         expect(attachments[0]).to.shallowDeepEqual(expectedAttachment);
-        expect(inboxAttachmentUploadService._upload).to.have.been.calledWith(sinon.match({name: 'name'}));
+        expect(inboxAttachmentUploadService._upload).to.have.been.calledWith(sinon.match({ name: 'name' }));
 
         done();
       });
@@ -210,8 +210,8 @@ describe('The inboxAttachmentUploadService service', function() {
 
       it('should show alternative uploader modal and not add the attachment if there is no alternative upload provider', function(done) {
         var largeFiles = [
-          {name: 'name1', size: DEFAULT_MAX_SIZE_UPLOAD + 1},
-          {name: 'name2', size: DEFAULT_MAX_SIZE_UPLOAD + 2}
+          { name: 'name1', size: DEFAULT_MAX_SIZE_UPLOAD + 1 },
+          { name: 'name2', size: DEFAULT_MAX_SIZE_UPLOAD + 2 }
         ];
 
         inboxAttachmentUploadService.uploadAttachments(largeFiles).then(function(attachments) {
@@ -225,19 +225,19 @@ describe('The inboxAttachmentUploadService service', function() {
       });
 
       it('should show alternative uploader modal and add the attachment if there is alternative upload provider', function(done) {
-        var largeFiles = [{name: 'name1', size: DEFAULT_MAX_SIZE_UPLOAD + 1}];
+        var largeFiles = [{ name: 'name1', size: DEFAULT_MAX_SIZE_UPLOAD + 1 }];
 
         inboxAttachmentAlternativeUploaderModal.show = function(files, maxSizeUpload, onUpload) {
           onUpload({
             fileToAttachment: function(file) {
-              return {name: file.name, size: file.size};
+              return { name: file.name, size: file.size };
             }
           }, files);
         };
 
         inboxAttachmentUploadService.uploadAttachments(largeFiles).then(function(attachments) {
           expect(attachments).to.deep.equal(largeFiles);
-          expect(inboxAttachmentUploadService._upload).to.have.been.calledWith(sinon.match({name: 'name1'}));
+          expect(inboxAttachmentUploadService._upload).to.have.been.calledWith(sinon.match({ name: 'name1' }));
           done();
         });
 

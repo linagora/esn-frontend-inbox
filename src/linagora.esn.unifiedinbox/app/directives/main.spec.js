@@ -1,17 +1,16 @@
 'use strict';
 
-/* global chai: false */
-/* global sinon: false */
+/* global chai, sinon, _: false */
 
-var expect = chai.expect;
+const { expect } = chai;
 
 describe('The linagora.esn.unifiedinbox Main module directives', function() {
 
   var $compile, $rootScope, $scope, $timeout, $templateCache, element, jmapClient, inboxPlugins,
-      iFrameResize = angular.noop, elementScrollService, $stateParams, $dropdown,
-      isMobile, searchService, windowMock, fakeNotification,
-      sendEmailFakePromise, inboxConfigMock, inboxJmapItemService, INBOX_EVENTS,
-      $httpBackend, inboxCustomRoleMailboxService;
+    iFrameResize = angular.noop, elementScrollService, $stateParams, $dropdown,
+    isMobile, searchService, windowMock, fakeNotification,
+    sendEmailFakePromise, inboxConfigMock, inboxJmapItemService, INBOX_EVENTS,
+    $httpBackend, inboxCustomRoleMailboxService;
 
   beforeEach(function() {
     angular.module('esn.iframe-resizer-wrapper', []);
@@ -80,7 +79,7 @@ describe('The linagora.esn.unifiedinbox Main module directives', function() {
   }));
 
   beforeEach(angular.mock.inject(function(_$compile_, _$rootScope_, _$timeout_, _$stateParams_, _$templateCache_, _$httpBackend_, session,
-                             _inboxJmapItemService_, _inboxPlugins_, _inboxCustomRoleMailboxService_, _INBOX_EVENTS_) {
+    _inboxJmapItemService_, _inboxPlugins_, _inboxCustomRoleMailboxService_, _INBOX_EVENTS_) {
     $compile = _$compile_;
     $rootScope = _$rootScope_;
     $timeout = _$timeout_;
@@ -283,7 +282,7 @@ describe('The linagora.esn.unifiedinbox Main module directives', function() {
         role: {
           value: null
         },
-          qualifiedName: 'test'
+        qualifiedName: 'test'
       };
       compileDirective('<mailbox-display mailbox="mailbox" />');
 
@@ -295,7 +294,7 @@ describe('The linagora.esn.unifiedinbox Main module directives', function() {
         role: {
           value: 'testrole'
         },
-          qualifiedName: 'test'
+        qualifiedName: 'test'
       };
       compileDirective('<mailbox-display mailbox="mailbox" />');
 
@@ -307,8 +306,8 @@ describe('The linagora.esn.unifiedinbox Main module directives', function() {
         role: {
           value: 'custom role'
         },
-          qualifiedName: 'test',
-          icon: 'mdi-custom-icon'
+        qualifiedName: 'test',
+        icon: 'mdi-custom-icon'
       };
       compileDirective('<mailbox-display mailbox="mailbox" />');
 
@@ -333,7 +332,7 @@ describe('The linagora.esn.unifiedinbox Main module directives', function() {
         role: {
           value: null
         },
-          qualifiedName: 'test'
+        qualifiedName: 'test'
       };
       compileDirective('<mailbox-display mailbox="mailbox" hide-badge=true />');
 
@@ -374,7 +373,7 @@ describe('The linagora.esn.unifiedinbox Main module directives', function() {
 
         it('should delegate to inboxJmapItemService.moveMultipleItems', function() {
           var item1 = { id: 1 },
-              item2 = { id: 2 };
+            item2 = { id: 2 };
 
           isolateScope.onDrop([item1, item2]);
 
@@ -546,7 +545,7 @@ describe('The linagora.esn.unifiedinbox Main module directives', function() {
 
     it('should scrolldown element when a tag is added and broadcast an event to inform the fullscreen-edit-form to scrolldown', function() {
       var scope = compileDirectiveThenGetScope();
-      var recipient = {displayName: 'user@domain'};
+      var recipient = { displayName: 'user@domain' };
 
       scope.onTagAdded(recipient);
 
@@ -570,14 +569,14 @@ describe('The linagora.esn.unifiedinbox Main module directives', function() {
     });
 
     it('should fallback to email when name is missing', function() {
-        $scope.model = [{ email: 'bob@example.com' }];
+      $scope.model = [{ email: 'bob@example.com' }];
 
-        expect(compileDirectiveThenGetScope().tags).to.deep.equal([
-          {
-            email: 'bob@example.com',
-            name: 'bob@example.com'
-          }
-        ]);
+      expect(compileDirectiveThenGetScope().tags).to.deep.equal([
+        {
+          email: 'bob@example.com',
+          name: 'bob@example.com'
+        }
+      ]);
     });
 
     it('should accept to add a new tag if email does not matche the email of an existing tag', function() {
@@ -609,7 +608,7 @@ describe('The linagora.esn.unifiedinbox Main module directives', function() {
 
     it('should make sure "email" is defined', function() {
       var scope = compileDirectiveThenGetScope(),
-          recipient = { name: 'a@a.com' };
+        recipient = { name: 'a@a.com' };
 
       scope.onTagAdding(recipient);
 
@@ -838,9 +837,9 @@ describe('The linagora.esn.unifiedinbox Main module directives', function() {
 
     beforeEach(function() {
       $scope.filters = [
-        {id: 'filter_1', displayName: 'display filter 1'},
-        {id: 'filter_2', displayName: 'display filter 2'},
-        {id: 'filter_3', displayName: 'display filter 3'}
+        { id: 'filter_1', displayName: 'display filter 1' },
+        { id: 'filter_2', displayName: 'display filter 2' },
+        { id: 'filter_3', displayName: 'display filter 3' }
       ];
 
       element = compileDirective('<inbox-filter-button filters="filters"/>');
@@ -857,9 +856,9 @@ describe('The linagora.esn.unifiedinbox Main module directives', function() {
 
     it('should keep the checked filter and indicate set filtered to true', function() {
       $scope.filters = [
-        {id: 'filter_1', displayName: 'display filter 1', checked: true},
-        {id: 'filter_2', displayName: 'display filter 2'},
-        {id: 'filter_3', displayName: 'display filter 3', checked: true}
+        { id: 'filter_1', displayName: 'display filter 1', checked: true },
+        { id: 'filter_2', displayName: 'display filter 2' },
+        { id: 'filter_3', displayName: 'display filter 3', checked: true }
       ];
       scope = compileDirective('<inbox-filter-button filters="filters"/>').isolateScope();
 

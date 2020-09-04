@@ -3,5 +3,5 @@
 angular.module('linagora.esn.unifiedinbox')
 
   .component('inboxSubheaderNotSpamButton', {
-    template: require("./subheader-not-spam-button.pug")
+    template: require('./subheader-not-spam-button.pug')
   });

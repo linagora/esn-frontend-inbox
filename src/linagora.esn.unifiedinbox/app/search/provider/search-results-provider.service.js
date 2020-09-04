@@ -1,7 +1,7 @@
 'use strict';
 
 require('../../providers.js');
-require('../../search/provider/search-submit.service.js');
+require('./search-submit.service.js');
 
 angular.module('linagora.esn.unifiedinbox').factory('inboxSearchResultsProvider', inboxSearchResultsProvider);
 

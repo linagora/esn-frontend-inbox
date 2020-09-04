@@ -2,6 +2,6 @@
 
 angular.module('linagora.esn.unifiedinbox')
   .component('inboxForwardings', {
-    template: require("./inbox-forwardings.pug"),
+    template: require('./inbox-forwardings.pug'),
     controller: 'InboxForwardingsController'
   });

@@ -31,4 +31,4 @@ angular.module('linagora.esn.unifiedinbox')
   .run(function($templateCache) {
     $templateCache.put('/unifiedinbox/app/services/plugins/jmap/jmap-empty-message.html', require('./jmap-empty-message.pug'));
     $templateCache.put('/unifiedinbox/app/services/plugins/jmap/jmap-empty-message-custom-folder.html', require('./jmap-empty-message-custom-folder.pug'));
-  })
+  });

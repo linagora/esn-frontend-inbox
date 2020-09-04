@@ -2,7 +2,7 @@
 
 /* global chai: false */
 
-var expect = chai.expect;
+const { expect } = chai;
 
 describe('The inboxFilterVisibleSharedMailboxes filter', function() {
 
@@ -18,15 +18,15 @@ describe('The inboxFilterVisibleSharedMailboxes filter', function() {
 
   it('should filter hidden shared mailboxes out', function() {
     var mailboxes = [
-        { role: { value: 'outbox' }},
-        { id: 2, namespace: { type: 'delegated' }, isDisplayed: false},
+        { role: { value: 'outbox' } },
+        { id: 2, namespace: { type: 'delegated' }, isDisplayed: false },
         { id: 3, name: '3', namespace: { type: 'personal' } },
-        { id: 4, namespace: { type: 'delegated' }},
-        { role: { value: undefined }},
-        { role: { value: 'inbox' }}
+        { id: 4, namespace: { type: 'delegated' } },
+        { role: { value: undefined } },
+        { role: { value: 'inbox' } }
       ],
       expectedMailboxes = [
-        { id: 4, namespace: { type: 'delegated' }}
+        { id: 4, namespace: { type: 'delegated' } }
       ];
 
     expect(inboxFilterVisibleSharedMailboxes(mailboxes)).to.deep.equal(expectedMailboxes);

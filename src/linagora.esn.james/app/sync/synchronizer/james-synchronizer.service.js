@@ -4,7 +4,7 @@ require('./james-group-synchronizer.service.js');
 
 angular.module('linagora.esn.james')
 
-.factory('jamesSynchronizerService', jamesSynchronizerService);
+  .factory('jamesSynchronizerService', jamesSynchronizerService);
 
 function jamesSynchronizerService(
   jamesGroupSynchronizer

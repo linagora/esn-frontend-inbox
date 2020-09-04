@@ -3,7 +3,7 @@
 /* global chai: false */
 /* global sinon: false */
 
-var expect = chai.expect;
+const { expect } = chai;
 
 describe('The jamesGroupSynchronizer service', function() {
   var $rootScope, $q;

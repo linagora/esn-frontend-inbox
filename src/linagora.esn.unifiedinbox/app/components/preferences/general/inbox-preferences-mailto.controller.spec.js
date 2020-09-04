@@ -2,13 +2,13 @@
 
 /* global chai, sinon: false */
 
-var expect = chai.expect;
+const { expect } = chai;
 
 describe('The inboxPreferencesMailtoController', function() {
 
   var $controller, $rootScope, $scope, $window, $q,
-      esnUserConfigurationService,
-      INBOX_MODULE_NAME;
+    esnUserConfigurationService,
+    INBOX_MODULE_NAME;
 
   beforeEach(function() {
     angular.mock.module('linagora.esn.unifiedinbox');

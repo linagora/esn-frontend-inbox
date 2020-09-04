@@ -1,9 +1,6 @@
 'use strict';
 
-const _ = require('lodash');
-
 require('../../../services/mailboxes-filter/mailboxes-filter-service.js');
-
 
 angular.module('linagora.esn.unifiedinbox')
   .controller('inboxConfigurationFiltersController', inboxConfigurationFiltersController);

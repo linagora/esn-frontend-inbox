@@ -2,7 +2,7 @@
 
 /* global chai: false */
 
-var expect = chai.expect;
+const { expect } = chai;
 
 describe('The inboxItemDate filter', function() {
 
@@ -12,12 +12,12 @@ describe('The inboxItemDate filter', function() {
     angular.mock.module('esn.inbox.libs', function($provide) {
       $provide.value('esnConfig', function(key) {
         if (key === 'core.language') {
-          return {then: function(cb) { cb('en'); }};
-        } else if (key === 'core.datetime') {
-          return {then: function(cb) { cb({timeZone: 'Europe/Berlin'}); }};
+          return { then: function(cb) { cb('en'); } };
+        } if (key === 'core.datetime') {
+          return { then: function(cb) { cb({ timeZone: 'Europe/Berlin' }); } };
         }
 
-        return {then: function(cb) { cb(); }};
+        return { then: function(cb) { cb(); } };
       });
     });
   });

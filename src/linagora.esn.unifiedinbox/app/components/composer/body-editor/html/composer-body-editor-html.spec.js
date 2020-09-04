@@ -2,7 +2,7 @@
 
 /* global chai: false, sinon: false */
 
-var expect = chai.expect;
+const { expect } = chai;
 
 describe('The inboxComposerBodyEditorHtml component', function() {
 
@@ -189,10 +189,10 @@ describe('The inboxComposerBodyEditorHtml component', function() {
     });
 
     it('should insert the base64 encoded images in summernote and not attach them to the mail', function(done) {
-      var image1 = new File(['wdghdxsfhgwdg'], 'file1', {type: 'image/jpeg'});
-      var image2 = new File(['dgswdgswdgd'], 'file2', {type: 'image/jpeg'});
-      var pdf1 = new File(['dwgdgwdgwdg'], 'file2', {type: 'application/pdf'});
-      var pdf2 = new File(['wdgwdgxwfdgh'], 'file2', {type: 'application/pdf'});
+      var image1 = new File(['wdghdxsfhgwdg'], 'file1', { type: 'image/jpeg' });
+      var image2 = new File(['dgswdgswdgd'], 'file2', { type: 'image/jpeg' });
+      var pdf1 = new File(['dwgdgwdgwdg'], 'file2', { type: 'application/pdf' });
+      var pdf2 = new File(['wdgwdgxwfdgh'], 'file2', { type: 'application/pdf' });
 
       controller.onAttachmentsUpload = undefined;
       sinon.spy($.fn, 'summernote');
@@ -213,10 +213,10 @@ describe('The inboxComposerBodyEditorHtml component', function() {
     });
 
     it('should attach files that are not images', function(done) {
-      var image1 = new File(['wdghdxsfhgwdg'], 'file1', {type: 'image/jpeg'});
-      var image2 = new File(['dgswdgswdgd'], 'file2', {type: 'image/jpeg'});
-      var pdf1 = new File(['dwgdgwdgwdg'], 'file3', {type: 'application/pdf'});
-      var pdf2 = new File(['wdgwdgxwfdgh'], 'file4', {type: 'application/pdf'});
+      var image1 = new File(['wdghdxsfhgwdg'], 'file1', { type: 'image/jpeg' });
+      var image2 = new File(['dgswdgswdgd'], 'file2', { type: 'image/jpeg' });
+      var pdf1 = new File(['dwgdgwdgwdg'], 'file3', { type: 'application/pdf' });
+      var pdf2 = new File(['wdgwdgxwfdgh'], 'file4', { type: 'application/pdf' });
 
       controller.onAttachmentsUpload = sinon.stub().returns($q.when());
 
@@ -228,7 +228,7 @@ describe('The inboxComposerBodyEditorHtml component', function() {
       }).then(function() {
         expect(controller.onAttachmentsUpload).to.have.been.calledOnce;
         expect(controller.onAttachmentsUpload.firstCall).to.have.been
-          .calledWith(sinon.match({attachments: sinon.match.array.contains([pdf1, pdf2])}));
+          .calledWith(sinon.match({ attachments: sinon.match.array.contains([pdf1, pdf2]) }));
         done();
       });
 

@@ -1,10 +1,10 @@
 'use strict';
 
-const angular = require("esn-frontend-common-libs/src/angular-common");
+const angular = require('esn-frontend-common-libs/src/angular-common');
 
 angular.module('linagora.esn.unifiedinbox')
   .component('inboxFolderSettings', {
-    template: require("./folder-settings.pug"),
+    template: require('./folder-settings.pug'),
     bindings: {
       mailbox: '=',
       isFolder: '<',

@@ -6,6 +6,6 @@ angular
     return {
       controllerAs: 'ctrl',
       controller: 'inboxSearchMessageListItemController',
-      template: require("./message-list-item.pug")
+      template: require('./message-list-item.pug')
     };
   });

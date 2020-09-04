@@ -2,7 +2,7 @@
 
 /* global chai, sinon: false */
 
-var expect = chai.expect;
+const { expect } = chai;
 
 describe('The inboxAttachmentAlternativeUploaderModalController controller', function() {
   var $controller;

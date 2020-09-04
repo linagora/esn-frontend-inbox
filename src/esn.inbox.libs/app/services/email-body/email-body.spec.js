@@ -1,8 +1,8 @@
 'use strict';
 
-/* global chai: false */
+/* global chai, _: false */
 
-var expect = chai.expect;
+const { expect } = chai;
 
 describe('The emailBodyService factory', function() {
 
@@ -17,8 +17,8 @@ describe('The emailBodyService factory', function() {
         return $q.when().then(function() {
           if (key === 'core.language') {
             return $q.when('en');
-          } else if (key === 'core.datetime') {
-            return $q.when({timeZone: 'Europe/Berlin'});
+          } if (key === 'core.datetime') {
+            return $q.when({ timeZone: 'Europe/Berlin' });
           }
 
           return $q.when();
