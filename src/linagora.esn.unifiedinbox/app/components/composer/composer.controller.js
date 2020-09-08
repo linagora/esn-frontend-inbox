@@ -50,6 +50,7 @@ angular.module('linagora.esn.unifiedinbox')
     /////
 
     function $onInit() {
+      _removeDuplicateRecipients(self.message);
       inboxEmailComposingHookService.preComposing(self.message);
       self.onTryClose({ callback: self.tryClose });
       self.draft = new InboxDraft(self.message);
@@ -260,6 +261,12 @@ angular.module('linagora.esn.unifiedinbox')
         emailSendingService.addReadReceiptRequest(self.message);
       } else {
         emailSendingService.removeReadReceiptRequest(self.message);
+      }
+    }
+
+    function _removeDuplicateRecipients(email) {
+      if (email && email.to) {
+        email.to = _.uniq(email.to, to => to.email) || [];
       }
     }
   });
