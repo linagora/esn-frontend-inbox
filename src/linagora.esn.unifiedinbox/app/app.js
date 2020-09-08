@@ -195,6 +195,7 @@ require('./directives/attachment-drag-and-drop-handler.js');
 require('./directives/dragula-disable-scroll-on.js');
 require('./directives/lists.js');
 require('./directives/main.js');
+require('./directives/op-inbox-compose');
 require('./directives/sidebar.js');
 require('./directives/subheaders.js');
 require('./module-registry.run.js');
