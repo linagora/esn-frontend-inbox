@@ -186,6 +186,43 @@ describe('The inboxComposerController controller', function() {
       expect(ctrl.onTitleUpdate).to.have.been.calledWith({ $title: 'subject' });
     });
 
+    it('should remove duplicate email adresses in the To property', () => {
+      ctrl.message = {
+        to: [
+          { displayName: 'user1', email: 'user1@test.com' },
+          { displayName: 'user1', email: 'user1@test.com' },
+          { displayName: 'user1', email: 'user1@test.com' }
+        ]
+      };
+
+      ctrl.$onInit();
+      expect(ctrl.message.to).to.have.length(1);
+      expect(ctrl.message.to).to.eql([{ displayName: 'user1', email: 'user1@test.com' }]);
+    });
+
+    it('should remove duplicate email adresses in the To property when there are multiple duplicates', () => {
+      ctrl.message = {
+        to: [
+          { displayName: 'user1', email: 'user1@test.com' },
+          { displayName: 'user1', email: 'user1@test.com' },
+          { displayName: 'user2', email: 'user2@test.com' },
+          { displayName: 'user2', email: 'user2@test.com' },
+          { displayName: 'user3', email: 'user3@test.com' },
+          { displayName: 'user3', email: 'user3@test.com' }
+        ]
+      };
+
+      const expected = [
+        { displayName: 'user1', email: 'user1@test.com' },
+        { displayName: 'user2', email: 'user2@test.com' },
+        { displayName: 'user3', email: 'user3@test.com' }
+      ];
+
+      ctrl.$onInit();
+      expect(ctrl.message.to).to.have.length(3);
+      expect(ctrl.message.to).to.eql(expected);
+    });
+
     describe('the attachment holder', function() {
       describe('the attachment getters and setters', function() {
         it('getter should return an empty list when message is undesfined or has no attachments yet', function() {
