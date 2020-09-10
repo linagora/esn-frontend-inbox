@@ -282,6 +282,14 @@ module.exports = {
             loader: 'pug-loader'
           }
         ]
+      },
+      {
+        test: path.resolve(__dirname, 'node_modules/esn-frontend-mailto-handler/src/lib/directive.js'),
+        use: [
+          {
+            loader: 'ignore-loader'
+          }
+        ]
       }
     ]
   }
