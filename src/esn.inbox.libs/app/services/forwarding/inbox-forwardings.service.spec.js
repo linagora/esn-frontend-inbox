@@ -8,7 +8,7 @@ const { expect } = chai;
 describe('The inboxForwardingsService service', function() {
   var $rootScope, inboxForwardingClient, inboxForwardingsService;
 
-  beforeEach(angular.mock.module('linagora.esn.unifiedinbox'));
+  beforeEach(angular.mock.module('esn.inbox.libs'));
 
   beforeEach(
     angular.mock.inject(function(

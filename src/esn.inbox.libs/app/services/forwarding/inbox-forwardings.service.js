@@ -2,7 +2,7 @@
 
 require('./inbox-forwardings-api-client.service.js');
 
-angular.module('linagora.esn.unifiedinbox')
+angular.module('esn.inbox.libs')
   .factory('inboxForwardingsService', function($q, inboxForwardingClient) {
 
     return {

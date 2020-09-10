@@ -79,21 +79,6 @@ angular.module('esn.inbox.libs')
     LOADED: 'LOADED',
     ERROR: 'ERROR'
   })
-  .constant('INBOX_MODULE_METADATA', {
-    id: 'linagora.esn.unifiedinbox',
-    title: 'Unified Inbox',
-    icon: '/unifiedinbox/images/inbox-icon.svg',
-    homePage: 'unifiedinbox',
-    config: {
-      template: 'inbox-config-form',
-      displayIn: {
-        user: false,
-        domain: true,
-        platform: true
-      }
-    },
-    disableable: true,
-    isDisplayedByDefault: true
-  })
+
   .constant('INBOX_SIGNATURE_SEPARATOR', '-- \n') // https://tools.ietf.org/html/rfc3676#section-4.3
   .constant('INBOX_ATTACHMENT_TYPE_JMAP', 'jmap');

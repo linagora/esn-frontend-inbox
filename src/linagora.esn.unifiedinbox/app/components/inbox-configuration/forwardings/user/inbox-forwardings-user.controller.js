@@ -2,8 +2,8 @@
 
 const _ = require('lodash');
 
-require('../../../../services/forwardings/inbox-forwardings.service.js');
-require('../../../../services/forwardings/inbox-forwardings-api-client.service.js');
+require('../../../../../../esn.inbox.libs/app/services/forwarding/inbox-forwardings-api-client.service.js');
+require('../../../../../../esn.inbox.libs/app/services/forwarding/inbox-forwardings.service.js');
 
 angular.module('linagora.esn.unifiedinbox')
   .controller('InboxForwardingsUserController', InboxForwardingsUserController);

@@ -1,5 +1,7 @@
 'use strict';
 
+require('../inbox-restangular.service.js');
+
 angular.module('esn.inbox.libs')
   .factory('inboxForwardingClient', inboxForwardingClient);
 
