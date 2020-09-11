@@ -84,7 +84,7 @@ angular.module('linagora.esn.unifiedinbox')
     }
 
     function warnSaveDraft() {
-      self.needsSave && notificationFactory.weakError('Note', 'You should save your email to not loose it');
+      self.needsSave && notificationFactory.weakError('Note', 'You should save your email in order not to lose it');
     }
 
     function updateSaveFlag() {
