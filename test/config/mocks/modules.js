@@ -6,6 +6,7 @@
  */
 angular.module('esn.sidebar', []);
 angular.module('hl.sticky', []);
+angular.module('awesome-angular-swipe', []);
 angular.module('esn.shortcuts', [])
   .factory('esnShortcuts', function() {
     return {
