@@ -3,6 +3,7 @@
 angular.module('linagora.esn.unifiedinbox', [
   'restangular',
   'ngTagsInput',
+  'mp.autoFocus',
   'esn.router',
   'angularMoment',
   'esn.notification',
