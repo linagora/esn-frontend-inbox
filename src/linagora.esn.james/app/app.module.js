@@ -42,8 +42,6 @@ require('./domain/alias/item/james-domain-alias-item.controller.js');
 require('./domain/alias/james-domain-alias.component.js');
 require('./domain/alias/james-domain-alias.controller.js');
 require('./domain/alias/james-domain-alias.run.js');
-require('./maintenance/james-maintenance.component.js');
-require('./maintenance/james-maintenance.controller.js');
 require('./quota/domain/james-quota-domain.component.js');
 require('./quota/domain/james-quota-domain.controller.js');
 require('./quota/domain/james-quota-domain.run.js');
