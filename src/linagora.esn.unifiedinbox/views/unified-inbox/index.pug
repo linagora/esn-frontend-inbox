@@ -1,7 +1,7 @@
 sub-header(ng-if="!inbox.list.isElementOpened")
   unified-view-subheader
 
-.inbox-list-preview-pane.ui-view(name="preview-pane", noanimation)
+.inbox-list-preview-pane.ui-view(name="preview-pane", noanimation="noanimation")
 .inbox-list-sidebar.ui-view(name="sidebar", ng-class="{ offscreen : !inbox.rightSidebar.isVisible || inbox.list.isElementOpened }")
 
 .inbox-list(ng-class="inbox.rightSidebar.isVisible ? 'has-sidebar-open' : 'has-sidebar-close'")
