@@ -101,25 +101,6 @@ require('../services.js');
       };
     })
 
-    .directive('inboxEmailer', function(session) {
-      return {
-        restrict: 'E',
-        replace: true,
-        controller: 'resolveEmailerController',
-        scope: {
-          emailer: '=',
-          hideEmail: '=?',
-          highlight: '@?'
-        },
-        template: require('../../views/partials/emailer/inbox-emailer.pug'),
-        link: function(scope) {
-          scope.$watch('emailer', function(emailer) {
-            scope.me = emailer && emailer.email && emailer.email === session.user.preferredEmail;
-          });
-        }
-      };
-    })
-
     .directive('inboxEmailerAvatar', function() {
       return {
         restrict: 'E',
@@ -141,58 +122,6 @@ require('../services.js');
           emailer: '='
         },
         template: require('../../views/partials/emailer/inbox-emailer-avatar-popover.pug')
-      };
-    })
-
-    .directive('inboxEmailerGroup', function() {
-      return {
-        restrict: 'E',
-        replace: true,
-        scope: {
-          group: '=',
-          displayInline: '@?'
-        },
-        template: require('../../views/partials/emailer/inbox-emailer-group.pug')
-      };
-    })
-
-    .directive('inboxEmailerDisplay', function(emailSendingService) {
-      function link(scope) {
-        var groupLabels = { to: 'To', cc: 'CC', bcc: 'BCC' },
-          groups = _.keys(groupLabels);
-
-        _init();
-
-        function findAndAssignPreviewEmailer(find) {
-          for (var i = 0; i < groups.length; i++) {
-            var group = groups[i],
-              emailer = find(scope.email[group]);
-
-            if (emailer) {
-              scope.previewEmailer = emailer;
-              scope.previewEmailerGroup = groupLabels[group];
-
-              break;
-            }
-          }
-        }
-
-        function _init() {
-          findAndAssignPreviewEmailer(_.head);
-
-          scope.collapsed = true;
-          scope.numberOfHiddenEmailer = emailSendingService.countRecipients(scope.email) - 1;
-          scope.showMoreButton = scope.numberOfHiddenEmailer > 0;
-        }
-      }
-
-      return {
-        restrict: 'E',
-        scope: {
-          email: '='
-        },
-        template: require('../../views/partials/emailer/inbox-emailer-display.pug'),
-        link: link
       };
     })
 

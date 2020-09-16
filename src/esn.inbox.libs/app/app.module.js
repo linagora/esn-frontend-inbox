@@ -2,6 +2,7 @@
 
 angular.module('esn.inbox.libs', [
   'restangular',
+  'esn.router',
   'esn.async-action',
   'esn.background',
   'esn.configuration',
@@ -9,10 +10,12 @@ angular.module('esn.inbox.libs', [
   'esn.i18n',
   'esn.datetime',
   'esn.session',
+  'esn.highlight',
   'esn.user-configuration',
   'ng.deviceDetector'
 ]);
 
+require('esn-frontend-common-libs/src/frontend/js/modules/esn.router.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/async-action.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/background.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/config/config.module.js');
@@ -21,6 +24,7 @@ require('esn-frontend-common-libs/src/frontend/js/modules/i18n/i18n.module.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/session.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/user-configuration/user-configuration.module.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/datetime/datetime.module.js');
+require('esn-frontend-common-libs/src/frontend/js/modules/highlight.js');
 require('jmap-draft-client/dist/jmap-draft-client.js');
 
 require('./app.config');
@@ -57,3 +61,7 @@ require('./filters/filter-descendant-mailboxes.js');
 require('./filters/item-date.js');
 require('./filters/quote/quote.js');
 require('./filters/visible-shared-mailboxes.js');
+require('./controllers/resolve-emailer.controller');
+require('./directives/inbox-emailer/inbox-emailer.directive');
+require('./directives/inbox-emailer-group/inbox-emailer-group.directive');
+require('./directives/inbox-emailer-display/inbox-emailer-display.directive');
