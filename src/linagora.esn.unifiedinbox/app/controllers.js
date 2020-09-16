@@ -689,25 +689,6 @@ require('./services/common/inbox-utils.service.js');
       }
     })
 
-    .controller('resolveEmailerController', function($scope, $q) {
-      var self = this;
-
-      self.resolveAvatar = resolveAvatar;
-
-      $scope.$watch('emailer', function(emailer) {
-        if (emailer && emailer.resolve) {
-          emailer.resolve();
-        }
-      });
-
-      /////
-
-      function resolveAvatar() {
-        return $scope.emailer ? $scope.emailer.resolve() : $q.when({});
-
-      }
-    })
-
     .controller('inboxListSubheaderController', function($state, $stateParams,
       inboxSelectionService, inboxJmapItemService, inboxMailboxesService, inboxPlugins, watchDynamicTranslatedValue) {
       var self = this,

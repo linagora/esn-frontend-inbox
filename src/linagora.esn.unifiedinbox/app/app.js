@@ -4,7 +4,6 @@ angular.module('linagora.esn.unifiedinbox', [
   'restangular',
   'ngTagsInput',
   'mp.autoFocus',
-  'esn.router',
   'angularMoment',
   'esn.notification',
   'esn.iframe-resizer-wrapper',
@@ -37,7 +36,6 @@ angular.module('linagora.esn.unifiedinbox', [
   'esn.user',
   'esn.attachment-list',
   'esn.avatar',
-  'esn.highlight',
   'esn.registry',
   'material.components.virtualRepeat',
   'esn.module-registry',
@@ -62,7 +60,6 @@ angular.module('linagora.esn.unifiedinbox', [
 ]);
 
 require('../../esn.inbox.libs/app/app.module.js');
-require('esn-frontend-common-libs/src/frontend/js/modules/esn.router.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/notification.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/iframe-resizer-wrapper.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/file.js');
@@ -91,7 +88,6 @@ require('esn-frontend-common-libs/src/frontend/js/modules/search/search.module.j
 require('esn-frontend-common-libs/src/frontend/js/modules/user/user.module.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/attachment/list/attachment-list.module.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/avatar.js');
-require('esn-frontend-common-libs/src/frontend/js/modules/highlight.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/registry.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/module-registry/module-registry.module.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/ui.js');
