@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('linagora.esn.unifiedinbox')
+angular.module('esn.inbox.libs')
 
   .component('inboxReadReceipt', {
     template: require('./read-receipt.pug'),

@@ -1,9 +1,9 @@
 'use strict';
 
-require('../../../services/jmap-item/jmap-item-service.js');
-require('../../../services.js');
+require('../../../../../linagora.esn.unifiedinbox/app/services/jmap-item/jmap-item-service.js');
+require('../../../../../linagora.esn.unifiedinbox/app/services.js');
 
-angular.module('linagora.esn.unifiedinbox')
+angular.module('esn.inbox.libs')
 
   .controller('inboxReadReceiptController', function(inboxJmapItemService, emailSendingService) {
     var self = this;

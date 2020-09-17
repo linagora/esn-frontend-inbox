@@ -14,7 +14,7 @@ describe('The inboxReadReceiptController controller', function() {
     message;
 
   beforeEach(function() {
-    angular.mock.module('linagora.esn.unifiedinbox');
+    angular.mock.module('esn.inbox.libs');
   });
 
   beforeEach(function() {

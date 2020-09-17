@@ -147,8 +147,6 @@ require('./components/inbox-configuration/forwardings/subheader/inbox-forwarding
 require('./components/inbox-configuration/forwardings/user/inbox-forwardings-user.component.js');
 require('./components/inbox-configuration/forwardings/user/inbox-forwardings-user.controller.js');
 require('./components/inbox-configuration/forwardings/user/inbox-forwardings-user.run.js');
-require('./components/inbox-configuration/read-receipt/read-receipt.component.js');
-require('./components/inbox-configuration/read-receipt/read-receipt.controller.js');
 require('./components/inbox-configuration/read-receipt/request-receipts/request-receipts.controller.js');
 require('./components/inbox-configuration/read-receipt/request-receipts/request-receipts.js');
 require('./components/inbox-configuration/read-receipt/request-receipts/subheader/request-receipts-subheader.js');
