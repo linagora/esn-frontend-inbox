@@ -9,7 +9,7 @@ describe('The inboxMailboxesService factory', function() {
   var inboxMailboxesCache, inboxMailboxesService, jmapClient, $rootScope, jmapDraft, notificationFactory,
     inboxConfigMock, INBOX_HIDDEN_SHAREDMAILBOXES_CONFIG_KEY, INBOX_ROLE_NAMESPACE_TYPES, INBOX_EVENTS;
 
-  beforeEach(angular.mock.module('linagora.esn.unifiedinbox', function($provide) {
+  beforeEach(angular.mock.module('esn.inbox.libs', function($provide) {
     jmapClient = {
       getMailboxes: function() { return $q.when([]); }
     };

@@ -8,7 +8,7 @@ describe('The inboxCustomRoleMailboxService factory', function() {
   var inboxCustomRoleMailboxService;
 
   beforeEach(function() {
-    angular.mock.module('linagora.esn.unifiedinbox');
+    angular.mock.module('esn.inbox.libs');
   });
 
   beforeEach(angular.mock.inject(function(_inboxCustomRoleMailboxService_) {

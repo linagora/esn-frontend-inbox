@@ -4,7 +4,7 @@ const _ = require('lodash');
 
 require('../filtered-list/filtered-list.js');
 
-angular.module('linagora.esn.unifiedinbox').factory('inboxSelectionService', inboxSelectionService);
+angular.module('esn.inbox.libs').factory('inboxSelectionService', inboxSelectionService);
 
 function inboxSelectionService(inboxFilteredList) {
   var selectedItems = [];

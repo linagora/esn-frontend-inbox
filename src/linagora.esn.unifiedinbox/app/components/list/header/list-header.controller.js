@@ -1,7 +1,5 @@
 'use strict';
 
-require('../../../services/filtering/filtering-service.js');
-
 angular.module('linagora.esn.unifiedinbox')
 
   .controller('inboxListHeaderController', function($scope, esnDatetimeService, inboxFilteringService, INBOX_EVENTS) {

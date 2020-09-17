@@ -7,7 +7,7 @@ const { expect } = chai;
 describe('The inboxEmailSendingHookService', function() {
   var $rootScope, inboxEmailSendingHookService;
 
-  beforeEach(angular.mock.module('linagora.esn.unifiedinbox'));
+  beforeEach(angular.mock.module('esn.inbox.libs'));
 
   beforeEach(angular.mock.inject(function(_$rootScope_, _inboxEmailSendingHookService_) {
     inboxEmailSendingHookService = _inboxEmailSendingHookService_;

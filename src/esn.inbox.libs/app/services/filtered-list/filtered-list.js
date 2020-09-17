@@ -4,7 +4,7 @@ const _ = require('lodash');
 
 require('../filtering/filtering-service.js');
 
-angular.module('linagora.esn.unifiedinbox').factory('inboxFilteredList', inboxFilteredList);
+angular.module('esn.inbox.libs').factory('inboxFilteredList', inboxFilteredList);
 
 function inboxFilteredList(
   $rootScope,

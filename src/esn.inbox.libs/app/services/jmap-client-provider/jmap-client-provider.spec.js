@@ -9,7 +9,7 @@ describe('The jmapClientProvider service', function() {
   var $rootScope, jmapClientProvider, jmapDraft, config;
 
   beforeEach(function() {
-    angular.mock.module('linagora.esn.unifiedinbox', function($provide) {
+    angular.mock.module('esn.inbox.libs', function($provide) {
       config = config || {};
 
       $provide.value('esnConfig', function(key, defaultValue) {

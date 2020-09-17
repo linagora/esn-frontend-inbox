@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('linagora.esn.unifiedinbox')
+angular.module('esn.inbox.libs')
 
   .factory('inboxFilters', function(PROVIDER_TYPES) {
     var inboxFilters = [

@@ -5,7 +5,7 @@ describe('The inboxUsersIdentitiesClient service', function() {
   var $httpBackend;
   var inboxUsersIdentitiesClient;
 
-  beforeEach(angular.mock.module('linagora.esn.unifiedinbox'));
+  beforeEach(angular.mock.module('esn.inbox.libs'));
 
   beforeEach(angular.mock.inject(function(_$httpBackend_, _inboxUsersIdentitiesClient_) {
     $httpBackend = _$httpBackend_;

@@ -2,9 +2,6 @@
 
 const _ = require('lodash');
 
-require('../../../services/selection/selection.service.js');
-require('../../../services/filtered-list/filtered-list.js');
-
 angular.module('linagora.esn.unifiedinbox')
 
   .controller('inboxListGroupToggleSelectionController', function(inboxSelectionService, inboxFilteredList) {

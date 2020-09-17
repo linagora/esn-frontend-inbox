@@ -10,7 +10,7 @@ describe('The inboxJmapItemService service', function() {
     notificationFactory, counter, infiniteListService, inboxSelectionService, INFINITE_LIST_EVENTS, INBOX_EVENTS,
     inboxConfigMock, inboxMailboxesService, inboxFilteredList;
 
-  beforeEach(angular.mock.module('linagora.esn.unifiedinbox'));
+  beforeEach(angular.mock.module('esn.inbox.libs'));
 
   beforeEach(angular.mock.module(function($provide) {
     counter = 0;

@@ -2,12 +2,10 @@
 
 const _ = require('lodash');
 
-require('../../services.js');
 require('../selection/selection.service.js');
-require('../../services.js');
 require('../filtered-list/filtered-list.js');
 
-angular.module('linagora.esn.unifiedinbox')
+angular.module('esn.inbox.libs')
 
   .service('inboxJmapItemService', function($q, $rootScope, session, newComposerService, emailSendingService,
     withJmapClient,

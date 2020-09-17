@@ -8,7 +8,6 @@ angular.module('linagora.esn.unifiedinbox', [
   'esn.notification',
   'esn.iframe-resizer-wrapper',
   'esn.file',
-  'esn.box-overlay',
   'esn.profile',
   'esn.summernote-wrapper',
   'esn.attendee',
@@ -21,7 +20,6 @@ angular.module('linagora.esn.unifiedinbox', [
   'esn.settings-overlay',
   'esn.desktop-utils',
   'esn.form.helper',
-  'esn.infinite-list',
   'esn.aggregator',
   'esn.provider',
   'esn.dragndrop',
@@ -31,7 +29,6 @@ angular.module('linagora.esn.unifiedinbox', [
   'ngAnimate',
   'esn.escape-html',
   'esn.cache',
-  'esn.search',
   'esn.user',
   'esn.attachment-list',
   'esn.avatar',
@@ -62,7 +59,6 @@ require('../../esn.inbox.libs/app/app.module.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/notification.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/iframe-resizer-wrapper.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/file.js');
-require('esn-frontend-common-libs/src/frontend/js/modules/box-overlay/box-overlay.module.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/profile.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/esn.summernote.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/attendee/attendee.module.js');
@@ -74,7 +70,6 @@ require('esn-frontend-common-libs/src/frontend/js/modules/lodash-wrapper.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/settings-overlay.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/desktop-utils.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/form-helper/form-helper.module.js');
-require('esn-frontend-common-libs/src/frontend/js/modules/infinite-list/infinite-list.module.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/aggregator.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/provider.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/dragndrop.js');
@@ -82,7 +77,6 @@ require('esn-frontend-common-libs/src/frontend/js/modules/esn.autolinker-wrapper
 require('esn-frontend-common-libs/src/frontend/js/modules/core.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/escape-html.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/cache.js');
-require('esn-frontend-common-libs/src/frontend/js/modules/search/search.module.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/user/user.module.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/attachment/list/attachment-list.module.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/avatar.js');
@@ -99,7 +93,6 @@ require('esn-frontend-common-libs/src/frontend/js/modules/action-list');
 require('esn-frontend-common-libs/src/frontend/js/modules/touchscreen-detector');
 require('esn-frontend-common-libs/src/frontend/js/modules/previous-page');
 require('esn-frontend-common-libs/src/frontend/js/modules/dropdown-list');
-require('esn-frontend-common-libs/src/frontend/js/modules/box-overlay/box-overlay.module.js');
 
 require('esn-frontend-inbox-linshare/src/app/app.module');
 require('esn-frontend-inbox-calendar/src/app/app.module.js');
@@ -212,12 +205,8 @@ require('./services/attachment-upload/inbox-attachment-upload.service.js');
 require('./services/common/inbox-utils.service.js');
 require('./services/draft/draft.js');
 require('./services/email-resolver/inbox-email-resolver.service.js');
-require('./services/filtered-list/filtered-list.js');
-require('./services/filtering/filtering-service.js');
-require('./services/filtering/filters.js');
 require('./services/forwardings/inbox-forwardings-api-client.service.js');
 require('./services/forwardings/inbox-forwardings.service.js');
-require('./services/jmap-item/jmap-item-service.js');
 require('./services/mailboxes-filter/mailboxes-filter-service.constants.js');
 require('./services/mailboxes-filter/mailboxes-filter-service.js');
 require('./services/mailboxes/permissions-service.constants.js');
@@ -232,7 +221,6 @@ require('./services/plugins/jmap/jmap-plugin.run.js');
 require('./services/plugins/plugins.js');
 require('./services/request-receipts/request-receipts-service.js');
 require('./services/request-receipts/request-receipts.constants.js');
-require('./services/selection/selection.service.js');
 require('./services/shortcuts/shortcuts.constants.js');
 require('./services/shortcuts/shortcuts.run.js');
 require('./services/user-quota/user-quota-service.constants.js');

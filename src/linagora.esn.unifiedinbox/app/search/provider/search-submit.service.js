@@ -1,6 +1,5 @@
 'use strict';
 
-require('../../services/filtered-list/filtered-list.js');
 require('../search.constants.js');
 
 angular.module('linagora.esn.unifiedinbox').factory('inboxSearchResultsProviderSubmit', inboxSearchResultsProviderSubmit);

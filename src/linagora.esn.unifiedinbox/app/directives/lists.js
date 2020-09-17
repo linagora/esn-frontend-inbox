@@ -1,7 +1,5 @@
 const _ = require('lodash');
 
-require('../services/selection/selection.service.js');
-require('../services/jmap-item/jmap-item-service.js');
 require('../services.js');
 
 (function(angular) {

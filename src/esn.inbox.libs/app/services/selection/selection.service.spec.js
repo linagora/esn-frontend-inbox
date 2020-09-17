@@ -9,7 +9,7 @@ const { expect } = chai;
 describe('The inboxSelectionService factory', function() {
   var inboxSelectionService, inboxFilteredList;
 
-  beforeEach(angular.mock.module('linagora.esn.unifiedinbox'));
+  beforeEach(angular.mock.module('esn.inbox.libs'));
 
   beforeEach(angular.mock.module(function($provide) {
     inboxFilteredList = {

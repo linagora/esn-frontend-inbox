@@ -1,7 +1,6 @@
 'use strict';
 
-require('../../../../../linagora.esn.unifiedinbox/app/services/jmap-item/jmap-item-service.js');
-require('../../../../../linagora.esn.unifiedinbox/app/services.js');
+require('../../../services/jmap-item/jmap-item-service.js');
 
 angular.module('esn.inbox.libs')
 

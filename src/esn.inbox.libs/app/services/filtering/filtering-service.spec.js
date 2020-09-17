@@ -8,7 +8,7 @@ describe('The inboxFilteringService service', function() {
 
   var $rootScope, service, filters, INBOX_EVENTS;
 
-  beforeEach(angular.mock.module('linagora.esn.unifiedinbox'));
+  beforeEach(angular.mock.module('esn.inbox.libs'));
 
   beforeEach(angular.mock.inject(function(_$rootScope_, inboxFilteringService, inboxFilters, _INBOX_EVENTS_) {
     $rootScope = _$rootScope_;

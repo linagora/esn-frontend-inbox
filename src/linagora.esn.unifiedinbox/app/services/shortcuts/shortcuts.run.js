@@ -1,6 +1,5 @@
 'use strict';
 
-require('../../../../esn.inbox.libs/app/services/new-composer/new-composer.js');
 require('./shortcuts.constants.js');
 
 angular.module('linagora.esn.unifiedinbox')

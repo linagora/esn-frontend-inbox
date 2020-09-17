@@ -1,8 +1,6 @@
 const _ = require('lodash');
 
-require('../services/jmap-item/jmap-item-service.js');
 require('../services/shortcuts/shortcuts.constants.js');
-require('../services/filtering/filtering-service.js');
 require('../services/plugins/plugins.js');
 require('../services.js');
 

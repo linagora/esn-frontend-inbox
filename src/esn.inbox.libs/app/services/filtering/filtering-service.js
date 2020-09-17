@@ -4,7 +4,7 @@ const _ = require('lodash');
 
 require('./filters.js');
 
-angular.module('linagora.esn.unifiedinbox')
+angular.module('esn.inbox.libs')
 
   .factory('inboxFilteringService', function($rootScope, inboxMailboxesService, inboxFilters, INBOX_EVENTS) {
     var providerFilters = {}, quickFilter = null;

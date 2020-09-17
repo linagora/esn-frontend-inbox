@@ -10,7 +10,7 @@ describe('The emailBodyService factory', function() {
 
   beforeEach(function() {
     angular.mock.module('esn.inbox.libs');
-    angular.mock.module('linagora.esn.unifiedinbox', function($provide) {
+    angular.mock.module('esn.inbox.libs', function($provide) {
       isMobile = false;
 
       $provide.value('esnConfig', function(key) {

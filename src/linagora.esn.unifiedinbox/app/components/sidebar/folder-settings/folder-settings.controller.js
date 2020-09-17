@@ -1,7 +1,5 @@
 'use strict';
 
-require('../../../services/jmap-item/jmap-item-service.js');
-
 angular.module('linagora.esn.unifiedinbox')
   .controller('inboxFolderSettingsController', inboxFolderSettingsController);
 
