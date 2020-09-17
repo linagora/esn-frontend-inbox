@@ -2,7 +2,6 @@
 
 const _ = require('lodash');
 
-require('../../services/new-composer/new-composer.js');
 require('../../services/plugins/plugins.js');
 
 angular

@@ -58,11 +58,6 @@ angular.module('linagora.esn.unifiedinbox')
     $templateCache.put('/unifiedinbox/views/folders/delete/index.html', require('../views/folders/delete/index.pug'));
     $templateCache.put('/unifiedinbox/views/partials/swipe/left-template-markAsRead.html', require('../views/partials/swipe/left-template-markAsRead.pug'));
     $templateCache.put('/unifiedinbox/views/partials/swipe/left-template-moveToTrash.html', require('../views/partials/swipe/left-template-moveToTrash.pug'));
-    $templateCache.put('/unifiedinbox/views/partials/quotes/original.html', require('../views/partials/quotes/original.pug'));
-    $templateCache.put('/unifiedinbox/views/partials/quotes/default.html', require('../views/partials/quotes/default.pug'));
-    $templateCache.put('/unifiedinbox/views/partials/quotes/defaultText.html', require('../views/partials/quotes/defaultText.pug'));
-    $templateCache.put('/unifiedinbox/views/partials/quotes/forward.html', require('../views/partials/quotes/forward.pug'));
-    $templateCache.put('/unifiedinbox/views/partials/quotes/forwardText.html', require('../views/partials/quotes/forwardText.pug'));
     $templateCache.put('/unifiedinbox/views/sidebar/sidebar-menu.html', require('../views/sidebar/sidebar-menu.pug'));
     $templateCache.put('/unifiedinbox/views/attachment/attachment-action-list.html', require('../views/attachment/attachment-action-list.pug'));
     $templateCache.put('/unifiedinbox/views/filter/dropdown-list.html', require('../views/filter/dropdown-list.pug'));

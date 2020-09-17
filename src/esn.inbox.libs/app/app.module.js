@@ -2,15 +2,20 @@
 
 angular.module('esn.inbox.libs', [
   'restangular',
+  'uuid4',
+  'esn.box-overlay',
   'esn.router',
   'esn.async-action',
   'esn.background',
   'esn.configuration',
   'esn.http',
   'esn.i18n',
+  'esn.infinite-list',
   'esn.datetime',
   'esn.session',
   'esn.highlight',
+  'esn.search',
+  'esn.url',
   'esn.user-configuration',
   'ng.deviceDetector'
 ]);
@@ -18,17 +23,23 @@ angular.module('esn.inbox.libs', [
 require('esn-frontend-common-libs/src/frontend/js/modules/esn.router.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/async-action.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/background.js');
+require('esn-frontend-common-libs/src/frontend/js/modules/box-overlay/box-overlay.module.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/config/config.module.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/http.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/i18n/i18n.module.js');
+require('esn-frontend-common-libs/src/frontend/js/modules/infinite-list/infinite-list.module.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/session.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/user-configuration/user-configuration.module.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/datetime/datetime.module.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/highlight.js');
+require('esn-frontend-common-libs/src/frontend/js/modules/search/search.module.js');
+require('esn-frontend-common-libs/src/frontend/js/modules/url.js');
 require('jmap-draft-client/dist/jmap-draft-client.js');
 
 require('./app.config');
 require('./app.constants');
+require('./run');
+require('./providers');
 require('./services/inbox-restangular.service');
 require('./services/config/config.js');
 require('./services/custom-role-mailbox/custom-role-mailbox.service.js');
@@ -55,6 +66,11 @@ require('./services/jmap-client-provider/jmap-client-provider.js');
 require('./services/jmap-client-provider/jmap-client-provider.run.js');
 require('./services/jmap-helper/jmap-helper.js');
 require('./services/models/mailbox.run.js');
+require('./services/filtered-list/filtered-list.js');
+require('./services/filtering/filtering-service.js');
+require('./services/filtering/filters.js');
+require('./services/jmap-item/jmap-item-service.js');
+require('./services/selection/selection.service.js');
 require('./filter/sanitize-stylised-html-filter.js');
 require('./filters.js');
 require('./filters/filter-descendant-mailboxes.js');
@@ -65,3 +81,9 @@ require('./controllers/resolve-emailer.controller');
 require('./directives/inbox-emailer/inbox-emailer.directive');
 require('./directives/inbox-emailer-group/inbox-emailer-group.directive');
 require('./directives/inbox-emailer-display/inbox-emailer-display.directive');
+require('./components/message-body/html/message-body-html.controller.js');
+require('./components/message-body/html/message-body-html.js');
+require('./components/message-body/message-body.js');
+require('./components/message-body/text/message-body-text.js');
+require('./components/inbox-configuration/read-receipt/read-receipt.component.js');
+require('./components/inbox-configuration/read-receipt/read-receipt.controller.js');

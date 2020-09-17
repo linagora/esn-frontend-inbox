@@ -8,7 +8,7 @@ describe('The inboxIdentitiesService factory', function() {
 
   var $rootScope, config, session, inboxIdentitiesService, identities, inboxUsersIdentitiesClient, userId;
 
-  beforeEach(angular.mock.module('linagora.esn.unifiedinbox', function($provide) {
+  beforeEach(angular.mock.module('esn.inbox.libs', function($provide) {
     config = {};
     userId = '123';
     identities = [{

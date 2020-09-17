@@ -6,7 +6,7 @@ const { expect } = chai;
 
 describe('The jmap client wrapper services', function() {
   beforeEach(function() {
-    angular.mock.module('linagora.esn.unifiedinbox');
+    angular.mock.module('esn.inbox.libs');
   });
 
   describe('The dollarHttpTransport factory', function() {

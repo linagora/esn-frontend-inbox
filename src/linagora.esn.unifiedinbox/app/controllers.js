@@ -3,9 +3,6 @@ const moment = require('moment');
 
 require('./providers.js');
 require('./services.js');
-require('./services/selection/selection.service.js');
-require('./services/filtered-list/filtered-list.js');
-require('./services/jmap-item/jmap-item-service.js');
 require('./services/user-quota/user-quota-service.js');
 require('./services/plugins/plugins.js');
 require('./search/provider/local-search-provider.service.js');

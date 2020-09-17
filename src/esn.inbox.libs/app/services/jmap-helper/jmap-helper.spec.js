@@ -9,7 +9,7 @@ describe('The inboxJmapHelper service', function() {
   var inboxJmapHelper, jmapDraft, emailBodyServiceMock, $rootScope, notificationFactory, jmapClient;
 
   beforeEach(function() {
-    angular.mock.module('linagora.esn.unifiedinbox', function($provide) {
+    angular.mock.module('esn.inbox.libs', function($provide) {
       jmapClient = {};
 
       $provide.value('withJmapClient', function(callback) {

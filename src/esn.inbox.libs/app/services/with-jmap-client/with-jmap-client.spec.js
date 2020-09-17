@@ -11,7 +11,7 @@ describe('The withJmapClient factory', function() {
   beforeEach(function() {
     jmapClientProviderMock = {};
 
-    angular.mock.module('linagora.esn.unifiedinbox', function($provide) {
+    angular.mock.module('esn.inbox.libs', function($provide) {
       $provide.value('jmapClientProvider', jmapClientProviderMock);
     });
   });

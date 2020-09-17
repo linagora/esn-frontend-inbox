@@ -1,7 +1,5 @@
 'use strict';
 
-require('../../../services/new-composer/new-composer.js');
-
 angular.module('linagora.esn.unifiedinbox')
 
   .controller('inboxComposerMobileController', function($rootScope, $stateParams, esnPreviousPage, newComposerService) {
