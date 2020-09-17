@@ -2,7 +2,6 @@
 
 const _ = require('lodash');
 
-require('../new-composer/new-composer.js');
 require('../../services.js');
 require('../selection/selection.service.js');
 require('../../services.js');

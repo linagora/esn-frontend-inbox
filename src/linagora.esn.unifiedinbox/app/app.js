@@ -22,7 +22,6 @@ angular.module('linagora.esn.unifiedinbox', [
   'esn.desktop-utils',
   'esn.form.helper',
   'esn.infinite-list',
-  'esn.url',
   'esn.aggregator',
   'esn.provider',
   'esn.dragndrop',
@@ -76,7 +75,6 @@ require('esn-frontend-common-libs/src/frontend/js/modules/settings-overlay.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/desktop-utils.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/form-helper/form-helper.module.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/infinite-list/infinite-list.module.js');
-require('esn-frontend-common-libs/src/frontend/js/modules/url.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/aggregator.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/provider.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/dragndrop.js');
@@ -163,10 +161,6 @@ require('./components/mailbox-shared-settings/mailbox-shared-settings.component.
 require('./components/mailbox-shared-settings/mailbox-shared-settings.controller.js');
 require('./components/mailbox-shared-settings/owner/mailbox-shared-settings-owner.component.js');
 require('./components/mailbox-shared-settings/user/mailbox-shared-settings-user.component.js');
-require('./components/message-body/html/message-body-html.controller.js');
-require('./components/message-body/html/message-body-html.js');
-require('./components/message-body/message-body.js');
-require('./components/message-body/text/message-body-text.js');
 require('./components/preferences/general/inbox-preferences-mailto.controller.js');
 require('./components/preferences/general/inbox-preferences-mailto.js');
 require('./components/preferences/general/inbox-preferences-mailto.run.js');
@@ -236,7 +230,6 @@ require('./services/models/emailer.service.js');
 require('./services/models/make-selectable.js');
 require('./services/models/message.run.js');
 require('./services/models/thread.run.js');
-require('./services/new-composer/new-composer.js');
 require('./services/plugins/jmap/jmap-plugin.run.js');
 require('./services/plugins/plugins.js');
 require('./services/request-receipts/request-receipts-service.js');

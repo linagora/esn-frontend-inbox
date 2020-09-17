@@ -4,7 +4,7 @@ const _ = require('lodash');
 
 require('../../../services/new-composer/new-composer.js');
 
-angular.module('linagora.esn.unifiedinbox')
+angular.module('esn.inbox.libs')
 
   .controller('inboxMessageBodyHtmlController', function($timeout, $q, newComposerService) {
     var self = this;

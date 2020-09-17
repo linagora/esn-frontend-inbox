@@ -9,7 +9,7 @@ describe.skip('The newComposerService ', function() {
   var $rootScope, $state, $timeout, config, newComposerService, deviceDetector, boxOverlayOpener;
 
   beforeEach(function() {
-    angular.mock.module('linagora.esn.unifiedinbox', function($provide) {
+    angular.mock.module('esn.inbox.libs', function($provide) {
       config = config || {};
 
       $provide.value('inboxIdentitiesService', {

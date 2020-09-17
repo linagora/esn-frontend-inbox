@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('linagora.esn.unifiedinbox')
+angular.module('esn.inbox.libs')
 
   .service('newComposerService', function($state, inboxJmapHelper, boxOverlayOpener, deviceDetector, esnI18nService) {
 

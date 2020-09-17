@@ -26,11 +26,11 @@ describe('The inboxMessageBodyHtml component', function() {
   });
 
   beforeEach(function() {
-    angular.mock.module('linagora.esn.unifiedinbox');
+    angular.mock.module('esn.inbox.libs');
   });
 
   beforeEach(function() {
-    angular.mock.module('linagora.esn.unifiedinbox', function($provide) {
+    angular.mock.module('esn.inbox.libs', function($provide) {
       $provide.value('newComposerService', { open: sinon.spy() });
       $provide.value('touchscreenDetectorService', { hasTouchscreen: function() { return false; } });
     });

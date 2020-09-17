@@ -11,6 +11,7 @@ angular.module('esn.inbox.libs', [
   'esn.datetime',
   'esn.session',
   'esn.highlight',
+  'esn.url',
   'esn.user-configuration',
   'ng.deviceDetector'
 ]);
@@ -25,6 +26,7 @@ require('esn-frontend-common-libs/src/frontend/js/modules/session.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/user-configuration/user-configuration.module.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/datetime/datetime.module.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/highlight.js');
+require('esn-frontend-common-libs/src/frontend/js/modules/url.js');
 require('jmap-draft-client/dist/jmap-draft-client.js');
 
 require('./app.config');
@@ -65,3 +67,9 @@ require('./controllers/resolve-emailer.controller');
 require('./directives/inbox-emailer/inbox-emailer.directive');
 require('./directives/inbox-emailer-group/inbox-emailer-group.directive');
 require('./directives/inbox-emailer-display/inbox-emailer-display.directive');
+require('./components/message-body/html/message-body-html.controller.js');
+require('./components/message-body/html/message-body-html.js');
+require('./components/message-body/message-body.js');
+require('./components/message-body/text/message-body-text.js');
+require('./components/inbox-configuration/read-receipt/read-receipt.component.js');
+require('./components/inbox-configuration/read-receipt/read-receipt.controller.js');
