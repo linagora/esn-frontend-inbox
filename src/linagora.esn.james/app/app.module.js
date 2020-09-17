@@ -15,7 +15,8 @@ angular.module('linagora.esn.james', [
   'esn.domain',
   'ngFileSaver',
   'ngSanitize',
-  'ui.select'
+  'ui.select',
+  'esn.api-client'
 ]);
 
 require('esn-frontend-common-libs/src/frontend/js/modules/async-action.js');
@@ -28,13 +29,12 @@ require('esn-frontend-common-libs/src/frontend/js/modules/config/config.module.j
 require('esn-frontend-common-libs/src/frontend/js/modules/user/user.module.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/session.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/domain.js');
+require('esn-frontend-common-libs/src/frontend/js/modules/esn.api-client.js');
 
 require('./app.constants.js');
 require('./app.routes.js');
 require('./app.config.js');
 require('./app.run.js');
-require('./common/james-api-client.service.js');
-require('./common/james-restangular.service.js');
 require('./domain/alias/form/james-domain-alias-form.component.js');
 require('./domain/alias/form/james-domain-alias-form.controller.js');
 require('./domain/alias/item/james-domain-alias-item.component.js');
