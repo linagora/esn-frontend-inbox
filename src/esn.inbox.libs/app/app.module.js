@@ -71,6 +71,7 @@ require('./services/filtering/filtering-service.js');
 require('./services/filtering/filters.js');
 require('./services/jmap-item/jmap-item-service.js');
 require('./services/selection/selection.service.js');
+require('./services/new-composer/new-composer');
 require('./filter/sanitize-stylised-html-filter.js');
 require('./filters.js');
 require('./filters/filter-descendant-mailboxes.js');
