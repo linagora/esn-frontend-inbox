@@ -11,7 +11,7 @@ pipeline {
       }
 
       steps {
-        sh 'npm install'
+        sh 'npm install -f'
         sh 'npm run lint'
         sh 'npm run test'
       }
