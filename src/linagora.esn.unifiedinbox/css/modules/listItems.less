@@ -67,7 +67,7 @@
 
   .inbox-infinite-list {
     height: ~"calc(100vh - @{header-height} - @{inbox-sub-header-height})";
-    
+
     @media (min-width: @screen-md-min) {
       height: ~"calc(100vh - @{header-height-md} - @{inbox-sub-header-height-md})";
     }
@@ -115,6 +115,10 @@
 
       &.selected {
         background-color: @darkenBgColor;
+      }
+
+      .inbox-hover-actions {
+        display: none;
       }
 
       .inbox-list-item-content {
@@ -178,7 +182,7 @@
 
           .flags-container {
             .flex-row-reverse;
-            
+
             min-width: 40px;
             font-size: 20px;
             margin: auto 5px auto 0;
@@ -195,6 +199,7 @@
         .inbox-list-item-date-and-indicators {
           .flex-column;
           .flex-shorthand(1);
+          position: relative;
 
           .date-and-indicators-container {
             text-align: right;
@@ -276,6 +281,26 @@
               top: 10px;
               left: 10px;
             }
+          }
+        }
+      }
+
+      .inbox-hover-actions {
+        // in esn-frontend-common-libs/src/frontend/components/material-admin/less/inc/card.less
+        // color is hardcoded
+        background-color: #fff;
+        padding-left: 20px;
+        position: absolute;
+        right: 0;
+        top: -2px;
+
+        i {
+          color: @m-gray;
+          font-size: 20px;
+          padding-left: 8px;
+
+          &:hover {
+            color: @primaryColor;
           }
         }
       }
@@ -405,6 +430,10 @@
               .cursor-grabbing;
             }
           }
+
+          .inbox-hover-actions {
+            background-color: @darkenBgColor;
+          }
         }
       }
     }
@@ -461,6 +490,7 @@
 
               min-width: 110px;
               max-width: 110px;
+              height: 22.4px;
             }
           }
 
@@ -495,7 +525,23 @@
             }
           }
         }
+
+        .inbox-hover-actions {
+          top: 1px;
+          right: 110px;
+          padding-left: 10px;
+          padding-right: 28px;
+          box-shadow: -4px 0px 20px @darkenBgColor;
+
+          i {
+            padding-right: 8px;
+          }
+        }
       }
     }
   }
+}
+
+body.is-desktop .inbox-list-item:hover .inbox-hover-actions {
+  display: flex;
 }
