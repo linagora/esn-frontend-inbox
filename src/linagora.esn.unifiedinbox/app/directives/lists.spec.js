@@ -449,6 +449,7 @@ describe('The linagora.esn.unifiedinbox List module directives', function() {
         $scope.item = {
           moveToMailboxWithRole: sinon.spy(function() {return $q.when();}),
           isUnread: true,
+          mailboxIds: [],
           setIsUnread: function(state) {
             this.isUnread = state;
 

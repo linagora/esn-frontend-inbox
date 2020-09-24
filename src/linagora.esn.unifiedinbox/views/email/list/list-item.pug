@@ -30,6 +30,10 @@
             inbox-emailer(ng-if="mailboxRole.value !== 'sent'", emailer="item.from")
             inbox-emailer-group(ng-if="mailboxRole.value === 'sent' && item.emailRecipients", group="item.emailRecipients", display-inline="true")
         .inbox-list-item-date-and-indicators
+          .inbox-hover-actions.flex-row(ng-click='$event.stopPropagation(); $event.preventDefault()')
+              i.mdi.mdi-delete.waves-notransition(ng-if='ctrl.canTrashMessages()', ng-click='ctrl.moveToTrash()', title="{{ 'Delete' | translate }}")
+              i.mdi.mdi-eye.waves-notransition(ng-if='item.isUnread', ng-click='ctrl.markAsRead()', title="{{ 'Mark as read' | translate }}")
+              i.mdi.mdi-eye-off.waves-notransition(ng-if='!item.isUnread', ng-click='ctrl.markAsUnread()', title="{{ 'Mark as unread' | translate }}")
           .date-and-indicators-container
             .indicators.esn-flex-noshrink.visible-xl
               ul.actions.flex-vertical-centered
