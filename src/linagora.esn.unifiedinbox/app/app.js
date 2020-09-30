@@ -148,6 +148,8 @@ require('./components/list/group-toggle-selection/list-group-toggle-selection.js
 require('./components/list/header/list-header.controller.js');
 require('./components/list/header/list-header.js');
 require('./components/list/refresh-button/refresh-button.js');
+require('./components/list/message-list-item/message-list-item');
+require('./components/list/message-list-item/message-list-item.controller');
 require('./components/mailbox-shared-settings/mailbox-shared-settings.component.js');
 require('./components/mailbox-shared-settings/mailbox-shared-settings.controller.js');
 require('./components/mailbox-shared-settings/owner/mailbox-shared-settings-owner.component.js');

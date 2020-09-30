@@ -1,0 +1,48 @@
+.inbox-message-list-item.swipe(inbox-swipeable-list-item, swipe-right="onSwipeRight", swipe-left="onSwipeLeft", left-template="{{ leftTemplate }}", ng-class="{ selected: ctrl.item.selected }")
+  a.inbox-list-item-content.clickable(
+      ng-attr-ng-click="ctrl.item.isDraft && !esnIsDragging ? ctrl.openDraft(ctrl.item.id) : undefined",
+      esn-draggable,
+      inbox-draggable-list-item,
+      esn-drag-message="getDragMessage($dragData)",
+      esn-drag-data="getDragData()",
+      esn-drag-class="dragging",
+      ng-class="{ dragging: ctrl.esnIsDragging && ctrl.item.selected }",
+      ng-attr-ui-sref="{{ !ctrl.item.isDraft && !ctrl.esnIsDragging ? '.message({mailbox: ctrl.mailbox, emailId: ctrl.item.id})' : '.' }}"
+    )
+    .inbox-item-with-icon
+      .list-image.badge-container(ng-click="ctrl.select(ctrl.item, $event)", desktop-hover="hovering = hover && !esnIsDragging")
+        inbox-emailer-avatar(ng-hide="hovering || ctrl.item.selected", emailer="mailboxRole.value !== 'sent' ? ctrl.item.from  :  ctrl.item.emailFirstRecipient" )
+        label.checkbox.clickable(ng-hide="!hovering && !ctrl.item.selected")
+          input(type='checkbox', ng-model="ctrl.item.selected")
+          i.input-helper
+      .media-body(ng-class="{ bold: ctrl.item.isUnread }")
+        .inbox-list-item-subject-and-from
+          .inbox-subject.lv-title
+            span.inbox-subject-inline {{ ctrl.item.subject }}
+            span.inbox-preview-inline.inbox-preview-divider(ng-if='ctrl.item.subject') -
+            .inbox-preview-inline.lv-small.preview(ng-if="ctrl.item.preview") {{ ctrl.item.preview }}
+          .flags-container
+            i.flag-icon.mdi.mdi-forward.visible-xl(ng-if='ctrl.item.isForwarded', title="{{ 'Forwarded' | translate }}")
+            i.flag-icon.mdi.mdi-reply.visible-xl(ng-if='ctrl.item.isAnswered', title="{{ 'Replied' | translate }}")
+          .inbox-from.lv-title
+            span.inbox-item-draft(ng-if="ctrl.item.isDraft") {{ 'Draft' | translate }}
+            span.inbox-item-draft-divider -
+            inbox-emailer(ng-if="mailboxRole.value !== 'sent'", emailer="ctrl.item.from")
+            inbox-emailer-group(ng-if="mailboxRole.value === 'sent' && ctrl.item.emailRecipients", group="ctrl.item.emailRecipients", display-inline="true")
+        .inbox-list-item-date-and-indicators
+          .inbox-hover-actions.flex-row(ng-click='$event.stopPropagation(); $event.preventDefault()')
+              i.mdi.mdi-delete.waves-notransition(ng-if='ctrl.canTrashMessages()', ng-click='ctrl.moveToTrash()', title="{{ 'Delete' | translate }}")
+              i.mdi.mdi-eye.waves-notransition(ng-if='ctrl.item.isUnread', ng-click='ctrl.markAsRead()', title="{{ 'Mark as read' | translate }}")
+              i.mdi.mdi-eye-off.waves-notransition(ng-if='!ctrl.item.isUnread', ng-click='ctrl.markAsUnread()', title="{{ 'Mark as unread' | translate }}")
+          .date-and-indicators-container
+            .indicators.esn-flex-noshrink.visible-xl
+              ul.actions.flex-vertical-centered
+                li.action-item
+                  i.inbox-message-indicators
+                    cal-inbox-invitation-message-indicator(ng-if="ctrl.shouldDisplayCalendarInvitationMessageIndicator")
+                    cal-inbox-resource-management-indicator(ng-if="ctrl.shouldDisplayCalendarResourceManagementIndicator")
+                  i.flag-icon.mdi.mdi-paperclip(ng-if='ctrl.item.hasAttachment', title="{{ 'Attachments' | translate }}")
+            .date-container
+            span {{ ctrl.item.date | inboxItemDate }}
+          inbox-indicators(item="ctrl.item", hidden-xl="true")
+    .inbox-preview-block.preview {{ ctrl.item.preview }}
