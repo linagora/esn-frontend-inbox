@@ -215,6 +215,14 @@ angular.module('linagora.esn.unifiedinbox')
           }
         }
       })
+      .state('unifiedinbox.configuration.experiments', {
+        url: '/experiments',
+        views: {
+          'configuration@unifiedinbox.configuration': {
+            template: '<inbox-configuration-experiments />'
+          }
+        }
+      })
       .state('unifiedinbox.inbox', {
         url: '/inbox?type&account&context&q&{a:json}',
         params: {

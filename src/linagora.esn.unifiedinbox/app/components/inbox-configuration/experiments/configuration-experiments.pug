@@ -1,0 +1,20 @@
+.inbox-configuration-experiments
+  .inbox-list(ng-if='!$ctrl.experiments.length')
+    .inbox-empty-container-message
+      .message
+        .inbox-empty-icon.mdi.mdi-test-tube
+        .message {{ 'No experiment is currently available. Come back later!' | translate }}
+  div(ng-if='$ctrl.experiments.length')
+    h3.p-10 List of available experiments
+    p Experiments are features under development. Development team may want to get feedback early, so you can enable the features and try them.
+    p Experiments are enabled on your current web browser only.
+    .card.w-50(ng-repeat='experiment in $ctrl.experiments')
+      .card-header
+        h2 {{ experiment.title }}
+      .card-body.card-padding
+        span {{ experiment.description }}
+        .checkbox.checkbox-styled
+          label
+            input(type='checkbox' ng-model='experiment.enabled' ng-change='$ctrl.recordChange(experiment)')
+            w.input-helper
+            span.ng-binding Enable experiment
