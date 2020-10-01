@@ -1284,7 +1284,7 @@ describe('The linagora.esn.unifiedinbox module controllers', function() {
       initController('inboxDeleteFolderController');
       scope.$digest();
 
-      expect(scope.message).to.equal('Folder %s (including folders %s and %s) and all the messages it contains will be deleted and you won\'t be able to recover them.');
+      expect(scope.message).to.equal('Folder 1 (including folders 2, 3, 4 and 5) and all the messages it contains will be deleted and you won\'t be able to recover them.');
     });
 
     it('should initialize $scope.message with "and x more" when more than 4 mailbox descendants are going to be deleted', function() {
@@ -1300,7 +1300,7 @@ describe('The linagora.esn.unifiedinbox module controllers', function() {
       initController('inboxDeleteFolderController');
       scope.$digest();
 
-      expect(scope.message).to.equal('Folder %s (including folders %s, %s and some others) and all the messages it contains will be deleted and you won\'t be able to recover them.');
+      expect(scope.message).to.equal('Folder 1 (including folders 2, 3, 4 and 2 others) and all the messages it contains will be deleted and you won\'t be able to recover them.');
     });
 
     it('should initialize $scope.message properly when the mailbox has no descendant', function() {
@@ -1311,7 +1311,7 @@ describe('The linagora.esn.unifiedinbox module controllers', function() {
       initController('inboxDeleteFolderController');
       scope.$digest();
 
-      expect(scope.message).to.equal('Folder %s and all the messages it contains will be deleted and you won\'t be able to recover them.');
+      expect(scope.message).to.equal('Folder 1 and all the messages it contains will be deleted and you won\'t be able to recover them.');
     });
 
     describe('The deleteFolder method', function() {
