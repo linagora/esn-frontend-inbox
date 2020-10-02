@@ -75,7 +75,7 @@
   "Filters": "Bộ lọc",
   "Folder {{mainFolder}} (including folder(s) {{otherFolders}}) and all the messages it contains will be deleted and you won't be able to recover them.": "Thư mục {{mainFolder}} (bao gồm cả thư mục {{otherFolders}}) và tất cả các thư chứa trong nó sẽ bị xóa và bạn sẽ không thể khôi phục chúng.",
   "Folder {{mainFolder}} (including folders {{otherFolders}} and {{lastFolder}}) and all the messages it contains will be deleted and you won't be able to recover them.": "Thư mục {{mainFolder}} (bao gồm các thư mục {{otherFolders}} và {{lastFolder}}) và tất cả các thư chứa trong nó sẽ bị xóa và bạn sẽ không thể khôi phục chúng.",
-  "Folder {{mainFolder}} (including folders {{otherFolders}} and {{count}} others) and all the messages it contains will be deleted and you won't be able to recover them.": "Thư mục {{mainFolder}} (bao gồm các thư mục {{otherFolders}}, {{count}} và một số thư mục khác) và tất cả các thư trong thư sẽ bị xóa và bạn sẽ không thể khôi phục chúng.",
+  "Folder {{mainFolder}} (including folders {{otherFolders}} and {{count}} others) and all the messages it contains will be deleted and you won't be able to recover them.": "Thư mục {{mainFolder}} (bao gồm các thư mục {{otherFolders}} và {{count}} thư mục khác) và tất cả các thư chứa trong nó sẽ bị xóa và bạn sẽ không thể khôi phục chúng.",
   "Folder {{mainFolder}} and all the messages it contains will be deleted and you won't be able to recover them.": "Thư mục {{mainFolder}} và tất cả các thư chứa trong đó sẽ bị xóa và bạn sẽ không thể khôi phục chúng.",
   "Folder created": "Thư mục đã được tạo",
   "Folder name": "Tên thư mục",
