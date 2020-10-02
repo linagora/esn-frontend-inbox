@@ -389,25 +389,36 @@ require('./services/common/inbox-utils.service.js');
         more = numberOfDescendants - numberOfMailboxesToDisplay,
         destroyMailboxesIds = [];
 
-      var messageFor1Folder = 'Folder %s and all the messages it contains will be deleted and you won\'t be able to recover them.',
-        messageFor2To4Folders = 'Folder %s (including folder %s) and all the messages it contains will be deleted and you won\'t be able to recover them.',
-        messageFor5Folders = 'Folder %s (including folders %s and %s) and all the messages it contains will be deleted and you won\'t be able to recover them.',
-        messageForMoreFolders = 'Folder %s (including folders %s, %s and some others) and all the messages it contains will be deleted and you won\'t be able to recover them.';
+      const messageFor1Folder = 'Folder {{mainFolder}} and all the messages it contains will be deleted and you won\'t be able to recover them.';
+      const messageFor2To4Folders = 'Folder {{mainFolder}} (including folder(s) {{otherFolders}}) and all the messages it contains will be deleted and you won\'t be able to recover them.';
+      const messageFor5Folders = 'Folder {{mainFolder}} (including folders {{otherFolders}} and {{lastFolder}}) and all the messages it contains will be deleted and you won\'t be able to recover them.';
+      const messageForMoreFolders = 'Folder {{mainFolder}} (including folders {{otherFolders}} and {{count}} others) and all the messages it contains will be deleted and you won\'t be able to recover them.';
 
       destroyMailboxesIds.push($scope.mailbox.id);
       destroyMailboxesIds = destroyMailboxesIds.concat(descendants.map(_.property('id')));
 
       if (numberOfDescendants < 1) {
-        $scope.message = esnI18nService.translate(messageFor1Folder, $scope.mailbox.displayName).toString();
+        $scope.message = esnI18nService.translate(messageFor1Folder, { mainFolder: $scope.mailbox.displayName }).toString();
       } else {
         var displayingDescendants = descendants.slice(0, numberOfMailboxesToDisplay).map(_.property('displayName')).join(', ');
 
         if (more <= 0) {
-          $scope.message = esnI18nService.translate(messageFor2To4Folders, $scope.mailbox.displayName, displayingDescendants).toString();
+          $scope.message = esnI18nService.translate(messageFor2To4Folders, {
+            mainFolder: $scope.mailbox.displayName,
+            otherFolders: displayingDescendants
+          }).toString();
         } else if (more === 1) {
-          $scope.message = esnI18nService.translate(messageFor5Folders, $scope.mailbox.displayName, displayingDescendants, descendants[numberOfMailboxesToDisplay].displayName).toString();
+          $scope.message = esnI18nService.translate(messageFor5Folders, {
+            mainFolder: $scope.mailbox.displayName,
+            otherFolders: displayingDescendants,
+            lastFolder: descendants[numberOfMailboxesToDisplay].displayName
+          }).toString();
         } else {
-          $scope.message = esnI18nService.translate(messageForMoreFolders, $scope.mailbox.displayName, displayingDescendants, more).toString();
+          $scope.message = esnI18nService.translate(messageForMoreFolders, {
+            mainFolder: $scope.mailbox.displayName,
+            otherFolders: displayingDescendants,
+            count: more
+          }).toString();
         }
       }
 
