@@ -4,7 +4,7 @@
   "description": "OpenPaaS suite Webmail (https://open-paas.org/)",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/karma/bin/karma start test/config/karma.conf.js",
+    "test": "LANG=C karma start test/config/karma.conf.js",
     "lint": "eslint src test webpack.*.js",
     "serve": "webpack-dev-server --watch --progress",
     "serve:prod": "webpack-dev-server --env=prod",
