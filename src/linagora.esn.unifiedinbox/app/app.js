@@ -213,7 +213,6 @@ require('./services/mailboxes-filter/mailboxes-filter-service.constants.js');
 require('./services/mailboxes-filter/mailboxes-filter-service.js');
 require('./services/mailboxes/permissions-service.constants.js');
 require('./services/mailboxes/permissions-service.js');
-require('./services/mailto-parser/mailto-parser.js');
 require('./services/models/emailer.run.js');
 require('./services/models/emailer.service.js');
 require('./services/models/make-selectable.js');
