@@ -32,7 +32,6 @@ require('esn-frontend-common-libs/src/frontend/js/modules/domain.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/esn.api-client.js');
 
 require('./app.constants.js');
-require('./app.routes.js');
 require('./app.config.js');
 require('./app.run.js');
 require('./domain/alias/form/james-domain-alias-form.component.js');
