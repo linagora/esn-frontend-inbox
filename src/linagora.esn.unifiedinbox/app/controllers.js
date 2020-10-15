@@ -398,7 +398,7 @@ require('./services/common/inbox-utils.service.js');
       destroyMailboxesIds = destroyMailboxesIds.concat(descendants.map(_.property('id')));
 
       if (numberOfDescendants < 1) {
-        $scope.message = esnI18nService.translate(messageFor1Folder, { mainFolder: $scope.mailbox.displayName }).toString();
+        $scope.message = esnI18nService.translate(messageFor1Folder, { mainFolder: $scope.mailbox.displayName }, true).toString();
       } else {
         var displayingDescendants = descendants.slice(0, numberOfMailboxesToDisplay).map(_.property('displayName')).join(', ');
 
@@ -406,19 +406,19 @@ require('./services/common/inbox-utils.service.js');
           $scope.message = esnI18nService.translate(messageFor2To4Folders, {
             mainFolder: $scope.mailbox.displayName,
             otherFolders: displayingDescendants
-          }).toString();
+          }, true).toString();
         } else if (more === 1) {
           $scope.message = esnI18nService.translate(messageFor5Folders, {
             mainFolder: $scope.mailbox.displayName,
             otherFolders: displayingDescendants,
             lastFolder: descendants[numberOfMailboxesToDisplay].displayName
-          }).toString();
+          }, true).toString();
         } else {
           $scope.message = esnI18nService.translate(messageForMoreFolders, {
             mainFolder: $scope.mailbox.displayName,
             otherFolders: displayingDescendants,
             count: more
-          }).toString();
+          }, true).toString();
         }
       }
 
