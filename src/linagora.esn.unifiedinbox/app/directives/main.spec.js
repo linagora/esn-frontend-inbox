@@ -7,13 +7,12 @@ const { expect } = chai;
 describe('The linagora.esn.unifiedinbox Main module directives', function() {
 
   var $compile, $rootScope, $scope, $timeout, $templateCache, element, jmapClient, inboxPlugins,
-    iFrameResize = angular.noop, elementScrollService, $stateParams, $dropdown,
+    elementScrollService, $stateParams, $dropdown,
     isMobile, searchService, windowMock, fakeNotification,
     sendEmailFakePromise, inboxConfigMock, inboxJmapItemService, INBOX_EVENTS,
     $httpBackend, inboxCustomRoleMailboxService;
 
   beforeEach(function() {
-    angular.module('esn.iframe-resizer-wrapper', []);
     angular.mock.module('esn.ui');
     angular.mock.module('esn.core');
     angular.mock.module('esn.session');
@@ -41,11 +40,6 @@ describe('The linagora.esn.unifiedinbox Main module directives', function() {
     jmapClient = {};
     $provide.constant('withJmapClient', function(callback) {
       return callback(jmapClient);
-    });
-    $provide.provider('iFrameResize', {
-      $get: function() {
-        return iFrameResize;
-      }
     });
     $provide.value('elementScrollService', elementScrollService = {
       autoScrollDown: sinon.spy(),
