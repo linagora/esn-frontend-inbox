@@ -6,7 +6,6 @@ angular.module('linagora.esn.unifiedinbox', [
   'mp.autoFocus',
   'angularMoment',
   'esn.notification',
-  'esn.iframe-resizer-wrapper',
   'esn.file',
   'esn.profile',
   'esn.summernote-wrapper',
@@ -57,7 +56,6 @@ angular.module('linagora.esn.unifiedinbox', [
 
 require('../../esn.inbox.libs/app/app.module.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/notification.js');
-require('esn-frontend-common-libs/src/frontend/js/modules/iframe-resizer-wrapper.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/file.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/profile.js');
 require('esn-frontend-common-libs/src/frontend/js/modules/esn.summernote.js');

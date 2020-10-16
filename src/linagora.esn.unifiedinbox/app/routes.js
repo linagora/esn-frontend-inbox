@@ -119,32 +119,6 @@ angular.module('linagora.esn.unifiedinbox')
         },
         params: { vacation: null }
       })
-      .state('profile.details.identities', {
-        url: '/identities',
-        views: {
-          'details@profile.details': {
-            template: '<inbox-identities user="user" />'
-          }
-        }
-      })
-      .state('unifiedinbox.configuration.identities.add', {
-        url: '/add',
-        views: {
-          'main@unifiedinbox': {
-            template: '<inbox-identity-form />'
-          }
-        }
-      })
-      .state('unifiedinbox.configuration.identities.identity', {
-        url: '/:identityId',
-        views: {
-          'main@unifiedinbox': {
-            template: function($stateParams) {
-              return '<inbox-identity-form identity-id="' + $stateParams.identityId + '" />';
-            }
-          }
-        }
-      })
       .state('unifiedinbox.configuration.shared', {
         url: '/shared',
         views: {
