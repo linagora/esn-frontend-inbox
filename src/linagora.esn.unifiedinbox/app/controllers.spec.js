@@ -1314,6 +1314,48 @@ describe('The linagora.esn.unifiedinbox module controllers', function() {
       expect(scope.message).to.equal('Folder 1 and all the messages it contains will be deleted and you won\'t be able to recover them.');
     });
 
+    it('should initialize $scope.message containing to-be-deleted mailboxes, correctly not-encoding the special characters', function() {
+      inboxMailboxesCache.push(newMailbox('1&2'));
+      inboxMailboxesCache.push(newMailbox('2&3', '1&2'));
+      inboxMailboxesCache.push(newMailbox('3&4', '2&3'));
+      inboxMailboxesCache.push(newMailbox('4&5', '2&3'));
+      inboxMailboxesCache.push(newMailbox('5&6', '2&3'));
+      jmapClient.setMailboxes = sinon.spy(function() { return $q.when(new jmapDraft.SetResponse()); });
+      scope.mailbox = inboxMailboxesCache[0];
+
+      initController('inboxDeleteFolderController');
+      scope.$digest();
+
+      expect(scope.message).to.equal('Folder 1&2 (including folders 2&3, 3&4, 4&5 and 5&6) and all the messages it contains will be deleted and you won\'t be able to recover them.');
+    });
+
+    it('should initialize $scope.message with "and x more" when more than 4 mailbox descendants are going to be deleted, correctly not-encoding the special characters', function() {
+      inboxMailboxesCache.push(newMailbox('1&2'));
+      inboxMailboxesCache.push(newMailbox('2&3', '1&2'));
+      inboxMailboxesCache.push(newMailbox('3&4', '2&3'));
+      inboxMailboxesCache.push(newMailbox('4&4', '2&3'));
+      inboxMailboxesCache.push(newMailbox('5&4', '2&3'));
+      inboxMailboxesCache.push(newMailbox('6&4', '2&3'));
+      jmapClient.setMailboxes = sinon.spy(function() { return $q.when(new jmapDraft.SetResponse()); });
+      scope.mailbox = inboxMailboxesCache[0];
+
+      initController('inboxDeleteFolderController');
+      scope.$digest();
+
+      expect(scope.message).to.equal('Folder 1&2 (including folders 2&3, 3&4, 4&4 and 2 others) and all the messages it contains will be deleted and you won\'t be able to recover them.');
+    });
+
+    it('should bring the correct special characters encoding when the mailbox has no descendant', function() {
+      inboxMailboxesCache.push(newMailbox('1&2'));
+      jmapClient.setMailboxes = sinon.spy(function() { return $q.when(new jmapDraft.SetResponse()); });
+      scope.mailbox = inboxMailboxesCache[0];
+
+      initController('inboxDeleteFolderController');
+      scope.$digest();
+
+      expect(scope.message).to.equal('Folder 1&2 and all the messages it contains will be deleted and you won\'t be able to recover them.');
+    });
+
     describe('The deleteFolder method', function() {
 
       it('should call client.setMailboxes with an array of mailbox descendant IDs as the "destroy" option', function() {
