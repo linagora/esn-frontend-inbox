@@ -16,7 +16,7 @@
   "license": "AGPLv3",
   "dependencies": {
     "angularjs-dragula": "2.0.0",
-    "dompurify": "1.0.9",
+    "dompurify": "~2.2.0",
     "esn-api-client": "github:openpaas-suite/esn-api-client#main",
     "esn-frontend-common-libs": "github:openpaas-suite/esn-frontend-common-libs#main",
     "esn-frontend-inbox-calendar": "github:openpaas-suite/esn-frontend-inbox-calendar#main",
