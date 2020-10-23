@@ -6,18 +6,18 @@ const { expect } = chai;
 
 describe('The inboxFilteredList factory', function() {
 
-  var $rootScope, jmapClient, jmapDraft, inboxFilteringService, inboxFilters, inboxFilteredList, esnSearchProvider, inboxHostedMailMessagesProvider, INBOX_EVENTS, PROVIDER_TYPES, counter, inboxConfigMock;
+  var $rootScope, jmapDraftClient, jmapDraft, inboxFilteringService, inboxFilters, inboxFilteredList, esnSearchProvider, inboxHostedMailMessagesProvider, INBOX_EVENTS, PROVIDER_TYPES, counter, inboxConfigMock;
 
   beforeEach(angular.mock.module('esn.inbox.libs', function($provide) {
-    jmapClient = {
+    jmapDraftClient = {
       getMailboxes: function() {
         return $q.when([
-          new jmapDraft.Mailbox(jmapClient, 'id_inbox', 'inbox', { role: 'inbox' })
+          new jmapDraft.Mailbox(jmapDraftClient, 'id_inbox', 'inbox', { role: 'inbox' })
         ]);
       }
     };
 
-    $provide.value('withJmapClient', function(callback) { return callback(jmapClient); });
+    $provide.value('withJmapDraftClient', function(callback) { return callback(jmapDraftClient); });
 
     inboxConfigMock = {};
     $provide.value('inboxConfig', function(key, defaultValue) {
@@ -40,7 +40,7 @@ describe('The inboxFilteredList factory', function() {
   }));
 
   function newMessage(options) {
-    var message = new jmapDraft.Message(jmapClient, 'id' + ++counter, 'blobId', 'threadId', ['id_inbox'], options);
+    var message = new jmapDraft.Message(jmapDraftClient, 'id' + ++counter, 'blobId', 'threadId', ['id_inbox'], options);
 
     message.provider = inboxHostedMailMessagesProvider;
 
@@ -217,7 +217,7 @@ describe('The inboxFilteredList factory', function() {
   });
 
   it('should not throw when message\'s provider has missing itemMatches function', function() {
-    var message = new jmapDraft.Message(jmapClient, 'id', 'blobId', 'threadId', ['id_inbox'], {}),
+    var message = new jmapDraft.Message(jmapDraftClient, 'id', 'blobId', 'threadId', ['id_inbox'], {}),
       fakeProvider = function() {
         return new esnSearchProvider({
           uid: '123',

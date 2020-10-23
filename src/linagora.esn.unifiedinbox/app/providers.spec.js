@@ -7,7 +7,7 @@ const { expect } = chai;
 describe('The Unified Inbox Angular module providers', function() {
 
   var $rootScope, inboxProviders, inboxHostedMailAttachmentProvider, inboxHostedMailThreadsProvider, inboxSearchResultsProvider,
-    jmapClient, inboxConfigMock, jmapDraft, ELEMENTS_PER_REQUEST;
+    jmapDraftClient, inboxConfigMock, jmapDraft, ELEMENTS_PER_REQUEST;
 
   function elements(id, length, offset) {
     var array = [], start = offset || 0;
@@ -29,7 +29,7 @@ describe('The Unified Inbox Angular module providers', function() {
     angular.mock.module('esn.core');
     angular.mock.module('esn.configuration');
     angular.mock.module('linagora.esn.unifiedinbox', function($provide) {
-      jmapClient = {
+      jmapDraftClient = {
         getMailboxes: function() {
           return $q.when([
             new jmapDraft.Mailbox({}, 'id_inbox', 'name_inbox', { role: 'inbox' }),
@@ -52,8 +52,8 @@ describe('The Unified Inbox Angular module providers', function() {
         }
       };
 
-      $provide.value('withJmapClient', function(cb) {
-        return cb(jmapClient);
+      $provide.value('withJmapDraftClient', function(cb) {
+        return cb(jmapDraftClient);
       });
       $provide.decorator('inboxMailboxesService', function($delegate) {
         $delegate.flagIsUnreadChanged = sinon.spy($delegate.flagIsUnreadChanged);

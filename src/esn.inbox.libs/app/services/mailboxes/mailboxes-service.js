@@ -16,7 +16,7 @@ angular.module('esn.inbox.libs')
     'drafts'
   ])
 
-  .factory('inboxMailboxesService', function($q, $state, $rootScope, withJmapClient, jmapDraft, asyncJmapAction,
+  .factory('inboxMailboxesService', function($q, $state, $rootScope, withJmapDraftClient, jmapDraft, asyncJmapAction,
     inboxSpecialMailboxes, inboxMailboxesCache, inboxSharedMailboxesService,
     esnI18nService, INBOX_EVENTS, MAILBOX_LEVEL_SEPARATOR, INBOX_RESTRICTED_MAILBOXES) {
 
@@ -224,7 +224,7 @@ angular.module('esn.inbox.libs')
         return $q.when(_assignToObject(dst, 'mailbox')(localMailbox));
       }
 
-      return withJmapClient(function(client) {
+      return withJmapDraftClient(function(client) {
         return client.getMailboxes({ ids: [id] })
           .then(_.head) // We expect a single mailbox here
           .then(_translateMailbox)
@@ -251,8 +251,8 @@ angular.module('esn.inbox.libs')
     }
 
     function updateSharedMailboxCache() {
-      return withJmapClient(function(jmapClient) {
-        return jmapClient.getMailboxes()
+      return withJmapDraftClient(function(jmapDraftClient) {
+        return jmapDraftClient.getMailboxes()
           .then(function(mailboxList) {
             return _addSharedMailboxVisibility(_getSharedMailboxes(mailboxList));
           })
@@ -285,8 +285,8 @@ angular.module('esn.inbox.libs')
       }
 
       if (!mailboxesListPromise) {
-        mailboxesListPromise = withJmapClient(function(jmapClient) {
-          return jmapClient.getMailboxes()
+        mailboxesListPromise = withJmapDraftClient(function(jmapDraftClient) {
+          return jmapDraftClient.getMailboxes()
             .then(_translateMailboxes)
             .then(_addSharedMailboxVisibility)
             .then(_updateMailboxCache)

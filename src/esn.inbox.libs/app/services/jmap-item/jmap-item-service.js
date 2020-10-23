@@ -8,7 +8,7 @@ require('../filtered-list/filtered-list.js');
 angular.module('esn.inbox.libs')
 
   .service('inboxJmapItemService', function($q, $rootScope, session, newComposerService, emailSendingService,
-    withJmapClient,
+    withJmapDraftClient,
     jmapDraft, inboxMailboxesService, infiniteListService, inboxSelectionService, asyncJmapAction, notificationFactory, esnI18nService,
     INBOX_EVENTS, INBOX_DISPLAY_NAME_SIZE, inboxFilteredList, inboxConfig, uuid4, INBOX_DEFAULT_NUMBER_ITEMS_PER_PAGE_ON_BULK_READ_OPERATIONS,
     INBOX_DEFAULT_NUMBER_ITEMS_PER_PAGE_ON_BULK_DELETE_OPERATIONS, INBOX_DEFAULT_NUMBER_ITEMS_PER_PAGE_ON_BULK_UPDATE_OPERATIONS) {
@@ -149,7 +149,7 @@ angular.module('esn.inbox.libs')
 
         var idsOfTheMessageBatch = ids.splice(0, numberItemsPerPageOnBulkDeleteOperations);
 
-        return withJmapClient(function(client) {
+        return withJmapDraftClient(function(client) {
           return client.destroyMessages(idsOfTheMessageBatch).then(function() {
             inboxFilteredList.removeFromList(idsOfTheMessageBatch);
 
@@ -166,7 +166,7 @@ angular.module('esn.inbox.libs')
       var position = 0;
 
       function loop() {
-        return withJmapClient(function(client) {
+        return withJmapDraftClient(function(client) {
           return client.getMessageList({
             filter: mailboxFilter,
             limit: numberItemsPerPageOnBulkReadOperations,
@@ -363,7 +363,7 @@ angular.module('esn.inbox.libs')
 
         var idsOfTheMessageBatch = messageIds.splice(0, numberItemsPerPageOnBulkUpdateOperations);
 
-        return withJmapClient(function(client) {
+        return withJmapDraftClient(function(client) {
           return client.setMessages({
             update: idsOfTheMessageBatch.reduce(function(updateObject, ids) {
               updateObject[ids] = _.zipObject([flag], [state]);
@@ -409,7 +409,7 @@ angular.module('esn.inbox.libs')
     }
 
     function getVacationActivated() {
-      return withJmapClient(function(client) {
+      return withJmapDraftClient(function(client) {
         return client.getVacationResponse().then(function(vacation) {
           return vacation.isActivated;
         });

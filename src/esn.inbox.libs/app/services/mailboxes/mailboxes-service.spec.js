@@ -6,15 +6,15 @@ const { expect } = chai;
 
 describe('The inboxMailboxesService factory', function() {
 
-  var inboxMailboxesCache, inboxMailboxesService, jmapClient, $rootScope, jmapDraft, notificationFactory,
+  var inboxMailboxesCache, inboxMailboxesService, jmapDraftClient, $rootScope, jmapDraft, notificationFactory,
     inboxConfigMock, INBOX_HIDDEN_SHAREDMAILBOXES_CONFIG_KEY, INBOX_ROLE_NAMESPACE_TYPES, INBOX_EVENTS;
 
   beforeEach(angular.mock.module('esn.inbox.libs', function($provide) {
-    jmapClient = {
+    jmapDraftClient = {
       getMailboxes: function() { return $q.when([]); }
     };
 
-    $provide.value('withJmapClient', function(callback) { return callback(jmapClient); });
+    $provide.value('withJmapDraftClient', function(callback) { return callback(jmapDraftClient); });
     notificationFactory = {
       weakSuccess: sinon.spy(),
       weakError: sinon.spy(function() { return { setCancelAction: sinon.spy() }; }),
@@ -42,7 +42,7 @@ describe('The inboxMailboxesService factory', function() {
   }));
 
   it('should update unread count when unread message destroyed', function() {
-    var unreadDraft = new jmapDraft.Message(jmapClient, 'id1', 'blobId', 'threadId', ['mailboxId'], { isUnread: true, date: 1 }),
+    var unreadDraft = new jmapDraft.Message(jmapDraftClient, 'id1', 'blobId', 'threadId', ['mailboxId'], { isUnread: true, date: 1 }),
       mailbox = {
         id: 'mailboxId', name: 'testMailbox', totalMessages: 12, unreadMessages: 4
       };
@@ -56,7 +56,7 @@ describe('The inboxMailboxesService factory', function() {
   });
 
   it('should update total message count when message destroyed', function() {
-    var unreadDraft = new jmapDraft.Message(jmapClient, 'id1', 'blobId', 'threadId', ['mailboxId'], { isUnread: true, date: 1 }),
+    var unreadDraft = new jmapDraft.Message(jmapDraftClient, 'id1', 'blobId', 'threadId', ['mailboxId'], { isUnread: true, date: 1 }),
       mailbox = {
         id: 'mailboxId', name: 'testMailbox', totalMessages: 12, unreadMessages: 4
       };
@@ -70,7 +70,7 @@ describe('The inboxMailboxesService factory', function() {
   });
 
   it('should not update unread count when read message destroyed', function() {
-    var unreadDraft = new jmapDraft.Message(jmapClient, 'id1', 'blobId', 'threadId', ['mailboxId'], { isUnread: false, date: 1 }),
+    var unreadDraft = new jmapDraft.Message(jmapDraftClient, 'id1', 'blobId', 'threadId', ['mailboxId'], { isUnread: false, date: 1 }),
       mailbox = {
         id: 'mailboxId', name: 'testMailbox', totalMessages: 12, unreadMessages: 4
       };
@@ -147,7 +147,7 @@ describe('The inboxMailboxesService factory', function() {
     });
 
     it('should filter mailboxes using a filter, if given', function(done) {
-      jmapClient.getMailboxes = function() {
+      jmapDraftClient.getMailboxes = function() {
         return $q.when([{}, {}, {}]);
       };
       inboxMailboxesService.assignMailboxesList(null, function(mailboxes) {
@@ -162,7 +162,7 @@ describe('The inboxMailboxesService factory', function() {
     });
 
     it('should add level and qualifiedName properties to mailboxes', function(done) {
-      jmapClient.getMailboxes = function() {
+      jmapDraftClient.getMailboxes = function() {
         return $q.when([
           { id: 1, name: '1' },
           { id: 2, name: '2', parentId: 1 },
@@ -202,7 +202,7 @@ describe('The inboxMailboxesService factory', function() {
       inboxMailboxesCache[0] = {
         id: 2, name: '2', level: 2, parentId: 1, qualifiedName: '1 / 2'
       };
-      jmapClient.getMailboxes = function() {
+      jmapDraftClient.getMailboxes = function() {
         return $q.when([
           { id: 1, name: '1' },
           { id: 4, name: '4' }
@@ -235,7 +235,7 @@ describe('The inboxMailboxesService factory', function() {
       inboxMailboxesCache[1] = {
         id: 5, sortOrder: 1, name: '5', level: 1, qualifiedName: '5'
       };
-      jmapClient.getMailboxes = function() {
+      jmapDraftClient.getMailboxes = function() {
         return $q.when([
           { id: 1, sortOrder: 1, name: '1' },
           { id: 4, sortOrder: 2, name: '4' },
@@ -279,7 +279,7 @@ describe('The inboxMailboxesService factory', function() {
     });
 
     it('should NOT set mailboxes\' sidebar visibility when none found in user configuration', function(done) {
-      jmapClient.getMailboxes = function() {
+      jmapDraftClient.getMailboxes = function() {
         return $q.when([
           { id: 1, name: '1' },
           { id: 2, name: '2', parentId: 1 },
@@ -307,7 +307,7 @@ describe('The inboxMailboxesService factory', function() {
     });
 
     it('should set mailboxes\' sidebar visibility according to user configuration', function(done) {
-      jmapClient.getMailboxes = function() {
+      jmapDraftClient.getMailboxes = function() {
         return $q.when([
           { id: 1, name: '1', namespace: { type: 'delegated' } },
           { id: 2, name: '2', parentId: 1 },
@@ -396,7 +396,7 @@ describe('The inboxMailboxesService factory', function() {
   describe('The assignMailbox function', function() {
 
     beforeEach(function() {
-      jmapClient.getMailboxes = function() {
+      jmapDraftClient.getMailboxes = function() {
         return $q.when([{ name: 'name' }]);
       };
     });
@@ -411,9 +411,9 @@ describe('The inboxMailboxesService factory', function() {
       $rootScope.$digest();
     });
 
-    it('should pass the mailbox.id to jmapClient.getMailboxes', function(done) {
+    it('should pass the mailbox.id to jmapDraftClient.getMailboxes', function(done) {
 
-      jmapClient.getMailboxes = function(data) {
+      jmapDraftClient.getMailboxes = function(data) {
         expect(data).to.deep.equal({ ids: [2] });
         done();
       };
@@ -422,12 +422,12 @@ describe('The inboxMailboxesService factory', function() {
     });
 
     it('should not query the backend if useCache is true and the mailbox is already cached', function(done) {
-      jmapClient.getMailboxes = sinon.spy();
+      jmapDraftClient.getMailboxes = sinon.spy();
       inboxMailboxesCache[0] = { id: 1, name: '1' };
       inboxMailboxesCache[1] = { id: 2, name: '2' };
 
       inboxMailboxesService.assignMailbox(2, null, true).then(function(mailbox) {
-        expect(jmapClient.getMailboxes).to.have.not.been.calledWith();
+        expect(jmapDraftClient.getMailboxes).to.have.not.been.calledWith();
         expect(mailbox.name).to.equal('2');
 
         done();
@@ -438,8 +438,8 @@ describe('The inboxMailboxesService factory', function() {
     it('should assign dst.mailbox if dst is given', function(done) {
       var object = {};
 
-      jmapClient.getMailboxes = function() {
-        return $q.when([new jmapDraft.Mailbox(jmapClient, 'id', 'name')]);
+      jmapDraftClient.getMailboxes = function() {
+        return $q.when([new jmapDraft.Mailbox(jmapDraftClient, 'id', 'name')]);
       };
 
       inboxMailboxesService.assignMailbox('id', object).then(function() {
@@ -487,7 +487,7 @@ describe('The inboxMailboxesService factory', function() {
     });
 
     it('should decrease source mailbox unread count and increase target one', function() {
-      jmapClient.getMailboxes = function() {
+      jmapDraftClient.getMailboxes = function() {
         return $q.when([
           { id: 1, unreadMessages: 1 },
           { id: 2, unreadMessages: 2 }
@@ -509,7 +509,7 @@ describe('The inboxMailboxesService factory', function() {
     it('should not decrease unread messages count of from and to mailboxes if message is read', function() {
       message.isUnread = false;
 
-      jmapClient.getMailboxes = function() {
+      jmapDraftClient.getMailboxes = function() {
         return $q.when([
           { id: 1, unreadMessages: 1 },
           { id: 2, unreadMessages: 2 }
@@ -529,7 +529,7 @@ describe('The inboxMailboxesService factory', function() {
     });
 
     it('should decrement total count of source mailbox and increment total count of target mailbox', function() {
-      jmapClient.getMailboxes = function() {
+      jmapDraftClient.getMailboxes = function() {
         return $q.when([
           { id: 1, totalMessages: 1 },
           { id: 2, totalMessages: 2 }
@@ -627,7 +627,7 @@ describe('The inboxMailboxesService factory', function() {
         id: 22, mayAddItems: true, role: jmapDraft.MailboxRole.OUTBOX, name: jmapDraft.MailboxRole.OUTBOX.toString()
       };
 
-      jmapClient.getMailboxes = function() {
+      jmapDraftClient.getMailboxes = function() {
         return $q.when([draftMailbox, outboxMailbox]);
       };
       inboxMailboxesService.assignMailboxesList({});
@@ -857,9 +857,9 @@ describe('The inboxMailboxesService factory', function() {
     it('should convert mailbox role to mailbox ID in filter of special mailbox in the first use', function(done) {
       var mailboxId = '123';
       var mailboxes = [
-        new jmapDraft.Mailbox(jmapClient, 'matched role', 'name', { role: 'inbox' }),
-        new jmapDraft.Mailbox(jmapClient, 'unmatched role', 'name', { role: 'outbox' }),
-        new jmapDraft.Mailbox(jmapClient, 'trashId', 'trash', { role: 'trash' })
+        new jmapDraft.Mailbox(jmapDraftClient, 'matched role', 'name', { role: 'inbox' }),
+        new jmapDraft.Mailbox(jmapDraftClient, 'unmatched role', 'name', { role: 'outbox' }),
+        new jmapDraft.Mailbox(jmapDraftClient, 'trashId', 'trash', { role: 'trash' })
       ];
       var specialMailbox = {
         id: mailboxId,
@@ -874,10 +874,10 @@ describe('The inboxMailboxesService factory', function() {
         return specialMailbox;
       };
 
-      jmapClient.getMailboxes = sinon.stub().returns($q.when(mailboxes));
+      jmapDraftClient.getMailboxes = sinon.stub().returns($q.when(mailboxes));
 
       inboxMailboxesService.getMessageListFilter(mailboxId).then(function(filter) {
-        expect(jmapClient.getMailboxes).to.have.been.calledWith();
+        expect(jmapDraftClient.getMailboxes).to.have.been.calledWith();
         expect(filter).to.deep.equal({
           notInMailboxes: [mailboxes[0].id],
           inMailboxes: ['trashId']
@@ -891,12 +891,12 @@ describe('The inboxMailboxesService factory', function() {
     it('should add sharedMailboxes ID in filter to exclude them', function(done) {
       var mailboxId = '123';
       var mailboxes = [
-        new jmapDraft.Mailbox(jmapClient, 'inboxId', 'Inbox', { role: 'inbox' }),
-        new jmapDraft.Mailbox(jmapClient, 'outboxId', 'Outbox', { role: 'outbox' }),
-        new jmapDraft.Mailbox(jmapClient, 'trashId', 'Trash', { role: 'trash' }),
-        new jmapDraft.Mailbox(jmapClient, 'sharedId1', 'shared1', { namespace: { type: 'delegated' } }),
-        new jmapDraft.Mailbox(jmapClient, 'sharedId2', 'shared2', { namespace: { type: 'delegated' } }),
-        new jmapDraft.Mailbox(jmapClient, 'NotShared', 'NotShared', { namespace: { type: 'personal' } })
+        new jmapDraft.Mailbox(jmapDraftClient, 'inboxId', 'Inbox', { role: 'inbox' }),
+        new jmapDraft.Mailbox(jmapDraftClient, 'outboxId', 'Outbox', { role: 'outbox' }),
+        new jmapDraft.Mailbox(jmapDraftClient, 'trashId', 'Trash', { role: 'trash' }),
+        new jmapDraft.Mailbox(jmapDraftClient, 'sharedId1', 'shared1', { namespace: { type: 'delegated' } }),
+        new jmapDraft.Mailbox(jmapDraftClient, 'sharedId2', 'shared2', { namespace: { type: 'delegated' } }),
+        new jmapDraft.Mailbox(jmapDraftClient, 'NotShared', 'NotShared', { namespace: { type: 'personal' } })
       ];
 
       var specialMailbox = {
@@ -912,10 +912,10 @@ describe('The inboxMailboxesService factory', function() {
         return specialMailbox;
       };
 
-      jmapClient.getMailboxes = sinon.stub().returns($q.when(mailboxes));
+      jmapDraftClient.getMailboxes = sinon.stub().returns($q.when(mailboxes));
 
       inboxMailboxesService.getMessageListFilter(mailboxId).then(function(filter) {
-        expect(jmapClient.getMailboxes).to.have.been.calledWith();
+        expect(jmapDraftClient.getMailboxes).to.have.been.calledWith();
 
         expect(filter).to.deep.equal({
           notInMailboxes: ['inboxId', 'sharedId1', 'sharedId2'],
@@ -941,10 +941,10 @@ describe('The inboxMailboxesService factory', function() {
         return specialMailbox;
       };
 
-      jmapClient.getMailboxes = sinon.stub().returns($q.reject());
+      jmapDraftClient.getMailboxes = sinon.stub().returns($q.reject());
 
       inboxMailboxesService.getMessageListFilter(mailboxId).then(function(filter) {
-        expect(jmapClient.getMailboxes).to.have.been.calledWith();
+        expect(jmapDraftClient.getMailboxes).to.have.been.calledWith();
         expect(filter).to.deep.equal({
           notInMailboxes: [],
           inMailboxes: []
@@ -956,12 +956,12 @@ describe('The inboxMailboxesService factory', function() {
     });
 
     it('should return a filter including the Inbox when no context given', function(done) {
-      jmapClient.getMailboxes = sinon.stub().returns($q.when([
-        new jmapDraft.Mailbox(jmapClient, 'inbox', 'inbox', { role: 'inbox' })
+      jmapDraftClient.getMailboxes = sinon.stub().returns($q.when([
+        new jmapDraft.Mailbox(jmapDraftClient, 'inbox', 'inbox', { role: 'inbox' })
       ]));
 
       inboxMailboxesService.getMessageListFilter().then(function(filter) {
-        expect(jmapClient.getMailboxes).to.have.been.calledWith();
+        expect(jmapDraftClient.getMailboxes).to.have.been.calledWith();
         expect(filter).to.deep.equal({
           inMailboxes: ['inbox']
         });
@@ -1000,7 +1000,7 @@ describe('The inboxMailboxesService factory', function() {
     };
 
     it('should call client.createMailbox', function(done) {
-      jmapClient.createMailbox = function(name, parentId) {
+      jmapDraftClient.createMailbox = function(name, parentId) {
         expect(name).to.equal('name');
         expect(parentId).to.equal(123);
         done();
@@ -1011,7 +1011,7 @@ describe('The inboxMailboxesService factory', function() {
     });
 
     it('should not update the cache if the creation fails', function(done) {
-      jmapClient.createMailbox = function() {
+      jmapDraftClient.createMailbox = function() {
         return $q.reject();
       };
 
@@ -1024,7 +1024,7 @@ describe('The inboxMailboxesService factory', function() {
     });
 
     it('should display an error notification with a "Reopen" link', function(done) {
-      jmapClient.createMailbox = function() {
+      jmapDraftClient.createMailbox = function() {
         return $q.reject();
       };
       inboxMailboxesService.createMailbox(mailbox).then(null, function() {
@@ -1036,8 +1036,8 @@ describe('The inboxMailboxesService factory', function() {
     });
 
     it('should update the cache with a qualified mailbox if the creation succeeds', function(done) {
-      jmapClient.createMailbox = function(name, parentId) {
-        return $q.when(new jmapDraft.Mailbox(jmapClient, 'id', 'name', {
+      jmapDraftClient.createMailbox = function(name, parentId) {
+        return $q.when(new jmapDraft.Mailbox(jmapDraftClient, 'id', 'name', {
           parentId: parentId
         }));
       };
@@ -1061,7 +1061,7 @@ describe('The inboxMailboxesService factory', function() {
   describe('The destroyMailbox function', function() {
 
     it('should call client.setMailboxes, passing the mailbox id if it has no children', function(done) {
-      jmapClient.setMailboxes = function(options) {
+      jmapDraftClient.setMailboxes = function(options) {
         expect(options).to.deep.equal({
           destroy: [123]
         });
@@ -1073,8 +1073,8 @@ describe('The inboxMailboxesService factory', function() {
     });
 
     it('should destroy children mailboxes before the parent', function(done) {
-      inboxMailboxesCache.push(new jmapDraft.Mailbox(jmapClient, 1, '1', { parentId: 2 }));
-      jmapClient.setMailboxes = function(options) {
+      inboxMailboxesCache.push(new jmapDraft.Mailbox(jmapDraftClient, 1, '1', { parentId: 2 }));
+      jmapDraftClient.setMailboxes = function(options) {
         expect(options).to.deep.equal({
           destroy: [1, 2]
         });
@@ -1082,17 +1082,17 @@ describe('The inboxMailboxesService factory', function() {
         done();
       };
 
-      inboxMailboxesService.destroyMailbox(new jmapDraft.Mailbox(jmapClient, 2, '2'));
+      inboxMailboxesService.destroyMailbox(new jmapDraft.Mailbox(jmapDraftClient, 2, '2'));
     });
 
     it('should remove destroyed mailboxes from the cache, when call succeeds', function(done) {
-      inboxMailboxesCache.push(new jmapDraft.Mailbox(jmapClient, 1, '1', { parentId: 2 }));
-      inboxMailboxesCache.push(new jmapDraft.Mailbox(jmapClient, 2, '2'));
-      jmapClient.setMailboxes = function() {
-        return $q.when(new jmapDraft.SetResponse(jmapClient, { destroyed: [1, 2] }));
+      inboxMailboxesCache.push(new jmapDraft.Mailbox(jmapDraftClient, 1, '1', { parentId: 2 }));
+      inboxMailboxesCache.push(new jmapDraft.Mailbox(jmapDraftClient, 2, '2'));
+      jmapDraftClient.setMailboxes = function() {
+        return $q.when(new jmapDraft.SetResponse(jmapDraftClient, { destroyed: [1, 2] }));
       };
 
-      inboxMailboxesService.destroyMailbox(new jmapDraft.Mailbox(jmapClient, 2, '2')).then(function() {
+      inboxMailboxesService.destroyMailbox(new jmapDraft.Mailbox(jmapDraftClient, 2, '2')).then(function() {
         expect(inboxMailboxesCache).to.deep.equal([]);
 
         done();
@@ -1101,14 +1101,14 @@ describe('The inboxMailboxesService factory', function() {
     });
 
     it('should remove destroyed mailboxes from the cache, when call does not succeed completely', function(done) {
-      inboxMailboxesCache.push(new jmapDraft.Mailbox(jmapClient, 1, '1', { parentId: 2 }));
-      inboxMailboxesCache.push(new jmapDraft.Mailbox(jmapClient, 2, '2'));
-      jmapClient.setMailboxes = function() {
-        return $q.when(new jmapDraft.SetResponse(jmapClient, { destroyed: [1] }));
+      inboxMailboxesCache.push(new jmapDraft.Mailbox(jmapDraftClient, 1, '1', { parentId: 2 }));
+      inboxMailboxesCache.push(new jmapDraft.Mailbox(jmapDraftClient, 2, '2'));
+      jmapDraftClient.setMailboxes = function() {
+        return $q.when(new jmapDraft.SetResponse(jmapDraftClient, { destroyed: [1] }));
       };
 
-      inboxMailboxesService.destroyMailbox(new jmapDraft.Mailbox(jmapClient, 2, '2')).catch(function() {
-        expect(inboxMailboxesCache).to.deep.equal([new jmapDraft.Mailbox(jmapClient, 2, '2')]);
+      inboxMailboxesService.destroyMailbox(new jmapDraft.Mailbox(jmapDraftClient, 2, '2')).catch(function() {
+        expect(inboxMailboxesCache).to.deep.equal([new jmapDraft.Mailbox(jmapDraftClient, 2, '2')]);
 
         done();
       });
@@ -1125,7 +1125,7 @@ describe('The inboxMailboxesService factory', function() {
     });
 
     it('should call client.updateMailbox, passing the new options', function(done) {
-      jmapClient.updateMailbox = function(id, options) {
+      jmapDraftClient.updateMailbox = function(id, options) {
         expect(id).to.equal('id');
         expect(options).to.deep.equal({
           name: 'name',
@@ -1139,7 +1139,7 @@ describe('The inboxMailboxesService factory', function() {
     });
 
     it('should not update the cache if the update fails', function(done) {
-      jmapClient.updateMailbox = function() {
+      jmapDraftClient.updateMailbox = function() {
         return $q.reject();
       };
 
@@ -1152,8 +1152,8 @@ describe('The inboxMailboxesService factory', function() {
     });
 
     it('should update the cache with a qualified mailbox if the update succeeds', function(done) {
-      jmapClient.updateMailbox = function() {
-        return $q.when(new jmapDraft.Mailbox(jmapClient, 'id', 'name'));
+      jmapDraftClient.updateMailbox = function() {
+        return $q.when(new jmapDraft.Mailbox(jmapDraftClient, 'id', 'name'));
       };
 
       inboxMailboxesService.updateMailbox(originalMailbox, { id: 'id', name: 'name' }).then(function() {
@@ -1180,8 +1180,8 @@ describe('The inboxMailboxesService factory', function() {
       inboxMailboxesCache.push({
         id: '4', name: '4', parentId: '2', level: 3, qualifiedName: '1 / 2 / 4'
       });
-      jmapClient.updateMailbox = function() {
-        return $q.when(new jmapDraft.Mailbox(jmapClient, '1', '1_Renamed'));
+      jmapDraftClient.updateMailbox = function() {
+        return $q.when(new jmapDraft.Mailbox(jmapDraftClient, '1', '1_Renamed'));
       };
 
       inboxMailboxesService.updateMailbox(originalMailbox, { id: '1', name: '1_Renamed' }).then(function() {
@@ -1223,7 +1223,7 @@ describe('The inboxMailboxesService factory', function() {
     });
 
     it('should call client.updateMailbox, passing only sharing settings', function(done) {
-      jmapClient.updateMailbox = function(id, options) {
+      jmapDraftClient.updateMailbox = function(id, options) {
         expect(id).to.equal('id');
         expect(options).to.deep.equal({
           sharedWith: sharingSettings
@@ -1237,7 +1237,7 @@ describe('The inboxMailboxesService factory', function() {
     });
 
     it('should not update the cache if the update fails', function(done) {
-      jmapClient.updateMailbox = function() {
+      jmapDraftClient.updateMailbox = function() {
         return $q.reject();
       };
 
@@ -1251,8 +1251,8 @@ describe('The inboxMailboxesService factory', function() {
     });
 
     it('should update the cache if the update succeeds', function(done) {
-      jmapClient.updateMailbox = function() {
-        return $q.when(new jmapDraft.Mailbox(jmapClient, 'id', 'name', { sharedWith: sharingSettings }));
+      jmapDraftClient.updateMailbox = function() {
+        return $q.when(new jmapDraft.Mailbox(jmapDraftClient, 'id', 'name', { sharedWith: sharingSettings }));
       };
 
       originalMailbox.sharedWith = sharingSettings;
@@ -1276,7 +1276,7 @@ describe('The inboxMailboxesService factory', function() {
     beforeEach(function() {
       mailbox = new jmapDraft.Mailbox({}, 'id', 'name', { role: 'drafts' });
 
-      jmapClient.getMailboxes = function() {
+      jmapDraftClient.getMailboxes = function() {
         return $q.when([mailbox]);
       };
     });
@@ -1299,8 +1299,8 @@ describe('The inboxMailboxesService factory', function() {
       $rootScope.$digest();
     });
 
-    it('should reject if jmapClient rejects', function(done) {
-      jmapClient.getMailboxes = function() {
+    it('should reject if jmapDraftClient rejects', function(done) {
+      jmapDraftClient.getMailboxes = function() {
         return $q.reject();
       };
 
@@ -1320,13 +1320,13 @@ describe('The inboxMailboxesService factory', function() {
       personalInbox = new jmapDraft.Mailbox({}, 'id', 'name',
         { role: 'inbox', namespace: { type: INBOX_ROLE_NAMESPACE_TYPES.owned } });
 
-      jmapClient.getMailboxes = function() {
+      jmapDraftClient.getMailboxes = function() {
         return $q.when([sharedInbox, personalInbox]);
       };
     });
 
     it('should resolve with nothing if the Mailbox is not found', function(done) {
-      jmapClient.getMailboxes = _.constant($q.when([sharedInbox]));
+      jmapDraftClient.getMailboxes = _.constant($q.when([sharedInbox]));
       inboxMailboxesService.getUserInbox().then(function(mailboxes) {
         expect(mailboxes).to.equal(undefined);
 
@@ -1373,7 +1373,7 @@ describe('The inboxMailboxesService factory', function() {
     });
 
     it('should filter shared mailboxes', function() {
-      jmapClient.getMailboxes = function() {
+      jmapDraftClient.getMailboxes = function() {
         return $q.when([
           {
             id: 1, name: '1', totalMessages: 3, unreadMessages: 1, namespace: { type: 'delegated' }
@@ -1395,7 +1395,7 @@ describe('The inboxMailboxesService factory', function() {
 
     it('should do anything on inboxMailboxesCache', function(done) {
       inboxMailboxesCache = [];
-      jmapClient.getMailboxes = function() {
+      jmapDraftClient.getMailboxes = function() {
         return $q.when([]);
       };
 
@@ -1410,7 +1410,7 @@ describe('The inboxMailboxesService factory', function() {
 
     it('should add and remove anything on inboxMailboxesCache', function(done) {
       inboxMailboxesCache = [{ id: 2, name: '2', namespace: { type: 'Delegated' } }];
-      jmapClient.getMailboxes = function() {
+      jmapDraftClient.getMailboxes = function() {
         return $q.when([{ id: 2, name: '2', namespace: { type: 'Delegated' } }]);
       };
 
@@ -1427,7 +1427,7 @@ describe('The inboxMailboxesService factory', function() {
 
     it('should add new shared mailboxes to inboxMailboxesCache', function(done) {
       inboxMailboxesCache = [{ id: 2, name: '2', namespace: { type: 'Delegated' } }];
-      jmapClient.getMailboxes = function() {
+      jmapDraftClient.getMailboxes = function() {
         return $q.when([{ id: 1, name: '1', namespace: { type: 'Delegated' } }, { id: 2, name: '2', namespace: { type: 'Delegated' } }]);
       };
 
@@ -1447,7 +1447,7 @@ describe('The inboxMailboxesService factory', function() {
 
     it('should remove shared mailboxes FROM inboxMailboxesCache', function(done) {
       inboxMailboxesCache = [{ id: 2, name: '2', namespace: { type: 'Delegated' } }, { id: 1, name: '1', namespace: { type: 'Delegated' } }];
-      jmapClient.getMailboxes = function() {
+      jmapDraftClient.getMailboxes = function() {
         return $q.when([{ id: 1, name: '1', namespace: { type: 'Delegated' } }]);
       };
 
@@ -1470,7 +1470,7 @@ describe('The inboxMailboxesService factory', function() {
         { id: 5, name: '5', namespace: { type: 'Personal' } },
         { id: 6, name: '6', namespace: { type: 'Personal' } }];
 
-      jmapClient.getMailboxes = function() {
+      jmapDraftClient.getMailboxes = function() {
         return $q.when([{ id: 2, name: '2', namespace: { type: 'Delegated' } },
           { id: 3, name: '33333333', namespace: { type: 'Delegated' } },
           { id: 5, name: '5', namespace: { type: 'Personal' } }]);

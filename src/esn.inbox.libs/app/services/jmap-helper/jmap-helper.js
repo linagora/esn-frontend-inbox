@@ -10,7 +10,7 @@ require('../../app.constants');
 
 angular.module('esn.inbox.libs')
 
-  .factory('inboxJmapHelper', function($q, jmapDraft, emailBodyService, withJmapClient, inboxIdentitiesService, JMAP_GET_MESSAGES_VIEW) {
+  .factory('inboxJmapHelper', function($q, jmapDraft, emailBodyService, withJmapDraftClient, inboxIdentitiesService, JMAP_GET_MESSAGES_VIEW) {
     return {
       getMessageById,
       toOutboundMessage
@@ -19,12 +19,12 @@ angular.module('esn.inbox.libs')
     /////
 
     function getMessageById(id) {
-      return withJmapClient(function(client) {
+      return withJmapDraftClient(function(client) {
         return client.getMessages({ ids: [id], properties: JMAP_GET_MESSAGES_VIEW }).then(_.head);
       });
     }
 
-    function toOutboundMessage(jmapClient, emailState) {
+    function toOutboundMessage(jmapDraftClient, emailState) {
       return $q.when(emailState.identity || inboxIdentitiesService.getDefaultIdentity())
         .then(function(identity) {
           const message = {
@@ -49,7 +49,7 @@ angular.module('esn.inbox.libs')
             });
           }
 
-          return new jmapDraft.OutboundMessage(jmapClient, message);
+          return new jmapDraft.OutboundMessage(jmapDraftClient, message);
         });
     }
 

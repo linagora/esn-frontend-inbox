@@ -7,7 +7,7 @@ const { expect } = chai;
 describe('The Unified Inbox Angular module providers', function() {
 
   var $rootScope, inboxHostedMailMessagesProvider,
-    jmapClient, inboxMailboxesService, inboxConfigMock, jmapDraft, computeUniqueSetOfRecipients, ELEMENTS_PER_REQUEST;
+    jmapDraftClient, inboxMailboxesService, inboxConfigMock, jmapDraft, computeUniqueSetOfRecipients, ELEMENTS_PER_REQUEST;
 
   function elements(id, length, offset) {
     var array = [], start = offset || 0;
@@ -29,7 +29,7 @@ describe('The Unified Inbox Angular module providers', function() {
     angular.mock.module('esn.core');
     angular.mock.module('esn.configuration');
     angular.mock.module('linagora.esn.unifiedinbox', function($provide) {
-      jmapClient = {
+      jmapDraftClient = {
         getMailboxes: function() {
           return $q.when([
             new jmapDraft.Mailbox({}, 'id_inbox', 'name_inbox', { role: 'inbox' }),
@@ -52,8 +52,8 @@ describe('The Unified Inbox Angular module providers', function() {
         }
       };
 
-      $provide.value('withJmapClient', function(cb) {
-        return cb(jmapClient);
+      $provide.value('withJmapDraftClient', function(cb) {
+        return cb(jmapDraftClient);
       });
       $provide.decorator('inboxMailboxesService', function($delegate) {
         $delegate.flagIsUnreadChanged = sinon.spy($delegate.flagIsUnreadChanged);
@@ -106,7 +106,7 @@ describe('The Unified Inbox Angular module providers', function() {
     it('should support fetching recent items', function(done) {
       var fetcher = inboxHostedMailMessagesProvider.fetch({ inMailboxes: ['id_inbox'] });
 
-      jmapClient = {
+      jmapDraftClient = {
         getMailboxWithRole: function(role) {
           return $q.when({ id: 'id_' + role.value });
         },
@@ -130,7 +130,7 @@ describe('The Unified Inbox Angular module providers', function() {
     it('should update mailbox badge when fetching unread recent items', function() {
       var fetcher = inboxHostedMailMessagesProvider.fetch({ inMailboxes: ['id_inbox'] });
 
-      jmapClient.getMessageList = function() {
+      jmapDraftClient.getMessageList = function() {
         return $q.when({
           messageIds: ['id1', 'id2'],
           getMessages: function() {
@@ -174,7 +174,7 @@ describe('The Unified Inbox Angular module providers', function() {
         isUnread: true
       };
 
-      jmapClient.getMessageList = function() {
+      jmapDraftClient.getMessageList = function() {
         return $q.when({
           messageIds: ['id1'],
           getMessages: function() {

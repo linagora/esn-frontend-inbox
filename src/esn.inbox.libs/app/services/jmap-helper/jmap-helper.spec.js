@@ -6,14 +6,14 @@ const { expect } = chai;
 
 describe('The inboxJmapHelper service', function() {
 
-  var inboxJmapHelper, jmapDraft, emailBodyServiceMock, $rootScope, notificationFactory, jmapClient;
+  var inboxJmapHelper, jmapDraft, emailBodyServiceMock, $rootScope, notificationFactory, jmapDraftClient;
 
   beforeEach(function() {
     angular.mock.module('esn.inbox.libs', function($provide) {
-      jmapClient = {};
+      jmapDraftClient = {};
 
-      $provide.value('withJmapClient', function(callback) {
-        return callback(jmapClient);
+      $provide.value('withJmapDraftClient', function(callback) {
+        return callback(jmapDraftClient);
       });
       $provide.value('emailBodyService', emailBodyServiceMock = { bodyProperty: 'htmlBody' });
       $provide.value('inboxIdentitiesService', {
@@ -36,7 +36,7 @@ describe('The inboxJmapHelper service', function() {
   describe('The getMessageById function', function() {
 
     it('should fetch the message, and reject upon failure', function(done) {
-      jmapClient.getMessages = function(options) {
+      jmapDraftClient.getMessages = function(options) {
         expect(options.ids).to.deep.equal(['id']);
 
         return $q.reject();
@@ -47,7 +47,7 @@ describe('The inboxJmapHelper service', function() {
     });
 
     it('should fetch the message, and return it upon success', function(done) {
-      jmapClient.getMessages = function(options) {
+      jmapDraftClient.getMessages = function(options) {
         expect(options.ids).to.deep.equal(['id']);
 
         return $q.when([{ id: 'id' }]);

@@ -14,7 +14,7 @@ angular.module('linagora.esn.unifiedinbox')
     JMAP_FILTER,
     jmapDraft,
     asyncJmapAction,
-    withJmapClient
+    withJmapDraftClient
   ) {
     var self = this;
 
@@ -122,7 +122,7 @@ angular.module('linagora.esn.unifiedinbox')
     function getFilters() {
       if (self.filters.length) return $q.when(self.filters);
 
-      return withJmapClient(function(client) {
+      return withJmapDraftClient(function(client) {
         return client.getFilter().then(function(result) {
           _setFiltersLocally(result);
 

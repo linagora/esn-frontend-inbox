@@ -123,7 +123,7 @@ angular.module('esn.inbox.libs')
     };
   })
 
-  .factory('inboxNewMessageProvider', function($q, withJmapClient, pagedJmapRequest, inboxJmapProviderContextBuilder, esnSearchProvider, sortByDateInDescendingOrder, inboxMailboxesService, JMAP_GET_MESSAGES_LIST, ELEMENTS_PER_REQUEST, PROVIDER_TYPES, esnI18nService) {
+  .factory('inboxNewMessageProvider', function($q, withJmapDraftClient, pagedJmapRequest, inboxJmapProviderContextBuilder, esnSearchProvider, sortByDateInDescendingOrder, inboxMailboxesService, JMAP_GET_MESSAGES_LIST, ELEMENTS_PER_REQUEST, PROVIDER_TYPES, esnI18nService) {
     return function(templateUrl, emailTransform) {
       return new esnSearchProvider({
         uid: 'op.inbox.emails',
@@ -156,7 +156,7 @@ angular.module('esn.inbox.libs')
           }
 
           function getMessages(position, dateOfMostRecentItem) {
-            return withJmapClient(function(client) {
+            return withJmapDraftClient(function(client) {
               return client.getMessageList({
                 filter: dateOfMostRecentItem ? angular.extend({}, context, { after: dateOfMostRecentItem }) : context,
                 sort: ['date desc'],

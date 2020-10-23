@@ -13,7 +13,7 @@ function inboxAttachmentUploadService(
   $filter,
   inboxAttachmentProviderRegistry,
   inboxConfig,
-  withJmapClient,
+  withJmapDraftClient,
   inboxAttachmentAlternativeUploaderModal,
   DEFAULT_MAX_SIZE_UPLOAD
 ) {
@@ -41,7 +41,7 @@ function inboxAttachmentUploadService(
 
     uploadCallback = (typeof uploadCallback === 'function') ? uploadCallback : angular.noop;
 
-    return withJmapClient(function(client) {
+    return withJmapDraftClient(function(client) {
       return inboxConfig('maxSizeUpload', DEFAULT_MAX_SIZE_UPLOAD)
         .then(function(maxSizeUpload) {
           var largeFiles = [];

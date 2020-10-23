@@ -6,7 +6,7 @@ require('../mailboxes/mailboxes-service');
 require('../hook/email-sending-hook.service');
 
 angular.module('esn.inbox.libs')
-  .factory('sendEmail', function($http, $q, inboxConfig, inBackground, jmapDraft, withJmapClient, inboxJmapHelper, inboxMailboxesService, httpConfigurer, inboxEmailSendingHookService) {
+  .factory('sendEmail', function($http, $q, inboxConfig, inBackground, jmapDraft, withJmapDraftClient, inboxJmapHelper, inboxMailboxesService, httpConfigurer, inboxEmailSendingHookService) {
     function sendBySmtp(email) {
       return $http.post(httpConfigurer.getUrl('/unifiedinbox/api/inbox/sendemail'), email);
     }
@@ -22,7 +22,7 @@ angular.module('esn.inbox.libs')
     }
 
     function sendEmail(email) {
-      return withJmapClient(function(client) {
+      return withJmapDraftClient(function(client) {
         return $q.all([
           inboxConfig('isJmapSendingEnabled'),
           inboxJmapHelper.toOutboundMessage(client, email)

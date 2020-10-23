@@ -263,10 +263,10 @@ require('./services/common/inbox-utils.service.js');
       esnShortcuts.use(INBOX_SHORTCUTS_ACTIONS_CATEGORY.shortcuts.SPAM_EMAIL, this.moveToSpam, $scope);
     })
 
-    .controller('viewThreadController', function($scope, $stateParams, $state, withJmapClient, inboxJmapItemService, JMAP_GET_MESSAGES_VIEW) {
+    .controller('viewThreadController', function($scope, $stateParams, $state, withJmapDraftClient, inboxJmapItemService, JMAP_GET_MESSAGES_VIEW) {
       $scope.thread = $stateParams.item;
 
-      withJmapClient(function(client) {
+      withJmapDraftClient(function(client) {
         client
           .getThreads({ ids: [$stateParams.threadId] })
           .then(_.head)
@@ -441,7 +441,7 @@ require('./services/common/inbox-utils.service.js');
       $stateParams,
       $q,
       jmapDraft,
-      withJmapClient,
+      withJmapDraftClient,
       rejectWithErrorNotification,
       asyncJmapAction,
       esnPreviousPage,
@@ -482,7 +482,7 @@ require('./services/common/inbox-utils.service.js');
           $scope.vacation = {};
           $scope.is24HourFormat = {};
 
-          withJmapClient(function(client) {
+          withJmapDraftClient(function(client) {
 
             $q.all([
               is24HourFormat(),
@@ -582,7 +582,7 @@ require('./services/common/inbox-utils.service.js');
       };
 
       $scope.$on(INBOX_EVENTS.VACATION_STATUS, function() {
-        withJmapClient(function(client) {
+        withJmapDraftClient(function(client) {
           client.getVacationResponse().then(function(vacation) {
             $scope.vacation.isEnabled = vacation.isEnabled;
           });

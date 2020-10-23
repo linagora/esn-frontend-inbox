@@ -11,7 +11,7 @@ require('./directives/lists.js');
       return new Providers();
     })
 
-    .factory('inboxHostedMailAttachmentProvider', function(withJmapClient, pagedJmapRequest, newProvider,
+    .factory('inboxHostedMailAttachmentProvider', function(withJmapDraftClient, pagedJmapRequest, newProvider,
       inboxMailboxesService, inboxJmapProviderContextBuilder,
       JMAP_GET_MESSAGES_ATTACHMENTS_LIST, ELEMENTS_PER_REQUEST, PROVIDER_TYPES) {
       return newProvider({
@@ -19,7 +19,7 @@ require('./directives/lists.js');
         name: 'Attachments',
         fetch: function(filter) {
           return pagedJmapRequest(function(position) {
-            return withJmapClient(function(client) {
+            return withJmapDraftClient(function(client) {
               return client.getMessageList({
                 filter: angular.extend(filter, { hasAttachment: true }),
                 sort: ['date desc'],
@@ -41,7 +41,7 @@ require('./directives/lists.js');
       });
     })
 
-    .factory('inboxHostedMailThreadsProvider', function($q, withJmapClient, pagedJmapRequest, inboxJmapProviderContextBuilder,
+    .factory('inboxHostedMailThreadsProvider', function($q, withJmapDraftClient, pagedJmapRequest, inboxJmapProviderContextBuilder,
       newProvider, JMAP_GET_MESSAGES_LIST, ELEMENTS_PER_REQUEST, PROVIDER_TYPES) {
       function _prepareThreads(data) {
         var threads = data[0],
@@ -59,7 +59,7 @@ require('./directives/lists.js');
         name: 'inboxHostedMailThreadsProvider',
         fetch: function(filter) {
           return pagedJmapRequest(function(position) {
-            return withJmapClient(function(client) {
+            return withJmapDraftClient(function(client) {
               return client.getMessageList({
                 filter: filter,
                 sort: ['date desc'],

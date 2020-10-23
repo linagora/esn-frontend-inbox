@@ -6,7 +6,7 @@ const { expect } = chai;
 
 describe('The linagora.esn.unifiedinbox Main module directives', function() {
 
-  var $compile, $rootScope, $scope, $timeout, $templateCache, element, jmapClient, inboxPlugins,
+  var $compile, $rootScope, $scope, $timeout, $templateCache, element, jmapDraftClient, inboxPlugins,
     elementScrollService, $stateParams, $dropdown,
     isMobile, searchService, windowMock, fakeNotification,
     sendEmailFakePromise, inboxConfigMock, inboxJmapItemService, INBOX_EVENTS,
@@ -37,9 +37,9 @@ describe('The linagora.esn.unifiedinbox Main module directives', function() {
       testrole: 'testclass',
       default: 'defaultclass'
     });
-    jmapClient = {};
-    $provide.constant('withJmapClient', function(callback) {
-      return callback(jmapClient);
+    jmapDraftClient = {};
+    $provide.constant('withJmapDraftClient', function(callback) {
+      return callback(jmapDraftClient);
     });
     $provide.value('elementScrollService', elementScrollService = {
       autoScrollDown: sinon.spy(),
