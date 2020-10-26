@@ -123,7 +123,7 @@ angular.module('esn.inbox.libs')
     };
   })
 
-  .factory('inboxNewMessageProvider', function($q, withJmapClient, pagedJmapRequest, inboxJmapProviderContextBuilder, esnSearchProvider, sortByDateInDescendingOrder, inboxMailboxesService, JMAP_GET_MESSAGES_LIST, ELEMENTS_PER_REQUEST, PROVIDER_TYPES) {
+  .factory('inboxNewMessageProvider', function($q, withJmapClient, pagedJmapRequest, inboxJmapProviderContextBuilder, esnSearchProvider, sortByDateInDescendingOrder, inboxMailboxesService, JMAP_GET_MESSAGES_LIST, ELEMENTS_PER_REQUEST, PROVIDER_TYPES, esnI18nService) {
     return function(templateUrl, emailTransform) {
       return new esnSearchProvider({
         uid: 'op.inbox.emails',
@@ -215,7 +215,7 @@ angular.module('esn.inbox.libs')
         },
         templateUrl: templateUrl,
         searchTemplateUrl: '/unifiedinbox/app/search/form/search-form-template.html',
-        placeHolder: 'Search in emails'
+        placeHolder: esnI18nService.translate('Search in emails')
       });
     };
   })
