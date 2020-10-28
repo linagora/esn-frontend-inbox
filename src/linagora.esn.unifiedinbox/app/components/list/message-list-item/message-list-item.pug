@@ -1,6 +1,8 @@
-.inbox-message-list-item.swipe(inbox-swipeable-list-item, swipe-right="onSwipeRight", swipe-left="onSwipeLeft", left-template="{{ leftTemplate }}", ng-class="{ selected: ctrl.item.selected }")
+.inbox-message-list-item.swipe(
+  action-list="/unifiedinbox/views/email/view/action-list.html", action-list-no-click,
+  inbox-swipeable-list-item, swipe-right="onSwipeRight", swipe-left="onSwipeLeft", left-template="{{ leftTemplate }}", ng-class="{ selected: ctrl.item.selected }")
   a.inbox-list-item-content.clickable(
-      ng-attr-ng-click="ctrl.item.isDraft && !esnIsDragging ? ctrl.openDraft(ctrl.item.id) : undefined",
+      ng-attr-ng-click="ctrl.item.isDraft && !ctrl.esnIsDragging ? ctrl.openDraft(ctrl.item.id) : undefined",
       esn-draggable,
       inbox-draggable-list-item,
       esn-drag-message="getDragMessage($dragData)",
@@ -10,7 +12,7 @@
       ng-attr-ui-sref="{{ !ctrl.item.isDraft && !ctrl.esnIsDragging ? '.message({mailbox: ctrl.mailbox, emailId: ctrl.item.id})' : '.' }}"
     )
     .inbox-item-with-icon
-      .list-image.badge-container(ng-click="ctrl.select(ctrl.item, $event)", desktop-hover="hovering = hover && !esnIsDragging")
+      .list-image.badge-container(ng-click="ctrl.select(ctrl.item, $event)", desktop-hover="hovering = hover && !ctrl.esnIsDragging")
         inbox-emailer-avatar(ng-hide="hovering || ctrl.item.selected", emailer="mailboxRole.value !== 'sent' ? ctrl.item.from  :  ctrl.item.emailFirstRecipient" )
         label.checkbox.clickable(ng-hide="!hovering && !ctrl.item.selected")
           input(type='checkbox', ng-model="ctrl.item.selected")
