@@ -786,58 +786,6 @@ describe('The linagora.esn.unifiedinbox Main module directives', function() {
 
   });
 
-  describe('The inboxEmailFooter directive', function() {
-
-    it('should hide replyAll button if email.hasReplyAll is false', function() {
-      $scope.email = { id: 'id', hasReplyAll: false };
-      compileDirective('<inbox-email-footer email="email"/>');
-
-      expect(element.find('.mdi-reply-all').length).to.equal(0);
-    });
-
-    it('should show replyAll button if email.hasReplyAll is true', function() {
-      $scope.email = { id: 'id', hasReplyAll: true };
-      compileDirective('<inbox-email-footer email="email"/>');
-
-      expect(element.find('.mdi-reply-all').length).to.equal(1);
-    });
-
-    describe('its controller', function() {
-      var controller;
-
-      beforeEach(function() {
-        $scope.email = { id: 'id' };
-        compileDirective('<inbox-email-footer email="email"/>');
-        controller = element.controller('inboxEmailFooter');
-      });
-
-      it('should expose a "reply" function', function() {
-        inboxJmapItemService.reply = sinon.spy();
-
-        controller.reply();
-
-        expect(inboxJmapItemService.reply).to.have.been.calledWith($scope.email);
-      });
-
-      it('should expose a "replyAll" function', function() {
-        inboxJmapItemService.replyAll = sinon.spy();
-
-        controller.replyAll();
-
-        expect(inboxJmapItemService.replyAll).to.have.been.calledWith($scope.email);
-      });
-
-      it('should expose a "forward" function', function() {
-        inboxJmapItemService.forward = sinon.spy();
-
-        controller.forward();
-
-        expect(inboxJmapItemService.forward).to.have.been.calledWith($scope.email);
-      });
-    });
-
-  });
-
   describe('The inboxEmailerAvatar directive', function() {
 
     it('should resolve the emailer', function() {
