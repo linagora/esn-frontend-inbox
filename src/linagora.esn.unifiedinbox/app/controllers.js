@@ -386,7 +386,7 @@ require('./services/common/inbox-utils.service.js');
     })
 
     .controller('inboxDeleteFolderController', function($scope, $state, inboxMailboxesService, esnI18nService) {
-      var descendants = $scope.mailbox.descendants,
+      var descendants = inboxMailboxesService.getMailboxDescendants($scope.mailbox.id),
         numberOfDescendants = descendants.length,
         numberOfMailboxesToDisplay = 3,
         more = numberOfDescendants - numberOfMailboxesToDisplay,
@@ -400,25 +400,27 @@ require('./services/common/inbox-utils.service.js');
       destroyMailboxesIds.push($scope.mailbox.id);
       destroyMailboxesIds = destroyMailboxesIds.concat(descendants.map(_.property('id')));
 
+      const displayName = inboxMailboxesService.getDisplayName($scope.mailbox.name);
+
       if (numberOfDescendants < 1) {
-        $scope.message = esnI18nService.translate(messageFor1Folder, { mainFolder: $scope.mailbox.displayName }, true).toString();
+        $scope.message = esnI18nService.translate(messageFor1Folder, { mainFolder: displayName }, true).toString();
       } else {
-        var displayingDescendants = descendants.slice(0, numberOfMailboxesToDisplay).map(_.property('displayName')).join(', ');
+        var displayingDescendants = descendants.slice(0, numberOfMailboxesToDisplay).map(mailbox => inboxMailboxesService.getDisplayName(mailbox.name)).join(', ');
 
         if (more <= 0) {
           $scope.message = esnI18nService.translate(messageFor2To4Folders, {
-            mainFolder: $scope.mailbox.displayName,
+            mainFolder: displayName,
             otherFolders: displayingDescendants
           }, true).toString();
         } else if (more === 1) {
           $scope.message = esnI18nService.translate(messageFor5Folders, {
-            mainFolder: $scope.mailbox.displayName,
+            mainFolder: displayName,
             otherFolders: displayingDescendants,
-            lastFolder: descendants[numberOfMailboxesToDisplay].displayName
+            lastFolder: inboxMailboxesService.getDisplayName(descendants[numberOfMailboxesToDisplay].name)
           }, true).toString();
         } else {
           $scope.message = esnI18nService.translate(messageForMoreFolders, {
-            mainFolder: $scope.mailbox.displayName,
+            mainFolder: displayName,
             otherFolders: displayingDescendants,
             count: more
           }, true).toString();
@@ -676,7 +678,7 @@ require('./services/common/inbox-utils.service.js');
           return;
         }
 
-        $scope.displayPersonnalFolders = $filter('filter')($scope.mailboxes, { role: { value: '!' }, namespace: { type: 'Personal' } });
+        $scope.displayPersonnalFolders = $filter('filter')($scope.mailboxes, { role: '!', namespace: 'Personal' });
       }
 
       function displaySharedFolders() {

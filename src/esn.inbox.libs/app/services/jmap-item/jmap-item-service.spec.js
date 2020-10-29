@@ -6,7 +6,7 @@ const { expect } = chai;
 
 describe('The inboxJmapItemService service', function() {
 
-  var $rootScope, jmapDraft, inboxJmapItemService, newComposerService, emailSendingService, quoteEmail, jmapDraftClientMock,
+  var $rootScope, jmapDraft, inboxJmapItemService, newComposerService, emailSendingService, quoteEmail, jmapDraftClientMock, jmapClientMock,
     notificationFactory, counter, infiniteListService, inboxSelectionService, INFINITE_LIST_EVENTS, INBOX_EVENTS,
     inboxConfigMock, inboxMailboxesService, inboxFilteredList;
 
@@ -14,6 +14,11 @@ describe('The inboxJmapItemService service', function() {
 
   beforeEach(angular.mock.module(function($provide) {
     counter = 0;
+    jmapClientMock = {
+      getSession: function() {
+        return { accounts: { dummy: null } };
+      }
+    };
     jmapDraftClientMock = {
       setMessages: sinon.spy(function() {
         return $q.when(new jmapDraft.SetResponse(jmapDraftClientMock));
@@ -41,6 +46,7 @@ describe('The inboxJmapItemService service', function() {
     quoteEmail = function() { return { transformed: 'value' }; };
     inboxConfigMock = {};
 
+    $provide.value('withJmapClient', function(callback) { return callback(jmapClientMock); });
     $provide.value('withJmapDraftClient', function(callback) { return callback(jmapDraftClientMock); });
     $provide.value('newComposerService', newComposerService = { open: sinon.spy() });
     $provide.value('emailSendingService', emailSendingService = {
@@ -113,7 +119,7 @@ describe('The inboxJmapItemService service', function() {
   describe('The moveToTrash function', function() {
 
     it('should reject if we cannot load the Trash mailbox', function(done) {
-      jmapDraftClientMock.getMailboxes = function() {
+      jmapClientMock.mailbox_get = function() {
         return $q.reject();
       };
 
@@ -122,8 +128,8 @@ describe('The inboxJmapItemService service', function() {
     });
 
     it('should move the message to the Trash mailbox', function(done) {
-      jmapDraftClientMock.getMailboxes = function() {
-        return $q.when([new jmapDraft.Mailbox({}, 'id_trash', 'name_trash', { role: 'trash' })]);
+      jmapClientMock.mailbox_get = function() {
+        return $q.when({ list: [{ id: 'id_trash', name: 'name_trash', role: 'trash' }] });
       };
 
       inboxJmapItemService.moveToTrash([
@@ -147,7 +153,7 @@ describe('The inboxJmapItemService service', function() {
   describe('The moveToSpam function', function() {
 
     it('should reject if we cannot load the Spam mailbox', function(done) {
-      jmapDraftClientMock.getMailboxes = function() {
+      jmapClientMock.mailbox_get = function() {
         return $q.reject();
       };
 
@@ -156,8 +162,8 @@ describe('The inboxJmapItemService service', function() {
     });
 
     it('should move the message to the Spam mailbox', function(done) {
-      jmapDraftClientMock.getMailboxes = function() {
-        return $q.when([new jmapDraft.Mailbox({}, 'id_spam', 'name_spam', { role: 'spam' })]);
+      jmapClientMock.mailbox_get = function() {
+        return $q.when({ list: [{ id: 'id_spam', name: 'name_spam', role: 'spam' }] });
       };
 
       inboxJmapItemService.moveToSpam([
@@ -181,7 +187,7 @@ describe('The inboxJmapItemService service', function() {
   describe('The unSpam function', function() {
 
     it('should reject if we cannot load the INBOX mailbox', function(done) {
-      jmapDraftClientMock.getMailboxes = function() {
+      jmapClientMock.mailbox_get = function() {
         return $q.reject();
       };
 
@@ -190,8 +196,8 @@ describe('The inboxJmapItemService service', function() {
     });
 
     it('should move the message to the INBOX mailbox', function(done) {
-      jmapDraftClientMock.getMailboxes = function() {
-        return $q.when([new jmapDraft.Mailbox({}, 'id_inbox', 'name_inbox', { role: 'inbox' })]);
+      jmapClientMock.mailbox_get = function() {
+        return $q.when({ list: [{ id: 'id_inbox', name: 'name_inbox', role: 'inbox' }] });
       };
 
       inboxJmapItemService.unSpam([
@@ -220,7 +226,7 @@ describe('The inboxJmapItemService service', function() {
       inboxMailboxesService = _inboxMailboxesService_;
 
       inboxMailboxesService.updateCountersWhenMovingMessage = sinon.spy(inboxMailboxesService.updateCountersWhenMovingMessage);
-      mailbox = { id: 'mailboxId', name: 'inbox', displayName: 'inbox' };
+      mailbox = { id: 'mailboxId', name: 'inbox' };
     }));
 
     it('should notify with a single-item error message when setMessages fails for a single item', function(done) {
@@ -669,7 +675,7 @@ describe('The inboxJmapItemService service', function() {
       inboxConfigMock.numberItemsPerPageOnBulkDeleteOperations = perPage;
       mailboxId = 'id_trash';
       inboxMailboxesCache[0] = {
-        id: mailboxId, name: 'name_trash', displayName: 'name_trash', totalMessages: 6, unreadMessages: 1
+        id: mailboxId, name: 'name_trash', totalEmails: 6, unreadEmails: 1
       };
       messageIdsList = ['1', '2', '3', '4', '5', '6'];
 
@@ -698,8 +704,8 @@ describe('The inboxJmapItemService service', function() {
         expect(inboxFilteredList.removeFromList).to.have.been.calledOnce;
         expect(inboxFilteredList.removeFromList).to.have.been.calledWith(messageIdsList);
         expect(inboxMailboxesService.emptyMailbox).to.have.been.calledOnce;
-        expect(inboxMailboxesCache[0].totalMessages).to.deep.equal(0);
-        expect(inboxMailboxesCache[0].unreadMessages).to.deep.equal(0);
+        expect(inboxMailboxesCache[0].totalEmails).to.deep.equal(0);
+        expect(inboxMailboxesCache[0].unreadEmails).to.deep.equal(0);
 
         done();
       });
@@ -752,7 +758,7 @@ describe('The inboxJmapItemService service', function() {
       unreadFlag = 'isUnread';
       state = false;
       inboxMailboxesCache[0] = {
-        id: mailboxId, name: 'mailboxName', displayName: 'mailbox_Name', totalMessages: 6, unreadMessages: 4
+        id: mailboxId, name: 'mailboxName', totalEmails: 6, unreadEmails: 4
       };
       messageIdsList = ['id1', 'id2', 'id3'];
 
@@ -793,7 +799,7 @@ describe('The inboxJmapItemService service', function() {
         expect(inboxFilteredList.updateFlagFromList).to.have.been.calledOnce;
         expect(inboxFilteredList.updateFlagFromList).to.have.been.calledWith(messageIdsList);
         expect(inboxMailboxesService.markAllAsRead).to.have.been.calledOnce;
-        expect(inboxMailboxesCache[0].unreadMessages).to.deep.equal(0);
+        expect(inboxMailboxesCache[0].unreadEmails).to.deep.equal(0);
 
         done();
       });

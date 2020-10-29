@@ -12,7 +12,7 @@ angular.module('esn.inbox.libs')
     }
 
     function sendByJmapDirectlyToOutbox(client, message) {
-      return inboxMailboxesService.getMailboxWithRole(jmapDraft.MailboxRole.OUTBOX).then(function(outbox) {
+      return inboxMailboxesService.getMailboxWithRole('outbox').then(function(outbox) {
         return client.send(message, outbox);
       });
     }

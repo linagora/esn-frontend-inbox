@@ -15,10 +15,9 @@ angular.module('esn.inbox.libs')
     'outbox',
     'drafts'
   ])
-
-  .factory('inboxMailboxesService', function($q, $state, $rootScope, withJmapDraftClient, jmapDraft, asyncJmapAction,
-    inboxSpecialMailboxes, inboxMailboxesCache, inboxSharedMailboxesService,
-    esnI18nService, INBOX_EVENTS, MAILBOX_LEVEL_SEPARATOR, INBOX_RESTRICTED_MAILBOXES) {
+  .factory('inboxMailboxesService', function($q, $state, $rootScope, withJmapClient, asyncJmapAction,
+    inboxSpecialMailboxes, inboxMailboxesCache, inboxSharedMailboxesService, limitToFilter,
+    esnI18nService, INBOX_EVENTS, MAILBOX_LEVEL_SEPARATOR, INBOX_RESTRICTED_MAILBOXES, INBOX_DISPLAY_NAME_SIZE) {
 
     let mailboxesListAlreadyFetched = false;
     let mailboxesListPromise;
@@ -50,13 +49,15 @@ angular.module('esn.inbox.libs')
       canMoveMessagesIntoMailbox,
       canMoveMessagesOutOfMailbox,
       updateUnreadDraftsCount,
+      getMailboxDescendants,
+      getDisplayName,
       mailboxtoTree
     };
 
     /////
 
     function filterSystemMailboxes(mailboxes) {
-      return _.reject(mailboxes, function(mailbox) { return mailbox.role.value; });
+      return _.reject(mailboxes, function(mailbox) { return mailbox.role; });
     }
 
     function qualifyMailbox(mailbox) {
@@ -111,7 +112,7 @@ angular.module('esn.inbox.libs')
     }
 
     function _translateMailbox(mailbox) {
-      if (mailbox && mailbox.role && mailbox.role.value) {
+      if (mailbox && mailbox.role) {
         mailbox.name = esnI18nService.translate(mailbox.name).toString();
       }
 
@@ -141,7 +142,7 @@ angular.module('esn.inbox.libs')
         });
     }
 
-    function _updateUnreadMessages(mailboxIds, adjust) {
+    function _updateUnreadEmails(mailboxIds, adjust) {
       if (!mailboxIds || !mailboxIds.length) {
         return true;
       }
@@ -150,12 +151,12 @@ angular.module('esn.inbox.libs')
         const mailbox = _findMailboxInCache(id);
 
         if (mailbox) {
-          mailbox.unreadMessages = Math.max(mailbox.unreadMessages + adjust, 0);
+          mailbox.unreadEmails = Math.max(mailbox.unreadEmails + adjust, 0);
         }
       });
     }
 
-    function _updateTotalMessages(mailboxIds, adjust) {
+    function _updateTotalEmails(mailboxIds, adjust) {
       if (!mailboxIds || !mailboxIds.length) {
         return true;
       }
@@ -164,7 +165,7 @@ angular.module('esn.inbox.libs')
         const mailbox = _findMailboxInCache(id);
 
         if (mailbox) {
-          mailbox.totalMessages = Math.max(mailbox.totalMessages + adjust, 0);
+          mailbox.totalEmails = Math.max(mailbox.totalEmails + adjust, 0);
         }
       });
     }
@@ -224,8 +225,14 @@ angular.module('esn.inbox.libs')
         return $q.when(_assignToObject(dst, 'mailbox')(localMailbox));
       }
 
-      return withJmapDraftClient(function(client) {
-        return client.getMailboxes({ ids: [id] })
+      return withJmapClient(function(client) {
+        return client.mailbox_get({
+          accountId: Object.keys(client.getSession().accounts)[0],
+          ids: [id]
+        })
+          .then(function(mailboxes) {
+            return mailboxes.list;
+          })
           .then(_.head) // We expect a single mailbox here
           .then(_translateMailbox)
           .then(_updateMailboxCache)
@@ -251,8 +258,14 @@ angular.module('esn.inbox.libs')
     }
 
     function updateSharedMailboxCache() {
-      return withJmapDraftClient(function(jmapDraftClient) {
-        return jmapDraftClient.getMailboxes()
+      return withJmapClient(function(jmapClient) {
+        return jmapClient.mailbox_get({
+          accountId: Object.keys(jmapClient.getSession().accounts)[0],
+          ids: null
+        })
+          .then(function(mailboxes) {
+            return mailboxes.list;
+          })
           .then(function(mailboxList) {
             return _addSharedMailboxVisibility(_getSharedMailboxes(mailboxList));
           })
@@ -285,8 +298,12 @@ angular.module('esn.inbox.libs')
       }
 
       if (!mailboxesListPromise) {
-        mailboxesListPromise = withJmapDraftClient(function(jmapDraftClient) {
-          return jmapDraftClient.getMailboxes()
+        mailboxesListPromise = withJmapClient(function(jmapClient) {
+          return jmapClient.mailbox_get({
+            accountId: Object.keys(jmapClient.getSession().accounts)[0],
+            ids: null
+          })
+            .then(mailboxes => mailboxes.list)
             .then(_translateMailboxes)
             .then(_addSharedMailboxVisibility)
             .then(_updateMailboxCache)
@@ -303,22 +320,22 @@ angular.module('esn.inbox.libs')
 
     function flagIsUnreadChanged(email, status) {
       if (email && angular.isDefined(status)) {
-        _updateUnreadMessages(email.mailboxIds, status ? 1 : -1);
+        _updateUnreadEmails(email.mailboxIds, status ? 1 : -1);
       }
     }
 
-    function updateCountersWhenMovingMessage(message, toMailboxIds) {
-      if (message.isUnread) {
-        _updateUnreadMessages(message.mailboxIds, -1);
-        _updateUnreadMessages(toMailboxIds, 1);
+    function updateCountersWhenMovingMessage(email, toMailboxIds) {
+      if (email.isUnread) {
+        _updateUnreadEmails(email.mailboxIds, -1);
+        _updateUnreadEmails(toMailboxIds, 1);
       }
-      _updateTotalMessages(message.mailboxIds, -1);
-      _updateTotalMessages(toMailboxIds, 1);
+      _updateTotalEmails(email.mailboxIds, -1);
+      _updateTotalEmails(toMailboxIds, 1);
     }
 
     function _isRestrictedMailbox(mailbox) {
       if (mailbox && mailbox.role) {
-        return INBOX_RESTRICTED_MAILBOXES.indexOf(mailbox.role.value) > -1;
+        return INBOX_RESTRICTED_MAILBOXES.indexOf(mailbox.role) > -1;
       }
 
       return false;
@@ -331,7 +348,7 @@ angular.module('esn.inbox.libs')
     function canMoveMessagesOutOfMailbox(mailboxObjectOrId) {
       const mailbox = _getMailboxFromId(mailboxObjectOrId);
 
-      if (mailbox && (_isRestrictedMailbox(mailbox) || !mailbox.mayRemoveItems)) {
+      if (mailbox && (_isRestrictedMailbox(mailbox) || !mailbox.myRights.mayRemoveItems)) {
         return false;
       }
 
@@ -341,7 +358,7 @@ angular.module('esn.inbox.libs')
     function canMoveMessagesIntoMailbox(mailboxObjectOrId) {
       const mailbox = _getMailboxFromId(mailboxObjectOrId);
 
-      if (mailbox && (_isSpecialMailbox(mailbox.id) || _isRestrictedMailbox(mailbox) || !mailbox.mayAddItems)) {
+      if (mailbox && (_isSpecialMailbox(mailbox.id) || _isRestrictedMailbox(mailbox) || !mailbox.myRights.mayAddItems)) {
         return false;
       }
 
@@ -352,11 +369,11 @@ angular.module('esn.inbox.libs')
       const mailbox = _getMailboxFromId(fromMailboxObjectOrId);
 
       if (mailbox) {
-        if (mailbox.role === jmapDraft.MailboxRole.DRAFTS) {
+        if (mailbox.role === 'drafts') {
           return true;
         }
 
-        if (mailbox.role === jmapDraft.MailboxRole.TRASH) {
+        if (mailbox.role === 'trash') {
           return false;
         }
       }
@@ -367,13 +384,13 @@ angular.module('esn.inbox.libs')
     function canUnSpamMessages(fromMailboxObjectOrId) {
       const mailbox = _getMailboxFromId(fromMailboxObjectOrId);
 
-      return !!mailbox && mailbox.role === jmapDraft.MailboxRole.SPAM;
+      return !!mailbox && mailbox.role === 'spam';
     }
 
     function canMoveMessage(message, toMailbox) {
       // do not allow moving draft message, except to trash
       if (message.isDraft) {
-        return toMailbox && toMailbox.role === jmapDraft.MailboxRole.TRASH;
+        return toMailbox && toMailbox.role === 'trash';
       }
 
       // do not allow moving to the same mailbox
@@ -397,7 +414,7 @@ angular.module('esn.inbox.libs')
       options = options || {};
 
       if (!mailboxId) {
-        return getMailboxWithRole(jmapDraft.MailboxRole.INBOX).then(function(mailbox) {
+        return getMailboxWithRole('inbox').then(function(mailbox) {
           return _.assign({}, { inMailboxes: [mailbox.id] }, options);
         });
       }
@@ -437,7 +454,7 @@ angular.module('esn.inbox.libs')
         return $q.when([]);
       }
 
-      return $q.all(roles.map(jmapDraft.MailboxRole.fromRole).map(getMailboxWithRole))
+      return $q.all(roles.map(getMailboxWithRole))
         .catch(_.constant([]))
         .then(function(mailboxes) {
           return _(mailboxes).filter(Boolean).map('id').value();
@@ -462,7 +479,7 @@ angular.module('esn.inbox.libs')
     }
 
     function destroyMailbox(mailbox) {
-      const ids = _(mailbox.descendants)
+      const ids = _(getMailboxDescendants(mailbox.id))
         .map(_.property('id'))
         .reverse()
         .push(mailbox.id)
@@ -508,7 +525,7 @@ angular.module('esn.inbox.libs')
 
     function shareMailbox(mailboxToShare) {
       return _updateMailboxProperties(mailboxToShare, {
-        sharedWith: mailboxToShare.sharedWith
+        rights: mailboxToShare.rights
       }, {
         success: 'Sharing settings updated',
         progressing: 'Updating sharing settings...',
@@ -524,7 +541,7 @@ angular.module('esn.inbox.libs')
 
     function getUserInbox() {
       return _getAllMailboxes(_.partialRight(_.filter, function(mailbox) {
-        return mailbox && mailbox.role === jmapDraft.MailboxRole.INBOX &&
+        return mailbox && mailbox.role === 'inbox' &&
           !inboxSharedMailboxesService.isShared(mailbox);
       })).then(_.head);
     }
@@ -532,7 +549,7 @@ angular.module('esn.inbox.libs')
     function markAllAsRead(mailboxId) {
       const targetIndexInCache = _getMailboxIndexInCache(mailboxId);
 
-      inboxMailboxesCache[targetIndexInCache].unreadMessages = 0;
+      inboxMailboxesCache[targetIndexInCache].unreadEmails = 0;
 
       return inboxMailboxesCache[targetIndexInCache];
     }
@@ -540,8 +557,8 @@ angular.module('esn.inbox.libs')
     function emptyMailbox(mailboxId) {
       const targetIndexInCache = _getMailboxIndexInCache(mailboxId);
 
-      inboxMailboxesCache[targetIndexInCache].unreadMessages = 0;
-      inboxMailboxesCache[targetIndexInCache].totalMessages = 0;
+      inboxMailboxesCache[targetIndexInCache].unreadEmails = 0;
+      inboxMailboxesCache[targetIndexInCache].totalEmails = 0;
 
       return inboxMailboxesCache[targetIndexInCache];
     }
@@ -553,7 +570,7 @@ angular.module('esn.inbox.libs')
     }
 
     function updateUnreadDraftsCount(currentInboxListId, updateDraftsList) {
-      const draftsFolder = _.find(inboxMailboxesCache, { role: jmapDraft.MailboxRole.DRAFTS }),
+      const draftsFolder = _.find(inboxMailboxesCache, { role: 'drafts' }),
         isBrowsingDrafts = currentInboxListId && currentInboxListId === draftsFolder.id;
 
       updateDraftsList = updateDraftsList || $q.when();
@@ -562,6 +579,40 @@ angular.module('esn.inbox.libs')
       }
 
       return $q.when(updateCountersWhenMovingMessage({ isUnread: true }, draftsFolder ? [draftsFolder.id] : []));
+    }
+
+    function getMailboxDescendants(mailboxId) {
+      const descendants = [],
+        toScanMailboxIds = [mailboxId],
+        scannedMailboxIds = [];
+
+      function pushDescendant(mailbox) {
+        descendants.push(mailbox);
+
+        if (scannedMailboxIds.indexOf(mailbox.id) === -1) {
+          toScanMailboxIds.push(mailbox.id);
+        }
+      }
+
+      while (toScanMailboxIds.length) {
+        const toScanMailboxId = toScanMailboxIds.shift();
+        const mailboxChildren = _.filter(inboxMailboxesCache, { parentId: toScanMailboxId });
+
+        scannedMailboxIds.push(toScanMailboxId);
+        mailboxChildren.forEach(pushDescendant);
+      }
+
+      return _.uniq(descendants);
+    }
+
+    function getDisplayName(maiboxName) {
+      let displayName = limitToFilter(maiboxName, INBOX_DISPLAY_NAME_SIZE);
+
+      if (maiboxName && maiboxName.length > INBOX_DISPLAY_NAME_SIZE) {
+        displayName = displayName + '\u2026'; // http://www.fileformat.info/info/unicode/char/2026/index.htm
+      }
+
+      return displayName;
     }
   });
 

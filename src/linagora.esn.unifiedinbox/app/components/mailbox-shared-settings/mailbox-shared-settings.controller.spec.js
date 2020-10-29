@@ -64,8 +64,8 @@ describe('The InboxMailboxSharedSettingsController controller', function() {
       $q = _$q_;
     });
 
-    mailbox = { _id: '1', namespace: { owner: 'user2@test.com' }, sharedWith: { 'user1@test.com': INBOX_MAILBOX_SHARING_ROLES.READ_AND_UPDATE } };
-    anothermailbox = { _id: '2', namespace: { owner: 'user2@test.com' }, sharedWith: {} };
+    mailbox = { _id: '1', namespace: 'Delegated[user2@test.com]', rights: { 'user1@test.com': INBOX_MAILBOX_SHARING_ROLES.READ_AND_UPDATE } };
+    anothermailbox = { _id: '2', namespace: 'Delegated[user2@test.com]', rights: {} };
     scope.mailbox = mailbox;
 
     inboxMailboxesService.shareMailbox = sinon.spy();
@@ -93,7 +93,7 @@ describe('The InboxMailboxSharedSettingsController controller', function() {
 
   describe('$onInit', function() {
     beforeEach(function() {
-      mailbox = { _id: '1', namespace: { owner: 'user1@test.com' }, sharedWith: {} };
+      mailbox = { _id: '1', namespace: 'Delegated[user1@test.com]', rights: {} };
       scope.mailbox = mailbox;
     });
 
@@ -125,15 +125,15 @@ describe('The InboxMailboxSharedSettingsController controller', function() {
   });
 
   describe('The getUserSharedInformation function', function() {
-    it('should call getUserSharedInformation and do nothing if sharedWith is empty object', function() {
+    it('should call getUserSharedInformation and do nothing if rights is empty object', function() {
       scope.mailbox = anothermailbox;
 
       var $controller = initController();
 
-      expect($controller.mailbox.sharedWith).to.be.deep.equal({});
+      expect($controller.mailbox.rights).to.be.deep.equal({});
     });
 
-    it('if sharedWith is emtpy object usersShared should be emtpy too', function() {
+    it('if rights is emtpy object usersShared should be emtpy too', function() {
       scope.mailbox = anothermailbox;
 
       var $controller = initController();
@@ -257,7 +257,7 @@ describe('The InboxMailboxSharedSettingsController controller', function() {
       expect(inboxMailboxesService.shareMailbox).to.have.been.calledWith($controller.mailbox);
     });
 
-    it('should exclude mailbox owner from sharedWith prop', function() {
+    it('should exclude mailbox owner from rights prop', function() {
       var $controller = initController();
 
       $controller.usersShared = [{ _id: '123', preferredEmail: $controller.mailbox.namespace.owner }];

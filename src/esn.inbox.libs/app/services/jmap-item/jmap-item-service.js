@@ -51,15 +51,15 @@ angular.module('esn.inbox.libs')
     }
 
     function moveToTrash(itemOrItems) {
-      return _moveToMailboxWithRole(itemOrItems, jmapDraft.MailboxRole.TRASH);
+      return _moveToMailboxWithRole(itemOrItems, 'trash');
     }
 
     function moveToSpam(itemOrItems) {
-      return _moveToMailboxWithRole(itemOrItems, jmapDraft.MailboxRole.SPAM);
+      return _moveToMailboxWithRole(itemOrItems, 'spam');
     }
 
     function unSpam(itemOrItems) {
-      return _moveToMailboxWithRole(itemOrItems, jmapDraft.MailboxRole.INBOX);
+      return _moveToMailboxWithRole(itemOrItems, 'inbox');
     }
 
     function _updateItemMailboxIds(item, newMailboxIds) {
@@ -82,10 +82,12 @@ angular.module('esn.inbox.libs')
 
       return asyncJmapAction({
         failure: items.length > 1 ?
-          esnI18nService.translate('Some items could not be moved to "%s"', { mailboxName: mailbox.displayName }) :
+          esnI18nService.translate('Some items could not be moved to "%s"', {
+            mailboxName: inboxMailboxesService.getDisplayName(mailbox.name)
+          }) :
           esnI18nService.translate('Cannot move "%s" to "%s"', {
             itemSubject: items[0].subject,
-            mailboxName: mailbox.displayName
+            mailboxName: inboxMailboxesService.getDisplayName(mailbox.name)
           })
       }, function(client) {
         return client.setMessages({

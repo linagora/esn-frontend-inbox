@@ -6,8 +6,15 @@ const { expect } = chai;
 
 describe('The Unified Inbox Angular module providers', function() {
 
-  var $rootScope, inboxHostedMailMessagesProvider,
-    jmapDraftClient, inboxMailboxesService, inboxConfigMock, jmapDraft, computeUniqueSetOfRecipients, ELEMENTS_PER_REQUEST;
+  var $rootScope,
+    inboxHostedMailMessagesProvider,
+    jmapClient,
+    jmapDraftClient,
+    inboxMailboxesService,
+    inboxConfigMock,
+    jmapDraft,
+    computeUniqueSetOfRecipients,
+    ELEMENTS_PER_REQUEST;
 
   function elements(id, length, offset) {
     var array = [], start = offset || 0;
@@ -29,14 +36,26 @@ describe('The Unified Inbox Angular module providers', function() {
     angular.mock.module('esn.core');
     angular.mock.module('esn.configuration');
     angular.mock.module('linagora.esn.unifiedinbox', function($provide) {
-      jmapDraftClient = {
-        getMailboxes: function() {
-          return $q.when([
-            new jmapDraft.Mailbox({}, 'id_inbox', 'name_inbox', { role: 'inbox' }),
-            new jmapDraft.Mailbox({}, 'id_trash', 'name_trash', { role: 'trash' }),
-            new jmapDraft.Mailbox({}, 'id_spam', 'name_spam', { role: 'spam' })
-          ]);
+      jmapClient = {
+        mailbox_get: function() {
+          return $q.when({
+            list: [
+              { id: 'id_inbox', name: 'name_inbox', role: 'inbox' },
+              { id: 'id_trash', name: 'name_trash', role: 'trash' },
+              { id: 'id_spam', name: 'name_spam', role: 'spam' }
+            ]
+          });
         },
+        getSession: function() {
+          return { accounts: { dummy: null } };
+        }
+      };
+
+      $provide.value('withJmapClient', function(cb) {
+        return cb(jmapClient);
+      });
+
+      jmapDraftClient = {
         getMessageList: function(options) {
           expect(options.filter.inMailboxes).to.deep.equal(['id_inbox']);
 
@@ -107,9 +126,6 @@ describe('The Unified Inbox Angular module providers', function() {
       var fetcher = inboxHostedMailMessagesProvider.fetch({ inMailboxes: ['id_inbox'] });
 
       jmapDraftClient = {
-        getMailboxWithRole: function(role) {
-          return $q.when({ id: 'id_' + role.value });
-        },
         getMessageList: function(options) {
           expect(options.filter).to.deep.equal({
             inMailboxes: ['id_inbox'],

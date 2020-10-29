@@ -65,7 +65,6 @@ require('./services/identities/inbox-users-identities-api-client.service.js');
 require('./services/jmap-client-provider/jmap-client-provider.js');
 require('./services/jmap-client-provider/jmap-client-provider.run.js');
 require('./services/jmap-helper/jmap-helper.js');
-require('./services/models/mailbox.run.js');
 require('./services/filtered-list/filtered-list.js');
 require('./services/filtering/filtering-service.js');
 require('./services/filtering/filters.js');

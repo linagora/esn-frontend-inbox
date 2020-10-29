@@ -6,18 +6,38 @@ const { expect } = chai;
 
 describe('The inboxFilteredList factory', function() {
 
-  var $rootScope, jmapDraftClient, jmapDraft, inboxFilteringService, inboxFilters, inboxFilteredList, esnSearchProvider, inboxHostedMailMessagesProvider, INBOX_EVENTS, PROVIDER_TYPES, counter, inboxConfigMock;
+  var $rootScope,
+    jmapDraftClient,
+    jmapClient,
+    jmapDraft,
+    inboxFilteringService,
+    inboxFilters,
+    inboxFilteredList,
+    esnSearchProvider,
+    inboxHostedMailMessagesProvider,
+    INBOX_EVENTS,
+    PROVIDER_TYPES,
+    counter,
+    inboxConfigMock;
 
   beforeEach(angular.mock.module('esn.inbox.libs', function($provide) {
-    jmapDraftClient = {
-      getMailboxes: function() {
-        return $q.when([
-          new jmapDraft.Mailbox(jmapDraftClient, 'id_inbox', 'inbox', { role: 'inbox' })
-        ]);
+
+    jmapDraftClient = {};
+    jmapClient = {
+      mailbox_get: function() {
+        return $q.when({
+          list: [{ id: 'id_inbox', name: 'inbox', role: 'inbox' }]
+        });
+      },
+      getSession: function() {
+        return { accounts: { dummy: null } };
       }
     };
 
     $provide.value('withJmapDraftClient', function(callback) { return callback(jmapDraftClient); });
+    $provide.value('withJmapClient', function(callback) {
+      return callback(jmapClient);
+    });
 
     inboxConfigMock = {};
     $provide.value('inboxConfig', function(key, defaultValue) {

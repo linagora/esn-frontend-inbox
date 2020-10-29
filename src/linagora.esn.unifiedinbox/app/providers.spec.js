@@ -7,7 +7,7 @@ const { expect } = chai;
 describe('The Unified Inbox Angular module providers', function() {
 
   var $rootScope, inboxProviders, inboxHostedMailAttachmentProvider, inboxHostedMailThreadsProvider, inboxSearchResultsProvider,
-    jmapDraftClient, inboxConfigMock, jmapDraft, ELEMENTS_PER_REQUEST;
+    jmapDraftClient, inboxConfigMock, ELEMENTS_PER_REQUEST;
 
   function elements(id, length, offset) {
     var array = [], start = offset || 0;
@@ -30,13 +30,6 @@ describe('The Unified Inbox Angular module providers', function() {
     angular.mock.module('esn.configuration');
     angular.mock.module('linagora.esn.unifiedinbox', function($provide) {
       jmapDraftClient = {
-        getMailboxes: function() {
-          return $q.when([
-            new jmapDraft.Mailbox({}, 'id_inbox', 'name_inbox', { role: 'inbox' }),
-            new jmapDraft.Mailbox({}, 'id_trash', 'name_trash', { role: 'trash' }),
-            new jmapDraft.Mailbox({}, 'id_spam', 'name_spam', { role: 'spam' })
-          ]);
-        },
         getMessageList: function(options) {
           expect(options.filter.inMailboxes).to.deep.equal(['id_inbox']);
 
@@ -68,13 +61,12 @@ describe('The Unified Inbox Angular module providers', function() {
   });
 
   beforeEach(angular.mock.inject(function(_$rootScope_, _inboxProviders_, _inboxSearchResultsProvider_,
-    _inboxHostedMailAttachmentProvider_, _inboxHostedMailThreadsProvider_, _jmapDraft_, _ELEMENTS_PER_REQUEST_) {
+    _inboxHostedMailAttachmentProvider_, _inboxHostedMailThreadsProvider_, _ELEMENTS_PER_REQUEST_) {
     $rootScope = _$rootScope_;
     inboxProviders = _inboxProviders_;
     inboxSearchResultsProvider = _inboxSearchResultsProvider_;
     inboxHostedMailAttachmentProvider = _inboxHostedMailAttachmentProvider_;
     inboxHostedMailThreadsProvider = _inboxHostedMailThreadsProvider_;
-    jmapDraft = _jmapDraft_;
 
     ELEMENTS_PER_REQUEST = _ELEMENTS_PER_REQUEST_;
   }));

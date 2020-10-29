@@ -13,7 +13,7 @@
     )
     .inbox-item-with-icon
       .list-image.badge-container(ng-click="ctrl.select(ctrl.item, $event)", desktop-hover="hovering = hover && !ctrl.esnIsDragging")
-        inbox-emailer-avatar(ng-hide="hovering || ctrl.item.selected", emailer="mailboxRole.value !== 'sent' ? ctrl.item.from  :  ctrl.item.emailFirstRecipient" )
+        inbox-emailer-avatar(ng-hide="hovering || ctrl.item.selected", emailer="mailboxRole !== 'sent' ? ctrl.item.from  :  ctrl.item.emailFirstRecipient" )
         label.checkbox.clickable(ng-hide="!hovering && !ctrl.item.selected")
           input(type='checkbox', ng-model="ctrl.item.selected")
           i.input-helper
@@ -29,8 +29,8 @@
           .inbox-from.lv-title
             span.inbox-item-draft(ng-if="ctrl.item.isDraft") {{ 'Draft' | translate }}
             span.inbox-item-draft-divider -
-            inbox-emailer(ng-if="mailboxRole.value !== 'sent'", emailer="ctrl.item.from")
-            inbox-emailer-group(ng-if="mailboxRole.value === 'sent' && ctrl.item.emailRecipients", group="ctrl.item.emailRecipients", display-inline="true")
+            inbox-emailer(ng-if="mailboxRole !== 'sent'", emailer="ctrl.item.from")
+            inbox-emailer-group(ng-if="mailboxRole === 'sent' && ctrl.item.emailRecipients", group="ctrl.item.emailRecipients", display-inline="true")
         .inbox-list-item-date-and-indicators
           .inbox-hover-actions.flex-row(ng-click='$event.stopPropagation(); $event.preventDefault()')
               i.mdi.mdi-delete.waves-notransition(ng-if='ctrl.canTrashMessages()', ng-click='ctrl.moveToTrash()', title="{{ 'Delete' | translate }}")

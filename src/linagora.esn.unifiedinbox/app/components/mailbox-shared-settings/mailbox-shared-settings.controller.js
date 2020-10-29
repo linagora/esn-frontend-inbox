@@ -54,19 +54,19 @@ function InboxMailboxSharedSettingsController(
       owner.displayName = userUtils.displayNameOf(owner);
       self.owner = owner;
     });
-    getUserSharedInformation(self.mailbox.sharedWith);
+    getUserSharedInformation(self.mailbox.rights);
   }
 
   function getOwner() {
-    var owner;
+    if (self.mailbox.namespace.toLowerCase().startsWith('delegated')) {
+      const ownerEmail = self.mailbox.namespace.replace(/^.*\[(.*)\]$/g, '$1');
 
-    if (self.mailbox.namespace.owner && self.mailbox.namespace.owner !== session.user.preferredEmail) {
-      owner = getUserByEmail(self.mailbox.namespace.owner);
-    } else {
-      owner = self.sessionUser;
+      if (ownerEmail !== session.user.preferredEmail) {
+        return $q.resolve(getUserByEmail(ownerEmail));
+      }
     }
 
-    return $q.resolve(owner);
+    return $q.resolve(getUserByEmail(session.user.preferredEmail));
   }
 
   function getUserSharedInformation(userSharedList) {

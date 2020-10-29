@@ -1,5 +1,5 @@
 md-menu-item
-  md-button(ng-disabled="ctrl.mailbox.unreadMessages === 0", ng-click="ctrl.markAllAsRead(ctrl.mailbox.id)")
+  md-button(ng-disabled="ctrl.mailbox.unreadEmails === 0", ng-click="ctrl.markAllAsRead(ctrl.mailbox.id)")
     md-icon(md-menu-origin, md-svg-icon="email-open", aria-label="email open Icon")
     | {{ 'Mark all as read' | translate }}
 md-menu-item(ng-if="::ctrl.isFoldersSharingEnabled && ctrl.isShareableMailbox(ctrl.mailbox)", esn-modal-launcher="/unifiedinbox/app/components/mailbox-shared-settings/mailbox-shared-settings.html", controller-as="ctrl", controller="InboxMailboxSharedSettingsController")
@@ -10,8 +10,8 @@ md-menu-item(ng-if="ctrl.isFolder || !ctrl.isShared && !ctrl.isSystem", esn-moda
   md-button
     md-icon(md-menu-origin, md-svg-icon="settings", aria-label="settings Icon")
     | {{ 'Folder settings' | translate }}
-md-menu-item(ng-if="ctrl.mailbox.role.value === 'trash'")
-  md-button(ng-disabled="ctrl.mailbox.totalMessages === 0", ng-click="ctrl.emptyTrash(ctrl.mailbox.id)")
+md-menu-item(ng-if="ctrl.mailbox.role === 'trash'")
+  md-button(ng-disabled="ctrl.mailbox.totalEmails === 0", ng-click="ctrl.emptyTrash(ctrl.mailbox.id)")
     md-icon(md-menu-origin, md-svg-icon="delete-empty", aria-label="empty Icon")
     | {{ 'Empty trash' | translate }}
 div(dynamic-directive="unifiedinbox-sidebar-folder-setting")

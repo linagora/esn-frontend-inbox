@@ -5,7 +5,7 @@
     )
     .inbox-item-with-icon
       .list-image.badge-container
-        inbox-emailer-avatar-popover(emailer="::mailboxRole.value !== 'sent' ? item.from : item.emailFirstRecipient" )
+        inbox-emailer-avatar-popover(emailer="::mailboxRole !== 'sent' ? item.from : item.emailFirstRecipient" )
       .media-body
         .inbox-list-item-subject-and-from
           .inbox-subject.lv-title
@@ -13,8 +13,8 @@
           .inbox-from.lv-title
             span.inbox-item-draft(ng-if="::item.isDraft") {{ 'Draft' | translate }}
             span.inbox-item-draft-divider -
-            inbox-emailer(ng-if="::mailboxRole.value !== 'sent'", emailer="::item.from", highlight="{{::query}}")
-            inbox-emailer-group(ng-if="::mailboxRole.value === 'sent' && item.emailRecipients", group="item.emailRecipients", display-inline="true", highlight="{{::query}}")
+            inbox-emailer(ng-if="::mailboxRole !== 'sent'", emailer="::item.from", highlight="{{::query}}")
+            inbox-emailer-group(ng-if="::mailboxRole === 'sent' && item.emailRecipients", group="item.emailRecipients", display-inline="true", highlight="{{::query}}")
         .inbox-list-item-date-and-indicators
           .date-and-indicators-container(ng-bind-html="::item.date | date: group.dateFormat | esnHighlight: query", ng-class="{bold: item.isUnread}") {{ ::item.date | date: group.dateFormat }}
           .flex-end
