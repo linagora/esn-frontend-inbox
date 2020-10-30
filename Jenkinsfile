@@ -40,12 +40,12 @@ pipeline {
           }
         }
       }
-    }
 
-    stage('Deploy new version') {
-      when { branch 'main' }
-      steps {
-        echo "Deploy"
+      post {
+        success {
+            echo 'Build OpenPaas front Docker image'
+            build wait: false, job: 'openpaas-front/main'
+        }
       }
     }
   }
