@@ -53,7 +53,7 @@ describe('The inboxComposerIdentitySelector component', function() {
     compileDirective('<inbox-composer-identity-selector identity="identity" on-identity-update="identity = $identity" />');
 
     expect(element.find('select > option')).to.have.length(2);
-    expect(element.find('select > option[selected]').val()).to.equal('0');
+    expect(element.find('select > option[selected]').val()).to.equal(defaultIdentity.uuid);
   });
 
   it('should populate the dropdown with all identities, preselecting the first one if the default one is not usable', function() {
@@ -72,7 +72,7 @@ describe('The inboxComposerIdentitySelector component', function() {
     compileDirective('<inbox-composer-identity-selector identity="identity" on-identity-update="identity = $identity" />');
 
     expect(element.find('select > option')).to.have.length(2);
-    expect(element.find('select > option[selected]').val()).to.equal('0');
+    expect(element.find('select > option[selected]').val()).to.equal(identity.uuid);
     expect(element.find('select > option[selected]').text()).to.equal(identity.name + ' <' + identity.email + '>');
   });
 
@@ -82,7 +82,7 @@ describe('The inboxComposerIdentitySelector component', function() {
     compileDirective('<inbox-composer-identity-selector identity="identity" on-identity-update="identity = $identity" />');
 
     expect(element.find('select > option')).to.have.length(2);
-    expect(element.find('select > option[selected]').val()).to.equal('1');
+    expect(element.find('select > option[selected]').val()).to.equal(identity.uuid);
   });
 
   it('should notify when identity selection changes', function(done) {
@@ -94,7 +94,7 @@ describe('The inboxComposerIdentitySelector component', function() {
       done();
     };
 
-    element.find('select').val('1').change();
+    element.find('select').val(identity.uuid).change();
   });
 
   it('should format identity labels', function() {

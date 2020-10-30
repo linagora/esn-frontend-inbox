@@ -5,6 +5,6 @@
       select.form-control(
         ng-model="$ctrl.identity",
         ng-change="$ctrl.onIdentityChange()",
-        ng-options="$ctrl.getIdentityLabel(identity) group by identity.description for identity in $ctrl.identities",
+        ng-options="$ctrl.getIdentityLabel(identity) group by identity.description for identity in $ctrl.identities track by identity.uuid",
         name="from"
       )
