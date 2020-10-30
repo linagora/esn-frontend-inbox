@@ -358,28 +358,6 @@ require('../services.js');
       };
     })
 
-    .directive('inboxEmailFooter', function(inboxJmapItemService) {
-      return {
-        restrict: 'E',
-        template: require('../../views/partials/email-footer.pug'),
-        scope: {
-          email: '='
-        },
-        controller: function($scope, esnShortcuts, INBOX_SHORTCUTS_ACTIONS_CATEGORY) {
-          ['reply', 'replyAll', 'forward'].forEach(function(action) {
-            this[action] = function() {
-              inboxJmapItemService[action]($scope.email);
-            };
-          }.bind(this));
-
-          esnShortcuts.use(INBOX_SHORTCUTS_ACTIONS_CATEGORY.shortcuts.REPLY_EMAIL, this.reply, $scope);
-          esnShortcuts.use(INBOX_SHORTCUTS_ACTIONS_CATEGORY.shortcuts.REPLY_ALL_EMAIL, this.replyAll, $scope);
-          esnShortcuts.use(INBOX_SHORTCUTS_ACTIONS_CATEGORY.shortcuts.FORWARD_EMAIL, this.forward, $scope);
-        },
-        controllerAs: 'ctrl'
-      };
-    })
-
     .directive('inboxFilterButton', function($rootScope, esnI18nService, INBOX_EVENTS) {
       return {
         restrict: 'E',

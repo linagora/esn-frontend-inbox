@@ -25,6 +25,10 @@ angular.module('linagora.esn.unifiedinbox')
       VIEW_PREVIOUS_EMAIL: {
         combo: 'left',
         description: 'View previous email'
+      },
+      VIEW_LIST: {
+        combo: 'u',
+        description: 'Go back to mailbox'
       }
     }
   })

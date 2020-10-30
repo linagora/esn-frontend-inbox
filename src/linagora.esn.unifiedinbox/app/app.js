@@ -120,6 +120,7 @@ require('./components/config/disable-local-copy/inbox-config-form-disable-local-
 require('./components/config/inbox-config-form.component.js');
 require('./components/config/inbox-config-form.constants.js');
 require('./components/config/inbox-config-form.controller.js');
+require('./components/email/footer/email-footer');
 require('./components/inbox-configuration/configuration.component.js');
 require('./components/inbox-configuration/configuration.controller.js');
 require('./components/inbox-configuration/filter-definition/configuration-filter-definition.component.js');
