@@ -200,7 +200,10 @@ angular.module('linagora.esn.unifiedinbox')
     }
 
     function _setFiltersOnServer(filters) {
-      return asyncJmapAction({ success: 'Filters set', failure: 'Error setting filters' }, function(client) {
+      return asyncJmapAction({
+        success: esnI18nService.translate('Filters set'),
+        failure: esnI18nService.translate('Error setting filters')
+      }, function(client) {
         return client.setFilter(filters);
       });
     }
