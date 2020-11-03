@@ -1,6 +1,6 @@
 button.btn.btn-link.btn-icon.visible-xl.waves-notransition.active(ng-if="$root.inbox.rightSidebar.isVisible", ui-sref="^", title="{{ 'Hide emails with attachments' | translate }}")
   i.mdi.mdi-paperclip
-button.btn.btn-link.btn-icon.visible-xl.waves-notransition(ng-if="!$root.inbox.rightSidebar.isVisible", ui-sref=".attachments", title="{{ 'Show emails with attachments' | translate }}")
+button.btn.btn-link.btn-icon.visible-xl.waves-notransition(ng-if="!$root.inbox.rightSidebar.isVisible", title="{{ 'Show emails with attachments' | translate }}", contextual-sidebar, data-content-template="/unifiedinbox/views/components/sidebar/attachment/sidebar-attachment.html", data-placement="right", data-controller="inboxListSidebarAttachmentController", data-controller-as="ctrl")
   i.mdi.mdi-paperclip
 button.btn.btn-link.btn-icon.hidden-xl.waves-notransition(title="{{ 'Show attachments' | translate }}", contextual-sidebar, data-content-template="/unifiedinbox/views/components/sidebar/attachment/sidebar-attachment.html", data-placement="right", data-controller="inboxListSidebarAttachmentController", data-controller-as="ctrl")
   i.mdi.mdi-paperclip
