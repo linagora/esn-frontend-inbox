@@ -6,7 +6,7 @@ require('./permissions-service.constants.js');
 
 angular.module('linagora.esn.unifiedinbox')
 
-  .service('inboxSharedMailboxesPermissionsService', function($q, inboxMailboxesService,
+  .service('inboxSharedMailboxesPermissionsService', function($q, inboxMailboxesService, inboxUtils,
     INBOX_PERSONAL_MAILBOX_NAMESPACE_TYPE, INBOX_MAILBOX_SHARING_ROLES, INBOX_MAILBOX_SHARING_PERMISSIONS) {
 
     var mapOfRolesByPermission = buildMapOfRolesIndexedByPermissions();
@@ -50,7 +50,7 @@ angular.module('linagora.esn.unifiedinbox')
       }
       if (!isMyOwnMailbox(mailbox)) { // has permissions to update mailbox rights props
         return $q.reject(new Error('Only user ' +
-          (mailbox.namespace && mailbox.namespace.replace(/^.*\[(.*)\]$/g, '$1') || '') +
+          inboxUtils.getMailboxOwnerEmail(mailbox.namespace) +
           ' is allowed to update sharing settings'));
       }
       if (!preferredEmail) {
@@ -84,7 +84,7 @@ angular.module('linagora.esn.unifiedinbox')
       }
       if (!isMyOwnMailbox(mailbox)) {
         return $q.reject(new Error('Only user ' +
-          (mailbox.namespace && mailbox.namespace.replace(/^.*\[(.*)\]$/g, '$1') || '') +
+        inboxUtils.getMailboxOwnerEmail(mailbox.namespace) +
           ' is allowed to update sharing settings'));
       }
       if (!preferredEmail) {

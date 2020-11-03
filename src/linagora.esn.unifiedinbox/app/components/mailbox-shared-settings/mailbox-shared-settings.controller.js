@@ -13,6 +13,7 @@ function InboxMailboxSharedSettingsController(
   session,
   inboxMailboxesService,
   inboxSharedMailboxesPermissionsService,
+  inboxUtils,
   userAPI,
   userUtils,
   $q,
@@ -59,7 +60,7 @@ function InboxMailboxSharedSettingsController(
 
   function getOwner() {
     if (self.mailbox.namespace.toLowerCase().startsWith('delegated')) {
-      const ownerEmail = self.mailbox.namespace.replace(/^.*\[(.*)\]$/g, '$1');
+      const ownerEmail = inboxUtils.getMailboxOwnerEmail(self.mailbox.namespace);
 
       if (ownerEmail !== session.user.preferredEmail) {
         return $q.resolve(getUserByEmail(ownerEmail));
