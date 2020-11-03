@@ -151,7 +151,7 @@ require('./services/common/inbox-utils.service.js');
     })
 
     .controller('viewEmailController', function($scope, $state, $stateParams, esnShortcuts, inboxJmapItemService,
-      inboxMailboxesService, inboxJmapHelper, inboxAsyncHostedMailControllerHelper, inboxUnavailableAccountNotifier,
+      inboxMailboxesService, inboxJmapDraftHelper, inboxAsyncHostedMailControllerHelper, inboxUnavailableAccountNotifier,
       inboxFilteredList, inboxMessagesCache, INBOX_SHORTCUTS_NAVIGATION_CATEGORY, INBOX_SHORTCUTS_ACTIONS_CATEGORY, INBOX_EVENTS,
       INBOX_CONTROLLER_LOADING_STATES) {
       var context = $stateParams.context;
@@ -166,7 +166,7 @@ require('./services/common/inbox-utils.service.js');
       }
 
       inboxAsyncHostedMailControllerHelper(this, function() {
-        return inboxJmapHelper
+        return inboxJmapDraftHelper
           .getMessageById(emailId)
           .then(function(message) {
             inboxMessagesCache[emailId] = message;

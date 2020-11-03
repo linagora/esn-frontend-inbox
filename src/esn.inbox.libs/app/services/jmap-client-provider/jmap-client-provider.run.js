@@ -3,6 +3,6 @@
 require('./jmap-client-provider.js');
 
 angular.module('esn.inbox.libs')
-  .run(function(jmapDraftClientProvider) {
-    return jmapDraftClientProvider.get();
+  .run(function(jmapClientProvider) {
+    return jmapClientProvider.get();
   });

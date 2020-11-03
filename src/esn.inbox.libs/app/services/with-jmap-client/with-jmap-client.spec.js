@@ -4,45 +4,45 @@
 
 const { expect } = chai;
 
-describe('The withJmapDraftClient factory', function() {
+describe('The withJmapClient factory', function() {
 
-  var $rootScope, withJmapDraftClient, jmapDraftClientProviderMock;
+  var $rootScope, withJmapClient, jmapClientProviderMock;
 
   beforeEach(function() {
-    jmapDraftClientProviderMock = {};
+    jmapClientProviderMock = {};
 
     angular.mock.module('esn.inbox.libs', function($provide) {
-      $provide.value('jmapDraftClientProvider', jmapDraftClientProviderMock);
+      $provide.value('jmapClientProvider', jmapClientProviderMock);
     });
   });
 
-  beforeEach(angular.mock.inject(function(_$rootScope_, _withJmapDraftClient_) {
+  beforeEach(angular.mock.inject(function(_$rootScope_, _withJmapClient_) {
     $rootScope = _$rootScope_;
 
-    withJmapDraftClient = _withJmapDraftClient_;
+    withJmapClient = _withJmapClient_;
   }));
 
-  it('should give the client in the callback when jmapDraftClientProvider resolves', function(done) {
-    var jmapDraftClient = { send: angular.noop };
+  it('should give the client in the callback when jmapClientProvider resolves', function(done) {
+    var jmapClient = { send: angular.noop };
 
-    jmapDraftClientProviderMock.get = function() { return $q.when(jmapDraftClient); };
+    jmapClientProviderMock.get = function() { return $q.when(jmapClient); };
 
-    withJmapDraftClient(function(client) {
-      expect(client).to.deep.equal(jmapDraftClient);
+    withJmapClient(function(client) {
+      expect(client).to.deep.equal(jmapClient);
 
       done();
     });
     $rootScope.$digest();
   });
 
-  it('should reject when jmapDraftClient cannot be built', function(done) {
+  it('should reject when jmapClient cannot be built', function(done) {
     var errorMessage = 'JMAP';
 
-    jmapDraftClientProviderMock.get = function() {
+    jmapClientProviderMock.get = function() {
       return $q.reject(new Error(errorMessage));
     };
 
-    withJmapDraftClient(function(client) {
+    withJmapClient(function(client) {
       expect(client).to.equal(null);
     }).catch(function(err) {
       expect(err.message).to.equal(errorMessage);
@@ -52,11 +52,11 @@ describe('The withJmapDraftClient factory', function() {
   });
 
   it('should reject if the callback promise rejects', function(done) {
-    jmapDraftClientProviderMock.get = function() { return $q.when({}); };
+    jmapClientProviderMock.get = function() { return $q.when({}); };
 
     var e = new Error('error message');
 
-    withJmapDraftClient(function() {
+    withJmapClient(function() {
       return $q.reject(e);
     }).then(done.bind(null, 'should reject'), function(err) {
       expect(err.message).to.equal(e.message);

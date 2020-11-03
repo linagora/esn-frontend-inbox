@@ -1,6 +1,6 @@
 'use strict';
 
-require('../with-jmap-client/with-jmap-client');
+require('../with-jmap-draft-client/with-jmap-draft-client');
 require('./background-action.service');
 
 angular.module('esn.inbox.libs')

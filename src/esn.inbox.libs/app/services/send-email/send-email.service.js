@@ -1,12 +1,13 @@
 'use strict';
 
 require('../config/config');
-require('../jmap-client-wrapper/jmap-client-wrapper.service');
+require('../jmap-draft-client-wrapper/jmap-draft-client-wrapper.service.js');
+require('../with-jmap-draft-client/with-jmap-draft-client');
 require('../mailboxes/mailboxes-service');
 require('../hook/email-sending-hook.service');
 
 angular.module('esn.inbox.libs')
-  .factory('sendEmail', function($http, $q, inboxConfig, inBackground, jmapDraft, withJmapDraftClient, inboxJmapHelper, inboxMailboxesService, httpConfigurer, inboxEmailSendingHookService) {
+  .factory('sendEmail', function($http, $q, inboxConfig, inBackground, withJmapDraftClient, inboxJmapDraftHelper, inboxMailboxesService, httpConfigurer, inboxEmailSendingHookService) {
     function sendBySmtp(email) {
       return $http.post(httpConfigurer.getUrl('/unifiedinbox/api/inbox/sendemail'), email);
     }
@@ -25,7 +26,7 @@ angular.module('esn.inbox.libs')
       return withJmapDraftClient(function(client) {
         return $q.all([
           inboxConfig('isJmapSendingEnabled'),
-          inboxJmapHelper.toOutboundMessage(client, email)
+          inboxJmapDraftHelper.toOutboundMessage(client, email)
         ]).then(function(data) {
           const isJmapSendingEnabled = data[0],
             message = data[1];

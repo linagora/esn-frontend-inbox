@@ -3,7 +3,6 @@
 const _ = require('lodash');
 
 require('../with-jmap-client/with-jmap-client.js');
-require('../jmap-client-wrapper/jmap-client-wrapper.service.js');
 require('../action/async-jmap-action.service.js');
 require('./special-mailboxes.js');
 require('./shared-mailboxes.js');

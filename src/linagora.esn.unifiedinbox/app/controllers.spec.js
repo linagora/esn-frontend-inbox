@@ -13,7 +13,7 @@ describe('The linagora.esn.unifiedinbox module controllers', function() {
     esnPreviousPage, inboxFilterDescendantMailboxesFilter, inboxSelectionService,
     inboxUserQuotaService, inboxUnavailableAccountNotifier, inboxUtils;
   var JMAP_GET_MESSAGES_VIEW, INBOX_EVENTS, DEFAULT_MAX_SIZE_UPLOAD, INFINITE_LIST_POLLING_INTERVAL;
-  let inboxJmapHelper;
+  let inboxJmapDraftHelper;
 
   beforeEach(function() {
     $stateParams = {
@@ -109,7 +109,7 @@ describe('The linagora.esn.unifiedinbox module controllers', function() {
     _inboxMailboxesService_, _JMAP_GET_MESSAGES_VIEW_,
     _DEFAULT_FILE_TYPE_, _moment_, _DEFAULT_MAX_SIZE_UPLOAD_, _inboxJmapItemService_,
     _INBOX_EVENTS_, _inboxMailboxesCache_, _esnPreviousPage_, _inboxSelectionService_, _inboxUnavailableAccountNotifier_,
-    _INFINITE_LIST_POLLING_INTERVAL_, _inboxUtils_, _inboxJmapHelper_) {
+    _INFINITE_LIST_POLLING_INTERVAL_, _inboxUtils_, _inboxJmapDraftHelper_) {
     $rootScope = _$rootScope_;
     $controller = _$controller_;
     $timeout = _$timeout_;
@@ -129,7 +129,7 @@ describe('The linagora.esn.unifiedinbox module controllers', function() {
     INFINITE_LIST_POLLING_INTERVAL = _INFINITE_LIST_POLLING_INTERVAL_;
     inboxFilteredList = _inboxFilteredList_;
     inboxUtils = _inboxUtils_;
-    inboxJmapHelper = _inboxJmapHelper_;
+    inboxJmapDraftHelper = _inboxJmapDraftHelper_;
 
     scope = $rootScope.$new();
   }));
@@ -496,7 +496,7 @@ describe('The linagora.esn.unifiedinbox module controllers', function() {
         isUnread: false
       });
 
-      sinon.stub(inboxJmapHelper, 'getMessageById').returns($q.when({
+      sinon.stub(inboxJmapDraftHelper, 'getMessageById').returns($q.when({
         isUnread: false
       }));
 
@@ -511,7 +511,7 @@ describe('The linagora.esn.unifiedinbox module controllers', function() {
         isUnread: true
       });
 
-      sinon.stub(inboxJmapHelper, 'getMessageById').returns($q.when({
+      sinon.stub(inboxJmapDraftHelper, 'getMessageById').returns($q.when({
         isUnread: true
       }));
 

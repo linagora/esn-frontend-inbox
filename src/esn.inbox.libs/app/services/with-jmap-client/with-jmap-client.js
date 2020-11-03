@@ -7,9 +7,4 @@ angular.module('esn.inbox.libs')
     return function(callback) {
       return jmapClientProvider.get().then(callback);
     };
-  })
-  .factory('withJmapDraftClient', function(jmapDraftClientProvider) {
-    return function(callback) {
-      return jmapDraftClientProvider.get().then(callback);
-    };
   });
