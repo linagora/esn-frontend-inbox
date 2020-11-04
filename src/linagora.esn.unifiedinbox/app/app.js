@@ -166,7 +166,6 @@ require('./components/sidebar/attachment/sidebar-attachment.component.js');
 require('./components/sidebar/attachment/sidebar-attachment.controller.js');
 require('./components/sidebar/folder-settings/folder-settings.component.js');
 require('./components/sidebar/folder-settings/folder-settings.controller.js');
-require('./components/sidebar/unifiedinbox-button/unifiedinbox-button.component.js');
 require('./components/subheader/delete-button/subheader-delete-button.js');
 require('./components/subheader/mark-as-read-button/subheader-mark-as-read-button.js');
 require('./components/subheader/mark-as-unread-button/subheader-mark-as-unread-button.js');
