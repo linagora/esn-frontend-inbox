@@ -60,8 +60,7 @@
     &.has-sidebar-open {
       width: 100%;
       float: left;
-      padding-right: 18vw;
-      .transition(@transition-sidebar);
+      padding-right: 0;
     }
   }
 
@@ -443,6 +442,11 @@
 
 @media (min-width: @screen-xl-min) {
   .inbox-root {
+    .inbox-list.has-sidebar-open {
+      padding-right: 18vw;
+      .transition(@transition-sidebar);
+    }
+
     .inbox-items-group {
       .inbox-list-item {
         min-height: @inbox-list-item-height;
