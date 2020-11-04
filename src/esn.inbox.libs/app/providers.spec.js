@@ -14,7 +14,8 @@ describe('The Unified Inbox Angular module providers', function() {
     inboxConfigMock,
     jmapDraft,
     computeUniqueSetOfRecipients,
-    ELEMENTS_PER_REQUEST;
+    ELEMENTS_PER_REQUEST,
+    INBOX_MAILBOX_ROLES;
 
   function elements(id, length, offset) {
     var array = [], start = offset || 0;
@@ -40,9 +41,9 @@ describe('The Unified Inbox Angular module providers', function() {
         mailbox_get: function() {
           return $q.when({
             list: [
-              { id: 'id_inbox', name: 'name_inbox', role: 'inbox' },
-              { id: 'id_trash', name: 'name_trash', role: 'trash' },
-              { id: 'id_spam', name: 'name_spam', role: 'spam' }
+              { id: 'id_inbox', name: 'name_inbox', role: INBOX_MAILBOX_ROLES.INBOX },
+              { id: 'id_trash', name: 'name_trash', role: INBOX_MAILBOX_ROLES.TRASH },
+              { id: 'id_spam', name: 'name_spam', role: INBOX_MAILBOX_ROLES.SPAM }
             ]
           });
         },
@@ -87,7 +88,7 @@ describe('The Unified Inbox Angular module providers', function() {
   });
 
   beforeEach(angular.mock.inject(function(_$rootScope_, _inboxHostedMailMessagesProvider_, _inboxMailboxesService_, _jmapDraft_,
-    _computeUniqueSetOfRecipients_, _ELEMENTS_PER_REQUEST_) {
+    _computeUniqueSetOfRecipients_, _ELEMENTS_PER_REQUEST_, _INBOX_MAILBOX_ROLES_) {
     $rootScope = _$rootScope_;
     inboxHostedMailMessagesProvider = _inboxHostedMailMessagesProvider_;
     inboxMailboxesService = _inboxMailboxesService_;
@@ -95,6 +96,7 @@ describe('The Unified Inbox Angular module providers', function() {
     computeUniqueSetOfRecipients = _computeUniqueSetOfRecipients_;
 
     ELEMENTS_PER_REQUEST = _ELEMENTS_PER_REQUEST_;
+    INBOX_MAILBOX_ROLES = _INBOX_MAILBOX_ROLES_;
   }));
 
   describe('The inboxHostedMailMessagesProvider factory', function() {

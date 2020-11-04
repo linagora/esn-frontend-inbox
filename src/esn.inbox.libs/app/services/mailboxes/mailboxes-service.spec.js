@@ -7,7 +7,7 @@ const { expect } = chai;
 describe('The inboxMailboxesService factory', function() {
 
   var inboxMailboxesCache, inboxMailboxesService, jmapClient, jmapDraftClient, $rootScope, jmapDraft, notificationFactory,
-    inboxConfigMock, INBOX_HIDDEN_SHAREDMAILBOXES_CONFIG_KEY, INBOX_ROLE_NAMESPACE_TYPES, INBOX_EVENTS;
+    inboxConfigMock, INBOX_HIDDEN_SHAREDMAILBOXES_CONFIG_KEY, INBOX_ROLE_NAMESPACE_TYPES, INBOX_EVENTS, INBOX_MAILBOX_ROLES;
 
   beforeEach(angular.mock.module('esn.inbox.libs', function($provide) {
     $provide.constant('INBOX_DISPLAY_NAME_SIZE', 10);
@@ -39,7 +39,7 @@ describe('The inboxMailboxesService factory', function() {
 
   beforeEach(angular.mock.inject(function(_inboxMailboxesService_, _$state_, _$rootScope_,
     _inboxMailboxesCache_, _jmapDraft_, _notificationFactory_, _INBOX_EVENTS_,
-    _INBOX_HIDDEN_SHAREDMAILBOXES_CONFIG_KEY_, _INBOX_ROLE_NAMESPACE_TYPES_) {
+    _INBOX_HIDDEN_SHAREDMAILBOXES_CONFIG_KEY_, _INBOX_ROLE_NAMESPACE_TYPES_, _INBOX_MAILBOX_ROLES_) {
     inboxMailboxesCache = _inboxMailboxesCache_;
     notificationFactory = _notificationFactory_;
     inboxMailboxesService = _inboxMailboxesService_;
@@ -48,6 +48,7 @@ describe('The inboxMailboxesService factory', function() {
     INBOX_HIDDEN_SHAREDMAILBOXES_CONFIG_KEY = _INBOX_HIDDEN_SHAREDMAILBOXES_CONFIG_KEY_;
     INBOX_ROLE_NAMESPACE_TYPES = _INBOX_ROLE_NAMESPACE_TYPES_;
     INBOX_EVENTS = _INBOX_EVENTS_;
+    INBOX_MAILBOX_ROLES = _INBOX_MAILBOX_ROLES_;
   }));
 
   it('should update unread count when unread message destroyed', function() {
@@ -771,7 +772,7 @@ describe('The inboxMailboxesService factory', function() {
         myRights: {
           mayAddItems: true
         },
-        role: 'drafts',
+        role: INBOX_MAILBOX_ROLES.DRAFTS,
         name: 'drafts'
       };
       trashMailbox = {
@@ -779,7 +780,7 @@ describe('The inboxMailboxesService factory', function() {
         myRights: {
           mayAddItems: true
         },
-        role: 'trash',
+        role: INBOX_MAILBOX_ROLES.TRASH,
         name: 'trash'
       };
     });
@@ -819,7 +820,7 @@ describe('The inboxMailboxesService factory', function() {
         myRights: {
           mayAddItems: true
         },
-        role: 'spam',
+        role: INBOX_MAILBOX_ROLES.SPAM,
         name: 'spam'
       };
       inboxMailbox = {
@@ -827,7 +828,7 @@ describe('The inboxMailboxesService factory', function() {
         myRights: {
           mayAddItems: true
         },
-        role: 'inbox',
+        role: INBOX_MAILBOX_ROLES.INBOX,
         name: 'inbox'
       };
     });
@@ -887,7 +888,7 @@ describe('The inboxMailboxesService factory', function() {
 
     it('should allow moving draft message to trash', function() {
       message.isDraft = true;
-      mailbox.role = 'trash';
+      mailbox.role = INBOX_MAILBOX_ROLES.TRASH;
       checkResult(true);
     });
 
@@ -1046,8 +1047,8 @@ describe('The inboxMailboxesService factory', function() {
     it('should return a filter including the Inbox when no context given', function(done) {
       jmapClient.mailbox_get = sinon.stub().returns($q.when({
         list: [
-          { id: 'inbox', name: 'inbox', role: 'inbox' },
-          { id: 'inbox', name: 'inbox', role: 'inbox' }
+          { id: 'inbox', name: 'inbox', role: INBOX_MAILBOX_ROLES.INBOX },
+          { id: 'inbox', name: 'inbox', role: INBOX_MAILBOX_ROLES.INBOX }
         ]
       }));
 
@@ -1363,7 +1364,7 @@ describe('The inboxMailboxesService factory', function() {
     var mailbox;
 
     beforeEach(function() {
-      mailbox = { id: 'id', name: 'name', role: 'drafts' };
+      mailbox = { id: 'id', name: 'name', role: INBOX_MAILBOX_ROLES.DRAFTS };
 
       jmapClient.mailbox_get = function() {
         return $q.when({ list: [mailbox] });
@@ -1380,7 +1381,7 @@ describe('The inboxMailboxesService factory', function() {
     });
 
     it('should resolve with the Mailbox if found', function(done) {
-      inboxMailboxesService.getMailboxWithRole('drafts').then(function(mailbox) {
+      inboxMailboxesService.getMailboxWithRole(INBOX_MAILBOX_ROLES.DRAFTS).then(function(mailbox) {
         expect(mailbox).to.equal(mailbox);
 
         done();
@@ -1407,13 +1408,13 @@ describe('The inboxMailboxesService factory', function() {
       sharedInbox = {
         id: 'id',
         name: 'shared inbox',
-        role: 'inbox',
+        role: INBOX_MAILBOX_ROLES.INBOX,
         namespace: INBOX_ROLE_NAMESPACE_TYPES.shared
       };
       personalInbox = {
         id: 'id',
         name: 'name',
-        role: 'inbox',
+        role: INBOX_MAILBOX_ROLES.INBOX,
         namespace: INBOX_ROLE_NAMESPACE_TYPES.owned
       };
 
@@ -1598,7 +1599,7 @@ describe('The inboxMailboxesService factory', function() {
 
     beforeEach(function() {
       draftsFolder = angular.extend({
-        id: 'id', name: 'name', role: 'drafts', unreadEmails: 0
+        id: 'id', name: 'name', role: INBOX_MAILBOX_ROLES.DRAFTS, unreadEmails: 0
       });
       inboxMailboxesCache.push(draftsFolder);
     });

@@ -12,7 +12,8 @@ describe('The linagora.esn.unifiedinbox module controllers', function() {
     inboxMailboxesService, inboxJmapItemService, fileUploadMock, config, moment, inboxMailboxesCache,
     esnPreviousPage, inboxFilterDescendantMailboxesFilter, inboxSelectionService,
     inboxUserQuotaService, inboxUnavailableAccountNotifier, inboxUtils;
-  var JMAP_GET_MESSAGES_VIEW, INBOX_EVENTS, DEFAULT_MAX_SIZE_UPLOAD, INFINITE_LIST_POLLING_INTERVAL;
+  var JMAP_GET_MESSAGES_VIEW, INBOX_EVENTS, DEFAULT_MAX_SIZE_UPLOAD, INFINITE_LIST_POLLING_INTERVAL,
+    INBOX_MAILBOX_ROLES;
   let inboxJmapDraftHelper;
 
   beforeEach(function() {
@@ -109,7 +110,7 @@ describe('The linagora.esn.unifiedinbox module controllers', function() {
     _inboxMailboxesService_, _JMAP_GET_MESSAGES_VIEW_,
     _DEFAULT_FILE_TYPE_, _moment_, _DEFAULT_MAX_SIZE_UPLOAD_, _inboxJmapItemService_,
     _INBOX_EVENTS_, _inboxMailboxesCache_, _esnPreviousPage_, _inboxSelectionService_, _inboxUnavailableAccountNotifier_,
-    _INFINITE_LIST_POLLING_INTERVAL_, _inboxUtils_, _inboxJmapDraftHelper_) {
+    _INFINITE_LIST_POLLING_INTERVAL_, _inboxUtils_, _inboxJmapDraftHelper_, _INBOX_MAILBOX_ROLES_) {
     $rootScope = _$rootScope_;
     $controller = _$controller_;
     $timeout = _$timeout_;
@@ -129,6 +130,7 @@ describe('The linagora.esn.unifiedinbox module controllers', function() {
     INFINITE_LIST_POLLING_INTERVAL = _INFINITE_LIST_POLLING_INTERVAL_;
     inboxFilteredList = _inboxFilteredList_;
     inboxUtils = _inboxUtils_;
+    INBOX_MAILBOX_ROLES = _INBOX_MAILBOX_ROLES_;
     inboxJmapDraftHelper = _inboxJmapDraftHelper_;
 
     scope = $rootScope.$new();
@@ -202,12 +204,12 @@ describe('The linagora.esn.unifiedinbox module controllers', function() {
     });
 
     it('should call our inbox provider as expected', function() {
-      folder = _.assign({ id: 'id_inbox', name: 'name_inbox', role: 'inbox' });
+      folder = _.assign({ id: 'id_inbox', name: 'name_inbox', role: INBOX_MAILBOX_ROLES.INBOX });
       inboxMailboxesCache.push(folder);
 
       jmapClient.mailbox_get = sinon.spy(function() {
         return $q.when({
-          list: [{ id: 'id_inbox', name: 'name_inbox', role: 'inbox' }]
+          list: [{ id: 'id_inbox', name: 'name_inbox', role: INBOX_MAILBOX_ROLES.INBOX }]
         });
       });
       jmapDraftClient.getMessageList = sinon.stub().returns($q.when(new jmapDraft.MessageList(jmapDraftClient, { messageIds: [1] })));
@@ -226,7 +228,7 @@ describe('The linagora.esn.unifiedinbox module controllers', function() {
     });
 
     it('should forward filters to our jmap provider', function() {
-      folder = _.assign({ id: 'id_inbox', name: 'name_inbox', role: 'inbox' });
+      folder = _.assign({ id: 'id_inbox', name: 'name_inbox', role: INBOX_MAILBOX_ROLES.INBOX });
       inboxMailboxesCache.push(folder);
 
       _.find(inboxFilters, { id: 'isUnread' }).checked = true; // This simulated the selection of isUnread
@@ -235,7 +237,7 @@ describe('The linagora.esn.unifiedinbox module controllers', function() {
       jmapDraftClient.getMessages = sinon.stub().returns($q.when([]));
       jmapClient.mailbox_get = sinon.spy(function() {
         return $q.when({
-          list: [{ id: 'id_inbox', name: 'name_inbox', role: 'inbox' }]
+          list: [{ id: 'id_inbox', name: 'name_inbox', role: INBOX_MAILBOX_ROLES.INBOX }]
         });
       });
 
@@ -294,7 +296,7 @@ describe('The linagora.esn.unifiedinbox module controllers', function() {
       jmapDraftClient.getMessages = sinon.stub().returns($q.when([]));
       jmapClient.mailbox_get = function() {
         return $q.when({
-          list: [{ id: 'id_inbox', name: 'name_inbox', role: 'inbox' }]
+          list: [{ id: 'id_inbox', name: 'name_inbox', role: INBOX_MAILBOX_ROLES.INBOX }]
         });
       };
 
@@ -316,7 +318,7 @@ describe('The linagora.esn.unifiedinbox module controllers', function() {
     });
 
     it('should update inboxFilteredList upon DRAFT_CREATED received, when browsing drafts folders', function() {
-      folder = _.assign({ id: 'id', name: 'DRAFTS', role: 'drafts' });
+      folder = _.assign({ id: 'id', name: 'DRAFTS', role: INBOX_MAILBOX_ROLES.DRAFTS });
       inboxMailboxesCache.push(folder);
 
       initController('unifiedInboxController');
@@ -335,7 +337,7 @@ describe('The linagora.esn.unifiedinbox module controllers', function() {
 
     it('should only increment unread drafts counter upon DRAFT_CREATED received, when browsing from anywhere but drafts', function() {
       folder = _.assign({
-        id: 'id', name: 'DRAFTS', role: 'drafts', unreadEmails: 0
+        id: 'id', name: 'DRAFTS', role: INBOX_MAILBOX_ROLES.DRAFTS, unreadEmails: 0
       });
       inboxMailboxesCache.push(folder);
 

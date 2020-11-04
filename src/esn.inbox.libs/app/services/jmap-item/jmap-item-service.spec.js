@@ -8,7 +8,7 @@ describe('The inboxJmapItemService service', function() {
 
   var $rootScope, jmapDraft, inboxJmapItemService, newComposerService, emailSendingService, quoteEmail, jmapDraftClientMock, jmapClientMock,
     notificationFactory, counter, infiniteListService, inboxSelectionService, INFINITE_LIST_EVENTS, INBOX_EVENTS,
-    inboxConfigMock, inboxMailboxesService, inboxFilteredList;
+    inboxConfigMock, inboxMailboxesService, inboxFilteredList, INBOX_MAILBOX_ROLES;
 
   beforeEach(angular.mock.module('esn.inbox.libs'));
 
@@ -64,7 +64,7 @@ describe('The inboxJmapItemService service', function() {
   }));
 
   beforeEach(angular.mock.inject(function(_$rootScope_, _jmapDraft_, _inboxJmapItemService_, _notificationFactory_,
-    _infiniteListService_, _inboxSelectionService_, _INFINITE_LIST_EVENTS_, _INBOX_EVENTS_,
+    _infiniteListService_, _inboxSelectionService_, _INFINITE_LIST_EVENTS_, _INBOX_EVENTS_, _INBOX_MAILBOX_ROLES_,
     _inboxMailboxesService_, _inboxMailboxesCache_, _inboxFilteredList_) {
     $rootScope = _$rootScope_;
     jmapDraft = _jmapDraft_;
@@ -74,6 +74,7 @@ describe('The inboxJmapItemService service', function() {
     inboxSelectionService = _inboxSelectionService_;
     INFINITE_LIST_EVENTS = _INFINITE_LIST_EVENTS_;
     INBOX_EVENTS = _INBOX_EVENTS_;
+    INBOX_MAILBOX_ROLES = _INBOX_MAILBOX_ROLES_;
 
     inboxMailboxesService = _inboxMailboxesService_;
     inboxFilteredList = _inboxFilteredList_;
@@ -129,7 +130,7 @@ describe('The inboxJmapItemService service', function() {
 
     it('should move the message to the Trash mailbox', function(done) {
       jmapClientMock.mailbox_get = function() {
-        return $q.when({ list: [{ id: 'id_trash', name: 'name_trash', role: 'trash' }] });
+        return $q.when({ list: [{ id: 'id_trash', name: 'name_trash', role: INBOX_MAILBOX_ROLES.TRASH }] });
       };
 
       inboxJmapItemService.moveToTrash([
@@ -163,7 +164,7 @@ describe('The inboxJmapItemService service', function() {
 
     it('should move the message to the Spam mailbox', function(done) {
       jmapClientMock.mailbox_get = function() {
-        return $q.when({ list: [{ id: 'id_spam', name: 'name_spam', role: 'spam' }] });
+        return $q.when({ list: [{ id: 'id_spam', name: 'name_spam', role: INBOX_MAILBOX_ROLES.SPAM }] });
       };
 
       inboxJmapItemService.moveToSpam([
@@ -197,7 +198,7 @@ describe('The inboxJmapItemService service', function() {
 
     it('should move the message to the INBOX mailbox', function(done) {
       jmapClientMock.mailbox_get = function() {
-        return $q.when({ list: [{ id: 'id_inbox', name: 'name_inbox', role: 'inbox' }] });
+        return $q.when({ list: [{ id: 'id_inbox', name: 'name_inbox', role: INBOX_MAILBOX_ROLES.INBOX }] });
       };
 
       inboxJmapItemService.unSpam([

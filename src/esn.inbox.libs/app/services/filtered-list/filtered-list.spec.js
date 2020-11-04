@@ -18,7 +18,8 @@ describe('The inboxFilteredList factory', function() {
     INBOX_EVENTS,
     PROVIDER_TYPES,
     counter,
-    inboxConfigMock;
+    inboxConfigMock,
+    INBOX_MAILBOX_ROLES;
 
   beforeEach(angular.mock.module('esn.inbox.libs', function($provide) {
 
@@ -26,7 +27,7 @@ describe('The inboxFilteredList factory', function() {
     jmapClient = {
       mailbox_get: function() {
         return $q.when({
-          list: [{ id: 'id_inbox', name: 'inbox', role: 'inbox' }]
+          list: [{ id: 'id_inbox', name: 'inbox', role: INBOX_MAILBOX_ROLES.INBOX }]
         });
       },
       getSession: function() {
@@ -47,7 +48,7 @@ describe('The inboxFilteredList factory', function() {
 
   beforeEach(angular.mock.inject(function(_$rootScope_, _jmapDraft_, _inboxFilteringService_, _inboxFilters_, _inboxFilteredList_,
     _esnSearchProvider_,
-    _inboxHostedMailMessagesProvider_, _INBOX_EVENTS_, _PROVIDER_TYPES_) {
+    _inboxHostedMailMessagesProvider_, _INBOX_EVENTS_, _PROVIDER_TYPES_, _INBOX_MAILBOX_ROLES_) {
     $rootScope = _$rootScope_;
     jmapDraft = _jmapDraft_;
     inboxFilteringService = _inboxFilteringService_;
@@ -57,6 +58,7 @@ describe('The inboxFilteredList factory', function() {
     esnSearchProvider = _esnSearchProvider_;
     INBOX_EVENTS = _INBOX_EVENTS_;
     PROVIDER_TYPES = _PROVIDER_TYPES_;
+    INBOX_MAILBOX_ROLES = _INBOX_MAILBOX_ROLES_;
   }));
 
   function newMessage(options) {

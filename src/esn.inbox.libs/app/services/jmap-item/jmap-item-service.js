@@ -11,7 +11,8 @@ angular.module('esn.inbox.libs')
     withJmapDraftClient,
     jmapDraft, inboxMailboxesService, infiniteListService, inboxSelectionService, asyncJmapAction, notificationFactory, esnI18nService,
     INBOX_EVENTS, INBOX_DISPLAY_NAME_SIZE, inboxFilteredList, inboxConfig, uuid4, INBOX_DEFAULT_NUMBER_ITEMS_PER_PAGE_ON_BULK_READ_OPERATIONS,
-    INBOX_DEFAULT_NUMBER_ITEMS_PER_PAGE_ON_BULK_DELETE_OPERATIONS, INBOX_DEFAULT_NUMBER_ITEMS_PER_PAGE_ON_BULK_UPDATE_OPERATIONS) {
+    INBOX_DEFAULT_NUMBER_ITEMS_PER_PAGE_ON_BULK_DELETE_OPERATIONS, INBOX_DEFAULT_NUMBER_ITEMS_PER_PAGE_ON_BULK_UPDATE_OPERATIONS,
+    INBOX_MAILBOX_ROLES) {
 
     return {
       reply: reply,
@@ -51,15 +52,15 @@ angular.module('esn.inbox.libs')
     }
 
     function moveToTrash(itemOrItems) {
-      return _moveToMailboxWithRole(itemOrItems, 'trash');
+      return _moveToMailboxWithRole(itemOrItems, INBOX_MAILBOX_ROLES.TRASH);
     }
 
     function moveToSpam(itemOrItems) {
-      return _moveToMailboxWithRole(itemOrItems, 'spam');
+      return _moveToMailboxWithRole(itemOrItems, INBOX_MAILBOX_ROLES.SPAM);
     }
 
     function unSpam(itemOrItems) {
-      return _moveToMailboxWithRole(itemOrItems, 'inbox');
+      return _moveToMailboxWithRole(itemOrItems, INBOX_MAILBOX_ROLES.INBOX);
     }
 
     function _updateItemMailboxIds(item, newMailboxIds) {

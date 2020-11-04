@@ -16,7 +16,8 @@ angular.module('esn.inbox.libs')
   ])
   .factory('inboxMailboxesService', function($q, $state, $rootScope, withJmapClient, asyncJmapAction,
     inboxSpecialMailboxes, inboxMailboxesCache, inboxSharedMailboxesService, limitToFilter,
-    esnI18nService, INBOX_EVENTS, MAILBOX_LEVEL_SEPARATOR, INBOX_RESTRICTED_MAILBOXES, INBOX_DISPLAY_NAME_SIZE) {
+    esnI18nService, INBOX_EVENTS, MAILBOX_LEVEL_SEPARATOR, INBOX_RESTRICTED_MAILBOXES, INBOX_DISPLAY_NAME_SIZE,
+    INBOX_MAILBOX_ROLES) {
 
     let mailboxesListAlreadyFetched = false;
     let mailboxesListPromise;
@@ -368,11 +369,11 @@ angular.module('esn.inbox.libs')
       const mailbox = _getMailboxFromId(fromMailboxObjectOrId);
 
       if (mailbox) {
-        if (mailbox.role === 'drafts') {
+        if (mailbox.role === INBOX_MAILBOX_ROLES.DRAFTS) {
           return true;
         }
 
-        if (mailbox.role === 'trash') {
+        if (mailbox.role === INBOX_MAILBOX_ROLES.TRASH) {
           return false;
         }
       }
@@ -383,13 +384,13 @@ angular.module('esn.inbox.libs')
     function canUnSpamMessages(fromMailboxObjectOrId) {
       const mailbox = _getMailboxFromId(fromMailboxObjectOrId);
 
-      return !!mailbox && mailbox.role === 'spam';
+      return !!mailbox && mailbox.role === INBOX_MAILBOX_ROLES.SPAM;
     }
 
     function canMoveMessage(message, toMailbox) {
       // do not allow moving draft message, except to trash
       if (message.isDraft) {
-        return toMailbox && toMailbox.role === 'trash';
+        return toMailbox && toMailbox.role === INBOX_MAILBOX_ROLES.TRASH;
       }
 
       // do not allow moving to the same mailbox
@@ -411,9 +412,8 @@ angular.module('esn.inbox.libs')
 
     function getMessageListFilter(mailboxId, options) {
       options = options || {};
-
       if (!mailboxId) {
-        return getMailboxWithRole('inbox').then(function(mailbox) {
+        return getMailboxWithRole(INBOX_MAILBOX_ROLES.INBOX).then(function(mailbox) {
           return _.assign({}, { inMailboxes: [mailbox.id] }, options);
         });
       }
@@ -540,7 +540,7 @@ angular.module('esn.inbox.libs')
 
     function getUserInbox() {
       return _getAllMailboxes(_.partialRight(_.filter, function(mailbox) {
-        return mailbox && mailbox.role === 'inbox' &&
+        return mailbox && mailbox.role === INBOX_MAILBOX_ROLES.INBOX &&
           !inboxSharedMailboxesService.isShared(mailbox);
       })).then(_.head);
     }
@@ -569,7 +569,7 @@ angular.module('esn.inbox.libs')
     }
 
     function updateUnreadDraftsCount(currentInboxListId, updateDraftsList) {
-      const draftsFolder = _.find(inboxMailboxesCache, { role: 'drafts' }),
+      const draftsFolder = _.find(inboxMailboxesCache, { role: INBOX_MAILBOX_ROLES.DRAFTS }),
         isBrowsingDrafts = currentInboxListId && currentInboxListId === draftsFolder.id;
 
       updateDraftsList = updateDraftsList || $q.when();

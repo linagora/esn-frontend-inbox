@@ -7,7 +7,7 @@ const { expect } = chai;
 
 describe('The Unified Inbox Angular module services', function() {
 
-  var attendeeService, isMobile, config;
+  var attendeeService, isMobile, config, INBOX_MAILBOX_ROLES;
 
   beforeEach(function() {
     angular.mock.module('esn.session');
@@ -80,11 +80,13 @@ describe('The Unified Inbox Angular module services', function() {
         });
       });
 
-      angular.mock.inject(function(_$httpBackend_, _$rootScope_, _sendEmail_, _backgroundProcessorService_) {
+      angular.mock.inject(function(_$httpBackend_, _$rootScope_, _sendEmail_, _backgroundProcessorService_,
+        _INBOX_MAILBOX_ROLES_) {
         $httpBackend = _$httpBackend_;
         $rootScope = _$rootScope_;
         sendEmail = _sendEmail_;
         backgroundProcessorService = _backgroundProcessorService_;
+        INBOX_MAILBOX_ROLES = _INBOX_MAILBOX_ROLES_;
       });
 
     });
@@ -145,7 +147,7 @@ describe('The Unified Inbox Angular module services', function() {
         outbox = {
           id: 'id_outbox',
           name: 'name_outbox',
-          role: 'outbox'
+          role: INBOX_MAILBOX_ROLES.OUTBOX
         };
         jmapClientMock.mailbox_get = function() {
           return $q.when({ list: [outbox] });
