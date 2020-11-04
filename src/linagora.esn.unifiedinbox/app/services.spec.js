@@ -69,9 +69,6 @@ describe('The Unified Inbox Angular module services', function() {
       });
 
       jmapClientMock = {
-        getSession: function() {
-          return { accounts: { dummy: null } };
-        }
       };
 
       angular.mock.module(function($provide) {

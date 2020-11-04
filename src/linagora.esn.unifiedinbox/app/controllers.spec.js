@@ -45,10 +45,7 @@ describe('The linagora.esn.unifiedinbox module controllers', function() {
         }
       };
       jmapClient = {
-        mailbox_get: function() { return $q.when({ list: [] }); },
-        getSession: function() {
-          return { accounts: { dummy: null } };
-        }
+        mailbox_get: function() { return $q.when({ list: [] }); }
       };
       config = {};
       inboxFilterDescendantMailboxesFilter = sinon.spy();

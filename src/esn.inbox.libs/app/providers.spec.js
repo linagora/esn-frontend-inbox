@@ -46,9 +46,6 @@ describe('The Unified Inbox Angular module providers', function() {
               { id: 'id_spam', name: 'name_spam', role: INBOX_MAILBOX_ROLES.SPAM }
             ]
           });
-        },
-        getSession: function() {
-          return { accounts: { dummy: null } };
         }
       };
 

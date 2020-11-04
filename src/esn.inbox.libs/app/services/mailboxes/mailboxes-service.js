@@ -227,7 +227,7 @@ angular.module('esn.inbox.libs')
 
       return withJmapClient(function(client) {
         return client.mailbox_get({
-          accountId: Object.keys(client.getSession().accounts)[0],
+          accountId: null,
           ids: [id]
         })
           .then(function(mailboxes) {
@@ -260,7 +260,7 @@ angular.module('esn.inbox.libs')
     function updateSharedMailboxCache() {
       return withJmapClient(function(jmapClient) {
         return jmapClient.mailbox_get({
-          accountId: Object.keys(jmapClient.getSession().accounts)[0],
+          accountId: null,
           ids: null
         })
           .then(function(mailboxes) {
@@ -300,7 +300,7 @@ angular.module('esn.inbox.libs')
       if (!mailboxesListPromise) {
         mailboxesListPromise = withJmapClient(function(jmapClient) {
           return jmapClient.mailbox_get({
-            accountId: Object.keys(jmapClient.getSession().accounts)[0],
+            accountId: null,
             ids: null
           })
             .then(mailboxes => mailboxes.list)

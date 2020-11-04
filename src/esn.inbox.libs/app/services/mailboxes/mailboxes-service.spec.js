@@ -13,10 +13,7 @@ describe('The inboxMailboxesService factory', function() {
     $provide.constant('INBOX_DISPLAY_NAME_SIZE', 10);
 
     jmapClient = {
-      mailbox_get: function() { return $q.when({ list: [] }); },
-      getSession: function() {
-        return { accounts: { dummy: null } };
-      }
+      mailbox_get: function() { return $q.when({ list: [] }); }
     };
     $provide.value('withJmapClient', function(callback) { return callback(jmapClient); });
 
@@ -434,7 +431,7 @@ describe('The inboxMailboxesService factory', function() {
 
       jmapClient.mailbox_get = function(data) {
         expect(data).to.deep.equal({
-          accountId: 'dummy',
+          accountId: null,
           ids: [2]
         });
         done();

@@ -15,9 +15,6 @@ describe('The inboxJmapItemService service', function() {
   beforeEach(angular.mock.module(function($provide) {
     counter = 0;
     jmapClientMock = {
-      getSession: function() {
-        return { accounts: { dummy: null } };
-      }
     };
     jmapDraftClientMock = {
       setMessages: sinon.spy(function() {

@@ -29,9 +29,6 @@ describe('The inboxFilteredList factory', function() {
         return $q.when({
           list: [{ id: 'id_inbox', name: 'inbox', role: INBOX_MAILBOX_ROLES.INBOX }]
         });
-      },
-      getSession: function() {
-        return { accounts: { dummy: null } };
       }
     };
 

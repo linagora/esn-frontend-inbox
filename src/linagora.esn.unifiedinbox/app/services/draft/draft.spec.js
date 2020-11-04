@@ -10,9 +10,7 @@ describe('The InboxDraft factory', function() {
 
   beforeEach(angular.mock.module('linagora.esn.unifiedinbox', function($provide) {
     jmapDraftClient = {};
-    jmapClient = {
-      getSession: () => ({ accounts: { dummyAccountId: null } })
-    };
+    jmapClient = {};
     notificationFactory = {
       strongInfo: sinon.stub().returns({ close: angular.noop }),
       weakError: sinon.spy(),
