@@ -5,7 +5,7 @@ ARG NGINX_VERSION=1.19.3
 
 FROM node:${NODE_VERSION} as build-stage
 
-ARG BASE_HREF=/calendar/
+ARG BASE_HREF=/inbox/
 ARG APP_GRID_ITEMS="[{ \"name\": \"Calendar\", \"url\": \"/calendar/\" }, { \"name\": \"Contacts\", \"url\": \"/contacts/\" }, { \"name\": \"Inbox\", \"url\": \"/inbox/\" }]"
 
 WORKDIR /app
