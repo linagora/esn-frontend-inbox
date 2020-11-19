@@ -641,7 +641,7 @@ require('./services/common/inbox-utils.service.js');
 
     .controller('inboxSidebarEmailController', function($scope, $rootScope, $interval,
       inboxMailboxesService, inboxSpecialMailboxes, inboxAsyncHostedMailControllerHelper,
-      inboxUnavailableAccountNotifier, session, inboxSharedMailboxesService, $filter, INFINITE_LIST_POLLING_INTERVAL, INBOX_EVENTS) {
+      inboxUnavailableAccountNotifier, session, inboxSharedMailboxesService, $filter, INFINITE_MAILBOXES_POLLING_INTERVAL, INBOX_EVENTS) {
       setupFolderPolling();
 
       $scope.specialMailboxes = inboxSpecialMailboxes.list();
@@ -685,10 +685,10 @@ require('./services/common/inbox-utils.service.js');
       }
 
       function setupFolderPolling() {
-        if (INFINITE_LIST_POLLING_INTERVAL > 0) {
+        if (INFINITE_MAILBOXES_POLLING_INTERVAL > 0) {
           var folderPoller = $interval(function() {
             inboxMailboxesService.updateSharedMailboxCache();
-          }, INFINITE_LIST_POLLING_INTERVAL);
+          }, INFINITE_MAILBOXES_POLLING_INTERVAL);
 
           $scope.$on('$destroy', function() {
             $interval.cancel(folderPoller);
