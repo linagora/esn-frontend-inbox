@@ -178,7 +178,9 @@ require('./services/common/inbox-utils.service.js');
               });
             }
 
-            inboxJmapItemService.markAsRead($scope.email);
+            if ($scope.email && $scope.email.isUnread) {
+              inboxJmapItemService.markAsRead($scope.email);
+            }
           })
           .finally(function() {
             $scope.email.loaded = true;

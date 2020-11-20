@@ -13,6 +13,7 @@ describe('The linagora.esn.unifiedinbox module controllers', function() {
     esnPreviousPage, inboxFilterDescendantMailboxesFilter, inboxSelectionService,
     inboxUserQuotaService, inboxUnavailableAccountNotifier, inboxUtils;
   var JMAP_GET_MESSAGES_VIEW, INBOX_EVENTS, DEFAULT_MAX_SIZE_UPLOAD, INFINITE_LIST_POLLING_INTERVAL;
+  let inboxJmapHelper;
 
   beforeEach(function() {
     $stateParams = {
@@ -36,7 +37,6 @@ describe('The linagora.esn.unifiedinbox module controllers', function() {
     angular.mock.module('esn.core');
     angular.mock.module('esn.notification');
     angular.mock.module('esn.previous-page');
-
     angular.mock.module('linagora.esn.unifiedinbox', function($provide) {
       jmapClient = {
         getVacationResponse: function() {
@@ -103,7 +103,7 @@ describe('The linagora.esn.unifiedinbox module controllers', function() {
     _inboxMailboxesService_, _JMAP_GET_MESSAGES_VIEW_,
     _DEFAULT_FILE_TYPE_, _moment_, _DEFAULT_MAX_SIZE_UPLOAD_, _inboxJmapItemService_,
     _INBOX_EVENTS_, _inboxMailboxesCache_, _esnPreviousPage_, _inboxSelectionService_, _inboxUnavailableAccountNotifier_,
-    _INFINITE_LIST_POLLING_INTERVAL_, _inboxUtils_) {
+    _INFINITE_LIST_POLLING_INTERVAL_, _inboxUtils_, _inboxJmapHelper_) {
     $rootScope = _$rootScope_;
     $controller = _$controller_;
     $timeout = _$timeout_;
@@ -123,6 +123,7 @@ describe('The linagora.esn.unifiedinbox module controllers', function() {
     INFINITE_LIST_POLLING_INTERVAL = _INFINITE_LIST_POLLING_INTERVAL_;
     inboxFilteredList = _inboxFilteredList_;
     inboxUtils = _inboxUtils_;
+    inboxJmapHelper = _inboxJmapHelper_;
 
     scope = $rootScope.$new();
   }));
@@ -448,7 +449,7 @@ describe('The linagora.esn.unifiedinbox module controllers', function() {
       });
       jmapClient.getMessages = function() {
         return $q.when([{
-          isFlagged: true, textBody: 'textBody', htmlBody: 'htmlBody', attachments: []
+          isUnread: false, isFlagged: true, textBody: 'textBody', htmlBody: 'htmlBody', attachments: []
         }]);
       };
 
@@ -482,6 +483,36 @@ describe('The linagora.esn.unifiedinbox module controllers', function() {
       });
 
       scope.$digest();
+    });
+
+    it('should not call markAsRead if the email is already read', function() {
+      inboxJmapItemService.markAsRead = sinon.spy();
+      $stateParams.item = new jmapDraft.Message(jmapClient, 'messageId1', 'blobId1', 'threadId1', [$stateParams.mailbox], {
+        id: 'id',
+        isUnread: false
+      });
+
+      sinon.stub(inboxJmapHelper, 'getMessageById').returns($q.when({
+        isUnread: false
+      }));
+
+      initController('viewEmailController');
+      expect(inboxJmapItemService.markAsRead).to.not.have.been.called;
+    });
+
+    it('should call markAsRead if the email is unread', function() {
+      inboxJmapItemService.markAsRead = sinon.spy();
+      $stateParams.item = new jmapDraft.Message(jmapClient, 'messageId1', 'blobId1', 'threadId1', [$stateParams.mailbox], {
+        id: 'id',
+        isUnread: true
+      });
+
+      sinon.stub(inboxJmapHelper, 'getMessageById').returns($q.when({
+        isUnread: true
+      }));
+
+      initController('viewEmailController');
+      expect(inboxJmapItemService.markAsRead).to.have.been.called;
     });
 
     it('should mark the email as read once it\'s loaded', function() {
