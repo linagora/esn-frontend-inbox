@@ -17,11 +17,11 @@ describe('The generateJwtToken service', function() {
   }));
 
   it('should resolve response data on success', function(done) {
-    var responseData = { key: 'value' };
+    const responseData = 'the server response';
 
     $httpBackend.expectPOST('/api/jwt/generate').respond(200, responseData);
     generateJwtToken().then(function(data) {
-      expect(data).to.deep.equal(responseData);
+      expect(data).to.equal(responseData);
       done();
     }, done.bind(null, 'should resolve'));
     $httpBackend.flush();
