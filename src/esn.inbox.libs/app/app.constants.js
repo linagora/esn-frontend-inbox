@@ -97,5 +97,5 @@ angular.module('esn.inbox.libs')
   })
   .constant('INBOX_SIGNATURE_SEPARATOR', '-- \n') // https://tools.ietf.org/html/rfc3676#section-4.3
   .constant('INBOX_ATTACHMENT_TYPE_JMAP', 'jmap')
-  .constant('INFINITE_MAILBOXES_POLLING_INTERVAL', 10 * 60 * 1000);
-
+  .constant('INFINITE_MAILBOXES_POLLING_INTERVAL', 10 * 60 * 1000)
+  .constant('INBOX_SEARCH_DEBOUNCE_DELAY', 1000);
