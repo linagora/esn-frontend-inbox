@@ -2,6 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
 
 const commonLibsPath = path.resolve(__dirname, 'node_modules', 'esn-frontend-common-libs');
@@ -59,6 +60,18 @@ module.exports = {
     new FaviconsWebpackPlugin({
       logo: './src/linagora.esn.unifiedinbox/images/inbox-icon.svg',
       prefix: 'inbox-assets/'
+    }),
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: path.resolve(__dirname, 'node_modules', 'openpaas-auth-client', 'src', 'assets'),
+          to: 'auth'
+        },
+        {
+          from: path.resolve(__dirname, 'node_modules', 'oidc-client', 'dist', 'oidc-client.min.js'),
+          to: 'auth'
+        }
+      ]
     })
   ],
   devServer: {
