@@ -19,8 +19,16 @@ describe('The inboxListHeader component', function() {
     return controller;
   }
 
+  const debounce = (fn, done) => {
+    setTimeout(function() {
+      fn();
+      done();
+    }, 10);
+  };
+
   beforeEach(function() {
     angular.mock.module('linagora.esn.unifiedinbox', function($provide) {
+      $provide.constant('INBOX_SEARCH_DEBOUNCE_DELAY', 10);
       $provide.constant('moment', function(argument) {
         return moment.tz(argument || nowDate, 'UTC');
       });
@@ -220,7 +228,7 @@ describe('The inboxListHeader component', function() {
   });
 
   describe('The setQuickFilter fn', function() {
-    it('should update quick filter when user searches for some text', function() {
+    it('should update quick filter when user searches for some text', function(done) {
       inboxFilteringService.setQuickFilter = sinon.stub();
 
       var controller = initController();
@@ -229,8 +237,10 @@ describe('The inboxListHeader component', function() {
 
       $scope.$digest();
 
-      expect(controller.quickFilter).to.equal('filter');
-      expect(inboxFilteringService.setQuickFilter).to.have.been.calledWith(controller.quickFilter);
+      debounce(function() {
+        expect(controller.quickFilter).to.equal('filter');
+        expect(inboxFilteringService.setQuickFilter).to.have.been.calledWith(controller.quickFilter);
+      }, done);
     });
 
     it('should update quick filter accordingly when the quick filter value of inboxFilteringService changes', function() {
