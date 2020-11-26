@@ -367,16 +367,6 @@ describe('The linagora.esn.unifiedinbox module controllers', function() {
       expect(scope.loadRecentItems).to.have.not.been.calledWith();
     });
 
-    it('should call _getVacationActivated  and return vacation activated', function() {
-      jmapClient.getVacationResponse = function() {
-        return $q.when({ isActivated: true });
-      };
-
-      initController('unifiedInboxController');
-
-      expect(inboxJmapItemService.getVacationActivated).to.have.been.called;
-    });
-
     it('should call _getQuotaStatus and return quota activated', function() {
       inboxUserQuotaService.getUserQuotaInfo = sinon.spy(function() {
         return $q.when({ quotaLevel: 'major' });
