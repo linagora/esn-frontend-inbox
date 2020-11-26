@@ -271,6 +271,8 @@ angular.module('esn.inbox.libs')
             if (!_.isEmpty(response.MDNNotSent)) {
               return $q.reject(new Error('Could not send the read receipt.'));
             }
+
+            return $q.when();
           });
       });
     }
