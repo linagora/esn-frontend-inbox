@@ -52,7 +52,6 @@ require('./services/common/inbox-utils.service.js');
       $scope.$on(INBOX_EVENTS.DRAFT_CREATED, handleNewDraft);
       $scope.$on(INBOX_EVENTS.UNAVAILABLE_ACCOUNT_DETECTED, handleUnavailableAccount.bind(this));
 
-      _getVacationActivated();
       _getQuotaStatus();
 
       $scope.$on(INBOX_EVENTS.VACATION_STATUS, _getVacationActivated);
