@@ -166,6 +166,35 @@ describe('The inboxConfigurationFilterDefinitionController', function() {
           }).catch(done);
 
         });
+
+        it('should reject filter form submission if name is not filled', function() {
+          var controller = initController();
+
+          controller.newFilter = {
+            name: '',
+            when: { key: 'subject' },
+            subject: 'email subject',
+            then: { key: 'appendIn' },
+            moveTo: { id: 'b2b44073-325e-4e01-ab59-925ea4723ee9' }
+          };
+
+          expect(inboxMailboxesFilterService.addFilter).to.not.have.been.called;
+        });
+
+        it('should reject filter form submission when destination mailbox identifier is empty', function() {
+          var controller = initController();
+
+          controller.newFilter = {
+            name: 'My filter',
+            when: { key: 'subject' },
+            subject: 'email subject',
+            then: { key: 'appendIn' },
+            moveTo: { }
+          };
+
+          expect(inboxMailboxesFilterService.addFilter).to.not.have.been.called;
+
+        });
       });
 
       context('when condition is SUBJECT', function() {
