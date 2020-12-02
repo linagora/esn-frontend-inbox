@@ -51,53 +51,6 @@ require('../services.js');
       };
     })
 
-    .directive('mailboxDisplay', function(
-      $rootScope,
-      inboxCustomRoleMailboxService,
-      inboxMailboxesService,
-      inboxJmapItemService,
-      MAILBOX_ROLE_ICONS_MAPPING,
-      INBOX_EVENTS
-    ) {
-      return {
-        restrict: 'E',
-        replace: true,
-        scope: {
-          mailbox: '=',
-          hideBadge: '@',
-          hideAside: '&',
-          isSpecial: '=?',
-          isSystem: '=?',
-          isFolder: '=?',
-          isShared: '=?'
-        },
-        template: require('../../views/sidebar/email/menu-item.pug'),
-        link: function(scope) {
-          scope.mailboxIcons = getMailboxIcon();
-
-          $rootScope.$on(INBOX_EVENTS.BADGE_LOADING_ACTIVATED, function(evt, data) {
-            scope.badgeLoadingActivated = data;
-          });
-
-          scope.onDrop = function($dragData) {
-            return inboxJmapItemService.moveMultipleItems($dragData, scope.mailbox);
-          };
-
-          scope.isDropZone = function($dragData) {
-            return _.all($dragData, function(item) {
-              return inboxMailboxesService.canMoveMessage(item, scope.mailbox);
-            });
-          };
-
-          function getMailboxIcon() {
-            return scope.mailbox.icon ||
-              inboxCustomRoleMailboxService.getMailboxIcon(scope.mailbox.role.value) ||
-              MAILBOX_ROLE_ICONS_MAPPING[scope.mailbox.role.value || 'default'];
-          }
-        }
-      };
-    })
-
     .directive('inboxEmailerAvatar', function() {
       return {
         restrict: 'E',

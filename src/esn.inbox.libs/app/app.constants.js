@@ -4,7 +4,7 @@ angular.module('esn.inbox.libs')
 
   .constant('INBOX_MODULE_NAME', 'linagora.esn.unifiedinbox')
   .constant('MAILBOX_ROLE_ICONS_MAPPING', {
-    default: 'mdi mdi-email',
+    default: 'mdi mdi-folder',
     inbox: 'mdi mdi-inbox-arrow-down',
     archive: 'mdi mdi-archive',
     drafts: 'mdi mdi-file-document',

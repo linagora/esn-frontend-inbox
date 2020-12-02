@@ -1,6 +1,6 @@
 @inboxAsideFontSize: 1.2em;
-@inboxAsideHeadingFontSize: 1.6em;
-@inboxAsideIconFontSize: 1.8em;
+@inboxAsideHeadingFontSize: 1.4em;
+@inboxAsideIconFontSize: 20px;
 @dividerColor: rgba(0, 0, 0, 0.08);
 @inboxAsideDragTargetBgColor: #FFCC80;
 
@@ -35,7 +35,7 @@
       }
     }
 
-    &.toggle-submenu {
+    &.folder-with-icon.toggle-submenu {
       .menu-item .menu-item-after:after {
         background-color: @body-bg;
       }
@@ -51,7 +51,7 @@
 
   .listview:not(.lv-lg):not(.lv-message) {
     .lv-item:not(.menu-heading) {
-      padding: 3px 3px 3px 22px;
+      padding: 3px 3px 3px 25px;
     }
 
     .lv-item.toggle-submenu:not(.toggle-empty) {
@@ -84,7 +84,7 @@
 
   esn-filter-input {
     width: 100%;
-    margin: 2px 2px 2px 16px;
+    margin: 2px 2px 2px 3px;
 
     input:not([type='button']):not([type='submit']):not([type='file']) {
       font-size: 13px;
@@ -185,12 +185,6 @@
           .menu-item .menu-item-after:after {
             background-color: @darkenBgColor;
           }
-        }
-      }
-
-      &.toggle-submenu {
-        .menu-item .menu-item-after:after {
-          background-color: @darkenBgColor;
         }
       }
 

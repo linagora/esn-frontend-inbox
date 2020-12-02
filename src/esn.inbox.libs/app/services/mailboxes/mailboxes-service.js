@@ -48,7 +48,8 @@ angular.module('esn.inbox.libs')
       canUnSpamMessages,
       canMoveMessagesIntoMailbox,
       canMoveMessagesOutOfMailbox,
-      updateUnreadDraftsCount
+      updateUnreadDraftsCount,
+      mailboxtoTree
     };
 
     /////
@@ -71,6 +72,31 @@ angular.module('esn.inbox.libs')
       }
 
       return mailbox;
+    }
+
+    function mailboxtoTree(mailboxes) {
+      const arrMap = new Map(mailboxes.map(item => [item.id, item]));
+      const tree = [];
+
+      mailboxes.forEach(item => {
+        if (item.parentId) {
+          const parentItem = arrMap.get(item.parentId);
+
+          if (parentItem && parentItem.id !== item.id) {
+            const { nodes } = parentItem;
+
+            if (nodes) {
+              parentItem.nodes.push(item);
+            } else {
+              parentItem.nodes = [item];
+            }
+          }
+        } else {
+          tree.push(item);
+        }
+      });
+
+      return tree;
     }
 
     function _translateMailboxes(mailboxes) {

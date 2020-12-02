@@ -10,7 +10,7 @@ describe('The linagora.esn.unifiedinbox Main module directives', function() {
     elementScrollService, $stateParams, $dropdown,
     isMobile, searchService, windowMock, fakeNotification,
     sendEmailFakePromise, inboxConfigMock, inboxJmapItemService, INBOX_EVENTS,
-    $httpBackend, inboxCustomRoleMailboxService;
+    $httpBackend;
 
   beforeEach(function() {
     angular.mock.module('esn.ui');
@@ -73,7 +73,7 @@ describe('The linagora.esn.unifiedinbox Main module directives', function() {
   }));
 
   beforeEach(angular.mock.inject(function(_$compile_, _$rootScope_, _$timeout_, _$stateParams_, _$templateCache_, _$httpBackend_, session,
-    _inboxJmapItemService_, _inboxPlugins_, _inboxCustomRoleMailboxService_, _INBOX_EVENTS_) {
+    _inboxJmapItemService_, _inboxPlugins_, _INBOX_EVENTS_) {
     $compile = _$compile_;
     $rootScope = _$rootScope_;
     $timeout = _$timeout_;
@@ -82,7 +82,6 @@ describe('The linagora.esn.unifiedinbox Main module directives', function() {
     $httpBackend = _$httpBackend_;
     inboxJmapItemService = _inboxJmapItemService_;
     inboxPlugins = _inboxPlugins_;
-    inboxCustomRoleMailboxService = _inboxCustomRoleMailboxService_;
     INBOX_EVENTS = _INBOX_EVENTS_;
 
     // in the mailbox-display we put a folder-settings component which use an icon provider that load this icon set
@@ -140,158 +139,6 @@ describe('The linagora.esn.unifiedinbox Main module directives', function() {
 
       expect(newComposerService.open).to.have.been.calledOnce;
       expect(newComposerService.open).to.have.been.calledWith({});
-    });
-
-  });
-
-  describe('The mailboxDisplay directive', function() {
-
-    it('should define $scope.mailboxIcons to default value if mailbox has no role', function() {
-      $scope.mailbox = {
-        role: {
-          value: null
-        },
-        qualifiedName: 'test'
-      };
-      compileDirective('<mailbox-display mailbox="mailbox" />');
-
-      expect(element.isolateScope().mailboxIcons).to.equal('defaultclass');
-    });
-
-    it('should define $scope.mailboxIcons to the correct value when mailbox has a role', function() {
-      $scope.mailbox = {
-        role: {
-          value: 'testrole'
-        },
-        qualifiedName: 'test'
-      };
-      compileDirective('<mailbox-display mailbox="mailbox" />');
-
-      expect(element.isolateScope().mailboxIcons).to.equal('testclass');
-    });
-
-    it('should define $scope.mailboxIcons to a custom one, if provided by a custom mailbox', function() {
-      $scope.mailbox = {
-        role: {
-          value: 'custom role'
-        },
-        qualifiedName: 'test',
-        icon: 'mdi-custom-icon'
-      };
-      compileDirective('<mailbox-display mailbox="mailbox" />');
-
-      expect(element.isolateScope().mailboxIcons).to.equal('mdi-custom-icon');
-    });
-
-    it('should define $scope.mailboxIcons to registered icon in inboxCustomRoleMailboxService, if provided by a mailbox with custom role', function() {
-      $scope.mailbox = {
-        role: {
-          value: 'custom role'
-        },
-        qualifiedName: 'test'
-      };
-      inboxCustomRoleMailboxService.getMailboxIcon = function() { return 'mdi-custom-icon'; };
-      compileDirective('<mailbox-display mailbox="mailbox" />');
-
-      expect(element.isolateScope().mailboxIcons).to.equal('mdi-custom-icon');
-    });
-
-    it('should define $scope.hideBadge to the correct value', function() {
-      $scope.mailbox = {
-        role: {
-          value: null
-        },
-        qualifiedName: 'test'
-      };
-      compileDirective('<mailbox-display mailbox="mailbox" hide-badge=true />');
-
-      expect(element.isolateScope().hideBadge).to.equal('true');
-    });
-
-    describe('The dragndrop feature', function() {
-
-      var isolateScope;
-
-      beforeEach(function() {
-        $scope.mailbox = {
-          id: '1',
-          role: {
-            value: 'testrole'
-          },
-          qualifiedName: 'test'
-        };
-        compileDirective('<mailbox-display mailbox="mailbox" />');
-
-        isolateScope = element.isolateScope();
-      });
-
-      it('should be droppable element', function() {
-        expect(element.attr('esn-droppable')).to.exist;
-      });
-
-      describe('The onDrop function', function() {
-        var inboxJmapItemService;
-
-        beforeEach(angular.mock.inject(function(_inboxJmapItemService_) {
-          inboxJmapItemService = _inboxJmapItemService_;
-
-          inboxJmapItemService.moveMultipleItems = sinon.spy(function() {
-            return $q.when();
-          });
-        }));
-
-        it('should delegate to inboxJmapItemService.moveMultipleItems', function() {
-          var item1 = { id: 1 },
-            item2 = { id: 2 };
-
-          isolateScope.onDrop([item1, item2]);
-
-          expect(inboxJmapItemService.moveMultipleItems).to.have.been.calledWith([item1, item2], $scope.mailbox);
-        });
-
-      });
-
-      describe('The isDropZone function', function() {
-
-        var inboxMailboxesService;
-
-        beforeEach(angular.mock.inject(function(_inboxMailboxesService_) {
-          inboxMailboxesService = _inboxMailboxesService_;
-          inboxMailboxesService.canMoveMessage = sinon.spy(function() {
-            return true;
-          });
-        }));
-
-        it('should check result from inboxMailboxesService.canMoveMessage for a single item', function() {
-          var item = {
-            mailboxIds: ['2']
-          };
-
-          isolateScope.isDropZone([item]);
-
-          expect(inboxMailboxesService.canMoveMessage).to.have.been.calledOnce;
-          expect(inboxMailboxesService.canMoveMessage).to.have.been.calledWith(item, $scope.mailbox);
-        });
-
-        it('should check result from inboxMailboxesService.canMoveMessage for multiple items', function() {
-          var item = {
-            id: '1',
-            mailboxIds: ['2']
-          };
-          var item2 = {
-            id: '2',
-            mailboxIds: ['3']
-          };
-
-          isolateScope.isDropZone([item, item2]);
-
-          expect(inboxMailboxesService.canMoveMessage).to.have.been.calledTwice;
-          expect(inboxMailboxesService.canMoveMessage).to.have.been.calledWith(item, $scope.mailbox);
-          expect(inboxMailboxesService.canMoveMessage).to.have.been.calledWith(item2, $scope.mailbox);
-        });
-
-      });
-
     });
 
   });
