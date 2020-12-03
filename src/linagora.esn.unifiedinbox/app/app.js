@@ -51,7 +51,8 @@ angular.module('linagora.esn.unifiedinbox', [
   'linagora.esn.unifiedinbox.linshare',
   'angular-clockpicker',
   'awesome-angular-swipe',
-  angularDragula(angular) // eslint-disable-line no-undef
+  angularDragula(angular), // eslint-disable-line no-undef
+  'ui.tree'
 ]);
 
 require('../../esn.inbox.libs/app/app.module.js');
@@ -166,6 +167,11 @@ require('./components/sidebar/attachment/sidebar-attachment.component.js');
 require('./components/sidebar/attachment/sidebar-attachment.controller.js');
 require('./components/sidebar/folder-settings/folder-settings.component.js');
 require('./components/sidebar/folder-settings/folder-settings.controller.js');
+require('./components/sidebar/mailbox-display/mailbox-display.component.js');
+require('./components/sidebar/mailbox-display/mailbox-display.controller.js');
+require('./components/sidebar/mailbox-display-tree/mailbox-display-tree.component.js');
+require('./components/sidebar/mailbox-display-tree/mailbox-display-tree.controller.js');
+require('./components/sidebar/mailbox-display-tree/mailbox-display-tree.config.js');
 require('./components/subheader/delete-button/subheader-delete-button.js');
 require('./components/subheader/mark-as-read-button/subheader-mark-as-read-button.js');
 require('./components/subheader/mark-as-unread-button/subheader-mark-as-unread-button.js');

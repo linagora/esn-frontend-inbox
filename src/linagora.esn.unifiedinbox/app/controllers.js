@@ -674,7 +674,7 @@ require('./services/common/inbox-utils.service.js');
           return;
         }
 
-        $scope.displayPersonnalFolders = $filter('filter')($scope.mailboxes, { role: { value: '!' }, namespace: { type: 'Personal' } }).length > 0;
+        $scope.displayPersonnalFolders = $filter('filter')($scope.mailboxes, { role: { value: '!' }, namespace: { type: 'Personal' } });
       }
 
       function displaySharedFolders() {

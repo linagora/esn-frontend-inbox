@@ -48,7 +48,8 @@ module.exports = {
       angularDragula: 'angularjs-dragula/angularjs-dragula.js', // for unifiedinbox
       sanitizeHtml: 'sanitize-html', // for unifiedinbox
       DOMPurify: 'dompurify', // for unifiedinbox
-      localforage: 'localforage' // for calendar
+      localforage: 'localforage', // for calendar
+      angularUiTree: 'ui.tree' // for unifiedinbox
     }),
     /*
      * To transform assets/index.pug to an HTML file, with webpack autoimporting the "main.js" bundle

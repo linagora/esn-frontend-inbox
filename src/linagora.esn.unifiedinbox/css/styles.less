@@ -93,6 +93,20 @@
 
   .inbox-icon {
     margin-right: 5px;
+    font-size: @inboxAsideIconFontSize;
+    vertical-align: bottom;
+  }
+
+  .btn-caret-submenu {
+    margin: 0px 4px 0 0px;
+    border-radius: 50%;
+    padding: 0;
+
+    i.mdi-menu-down {
+      font-size: 20px;
+      color: @secondaryTextColor;
+      vertical-align: middle;
+    }
   }
 
   .card {
@@ -148,7 +162,7 @@
       }
 
       i.mdi-menu-down {
-        font-size: 1.8em;
+        font-size: 20px;
         color: @secondaryTextColor;
       }
     }
@@ -162,6 +176,18 @@
           .rotateZ3d(-90deg);
         }
       }
+    }
+  }
+
+  .btn-caret-submenu {
+    margin: 0px 4px 0 0px;
+    border-radius: 50%;
+    padding: 0;
+
+    i.mdi-menu-down {
+      font-size: 20px;
+      color: @secondaryTextColor;
+      vertical-align: middle;
     }
   }
 }

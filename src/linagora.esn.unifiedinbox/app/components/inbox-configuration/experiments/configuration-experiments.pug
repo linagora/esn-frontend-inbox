@@ -8,7 +8,7 @@
     h3.p-10 List of available experiments
     p Experiments are features under development. Development team may want to get feedback early, so you can enable the features and try them.
     p Experiments are enabled on your current web browser only.
-    .card.w-50(ng-repeat='experiment in $ctrl.experiments')
+    .card.w-50(ng-repeat='experiment in $ctrl.experiments track by $index')
       .card-header
         h2 {{ experiment.title }}
       .card-body.card-padding

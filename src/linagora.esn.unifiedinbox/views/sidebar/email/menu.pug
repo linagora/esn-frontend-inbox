@@ -15,22 +15,24 @@
           span {{ ::emailAddress }}
       ul.nopadding
         esn-filter-input(on-change="ctrl.filter = $filter")
-        mailbox-display.lv-item(is-special="true", mailbox="mailbox", ng-repeat="mailbox in specialMailboxes" ui-sref="unifiedinbox.inbox({ type: 'jmap', account: '', context: mailbox.id })")
+        mailbox-display(is-special="true", mailbox="mailbox", ng-repeat="mailbox in specialMailboxes" )
 
-        mailbox-display.lv-item(is-system="true", mailbox="mailbox", ng-repeat="mailbox in mailboxes | filter: { role: { value: '' }, namespace: { type: 'Personal' }, name: ctrl.filter } track by mailbox.id", ui-sref="unifiedinbox.inbox({ type: 'jmap', account: '', context: mailbox.id })")
+        mailbox-display(is-system="true", mailbox="mailbox", ng-repeat="mailbox in mailboxes | filter: { role: { value: '' }, namespace: { type: 'Personal' }, name: ctrl.filter } track by mailbox.id")
 
         hr
         inbox-sidebar-new-folder-button
 
         div(ng-if="displayPersonnalFolders")
           hr
-          .lv-item {{ 'My folders' | translate }}
-          mailbox-display.lv-item(is-folder="true", hide-aside="$hide()", mailbox="mailbox", ng-repeat="mailbox in mailboxes | filter: { role: { value: '!' }, namespace: { type: 'Personal' }, name: ctrl.filter } track by mailbox.id", ui-sref="unifiedinbox.inbox({ type: 'jmap', account: '', context: mailbox.id })")
+          div {{ 'My folders' | translate }}
+          mailbox-display(feature-flag="inbox.experiment.tree-folders", feature-flag-hide, is-folder="true", hide-aside="$hide()", mailbox="mailbox", ng-repeat="mailbox in mailboxes | filter: { role: { value: '!' }, namespace: { type: 'Personal' }, name: ctrl.filter } track by mailbox.id")
+
+          mailbox-display-tree(feature-flag="inbox.experiment.tree-folders", mailboxes="displayPersonnalFolders", hide-aside="$hide()")
 
         div(ng-if="displayFoldersSharedWithMe")
           hr
-          .lv-item {{ 'Shared folders' | translate }}
-          mailbox-display.lv-item(is-shared="true", hide-aside="$hide()", mailbox="mailbox", ng-repeat="mailbox in mailboxes | inboxFilterVisibleSharedMailboxes | filter: { name: ctrl.filter } track by mailbox.id", ui-sref="unifiedinbox.inbox({ type: 'jmap', account: '', context: mailbox.id })")
+          div {{ 'Shared folders' | translate }}
+          mailbox-display(is-shared="true", hide-aside="$hide()", mailbox="mailbox", ng-repeat="mailbox in mailboxes | inboxFilterVisibleSharedMailboxes | filter: { name: ctrl.filter } track by mailbox.id")
 
   .lv-body(ng-switch-when="ERROR")
     inbox-sidebar-account-unavailable.lv-item(account="::ctrl.account", ng-click="ctrl.load()")
