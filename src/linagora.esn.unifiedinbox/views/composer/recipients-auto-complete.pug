@@ -8,7 +8,8 @@ tags-input.inbox-tags-input(
   on-tag-added="onTagAdded($tag)",
   on-tag-removed="onTagRemoved($tag)",
   min-length="1",
-  ng-class="addClass"
+  ng-class="addClass",
+  template='{{"/unifiedinbox/views/composer/recipients-autocomplete-input-tag.html"}}'
 )
   auto-complete(
     source='search($query)',
