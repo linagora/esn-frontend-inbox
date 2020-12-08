@@ -893,16 +893,11 @@ describe('The inboxMailboxesService factory', function() {
       var mailboxes = [
         new jmapDraft.Mailbox(jmapClient, 'inboxId', 'Inbox', { role: 'inbox' }),
         new jmapDraft.Mailbox(jmapClient, 'outboxId', 'Outbox', { role: 'outbox' }),
-        new jmapDraft.Mailbox(jmapClient, 'trashId', 'Trash', { role: 'trash' })
+        new jmapDraft.Mailbox(jmapClient, 'trashId', 'Trash', { role: 'trash' }),
+        new jmapDraft.Mailbox(jmapClient, 'sharedId1', 'shared1', { namespace: { type: 'delegated' } }),
+        new jmapDraft.Mailbox(jmapClient, 'sharedId2', 'shared2', { namespace: { type: 'delegated' } }),
+        new jmapDraft.Mailbox(jmapClient, 'NotShared', 'NotShared', { namespace: { type: 'personal' } })
       ];
-
-      jmapClient.getMailboxes = function() {
-        return $q.when([
-          { id: 'sharedId1', name: 'shared1', namespace: { type: 'delegated' } },
-          { id: 'sharedId2', name: 'shared2', namespace: { type: 'delegated' } },
-          { id: 'NotShared', name: 'NotShared', namespace: { type: 'personal' } }
-        ]);
-      };
 
       var specialMailbox = {
         id: mailboxId,
@@ -916,8 +911,6 @@ describe('The inboxMailboxesService factory', function() {
       inboxSpecialMailboxes.get = function() {
         return specialMailbox;
       };
-
-      inboxMailboxesService.sharedMailboxesList();
 
       jmapClient.getMailboxes = sinon.stub().returns($q.when(mailboxes));
 
