@@ -407,6 +407,7 @@ describe('The InboxDraft factory', function() {
     it('should call saveAsDraft if needToBeSaved returns true', function(done) {
       jmapClient.saveAsDraft = sinon.stub().returns($q.when({}));
       jmapClient.getMessages = function() { return $q.when(); };
+      jmapClient.getMailboxes = function() { return $q.when([]); };
 
       new InboxDraft({ subject: 'yo' }).save({ subject: 'lo' }).then(function() {
         expect(jmapClient.saveAsDraft).to.have.been.calledWith();
@@ -420,6 +421,7 @@ describe('The InboxDraft factory', function() {
     it('should reset original message by the the new draft id after draft is saved', function(done) {
       jmapClient.saveAsDraft = function() { return $q.when({ id: 'new-id' }); };
       jmapClient.getMessages = sinon.stub().returns($q.when([{ id: 'new-id', subject: 'yolo' }]));
+      jmapClient.getMailboxes = function() { return $q.when([]); };
 
       var draft = new InboxDraft({ subject: 'yo' });
 
@@ -438,6 +440,7 @@ describe('The InboxDraft factory', function() {
     it('should call saveAsDraft with OutboundMessage filled with properties', function() {
       jmapClient.saveAsDraft = sinon.stub().returns($q.when({}));
       jmapClient.getMessages = function() { return $q.when(); };
+      jmapClient.getMailboxes = function() { return $q.when([]); };
 
       new InboxDraft({}).save({
         subject: 'expected subject',
@@ -463,6 +466,7 @@ describe('The InboxDraft factory', function() {
     it('should map all recipients to name-email tuple', function() {
       jmapClient.saveAsDraft = sinon.stub().returns($q.when({}));
       jmapClient.getMessages = function() { return $q.when(); };
+      jmapClient.getMailboxes = function() { return $q.when([]); };
 
       new InboxDraft({}).save({
         subject: 'expected subject',
@@ -488,6 +492,8 @@ describe('The InboxDraft factory', function() {
 
       jmapClient.saveAsDraft = function() {return $q.when({});};
       jmapClient.getMessages = function() { return $q.when(); };
+      jmapClient.getMailboxes = function() { return $q.when([]); };
+
       draft.save({ to: [{ email: 'yo@lo' }] });
 
       $rootScope.$digest();
@@ -500,6 +506,8 @@ describe('The InboxDraft factory', function() {
         err = { message: 'rejected with err' };
 
       jmapClient.saveAsDraft = function() {return $q.reject(err);};
+      jmapClient.getMailboxes = function() { return $q.when([]); };
+
       draft.save({ to: [{ email: 'yo@lo' }] }).catch(function(error) {
         expect(notificationFactory.weakError).to.have.been.calledWith('Error', 'Saving your email as draft failed');
         expect(error).to.deep.equal(err);
@@ -512,6 +520,8 @@ describe('The InboxDraft factory', function() {
     it('should broadcast a draft destroyed event at the start of saving process', function() {
       jmapClient.saveAsDraft = sinon.stub().returns($q.when({ id: 'new-draft' }));
       jmapClient.getMessages = function() { return $q.when(); };
+      jmapClient.getMailboxes = function() { return $q.when([]); };
+
       var draft = new InboxDraft({}),
         eventCatcher = sinon.spy();
 
@@ -529,6 +539,8 @@ describe('The InboxDraft factory', function() {
     it('should broadcast an event when draft has been saved successfully', function() {
       jmapClient.saveAsDraft = function() {return $q.when({});};
       jmapClient.getMessages = function() { return $q.when(); };
+      jmapClient.getMailboxes = function() { return $q.when([]); };
+
       var draft = new InboxDraft({}),
         eventCatcher = sinon.spy();
 
@@ -547,6 +559,7 @@ describe('The InboxDraft factory', function() {
       jmapClient.saveAsDraft = sinon.stub().returns($q.when({ id: 'new-draft' }));
       jmapClient.destroyMessage = sinon.stub().returns($q.when());
       jmapClient.getMessages = function() { return $q.when(); };
+      jmapClient.getMailboxes = function() { return $q.when([]); };
 
       var draft = new InboxDraft({ id: 'original-draft' });
 
