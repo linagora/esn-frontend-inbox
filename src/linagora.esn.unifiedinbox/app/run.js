@@ -65,4 +65,5 @@ angular.module('linagora.esn.unifiedinbox')
     $templateCache.put('/unifiedinbox/views/thread/view/action-list.html', require('../views/thread/view/action-list.pug'));
     $templateCache.put('/unifiedinbox/views/unified-inbox/action-list.html', require('../views/unified-inbox/action-list.pug'));
     $templateCache.put('/unifiedinbox/app/components/sidebar/mailbox-display-tree/mailbox-display-tree-node.html', require('./components/sidebar/mailbox-display-tree/mailbox-display-tree-node.pug'));
+    $templateCache.put('/unifiedinbox/views/composer/recipients-autocomplete-input-tag.html', require('../views/composer/recipients-autocomplete-input-tag.pug'));
   });
