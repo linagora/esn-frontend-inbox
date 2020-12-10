@@ -152,7 +152,7 @@ require('./services/common/inbox-utils.service.js');
 
     .controller('viewEmailController', function($scope, $state, $stateParams, esnShortcuts, inboxJmapItemService,
       inboxMailboxesService, inboxJmapHelper, inboxAsyncHostedMailControllerHelper, inboxUnavailableAccountNotifier,
-      inboxFilteredList, INBOX_SHORTCUTS_NAVIGATION_CATEGORY, INBOX_SHORTCUTS_ACTIONS_CATEGORY, INBOX_EVENTS,
+      inboxFilteredList, inboxMessagesCache, INBOX_SHORTCUTS_NAVIGATION_CATEGORY, INBOX_SHORTCUTS_ACTIONS_CATEGORY, INBOX_EVENTS,
       INBOX_CONTROLLER_LOADING_STATES) {
       var context = $stateParams.context;
       var emailId = $stateParams.emailId;
@@ -169,6 +169,8 @@ require('./services/common/inbox-utils.service.js');
         return inboxJmapHelper
           .getMessageById(emailId)
           .then(function(message) {
+            inboxMessagesCache[emailId] = message;
+
             if (!$scope.email) {
               $scope.email = message;
             } else {
