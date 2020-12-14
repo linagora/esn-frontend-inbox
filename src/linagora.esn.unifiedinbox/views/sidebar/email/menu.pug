@@ -27,7 +27,7 @@
           div {{ 'My folders' | translate }}
           mailbox-display(feature-flag="inbox.experiment.tree-folders", feature-flag-hide, is-folder="true", hide-aside="$hide()", mailbox="mailbox", ng-repeat="mailbox in mailboxes | filter: { role: { value: '!' }, namespace: { type: 'Personal' }, name: ctrl.filter } track by mailbox.id")
 
-          mailbox-display-tree(feature-flag="inbox.experiment.tree-folders", mailboxes="displayPersonnalFolders", hide-aside="$hide()")
+          mailbox-display-tree(feature-flag="inbox.experiment.tree-folders", mailboxes="displayPersonnalFolders", hide-aside="$hide()", filter="ctrl.filter")
 
         div(ng-if="displayFoldersSharedWithMe")
           hr

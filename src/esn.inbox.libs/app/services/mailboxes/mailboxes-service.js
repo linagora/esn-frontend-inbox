@@ -76,16 +76,21 @@ angular.module('esn.inbox.libs')
     }
 
     function mailboxtoTree(mailboxes) {
+      if (!angular.isArray(mailboxes)) {
+        mailboxes = [mailboxes];
+      }
+
       const arrMap = new Map(mailboxes.map(item => [item.id, item]));
       const tree = [];
 
       mailboxes.forEach(item => {
+        item.nodes = []; //reset nodes
+
         if (item.parentId) {
           const parentItem = arrMap.get(item.parentId);
+          const { nodes } = parentItem;
 
-          if (parentItem && parentItem.id !== item.id) {
-            const { nodes } = parentItem;
-
+          if (parentItem && parentItem.id !== item.id && !_.find(nodes, { id: item.id })) {
             if (nodes) {
               parentItem.nodes.push(item);
             } else {

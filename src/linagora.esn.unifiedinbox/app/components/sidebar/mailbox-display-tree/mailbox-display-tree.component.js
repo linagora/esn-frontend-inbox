@@ -6,10 +6,10 @@ angular.module('linagora.esn.unifiedinbox')
   .component('mailboxDisplayTree', {
     template: require('./mailbox-display-tree.pug'),
     bindings: {
-      mailboxes: '=',
+      mailboxes: '<',
       hideAside: '&',
       hideBadge: '@',
-      filter: '='
+      filter: '<'
     },
     controllerAs: 'ctrl',
     controller: 'mailboxDisplayTreeController'

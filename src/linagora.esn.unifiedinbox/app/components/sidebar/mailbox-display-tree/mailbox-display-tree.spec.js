@@ -54,36 +54,41 @@ describe('The mailboxDisplayTree controller', function() {
     return controller;
   }
 
-  it('should call the inboxMailboxesService.mailboxtoTree function', function() {
-    var controller = initController();
+  describe('$onInit function', function() {
 
-    var inboxMailboxesServiceMailboxtoTreeSpy = sinon.spy(inboxMailboxesService, 'mailboxtoTree');
+    it('should call the inboxMailboxesService.mailboxtoTree function', function() {
+      var controller = initController();
 
-    var mailboxesTree = [
-      {
-        id: 'id_mailbox',
-        name: 'Mailbox 1',
-        totalMessages: 10,
-        parentId: null,
-        level: 1,
-        qualifiedName: 'Mailbox 1',
-        nodes: [
-          {
-            id: 'id_mailbox2',
-            name: 'Mailbox 2',
-            unreadMessages: 0,
-            parentId: 'id_mailbox',
-            level: 2,
-            qualifiedName: 'Mailbox 1 / Mailbox 2'
-          }
-        ]
-      }
-    ];
+      var inboxMailboxesServiceMailboxtoTreeSpy = sinon.spy(inboxMailboxesService, 'mailboxtoTree');
 
-    controller.$onInit();
+      var mailboxesTree = [
+        {
+          id: 'id_mailbox',
+          name: 'Mailbox 1',
+          totalMessages: 10,
+          parentId: null,
+          level: 1,
+          qualifiedName: 'Mailbox 1',
+          nodes: [
+            {
+              id: 'id_mailbox2',
+              name: 'Mailbox 2',
+              unreadMessages: 0,
+              parentId: 'id_mailbox',
+              level: 2,
+              qualifiedName: 'Mailbox 1 / Mailbox 2',
+              nodes: []
+            }
+          ]
+        }
+      ];
 
-    expect(inboxMailboxesServiceMailboxtoTreeSpy).to.have.been.calledWith(mailboxes);
-    expect(controller.displayPersonnalFolders).to.deep.equal(mailboxesTree);
+      controller.$onInit();
+
+      expect(inboxMailboxesServiceMailboxtoTreeSpy).to.have.been.calledWith(mailboxes);
+      expect(controller.displayPersonnalFolders).to.deep.equal(mailboxesTree);
+    });
+
   });
 
   it('should call "toggleMenuItem" when clicked in toggle icon', function() {
@@ -92,5 +97,62 @@ describe('The mailboxDisplayTree controller', function() {
     controller.toggleMenuItem();
 
     expect(controller.toggle).to.have.been.called;
+  });
+
+  describe('$onChanges function', function() {
+
+    it('should call the inboxMailboxesService.mailboxtoTree function', function() {
+      var controller = initController();
+
+      var inboxMailboxesServiceMailboxtoTreeSpy = sinon.spy(inboxMailboxesService, 'mailboxtoTree');
+      var changes = {
+        mailboxes: {
+          currentValue: mailboxes
+        }
+      };
+
+      var mailboxesTree = [
+        {
+          id: 'id_mailbox',
+          name: 'Mailbox 1',
+          totalMessages: 10,
+          parentId: null,
+          level: 1,
+          qualifiedName: 'Mailbox 1',
+          nodes: [
+            {
+              id: 'id_mailbox2',
+              name: 'Mailbox 2',
+              unreadMessages: 0,
+              parentId: 'id_mailbox',
+              level: 2,
+              qualifiedName: 'Mailbox 1 / Mailbox 2',
+              nodes: []
+            }
+          ]
+        }
+      ];
+
+      controller.$onInit();
+      controller.$onChanges(changes);
+
+      expect(inboxMailboxesServiceMailboxtoTreeSpy).to.have.been.calledWith(changes.mailboxes.currentValue);
+      expect(controller.displayPersonnalFolders).to.deep.equal(mailboxesTree);
+    });
+
+    it('should filter displayPersonnalFolders by filter', function() {
+      var controller = initController();
+      var changes = {
+        filter: {
+          currentValue: 'test'
+        }
+      };
+
+      controller.$onInit();
+      controller.$onChanges(changes);
+
+      expect(controller.filter).to.deep.equal(changes.filter.currentValue);
+    });
+
   });
 });
