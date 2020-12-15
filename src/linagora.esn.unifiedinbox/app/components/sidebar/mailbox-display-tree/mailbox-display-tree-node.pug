@@ -1,4 +1,4 @@
 mailbox-display(is-folder="true", hide-aside="$hide()", hide-badge="hideBadge", mailbox="node",
   toggle="toggle()", collapsed="collapsed")
 div(ui-tree-nodes, ng-model='node.nodes', ng-class='{hidden: collapsed}')
-  div(ng-repeat='node in node.nodes track by node.id', ui-tree-node, ng-include="'/unifiedinbox/app/components/sidebar/mailbox-display-tree/mailbox-display-tree-node.html'")
+  div(ng-repeat='node in node.nodes | filter: { name: ctrl.filter } track by node.id', ui-tree-node, ng-include="'/unifiedinbox/app/components/sidebar/mailbox-display-tree/mailbox-display-tree-node.html'")
