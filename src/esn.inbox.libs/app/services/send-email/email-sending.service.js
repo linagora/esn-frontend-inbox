@@ -193,13 +193,17 @@ angular.module('esn.inbox.libs')
       };
     }
 
-    function getReplyRecipients(email) {
-      if (!email) {
+    function getReplyRecipients(email, sender) {
+      function notMe(item) {
+        return item.email !== getEmailAddress(sender);
+      }
+
+      if (!email || !sender) {
         return;
       }
 
       return {
-        to: getReplyToRecipients(email),
+        to: _(email.to || []).concat(getReplyToRecipients(email)).uniq('email').value().filter(notMe),
         cc: [],
         bcc: []
       };
