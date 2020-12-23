@@ -88,14 +88,16 @@ angular.module('esn.inbox.libs')
 
         if (item.parentId) {
           const parentItem = arrMap.get(item.parentId);
-          const { nodes } = parentItem;
+          const nodes = parentItem.nodes;
 
-          if (parentItem && parentItem.id !== item.id && !_.find(nodes, { id: item.id })) {
+          if (parentItem && parentItem !== null && parentItem.id !== item.id && !_.find(nodes, { id: item.id })) {
             if (nodes) {
               parentItem.nodes.push(item);
             } else {
               parentItem.nodes = [item];
             }
+          } else {
+            tree.push(item);
           }
         } else {
           tree.push(item);

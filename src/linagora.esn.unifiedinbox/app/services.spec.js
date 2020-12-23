@@ -697,7 +697,7 @@ describe('The Unified Inbox Angular module services', function() {
     });
 
     describe('The getReplyRecipients function', function() {
-      var email, expectedEmail;
+      var email, expectedEmail, sender;
 
       it('should do nothing when email is not provided', function() {
         expect(emailSendingService.getReplyRecipients(null)).to.be.undefined;
@@ -712,7 +712,8 @@ describe('The Unified Inbox Angular module services', function() {
           to: [{ displayName: '0', email: '0@linagora.com' }]
         };
 
-        expect(emailSendingService.getReplyRecipients(email)).to.shallowDeepEqual(expectedEmail);
+        sender = { displayName: 'sender', preferredEmail: 'sender@linagora.com' };
+        expect(emailSendingService.getReplyRecipients(email, sender)).to.shallowDeepEqual(expectedEmail);
       });
 
       it('should reply to ReplyTo if ReplyTo is present', function() {
@@ -725,7 +726,8 @@ describe('The Unified Inbox Angular module services', function() {
           to: [{ displayName: 'replyto', email: 'replyto@linagora.com' }]
         };
 
-        expect(emailSendingService.getReplyRecipients(email)).to.shallowDeepEqual(expectedEmail);
+        sender = { displayName: 'sender', preferredEmail: 'sender@linagora.com' };
+        expect(emailSendingService.getReplyRecipients(email, sender)).to.shallowDeepEqual(expectedEmail);
       });
 
       it('should reply to ReplyTo if ReplyTo is present, filtering out unknown EMailers', function() {
@@ -738,7 +740,8 @@ describe('The Unified Inbox Angular module services', function() {
           to: [{ displayName: 'replyto', email: 'replyto@linagora.com' }, { name: 'second', email: 'second@linagora.com' }]
         };
 
-        expect(emailSendingService.getReplyRecipients(email)).to.shallowDeepEqual(expectedEmail);
+        sender = { displayName: 'sender', preferredEmail: 'sender@linagora.com' };
+        expect(emailSendingService.getReplyRecipients(email, sender)).to.shallowDeepEqual(expectedEmail);
       });
 
     });
@@ -1068,7 +1071,7 @@ describe('The Unified Inbox Angular module services', function() {
         sender = { displayName: 'sender', email: 'sender@linagora.com' };
         expectedAnswer = {
           from: 'sender@linagora.com',
-          to: [{ email: 'from@linagora.com', name: 'linagora' }],
+          to: [{ email: '1@linagora.com', displayName: '1' }],
           subject: 'Re: my subject',
           quoted: email,
           quoteTemplate: 'default',
@@ -1097,7 +1100,7 @@ describe('The Unified Inbox Angular module services', function() {
         sender = { displayName: 'sender', email: 'sender@linagora.com' };
         expectedAnswer = {
           from: 'sender@linagora.com',
-          to: [{ email: 'from@linagora.com', name: 'linagora' }],
+          to: [{ email: '1@linagora.com', displayName: '1' }],
           subject: 'Re: my subject',
           quoted: {
             htmlBody: '<p><br></p><cite>On August 21, 2015 2:10 AM, from from@linagora.com</cite><blockquote><p>my body</p></blockquote>'
@@ -1125,7 +1128,7 @@ describe('The Unified Inbox Angular module services', function() {
         sender = { displayName: 'sender', email: 'sender@linagora.com' };
         expectedAnswer = {
           from: 'sender@linagora.com',
-          to: [{ email: 'from@linagora.com', name: 'linagora' }],
+          to: [{ email: '1@linagora.com', displayName: '1' }],
           subject: 'Re: my subject',
           quoted: email,
           quoteTemplate: 'default',
@@ -1142,6 +1145,7 @@ describe('The Unified Inbox Angular module services', function() {
 
       it('should not include non-inline attachments in the reply email', function(done) {
         email = {
+          from: { email: 'from@linagora.com', name: 'linagora' },
           attachments: [
             { name: 'A', isInline: false },
             { name: 'B', isInline: false }
@@ -1149,6 +1153,7 @@ describe('The Unified Inbox Angular module services', function() {
         };
 
         mockGetMessages(email);
+        sender = { displayName: 'sender', email: 'sender@linagora.com' };
         emailSendingService.createReplyEmailObject('id', sender).then(function(email) {
           expect(email.attachments).to.be.undefined;
         }).then(done, done);
@@ -1158,6 +1163,7 @@ describe('The Unified Inbox Angular module services', function() {
 
       it('should include inline attachments in the reply email', function(done) {
         email = {
+          from: { email: 'from@linagora.com', name: 'linagora' },
           attachments: [
             { name: 'A', isInline: true },
             { name: 'B', isInline: true }
@@ -1165,6 +1171,7 @@ describe('The Unified Inbox Angular module services', function() {
         };
 
         mockGetMessages(email);
+        sender = { displayName: 'sender', email: 'sender@linagora.com' };
         emailSendingService.createReplyEmailObject('id', sender).then(function(email) {
           expect(email.attachments).to.deep.equal([
             { name: 'A', isInline: true },
@@ -1248,7 +1255,7 @@ describe('The Unified Inbox Angular module services', function() {
         sender = { displayName: 'sender', email: 'sender@linagora.com' };
         expectedAnswer = {
           from: 'sender@linagora.com',
-          to: [{ email: 'from@linagora.com', name: 'linagora' }],
+          to: [{ email: '1@linagora.com', displayName: '1' }],
           subject: 'Re: my subject',
           quoted: email,
           quoteTemplate: 'default',
@@ -1284,7 +1291,7 @@ describe('The Unified Inbox Angular module services', function() {
         sender = { displayName: 'sender', email: 'sender@linagora.com' };
         expectedAnswer = {
           from: 'sender@linagora.com',
-          to: [{ email: 'from@linagora.com', name: 'linagora' }],
+          to: [{ email: '1@linagora.com', displayName: '1' }],
           subject: 'Re: my subject',
           quoted: email,
           quoteTemplate: 'default',
