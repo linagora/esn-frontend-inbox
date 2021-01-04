@@ -22,7 +22,7 @@
         hr
         inbox-sidebar-new-folder-button
 
-        div(ng-if="displayPersonnalFolders")
+        div(ng-if="displayPersonnalFolders.length > 0")
           hr
           div {{ 'My folders' | translate }}
           mailbox-display(feature-flag="inbox.experiment.tree-folders", feature-flag-hide, is-folder="true", hide-aside="$hide()", mailbox="mailbox", ng-repeat="mailbox in mailboxes | filter: { role: { value: '!' }, namespace: { type: 'Personal' }, name: ctrl.filter } track by mailbox.id")
