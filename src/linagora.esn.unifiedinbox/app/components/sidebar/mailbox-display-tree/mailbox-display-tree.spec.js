@@ -29,6 +29,14 @@ describe('The mailboxDisplayTree controller', function() {
         parentId: 'id_mailbox',
         level: 2,
         qualifiedName: 'Mailbox 1 / Mailbox 2'
+      },
+      {
+        id: 'id_mailbox3',
+        name: 'Mailbox 3',
+        unreadMessages: 0,
+        parentId: 'id_mailbox_special',
+        level: 2,
+        qualifiedName: 'Mailbox special / Mailbox 3'
       }
     ];
 
@@ -80,6 +88,15 @@ describe('The mailboxDisplayTree controller', function() {
               nodes: []
             }
           ]
+        },
+        {
+          id: 'id_mailbox3',
+          name: 'Mailbox 3',
+          unreadMessages: 0,
+          parentId: 'id_mailbox_special',
+          level: 2,
+          qualifiedName: 'Mailbox special / Mailbox 3',
+          nodes: []
         }
       ];
 
@@ -130,6 +147,15 @@ describe('The mailboxDisplayTree controller', function() {
               nodes: []
             }
           ]
+        },
+        {
+          id: 'id_mailbox3',
+          name: 'Mailbox 3',
+          unreadMessages: 0,
+          parentId: 'id_mailbox_special',
+          level: 2,
+          qualifiedName: 'Mailbox special / Mailbox 3',
+          nodes: []
         }
       ];
 
