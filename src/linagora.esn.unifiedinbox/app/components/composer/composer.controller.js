@@ -113,10 +113,6 @@ angular.module('linagora.esn.unifiedinbox')
       var options = {
         persist: true,
         silent: true,
-        onFailure: {
-          linkText: 'Reopen the composer',
-          action: self.onShow
-        },
         onClose: self.forceClose
       };
 

@@ -358,10 +358,6 @@ describe('The inboxComposerController controller', function() {
         var options = {
           persist: true,
           silent: true,
-          onFailure: {
-            linkText: 'Reopen the composer',
-            action: ctrl.onShow
-          },
           onClose: ctrl.forceClose
         };
 
