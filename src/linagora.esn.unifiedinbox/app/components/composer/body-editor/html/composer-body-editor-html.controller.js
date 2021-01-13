@@ -20,7 +20,6 @@ angular.module('linagora.esn.unifiedinbox')
     self.onSummernoteBlur = onSummernoteBlur;
     self.onImageUpload = onImageUpload;
     self.summernoteOptions = INBOX_SUMMERNOTE_OPTIONS;
-    self.onSummernotePaste = onSummernotePaste;
 
     /////
 
@@ -50,13 +49,6 @@ angular.module('linagora.esn.unifiedinbox')
       $element
         .find('.note-editable')
         .after($compile('<inbox-composer-attachments message="$ctrl.message" upload="$ctrl.upload({ $attachment: $attachment })" remove-attachment="$ctrl.removeAttachment({ $attachment: $attachment })" />')($scope));
-    }
-
-    function onSummernotePaste(event) {
-      event.preventDefault();
-      const html = (event.originalEvent || event).clipboardData.getData('text/html');
-
-      document.execCommand('insertHtml', false, $filter('sanitizeStylisedHtml')(html));
     }
 
     function onSummernoteBlur() {
