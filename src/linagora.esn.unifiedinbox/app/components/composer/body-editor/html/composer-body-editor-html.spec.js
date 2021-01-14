@@ -66,13 +66,6 @@ describe('The inboxComposerBodyEditorHtml component', function() {
   });
 
   describe('component', function() {
-
-    let $filter;
-
-    beforeEach(angular.mock.inject(function(_$filter_) {
-      $filter = _$filter_;
-    }));
-
     it('should add a new inbox-composer-attachments component inside the body', function() {
       expect(compileComponent().find('.note-editable + inbox-composer-attachments')).to.have.length(1);
     });
@@ -152,31 +145,6 @@ describe('The inboxComposerBodyEditorHtml component', function() {
       $rootScope.$digest();
 
       expect($rootScope.message.htmlBody).to.equal('<p><br></p><div class="openpaas-signature">-- \nmy signature</div>');
-    });
-
-    it('should call sanitizeStylisedHtml filter', function() {
-      compileComponent();
-      const unsafeHtml = '<script>alert("hi");</script><h1>hello</h1><img src=x onerror=alert(1)//>';
-      const onPasteEvent = {
-        preventDefault: () => {},
-        clipboardData: {
-          getData: () => unsafeHtml
-        }
-      };
-
-      controller.onSummernotePaste(onPasteEvent);
-      $rootScope.$digest();
-
-      const trustedValue = $filter('sanitizeStylisedHtml')(unsafeHtml).$$unwrapTrustedValue();
-
-      expect(trustedValue).to.equal('<h1>hello</h1><img src="x" />');
-
-      element.find('.summernote').summernote('focus');
-      element.find('.summernote').summernote('insertText', trustedValue);
-      element.find('.note-editable').blur();
-
-      expect($rootScope.message.htmlBody).to.equal('<p>&lt;h1&gt;hello&lt;/h1&gt;&lt;img src="x" /&gt;<br></p><div class="openpaas-signature">-- \nmy signature</div>');
-
     });
   });
 
