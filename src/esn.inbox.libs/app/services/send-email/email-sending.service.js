@@ -198,20 +198,12 @@ angular.module('esn.inbox.libs')
         return item.email !== getEmailAddress(sender);
       }
 
-      function replyTo() {
-        if (email.from.id !== session.user.id) {
-          return getReplyToRecipients(email);
-        }
-
-        return _(email.to || []).concat(getReplyToRecipients(email)).uniq('email').value().filter(notMe);
-      }
-
       if (!email || !sender) {
         return;
       }
 
       return {
-        to: replyTo(),
+        to: _(email.to || []).concat(getReplyToRecipients(email)).uniq('email').value().filter(notMe),
         cc: [],
         bcc: []
       };
