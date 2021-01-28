@@ -104,8 +104,6 @@ angular.module('linagora.esn.unifiedinbox')
 function filterOutUnwantedAttachments(results) {
   const filteredResults = results.filter(result => {
     const attachments = result.attachments || [];
-
-    result.michael = true;
     const onlyWantedAttachments = attachments
       .filter(a => !a.type.toLowerCase().startsWith('text/calendar') && !a.type.toLowerCase().startsWith('application/ics'))
       .filter(a => !a.isInline);
