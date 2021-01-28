@@ -237,18 +237,33 @@ angular.module('esn.inbox.libs')
     };
   })
 
-  .factory('pagedJmapRequest', function() {
-    return function(loadNextItems) {
-      var position = 0;
+  .factory('pagedJmapRequest', function(ELEMENTS_PER_REQUEST) {
+    return (loadNextItems, opts = {}) => {
+      const filter = opts.filter || function passThrough(results) { return results; };
+      let position = 0;
+      let end = false;
 
-      return function() {
-        return loadNextItems(position)
-          .then(function(results) {
-            position += results.length;
+      const fetchItems = (items = []) => (end ? Promise.resolve(items) : loadNextItems(position)
+        .then(results => {
+          position += results.length;
+          if (!results.length) {
+            end = true;
+          }
 
-            return results;
-          });
-      };
+          return results;
+        })
+        .then(filter)
+        .then(results => {
+          const updatedItems = [...items, ...results];
+
+          if (updatedItems.length >= ELEMENTS_PER_REQUEST) {
+            return updatedItems;
+          }
+
+          return fetchItems(updatedItems);
+        }));
+
+      return fetchItems;
     };
   });
 
