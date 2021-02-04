@@ -19,6 +19,7 @@ angular.module('linagora.esn.unifiedinbox')
     self.onSummernoteKeydown = onSummernoteKeydown;
     self.onSummernoteBlur = onSummernoteBlur;
     self.onImageUpload = onImageUpload;
+    self.onSummernotePaste = onSummernotePaste;
     self.summernoteOptions = INBOX_SUMMERNOTE_OPTIONS;
 
     /////
@@ -58,6 +59,27 @@ angular.module('linagora.esn.unifiedinbox')
       }
 
       self.onBodyUpdate({ $body: $element.find('.summernote').summernote('code') });
+    }
+
+    function onSummernotePaste(event) {
+      event.preventDefault();
+      var text = event.originalEvent.clipboardData.getData('text/plain'),
+        html = event.originalEvent.clipboardData.getData('text/html');
+      const badAttributes = ['style'];
+      const badStyleAttributes = ['line-height'];
+
+      if (html) {
+        // https://gist.github.com/jasonbyrne/ed3572949091347bca90
+        var attributeStripper = new RegExp(' (' + badAttributes.join('|') + ')(="[^"]*"|=\'[^\']*\'|=[^ ]+)?', 'gi'); /* eslint-disable no-control-regex */
+        var attributeStyleStripper = new RegExp('(' + badAttributes.join('|') + '\s*:\s*(\w+|\d\.\d+)%?\;?)'); /* eslint-disable no-control-regex */
+
+        // clean it up
+        html = html.toString()
+          .match(attributeStripper);
+          // Remove attributes
+          // .replace(attributeStripper, '');
+      }
+      document.execCommand('insertHtml', false, $filter('sanitizeStylisedHtml')(html || text));
     }
 
     function updateIdentity(identity, initializing) {
