@@ -4,9 +4,7 @@ angular.module('esn.inbox.libs')
   .constant('INBOX_ALL_MAIL_MAILBOX', {
     id: 'all',
     name: 'All Mail',
-    role: {
-      value: 'all'
-    },
+    role: 'all',
     icon: 'mdi mdi-folder-outline',
     filter: {
       unprocessed: true,

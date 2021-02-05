@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  /* global chai: false, sinon: false, jmapDraft: false */
+  /* global chai: false, sinon: false */
   const { expect } = chai;
 
   describe('The inboxSharedMailboxesService service', function() {
@@ -45,13 +45,13 @@
       });
 
       it('should return false for system mailboxes', function() {
-        var systemMailbox = new jmapDraft.Mailbox({}, 'id_outbox', 'name_outbox', { role: 'outbox' });
+        var systemMailbox = { id: 'id_shared', name: 'shared_mailbox', role: 'outbox' };
 
         expect(inboxSharedMailboxesService.isShared(systemMailbox)).to.equal(false);
       });
 
       it('should return true when mailbox is shared', function() {
-        var sharedMailbox = new jmapDraft.Mailbox({}, 'id_shared', 'shared_mailbox', { namespace: { type: 'dElEgAtEd' } });
+        var sharedMailbox = { id: 'id_shared', name: 'shared_mailbox', namespace: 'dElEgAtEd' };
 
         expect(inboxSharedMailboxesService.isShared(sharedMailbox)).to.equal(true);
       });
@@ -229,7 +229,7 @@
     describe('The isShareableMailbox function', function() {
 
       it('should return true if mailbox is allow to be share', function() {
-        var mailboxAllow = { role: { value: 'inbox' } };
+        var mailboxAllow = { role: 'inbox' };
 
         var result = inboxSharedMailboxesService.isShareableMailbox(mailboxAllow);
 
@@ -237,7 +237,7 @@
       });
 
       it('should return false if mailbox is NOT allow to be share', function() {
-        var mailboxNotAllow = { role: { value: 'trash' } };
+        var mailboxNotAllow = { role: 'trash' };
 
         var result = inboxSharedMailboxesService.isShareableMailbox(mailboxNotAllow);
 

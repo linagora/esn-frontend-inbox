@@ -20,7 +20,7 @@ describe.skip('The newComposerService ', function() {
       $provide.value('esnConfig', function(key, defaultValue) {
         return $q.when(angular.isDefined(config[key]) ? config[key] : defaultValue);
       });
-      $provide.value('withJmapClient', function(callback) {
+      $provide.value('withJmapDraftClient', function(callback) {
         return callback({
           getMessages: function() {
             return $q.when([{ id: 'id' }]);

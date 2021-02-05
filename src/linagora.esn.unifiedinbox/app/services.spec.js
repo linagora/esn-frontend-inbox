@@ -7,7 +7,7 @@ const { expect } = chai;
 
 describe('The Unified Inbox Angular module services', function() {
 
-  var attendeeService, isMobile, config;
+  var attendeeService, isMobile, config, INBOX_MAILBOX_ROLES;
 
   beforeEach(function() {
     angular.mock.module('esn.session');
@@ -57,10 +57,19 @@ describe('The Unified Inbox Angular module services', function() {
 
   describe('The sendEmail service', function() {
 
-    var $httpBackend, $rootScope, jmapDraft, sendEmail, backgroundProcessorService, jmapClientMock;
+    var $httpBackend, $rootScope, sendEmail, backgroundProcessorService, jmapDraftClientMock, jmapClientMock;
 
     beforeEach(function() {
-      jmapClientMock = {};
+      jmapDraftClientMock = {};
+
+      angular.mock.module(function($provide) {
+        $provide.value('withJmapDraftClient', function(callback) {
+          return callback(jmapDraftClientMock);
+        });
+      });
+
+      jmapClientMock = {
+      };
 
       angular.mock.module(function($provide) {
         $provide.value('withJmapClient', function(callback) {
@@ -68,12 +77,13 @@ describe('The Unified Inbox Angular module services', function() {
         });
       });
 
-      angular.mock.inject(function(_$httpBackend_, _$rootScope_, _jmapDraft_, _sendEmail_, _backgroundProcessorService_) {
+      angular.mock.inject(function(_$httpBackend_, _$rootScope_, _sendEmail_, _backgroundProcessorService_,
+        _INBOX_MAILBOX_ROLES_) {
         $httpBackend = _$httpBackend_;
         $rootScope = _$rootScope_;
-        jmapDraft = _jmapDraft_;
         sendEmail = _sendEmail_;
         backgroundProcessorService = _backgroundProcessorService_;
+        INBOX_MAILBOX_ROLES = _INBOX_MAILBOX_ROLES_;
       });
 
     });
@@ -131,17 +141,21 @@ describe('The Unified Inbox Angular module services', function() {
         config['linagora.esn.unifiedinbox.isJmapSendingEnabled'] = true;
         config['linagora.esn.unifiedinbox.isSaveDraftBeforeSendingEnabled'] = false;
 
-        outbox = new jmapDraft.Mailbox({}, 'id_outbox', 'name_outbox', { role: 'outbox' });
-        jmapClientMock.getMailboxes = function() {
-          return $q.when([outbox]);
+        outbox = {
+          id: 'id_outbox',
+          name: 'name_outbox',
+          role: INBOX_MAILBOX_ROLES.OUTBOX
+        };
+        jmapClientMock.mailbox_get = function() {
+          return $q.when({ list: [outbox] });
         };
       });
 
       it('should use JMAP to send email when JMAP is enabled to send email', function(done) {
-        jmapClientMock.send = sinon.stub().returns($q.when('expected return'));
+        jmapDraftClientMock.send = sinon.stub().returns($q.when('expected return'));
 
         sendEmail(email).then(function(returnedValue) {
-          expect(jmapClientMock.send).to.have.been.calledWithMatch({ to: [{ email: 'B', name: '' }] }, outbox);
+          expect(jmapDraftClientMock.send).to.have.been.calledWithMatch({ to: [{ email: 'B', name: '' }] }, outbox);
           expect(returnedValue).to.equal('expected return');
         }).then(done, done);
 
@@ -151,7 +165,7 @@ describe('The Unified Inbox Angular module services', function() {
       it('should reject if JMAP client send fails', function(done) {
         var error = new Error('error message');
 
-        jmapClientMock.send = sinon.stub().returns($q.reject(error));
+        jmapDraftClientMock.send = sinon.stub().returns($q.reject(error));
 
         sendEmail(email).then(null).then(done.bind(null, 'should reject'), function(err) {
           expect(err).to.deep.equal(error);
@@ -166,15 +180,15 @@ describe('The Unified Inbox Angular module services', function() {
   });
 
   describe('The emailSendingService factory', function() {
-    var emailSendingService, email, $rootScope, jmapClient, INBOX_MESSAGE_HEADERS;
+    var emailSendingService, email, $rootScope, jmapDraftClient, INBOX_MESSAGE_HEADERS;
 
     beforeEach(function() {
-      jmapClient = {};
+      jmapDraftClient = {};
 
       angular.mock.module(function($provide) {
         $provide.value('sendEmail', angular.noop);
-        $provide.value('withJmapClient', function(callback) {
-          return callback(jmapClient);
+        $provide.value('withJmapDraftClient', function(callback) {
+          return callback(jmapDraftClient);
         });
       });
 
@@ -747,7 +761,7 @@ describe('The Unified Inbox Angular module services', function() {
     });
 
     function mockGetMessages(message) {
-      jmapClient.getMessages = function() {
+      jmapDraftClient.getMessages = function() {
         return $q.when([message]);
       };
     }
@@ -1678,23 +1692,23 @@ describe('The Unified Inbox Angular module services', function() {
 
   describe('The asyncJmapAction factory', function() {
 
-    var asyncJmapAction, backgroundAction, withJmapClient;
+    var asyncJmapAction, backgroundAction, withJmapDraftClient;
 
     beforeEach(angular.mock.module(function($provide) {
       $provide.value('backgroundAction', sinon.spy(function(message, action) { return action(); }));
-      $provide.value('withJmapClient', sinon.spy(function(callback) { return callback; }));
+      $provide.value('withJmapDraftClient', sinon.spy(function(callback) { return callback; }));
     }));
 
-    beforeEach(angular.mock.inject(function(_asyncJmapAction_, _backgroundAction_, _withJmapClient_) {
+    beforeEach(angular.mock.inject(function(_asyncJmapAction_, _backgroundAction_, _withJmapDraftClient_) {
       backgroundAction = _backgroundAction_;
-      withJmapClient = _withJmapClient_;
+      withJmapDraftClient = _withJmapDraftClient_;
       asyncJmapAction = _asyncJmapAction_;
     }));
 
     it('should delegate to backgroundAction, forwarding the message and the wrapped action', function() {
       asyncJmapAction('Message', 1, { expected: 'options' });
 
-      expect(withJmapClient).to.have.been.calledWith(1);
+      expect(withJmapDraftClient).to.have.been.calledWith(1);
       expect(backgroundAction).to.have.been.calledWith('Message', sinon.match.func, { expected: 'options' });
     });
 
@@ -1801,13 +1815,13 @@ describe('The Unified Inbox Angular module services', function() {
 
   describe('The attachmentUploadService service', function() {
 
-    var $rootScope, jmapClientProviderMock = {}, jmapClientMock, backgroundProcessorService, attachmentUploadService, file = { name: 'n', size: 1, type: 'type' };
+    var $rootScope, jmapDraftClientProviderMock = {}, jmapDraftClientMock, backgroundProcessorService, attachmentUploadService, file = { name: 'n', size: 1, type: 'type' };
 
     beforeEach(angular.mock.module(function($provide) {
-      $provide.value('withJmapClient', function(callback) {
+      $provide.value('withJmapDraftClient', function(callback) {
         return callback(null);
       });
-      $provide.value('jmapClientProvider', jmapClientProviderMock);
+      $provide.value('jmapDraftClientProvider', jmapDraftClientProviderMock);
       config['linagora.esn.unifiedinbox.uploadUrl'] = 'http://jmap';
 
       $.mockjaxSettings.logging = false;
@@ -1822,20 +1836,20 @@ describe('The Unified Inbox Angular module services', function() {
     }));
 
     beforeEach(function() {
-      jmapClientMock = {
+      jmapDraftClientMock = {
         authToken: 'Bearer authToken'
       };
-      jmapClientProviderMock.get = sinon.stub().returns($q.when(jmapClientMock));
+      jmapDraftClientProviderMock.get = sinon.stub().returns($q.when(jmapDraftClientMock));
     });
 
     afterEach(function() {
       $.mockjax.clear();
     });
 
-    it('should call jmapClientProvider to get the authToken', function(done) {
+    it('should call jmapDraftClientProvider to get the authToken', function(done) {
       this.timeout(4000);
       var mockjax = function(data) {
-        expect(data.headers.Authorization).to.equal(jmapClientMock.authToken);
+        expect(data.headers.Authorization).to.equal(jmapDraftClientMock.authToken);
 
         return {
           response: function() {
@@ -1849,7 +1863,7 @@ describe('The Unified Inbox Angular module services', function() {
       attachmentUploadService
         .uploadFile(null, file, file.type, file.size, null, null)
         .then(function() {
-          expect(jmapClientProviderMock.get).to.have.been.calledWith();
+          expect(jmapDraftClientProviderMock.get).to.have.been.calledWith();
 
           done();
         });

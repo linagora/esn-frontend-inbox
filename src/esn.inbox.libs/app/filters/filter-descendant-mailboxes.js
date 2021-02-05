@@ -4,7 +4,7 @@ const _ = require('lodash');
 
 angular.module('esn.inbox.libs')
 
-  .filter('inboxFilterDescendantMailboxes', function() {
+  .filter('inboxFilterDescendantMailboxes', function(inboxMailboxesService) {
     return function(mailboxes, id, filterOnlyParentMailbox) {
       if (!mailboxes || !id) {
         return mailboxes;
@@ -18,7 +18,7 @@ angular.module('esn.inbox.libs')
       }
 
       if (!filterOnlyParentMailbox) {
-        descendants = parent.descendants;
+        descendants = inboxMailboxesService.getMailboxDescendants(parent.id);
       }
 
       return _.filter(mailboxes, function(mailbox) {

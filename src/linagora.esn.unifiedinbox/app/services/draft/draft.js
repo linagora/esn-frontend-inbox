@@ -6,9 +6,9 @@ require('../../services.js');
 
 angular.module('linagora.esn.unifiedinbox')
 
-  .factory('InboxDraft', function($rootScope, $q, emailBodyService, asyncJmapAction, inboxJmapHelper,
-    waitUntilMessageIsComplete, inboxConfig, gracePeriodService, inboxMailboxesService, jmapDraft,
-    INBOX_EVENTS, ATTACHMENTS_ATTRIBUTES) {
+  .factory('InboxDraft', function($rootScope, $q, emailBodyService, asyncJmapAction, inboxJmapDraftHelper,
+    waitUntilMessageIsComplete, inboxConfig, gracePeriodService, inboxMailboxesService,
+    INBOX_EVENTS, ATTACHMENTS_ATTRIBUTES, INBOX_MAILBOX_ROLES) {
     function InboxDraft(original) {
       this.original = original ? angular.copy(original) : {};
     }
@@ -41,8 +41,8 @@ angular.module('linagora.esn.unifiedinbox')
         .then(waitUntilMessageIsComplete.bind(null, email))
         .then(function() {
           return asyncJmapAction('Saving your email as draft', function(client) {
-            return inboxJmapHelper.toOutboundMessage(client, email).then(function(message) {
-              return inboxMailboxesService.getMailboxWithRole(jmapDraft.MailboxRole.DRAFTS)
+            return inboxJmapDraftHelper.toOutboundMessage(client, email).then(function(message) {
+              return inboxMailboxesService.getMailboxWithRole(INBOX_MAILBOX_ROLES.DRAFTS)
                 .then(drafts => client.saveAsDraft(message, drafts))
                 .then(ack => {
                   newDraftId = ack.id;
@@ -58,7 +58,7 @@ angular.module('linagora.esn.unifiedinbox')
           }
         })
         .then(function() {
-          return inboxJmapHelper.getMessageById(newDraftId);
+          return inboxJmapDraftHelper.getMessageById(newDraftId);
         })
         .then(function(newDraft) {
           self.original = newDraft;

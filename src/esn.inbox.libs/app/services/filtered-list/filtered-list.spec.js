@@ -6,18 +6,36 @@ const { expect } = chai;
 
 describe('The inboxFilteredList factory', function() {
 
-  var $rootScope, jmapClient, jmapDraft, inboxFilteringService, inboxFilters, inboxFilteredList, esnSearchProvider, inboxHostedMailMessagesProvider, INBOX_EVENTS, PROVIDER_TYPES, counter, inboxConfigMock;
+  var $rootScope,
+    jmapDraftClient,
+    jmapClient,
+    jmapDraft,
+    inboxFilteringService,
+    inboxFilters,
+    inboxFilteredList,
+    esnSearchProvider,
+    inboxHostedMailMessagesProvider,
+    INBOX_EVENTS,
+    PROVIDER_TYPES,
+    counter,
+    inboxConfigMock,
+    INBOX_MAILBOX_ROLES;
 
   beforeEach(angular.mock.module('esn.inbox.libs', function($provide) {
+
+    jmapDraftClient = {};
     jmapClient = {
-      getMailboxes: function() {
-        return $q.when([
-          new jmapDraft.Mailbox(jmapClient, 'id_inbox', 'inbox', { role: 'inbox' })
-        ]);
+      mailbox_get: function() {
+        return $q.when({
+          list: [{ id: 'id_inbox', name: 'inbox', role: INBOX_MAILBOX_ROLES.INBOX }]
+        });
       }
     };
 
-    $provide.value('withJmapClient', function(callback) { return callback(jmapClient); });
+    $provide.value('withJmapDraftClient', function(callback) { return callback(jmapDraftClient); });
+    $provide.value('withJmapClient', function(callback) {
+      return callback(jmapClient);
+    });
 
     inboxConfigMock = {};
     $provide.value('inboxConfig', function(key, defaultValue) {
@@ -27,7 +45,7 @@ describe('The inboxFilteredList factory', function() {
 
   beforeEach(angular.mock.inject(function(_$rootScope_, _jmapDraft_, _inboxFilteringService_, _inboxFilters_, _inboxFilteredList_,
     _esnSearchProvider_,
-    _inboxHostedMailMessagesProvider_, _INBOX_EVENTS_, _PROVIDER_TYPES_) {
+    _inboxHostedMailMessagesProvider_, _INBOX_EVENTS_, _PROVIDER_TYPES_, _INBOX_MAILBOX_ROLES_) {
     $rootScope = _$rootScope_;
     jmapDraft = _jmapDraft_;
     inboxFilteringService = _inboxFilteringService_;
@@ -37,10 +55,11 @@ describe('The inboxFilteredList factory', function() {
     esnSearchProvider = _esnSearchProvider_;
     INBOX_EVENTS = _INBOX_EVENTS_;
     PROVIDER_TYPES = _PROVIDER_TYPES_;
+    INBOX_MAILBOX_ROLES = _INBOX_MAILBOX_ROLES_;
   }));
 
   function newMessage(options) {
-    var message = new jmapDraft.Message(jmapClient, 'id' + ++counter, 'blobId', 'threadId', ['id_inbox'], options);
+    var message = new jmapDraft.Message(jmapDraftClient, 'id' + ++counter, 'blobId', 'threadId', ['id_inbox'], options);
 
     message.provider = inboxHostedMailMessagesProvider;
 
@@ -217,7 +236,7 @@ describe('The inboxFilteredList factory', function() {
   });
 
   it('should not throw when message\'s provider has missing itemMatches function', function() {
-    var message = new jmapDraft.Message(jmapClient, 'id', 'blobId', 'threadId', ['id_inbox'], {}),
+    var message = new jmapDraft.Message(jmapDraftClient, 'id', 'blobId', 'threadId', ['id_inbox'], {}),
       fakeProvider = function() {
         return new esnSearchProvider({
           uid: '123',
