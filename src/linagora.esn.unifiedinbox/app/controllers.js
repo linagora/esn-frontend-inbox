@@ -38,12 +38,6 @@ require('./services/common/inbox-utils.service.js');
       $scope.inboxListModel = inboxFilteredList.asMdVirtualRepeatModel($scope.loadMoreElements);
       $scope.loading = false;
 
-      if (plugin && plugin.type === PROVIDER_TYPES.JMAP) {
-        plugin.resolveContextRole($stateParams.account, $stateParams.context).then(function(role) {
-          $scope.mailboxRole = role;
-        });
-      }
-
       $scope.$on(INBOX_EVENTS.FILTER_CHANGED, updateFetchersInScope);
 
       // We are currently unable to add a new message in our filteredList without calling PageAggregator.
