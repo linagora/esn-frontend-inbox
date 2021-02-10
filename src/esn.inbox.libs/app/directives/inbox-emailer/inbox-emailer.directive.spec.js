@@ -102,4 +102,27 @@ describe('The inboxEmailer directive', function() {
 
     expect(element.find('.email')).to.have.length(0);
   });
+
+  it('should display the email address if hide-email=false', function() {
+    $scope.emailer = {
+      email: 'me@linagora.com',
+      resolve: angular.noop
+    };
+
+    compileDirective('<inbox-emailer emailer="emailer" hide-email="false" />');
+
+    expect(element.find('.email')).to.have.length(1);
+  });
+
+  it('should display the email address if hide-email is not defined', function() {
+    $scope.emailer = {
+      email: 'me@linagora.com',
+      resolve: angular.noop
+    };
+
+    compileDirective('<inbox-emailer emailer="emailer" />');
+
+    expect(element.find('.email')).to.have.length(1);
+  });
+
 });
