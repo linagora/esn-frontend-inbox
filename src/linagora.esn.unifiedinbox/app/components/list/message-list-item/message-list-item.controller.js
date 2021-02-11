@@ -9,12 +9,15 @@ angular.module('linagora.esn.unifiedinbox')
     inboxSwipeHelper,
     inboxMailboxesService,
     inboxSelectionService,
+    inboxPlugins,
     $scope,
     INVITATION_MESSAGE_HEADERS,
     X_OPENPAAS_CAL_HEADERS
   ) {
     var self = this,
-      context = $stateParams.context;
+      account = $stateParams.account,
+      context = $stateParams.context,
+      plugin = inboxPlugins.get('jmap');
 
     self.$onChanges = () => {
       const mailbox = $stateParams.mailbox || ($scope.mailbox && $scope.mailbox.id) || (self.item && _.first(self.item.mailboxIds));
@@ -29,6 +32,12 @@ angular.module('linagora.esn.unifiedinbox')
 
       self.shouldDisplayCalendarInvitationMessageIndicator = self.item && self.item.headers && self.item.headers[INVITATION_MESSAGE_HEADERS.UID];
       self.shouldDisplayCalendarResourceManagementIndicator = self.item && self.item.headers && self.item.headers[X_OPENPAAS_CAL_HEADERS.ACTION];
+
+      if (plugin) {
+        plugin.resolveContextRole(account, context).then(function(role) {
+          self.mailboxRole = role;
+        });
+      }
     };
 
     self.select = (item, $event) => {
