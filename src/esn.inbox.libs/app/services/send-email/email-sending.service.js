@@ -199,7 +199,7 @@ angular.module('esn.inbox.libs')
       }
 
       function replyTo() {
-        if (email.from.id !== session.user.id) {
+        if (email.from.email !== session.user.preferredEmail) {
           return getReplyToRecipients(email);
         }
 
