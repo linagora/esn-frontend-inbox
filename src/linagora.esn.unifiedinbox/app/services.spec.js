@@ -1071,7 +1071,7 @@ describe('The Unified Inbox Angular module services', function() {
         sender = { displayName: 'sender', email: 'sender@linagora.com' };
         expectedAnswer = {
           from: 'sender@linagora.com',
-          to: [{ email: '1@linagora.com', displayName: '1' }],
+          to: [{ email: 'from@linagora.com', name: 'linagora' }],
           subject: 'Re: my subject',
           quoted: email,
           quoteTemplate: 'default',
@@ -1100,7 +1100,7 @@ describe('The Unified Inbox Angular module services', function() {
         sender = { displayName: 'sender', email: 'sender@linagora.com' };
         expectedAnswer = {
           from: 'sender@linagora.com',
-          to: [{ email: '1@linagora.com', displayName: '1' }],
+          to: [{ email: 'from@linagora.com', name: 'linagora' }],
           subject: 'Re: my subject',
           quoted: {
             htmlBody: '<p><br></p><cite>On August 21, 2015 2:10 AM, from from@linagora.com</cite><blockquote><p>my body</p></blockquote>'
@@ -1128,7 +1128,7 @@ describe('The Unified Inbox Angular module services', function() {
         sender = { displayName: 'sender', email: 'sender@linagora.com' };
         expectedAnswer = {
           from: 'sender@linagora.com',
-          to: [{ email: '1@linagora.com', displayName: '1' }],
+          to: [{ email: 'from@linagora.com', name: 'linagora' }],
           subject: 'Re: my subject',
           quoted: email,
           quoteTemplate: 'default',
@@ -1255,7 +1255,7 @@ describe('The Unified Inbox Angular module services', function() {
         sender = { displayName: 'sender', email: 'sender@linagora.com' };
         expectedAnswer = {
           from: 'sender@linagora.com',
-          to: [{ email: '1@linagora.com', displayName: '1' }],
+          to: [{ email: 'from@linagora.com', name: 'linagora' }],
           subject: 'Re: my subject',
           quoted: email,
           quoteTemplate: 'default',
@@ -1291,7 +1291,7 @@ describe('The Unified Inbox Angular module services', function() {
         sender = { displayName: 'sender', email: 'sender@linagora.com' };
         expectedAnswer = {
           from: 'sender@linagora.com',
-          to: [{ email: '1@linagora.com', displayName: '1' }],
+          to: [{ email: 'from@linagora.com', name: 'linagora' }],
           subject: 'Re: my subject',
           quoted: email,
           quoteTemplate: 'default',
