@@ -45,6 +45,6 @@
                     cal-inbox-resource-management-indicator(ng-if="ctrl.shouldDisplayCalendarResourceManagementIndicator")
                   i.flag-icon.mdi.mdi-paperclip(ng-if='ctrl.item.hasAttachment', title="{{ 'Attachments' | translate }}")
             .date-container
-            span {{ ctrl.item.date | inboxItemDate }}
+            span(ng-attr-title="{{ctrl.item.date  | esnDatetime: 'shortDate time' }}") {{ ctrl.item.date | inboxItemDate }}
           inbox-indicators(item="ctrl.item", hidden-xl="true")
     .inbox-preview-block.preview {{ ctrl.item.preview }}
