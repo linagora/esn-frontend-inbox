@@ -24,8 +24,16 @@
       border-radius: 2px;
 
       .badge {
-        border: 1px solid @badge-color;
+        color: inherit;
+        font-weight: 500;
       }
+    }
+
+    .badge {
+      background-color: inherit;
+      color: @secondaryTextColor;
+      bottom: initial;
+      border-radius: 0 0;
     }
 
     &:hover {
