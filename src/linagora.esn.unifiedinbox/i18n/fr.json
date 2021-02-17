@@ -52,6 +52,7 @@
   "Downloading message \"%s\"...": "Téléchargement du message \"{{ messageSubject }}\"...",
   "Draft": "Brouillon",
   "Drafts": "Brouillons",
+  "Edit as new": "Editer comme un nouveau mail",
   "Edit identity": "Editer une identité",
   "Edit quoted mail": "Editer le mail cité",
   "Email Links": "Liens Email",
