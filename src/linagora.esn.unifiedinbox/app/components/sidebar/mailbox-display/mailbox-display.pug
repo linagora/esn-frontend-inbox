@@ -11,15 +11,16 @@
   .badge-container
     button.btn.btn-link.btn-sucess.btn-xs.btn-caret-submenu(ng-if='ctrl.featureFlagInboxExperimentTreeFolders && ctrl.mailbox.nodes && ctrl.mailbox.nodes.length > 0' data-nodrag, ng-click="$event.preventDefault(); $event.stopPropagation(); ctrl.toggleMenuItem()")
       i.mdi.mdi-menu-down(ng-style="{ transform: { true:'rotateZ(-90deg)', false:'rotateZ(0deg)' }[ctrl.collapsed] }")
-    .badge(ng-if="!ctrl.hideBadge && ctrl.mailbox.unreadMessages > 0 || ctrl.mailbox.id === ctrl.badgeLoadingActivated")
-      span(ng-class="{ 'hide-badge-number' : ctrl.mailbox.id === ctrl.badgeLoadingActivated }") {{ ctrl.mailbox.unreadMessages | maxPlus:99 }}
-      span(ng-if="ctrl.mailbox.id === ctrl.badgeLoadingActivated")
-        i.mdi.mdi-loading.badge-loading-activate
     i.inbox-icon(ng-class='ctrl.mailboxIcons')
 
   .menu-item
     span.menu-item-inner
       bdi {{ ctrl.featureFlagInboxExperimentTreeFolders ? ctrl.mailbox.name : ctrl.mailbox.qualifiedName }}
     span.menu-item-after
-  settings-overlay(ng-if="!ctrl.isSpecial && !ctrl.hideBadge", ng-click="$event.stopImmediatePropagation(); ctrl.hideAside();", ui-sref-active-eq="selected")
-    inbox-folder-settings(mailbox="ctrl.mailbox", is-shared="ctrl.isShared", is-folder="ctrl.isFolder", is-system="ctrl.isSystem")
+  .badge-container.flex.flex-vertical-centered.flex-end
+    .badge(ng-if="!ctrl.hideBadge && ctrl.mailbox.unreadMessages > 0 || ctrl.mailbox.id === ctrl.badgeLoadingActivated")
+        span(ng-class="{ 'hide-badge-number' : ctrl.mailbox.id === ctrl.badgeLoadingActivated }") {{ ctrl.mailbox.unreadMessages }}
+        span(ng-if="ctrl.mailbox.id === ctrl.badgeLoadingActivated")
+          i.mdi.mdi-loading.badge-loading-activate
+    settings-overlay(ng-if="!ctrl.isSpecial && !ctrl.hideBadge", ng-click="$event.stopImmediatePropagation(); ctrl.hideAside();", ui-sref-active-eq="selected")
+      inbox-folder-settings(mailbox="ctrl.mailbox", is-shared="ctrl.isShared", is-folder="ctrl.isFolder", is-system="ctrl.isSystem")
