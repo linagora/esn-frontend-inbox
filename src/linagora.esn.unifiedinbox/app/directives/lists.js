@@ -72,6 +72,9 @@ require('../services.js');
 
           self.shouldDisplayCalendarInvitationMessageIndicator = $scope.item && $scope.item.headers && $scope.item.headers[INVITATION_MESSAGE_HEADERS.UID];
           self.shouldDisplayCalendarResourceManagementIndicator = $scope.item && $scope.item.headers && $scope.item.headers[X_OPENPAAS_CAL_HEADERS.ACTION];
+          self.shouldDisplayAttachmentIndicator = !self.shouldDisplayCalendarInvitationMessageIndicator &&
+            !self.shouldDisplayCalendarResourceManagementIndicator &&
+            $scope.item && $scope.item.hasAttachment;
 
           self.select = function(item, $event) {
             $event.stopPropagation();
