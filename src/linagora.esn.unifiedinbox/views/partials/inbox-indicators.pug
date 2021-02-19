@@ -6,5 +6,5 @@
       i.inbox-message-indicators
         cal-inbox-invitation-message-indicator(ng-if="ctrl.shouldDisplayCalendarInvitationMessageIndicator")
         cal-inbox-resource-management-indicator(ng-if="ctrl.shouldDisplayCalendarResourceManagementIndicator")
-      i.flag-icon.mdi.mdi-paperclip(ng-if='item.hasAttachment', title="{{ 'Attachments' | translate }}")
+      i.flag-icon.mdi.mdi-paperclip(ng-if='ctrl.shouldDisplayAttachmentIndicator', title="{{ 'Attachments' | translate }}")
     inbox-star(item='item')
