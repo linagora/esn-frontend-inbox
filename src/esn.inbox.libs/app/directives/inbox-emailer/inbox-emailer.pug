@@ -6,7 +6,7 @@
   profile-popover-card-hide-on-element-scroll="body"
   profile-popover-card-show-mobile
 )
-  span(ng-bind-html="emailer.name | esnHighlight: highlight") {{ emailer.name }}
+  span(ng-class="{ 'bold': isUnread }", ng-bind-html="emailer.name | esnHighlight: highlight") {{ emailer.name }}
   span.me(ng-if="me") ({{ 'me' | translate }})
   span.hidden-xs.email(ng-if="!hideEmail && emailer.email")
     | <
