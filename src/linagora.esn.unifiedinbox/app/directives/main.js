@@ -251,7 +251,7 @@ require('../services.js');
           X_OPENPAAS_CAL_HEADERS,
           X_OPENPAAS_CAL_VALUES
         ) {
-          ['reply', 'replyAll', 'forward'].forEach(function(action) {
+          ['reply', 'replyAll', 'forward', 'editAsNew'].forEach(function(action) {
             this[action] = function() {
               inboxJmapItemService[action]($scope.email);
             };
