@@ -251,7 +251,7 @@ require('../services.js');
           X_OPENPAAS_CAL_HEADERS,
           X_OPENPAAS_CAL_VALUES
         ) {
-          ['reply', 'replyAll', 'forward'].forEach(function(action) {
+          ['reply', 'replyAll', 'forward', 'editAsNew'].forEach(function(action) {
             this[action] = function() {
               inboxJmapItemService[action]($scope.email);
             };
@@ -307,6 +307,9 @@ require('../services.js');
 
           self.shouldDisplayCalendarInvitationMessageIndicator = $scope.item && $scope.item.headers && $scope.item.headers[INVITATION_MESSAGE_HEADERS.UID];
           self.shouldDisplayCalendarResourceManagementIndicator = $scope.item && $scope.item.headers && $scope.item.headers[X_OPENPAAS_CAL_HEADERS.ACTION];
+          self.shouldDisplayAttachmentIndicator = !self.shouldDisplayCalendarInvitationMessageIndicator &&
+            !self.shouldDisplayCalendarResourceManagementIndicator &&
+            $scope.item && $scope.item.hasAttachment;
         }
       };
     })

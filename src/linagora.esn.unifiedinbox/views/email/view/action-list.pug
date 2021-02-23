@@ -4,6 +4,11 @@
       i.mdi.mdi-reply
       span.label
         | {{ 'Reply' | translate }}
+  .action
+    a(ng-click='ctrl.editAsNew()', title="{{ 'Edit as new' | translate }}")
+      i.mdi.mdi-pencil
+      span.label
+        | {{ 'Edit as new' | translate }}
   .action(ng-if='::email.hasReplyAll')
     a(ng-click='ctrl.replyAll()', title="{{ 'Reply all' | translate }}")
       i.mdi.mdi-reply-all

@@ -9,10 +9,11 @@
       esn-drag-data="getDragData()",
       esn-drag-class="dragging",
       ng-class="{ dragging: ctrl.esnIsDragging && ctrl.item.selected }",
-      ng-attr-ui-sref="{{ !ctrl.item.isDraft && !ctrl.esnIsDragging ? '.message({mailbox: ctrl.mailbox, emailId: ctrl.item.id})' : '.' }}"
+      ng-attr-ui-sref="{{ !ctrl.item.isDraft && !ctrl.esnIsDragging ? '.message({mailbox: ctrl.mailbox, emailId: ctrl.item.id})' : '.' }}",
+      desktop-hover="hovering = hover && !ctrl.esnIsDragging"
     )
     .inbox-item-with-icon
-      .list-image.badge-container(ng-click="ctrl.select(ctrl.item, $event)", desktop-hover="hovering = hover && !ctrl.esnIsDragging")
+      .list-image.badge-container(ng-click="ctrl.select(ctrl.item, $event)")
         inbox-emailer-avatar(ng-hide="hovering || ctrl.item.selected", emailer="ctrl.mailboxRole.value !== 'sent' ? ctrl.item.from  :  ctrl.item.emailFirstRecipient" )
         label.checkbox.clickable(ng-hide="!hovering && !ctrl.item.selected")
           input(type='checkbox', ng-model="ctrl.item.selected")
@@ -29,7 +30,7 @@
           .inbox-from.lv-title
             span.inbox-item-draft(ng-if="ctrl.item.isDraft") {{ 'Draft' | translate }}
             span.inbox-item-draft-divider -
-            inbox-emailer(ng-if="ctrl.mailboxRole.value !== 'sent'", emailer="ctrl.item.from")
+            inbox-emailer(is-unread="ctrl.item.isUnread", ng-if="ctrl.mailboxRole.value !== 'sent'", emailer="ctrl.item.from")
             inbox-emailer-group(ng-if="ctrl.mailboxRole.value === 'sent' && ctrl.item.emailRecipients", group="ctrl.item.emailRecipients", display-inline="true")
         .inbox-list-item-date-and-indicators
           .inbox-hover-actions.flex-row(ng-click='$event.stopPropagation(); $event.preventDefault()')
@@ -43,7 +44,7 @@
                   i.inbox-message-indicators
                     cal-inbox-invitation-message-indicator(ng-if="ctrl.shouldDisplayCalendarInvitationMessageIndicator")
                     cal-inbox-resource-management-indicator(ng-if="ctrl.shouldDisplayCalendarResourceManagementIndicator")
-                  i.flag-icon.mdi.mdi-paperclip(ng-if='ctrl.item.hasAttachment', title="{{ 'Attachments' | translate }}")
+                  i.flag-icon.mdi.mdi-paperclip(ng-if='ctrl.shouldDisplayAttachmentIndicator', title="{{ 'Attachments' | translate }}")
             .date-container
             span(ng-attr-title="{{ctrl.item.date  | esnDatetime: 'shortDate time' }}") {{ ctrl.item.date | inboxItemDate }}
           inbox-indicators(item="ctrl.item", hidden-xl="true")

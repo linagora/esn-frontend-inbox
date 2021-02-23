@@ -16,6 +16,7 @@ angular.module('esn.inbox.libs')
     return {
       reply: reply,
       replyAll: replyAll,
+      editAsNew: editAsNew,
       forward: forward,
       ackReceipt: ackReceipt,
       markAsUnread: markAsUnread,
@@ -210,6 +211,12 @@ angular.module('esn.inbox.libs')
     function reply(message) {
       emailSendingService.createReplyEmailObject(message.id, session.user).then(function(replyMessage) {
         newComposerService.open(replyMessage);
+      });
+    }
+
+    function editAsNew(message) {
+      emailSendingService.editAsNewEmailObject(message.id, session.user).then(function(newMessage) {
+        newComposerService.open(newMessage);
       });
     }
 

@@ -32,6 +32,9 @@ angular.module('linagora.esn.unifiedinbox')
 
       self.shouldDisplayCalendarInvitationMessageIndicator = self.item && self.item.headers && self.item.headers[INVITATION_MESSAGE_HEADERS.UID];
       self.shouldDisplayCalendarResourceManagementIndicator = self.item && self.item.headers && self.item.headers[X_OPENPAAS_CAL_HEADERS.ACTION];
+      self.shouldDisplayAttachmentIndicator = !self.shouldDisplayCalendarInvitationMessageIndicator &&
+            !self.shouldDisplayCalendarResourceManagementIndicator &&
+            self.item && self.item.hasAttachment;
 
       if (plugin) {
         plugin.resolveContextRole(account, context).then(function(role) {

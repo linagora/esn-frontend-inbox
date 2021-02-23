@@ -24,6 +24,9 @@ angular.module('esn.inbox.libs')
         subjectPrefix: 'Re: ',
         recipients: getReplyAllRecipients,
         referenceIdHeader: INBOX_MESSAGE_HEADERS.REPLY_TO
+      },
+      editAsNew: {
+        recipients: getReplyAllRecipients
       }
     };
 
@@ -44,6 +47,7 @@ angular.module('esn.inbox.libs')
       createReplyAllEmailObject: _createQuotedEmail.bind(null, referencingEmailOptions.replyAll),
       createReplyEmailObject: _createQuotedEmail.bind(null, referencingEmailOptions.reply),
       createForwardEmailObject: _createQuotedEmail.bind(null, referencingEmailOptions.forward),
+      editAsNewEmailObject: _createQuotedEmail.bind(null, referencingEmailOptions.editAsNew),
       countRecipients,
       handleInlineImageBeforeSending
     };
