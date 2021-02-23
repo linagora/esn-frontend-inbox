@@ -456,7 +456,7 @@ describe('The linagora.esn.unifiedinbox Main module directives', function() {
       $scope.email = { id: 'id', hasReplyAll: true };
       compileDirective('<email email="email"/>');
 
-      expect(element.find('.mdi-reply').length).to.equal(0);
+      expect(element.find('.mdi-reply').length).to.equal(1);
       expect(element.find('.mdi-reply-all').length).to.equal(1);
     });
 
