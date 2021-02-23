@@ -10,7 +10,8 @@ angular.module('esn.inbox.libs')
       scope: {
         emailer: '=',
         hideEmail: '=?',
-        highlight: '@?'
+        highlight: '@?',
+        isUnread: '=?'
       },
       template: require('./inbox-emailer.pug'),
       link: function(scope) {
