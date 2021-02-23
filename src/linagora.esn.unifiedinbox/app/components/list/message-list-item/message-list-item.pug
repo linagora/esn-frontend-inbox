@@ -30,7 +30,7 @@
           .inbox-from.lv-title
             span.inbox-item-draft(ng-if="ctrl.item.isDraft") {{ 'Draft' | translate }}
             span.inbox-item-draft-divider -
-            inbox-emailer(ng-if="ctrl.mailboxRole.value !== 'sent'", emailer="ctrl.item.from")
+            inbox-emailer(is-unread="ctrl.item.isUnread", ng-if="ctrl.mailboxRole.value !== 'sent'", emailer="ctrl.item.from")
             inbox-emailer-group(ng-if="ctrl.mailboxRole.value === 'sent' && ctrl.item.emailRecipients", group="ctrl.item.emailRecipients", display-inline="true")
         .inbox-list-item-date-and-indicators
           .inbox-hover-actions.flex-row(ng-click='$event.stopPropagation(); $event.preventDefault()')
