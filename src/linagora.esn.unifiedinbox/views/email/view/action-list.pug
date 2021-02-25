@@ -1,10 +1,5 @@
 .action-list(ng-click='$hide(); $event.stopPropagation()')
   .action
-    a(ng-click='ctrl.forward()', title="{{ 'Forward' | translate }}")
-      i.mdi.mdi-forward
-      span.label
-        | {{ 'Forward' | translate }}
-  .action
     a(ng-click='ctrl.reply()', title="{{ 'Reply' | translate }}")
       i.mdi.mdi-reply
       span.label
@@ -19,6 +14,11 @@
       i.mdi.mdi-reply-all
       span.label
         | {{ 'Reply all' | translate }}
+  .action
+    a(ng-click='ctrl.forward()', title="{{ 'Forward' | translate }}")
+      i.mdi.mdi-forward
+      span.label
+        | {{ 'Forward' | translate }}
   .action(ng-if="onSwipeRight", ng-switch='email.isUnread')
     a(ng-switch-when='false', ng-click='ctrl.markAsUnread()', title="{{ 'Mark as unread' | translate }}")
       i.mdi.mdi-eye-off
