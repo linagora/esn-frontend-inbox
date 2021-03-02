@@ -716,6 +716,16 @@ require('./services/common/inbox-utils.service.js');
       self.getSelectedItems = inboxSelectionService.getSelectedItems;
       self.unselectAllItems = inboxSelectionService.unselectAllItems;
       self.selectedItems = {};
+      self.isSomeUnreadItems = isSomeUnreadItems;
+      self.isSomeReadItems = isSomeReadItems;
+
+      function isSomeUnreadItems() {
+        return _.some(self.getSelectedItems(), message => message._isUnread);
+      }
+
+      function isSomeReadItems() {
+        return _.some(self.getSelectedItems(), message => !message._isUnread);
+      }
 
       ['markAsUnread', 'markAsRead', 'unmarkAsFlagged', 'markAsFlagged', 'moveToTrash', 'moveToSpam', 'unSpam'].forEach(function(action) {
         self[action] = function() {

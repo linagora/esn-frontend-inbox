@@ -14,6 +14,8 @@ require('./directives/lists.js');
     .factory('inboxHostedMailAttachmentProvider', function(withJmapClient, pagedJmapRequest, newProvider,
       inboxMailboxesService, inboxJmapProviderContextBuilder,
       JMAP_GET_MESSAGES_ATTACHMENTS_LIST, ELEMENTS_PER_REQUEST, PROVIDER_TYPES) {
+      var hasTrueAttachment = function(obj) { return !obj.isInline && obj.name !== 'meeting.ics' && obj.name !== null; };
+
       return newProvider({
         type: PROVIDER_TYPES.JMAP,
         name: 'Attachments',
@@ -29,7 +31,22 @@ require('./directives/lists.js');
                 limit: ELEMENTS_PER_REQUEST
               })
                 .then(function(messageList) {
-                  return messageList.getMessages({ properties: JMAP_GET_MESSAGES_ATTACHMENTS_LIST });
+                  return messageList.getMessages({ properties: JMAP_GET_MESSAGES_ATTACHMENTS_LIST })
+                    .then(function(messageList) {
+                      const messageTrueAttachmentList = [];
+
+                      messageList.map(function(message) {
+                        const trueAttachment = message.attachments && message.attachments.filter(hasTrueAttachment) || [];
+
+                        if (trueAttachment.length > 0) {
+                          message.attachments = trueAttachment;
+                        }
+
+                        messageTrueAttachmentList.push(message);
+                      });
+
+                      return messageTrueAttachmentList;
+                    });
                 });
             });
           });
