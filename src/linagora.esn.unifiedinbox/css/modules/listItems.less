@@ -333,11 +333,20 @@
             }
           }
 
+          .inbox-hover-actions {
+            background-color: lighten(@accentColor, 20%);
+          }
+
           &.dragging {
             .inbox-preview-block {
               &:before, &:after {
                 background-color: lighten(@accentColor, 20%);
               }
+            }
+
+            .inbox-hover-actions {
+              background-color: lighten(@accentColor, 20%);
+              box-shadow: -4px 0px 20px lighten(@accentColor, 20%);
             }
           }
         }
@@ -423,6 +432,11 @@
                 &:before, &:after {
                   background-color: lighten(@accentColor, 20%);
                 }
+              }
+
+              .inbox-hover-actions {
+                background-color: lighten(@accentColor, 20%);
+                box-shadow: -4px 0px 20px lighten(@accentColor, 20%);
               }
             }
 
