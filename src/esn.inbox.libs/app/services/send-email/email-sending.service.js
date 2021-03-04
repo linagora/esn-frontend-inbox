@@ -26,7 +26,8 @@ angular.module('esn.inbox.libs')
         referenceIdHeader: INBOX_MESSAGE_HEADERS.REPLY_TO
       },
       editAsNew: {
-        recipients: getReplyAllRecipients
+        recipients: getReplyAllRecipients,
+        includeAttachments: true
       }
     };
 
