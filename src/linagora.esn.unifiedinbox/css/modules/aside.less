@@ -30,10 +30,14 @@
     }
 
     .badge {
-      background-color: inherit;
-      color: @secondaryTextColor;
+      background-color: @body-bg;
+      color: lighten(@secondaryTextColor, 10%);
       bottom: initial;
       border-radius: 0 0;
+      border: initial;
+      box-shadow: -4px 0px 20px @body-bg;
+      right: 20px;
+      letter-spacing: .3px;
     }
 
     &:hover {
@@ -41,11 +45,16 @@
         background-color: @darkenBgColor;
         border-radius: 2px;
       }
+
+      .badge {
+        background-color: @darkenBgColor;
+        box-shadow: -4px 0px 20px @darkenBgColor;
+      }
     }
 
     &.folder-with-icon.toggle-submenu {
       .menu-item .menu-item-after:after {
-        background-color: @body-bg;
+        background-color: @bodyBgColor;
       }
     }
   }
@@ -174,7 +183,7 @@
 
       &.selected {
         .menu-item .menu-item-after:after {
-          background-color: darken(@darkenBgColor, 2%);
+          background-color: darken(@darkenBgColor, 3%);
         }
 
         &:hover {
@@ -186,7 +195,7 @@
 
       &.folder-with-icon {
         .menu-item .menu-item-after:after {
-          background-color: darken(@darkenBgColor, 2%);
+          background-color: darken(@darkenBgColor, 3%);
         }
 
         &:hover {
@@ -213,9 +222,19 @@
 }
 
 .is-mobile .inbox-aside .clickable {
+  &.selected .badge {
+    box-shadow: -4px 0px 20px @darkenBgColor;
+    background-color: @darkenBgColor;
+  }
+
   &:hover {
     .menu-item .menu-item-after:after {
       background-color: white;
     }
+  }
+
+  .badge {
+    background-color: white;
+    box-shadow: -4px 0px 20px white;
   }
 }
