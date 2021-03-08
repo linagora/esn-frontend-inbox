@@ -4,11 +4,6 @@
       i.mdi.mdi-reply
       span.label
         | {{ 'Reply' | translate }}
-  .action
-    a(ng-click='ctrl.editAsNew()', title="{{ 'Edit as new' | translate }}")
-      i.mdi.mdi-pencil
-      span.label
-        | {{ 'Edit as new' | translate }}
   .action(ng-if='::email.hasReplyAll')
     a(ng-click='ctrl.replyAll()', title="{{ 'Reply all' | translate }}")
       i.mdi.mdi-reply-all
@@ -57,6 +52,11 @@
       i.mdi.mdi-alert-decagram
       span.label
         | {{ 'Spam' | translate }}
+  .action
+    a(ng-click='ctrl.editAsNew()', title="{{ 'Edit as new' | translate }}")
+      i.mdi.mdi-pencil
+      span.label
+        | {{ 'Edit as new' | translate }}
   .action
     a(ng-click='ctrl.download()', title="{{ 'Download (.eml)' | translate }}", href="", target="_blank")
       i.mdi.mdi-download
