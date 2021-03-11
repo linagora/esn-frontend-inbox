@@ -27,7 +27,8 @@ angular.module('esn.inbox.libs')
       },
       editAsNew: {
         recipients: getReplyAllRecipients,
-        includeAttachments: true
+        includeAttachments: true,
+        templateName: 'editAsNew'
       }
     };
 
