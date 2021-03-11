@@ -19,7 +19,7 @@
     span.menu-item-after
   .badge-container.flex.flex-vertical-centered.flex-end
     .badge(ng-if="!ctrl.hideBadge && ctrl.mailbox.unreadMessages > 0 || ctrl.mailbox.id === ctrl.badgeLoadingActivated")
-        span(ng-class="{ 'hide-badge-number' : ctrl.mailbox.id === ctrl.badgeLoadingActivated }") {{ ctrl.mailbox.unreadMessages }}
+        span(ng-class="{ 'hide-badge-number' : ctrl.mailbox.id === ctrl.badgeLoadingActivated }") {{ ctrl.mailbox.unreadMessages | maxPlus:999 }}
         span(ng-if="ctrl.mailbox.id === ctrl.badgeLoadingActivated")
           i.mdi.mdi-loading.badge-loading-activate
     settings-overlay(ng-if="!ctrl.isSpecial && !ctrl.hideBadge", ng-click="$event.stopImmediatePropagation(); ctrl.hideAside();", ui-sref-active-eq="selected")
