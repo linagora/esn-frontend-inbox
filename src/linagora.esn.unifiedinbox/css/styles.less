@@ -212,11 +212,20 @@ inbox-fab {
           background-color: lighten(@accentColor, 20%);
         }
 
+        .badge {
+          background-color: lighten(@accentColor, 20%);
+          box-shadow: -10px 0px 3px lighten(@accentColor, 20%);
+        }
+
         &:active{
           .cursor-grabbing;
         }
       }
     }
+    .clickable:not(.text-danger):not(.menu-root):active {
+      background-color: darken(@bodyBgColor, 5%);
+    }
+
     .clickable.text-danger:hover {
       color: darken(@state-danger-text, 10%);
     }

@@ -273,7 +273,7 @@ describe('The linagora.esn.unifiedinbox List module directives', function() {
         return element.controller('inboxMessageListItem').openDraft(emailId);
       }
 
-      it('should call newComposerService.openDraft if message is a draft', function() {
+      it.skip('should call newComposerService.openDraft if message is a draft', function() {
         newComposerService.openDraft = sinon.spy();
 
         compileDirective('<inbox-message-list-item />');

@@ -339,6 +339,11 @@
                 background-color: lighten(@accentColor, 20%);
               }
             }
+
+            .inbox-hover-actions {
+              background-color: lighten(@accentColor, 20%);
+              box-shadow: -4px 0px 20px lighten(@accentColor, 20%);
+            }
           }
         }
       }
@@ -424,6 +429,11 @@
                   background-color: lighten(@accentColor, 20%);
                 }
               }
+
+              .inbox-hover-actions {
+                background-color: lighten(@accentColor, 20%);
+                box-shadow: -4px 0px 20px lighten(@accentColor, 20%);
+              }
             }
 
             &.dragging:active {
@@ -493,8 +503,8 @@
               .flex-space-between;
               .flex-shorthand(1, 1);
 
-              min-width: 110px;
-              max-width: 110px;
+              min-width: 130px;
+              max-width: 130px;
               height: 22.4px;
             }
           }
@@ -533,7 +543,7 @@
 
         .inbox-hover-actions {
           top: 1px;
-          right: 110px;
+          right: 130px;
           padding-left: 10px;
           padding-right: 28px;
           box-shadow: -4px 0px 20px @darkenBgColor;

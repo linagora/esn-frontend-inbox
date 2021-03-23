@@ -143,7 +143,9 @@ require('./components/inbox-configuration/forwardings/user/inbox-forwardings-use
 require('./components/inbox-configuration/read-receipt/request-receipts/request-receipts.controller.js');
 require('./components/inbox-configuration/read-receipt/request-receipts/request-receipts.js');
 require('./components/inbox-configuration/read-receipt/request-receipts/subheader/request-receipts-subheader.js');
-require('./components/inbox-configuration/experiments/configuration-experiments.component');
+require('./components/inbox-configuration/experiments/configuration-experiments.component.js');
+require('./components/inbox-configuration/experiments/configuration-experiments.controller.js');
+require('./components/inbox-configuration/experiments/subheader/experiments-subheader.js');
 require('./components/list/group-toggle-selection/list-group-toggle-selection.controller.js');
 require('./components/list/group-toggle-selection/list-group-toggle-selection.js');
 require('./components/list/header/list-header.controller.js');

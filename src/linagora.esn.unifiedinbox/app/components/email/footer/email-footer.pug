@@ -1,16 +1,16 @@
 .lv-footer
   .action
-    a(ng-click="ctrl.forward()", title="{{ 'Forward' | translate }}")
-      i.mdi.mdi-forward
-      span.label
-        | {{ 'Forward' | translate }}
-  .action
     a(ng-click="ctrl.reply()", title="{{ 'Reply' | translate }}")
       i.mdi.mdi-reply
       span.label
         | {{ 'Reply' | translate }}
-  .action(ng-if="::email.hasReplyAll")
+  .action(ng-if="::ctrl.email.hasReplyAll")
     a(ng-click="ctrl.replyAll()", title="{{ 'Reply all' | translate }}")
       i.mdi.mdi-reply-all
       span.label
         | {{ 'Reply all' | translate }}
+  .action
+    a(ng-click="ctrl.forward()", title="{{ 'Forward' | translate }}")
+      i.mdi.mdi-forward
+      span.label
+        | {{ 'Forward' | translate }}

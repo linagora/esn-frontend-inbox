@@ -58,8 +58,8 @@ function mailboxDisplayController(
 
   function getMailboxIcon() {
     return self.mailbox.icon ||
-      inboxCustomRoleMailboxService.getMailboxIcon(self.mailbox.role.value) ||
-      MAILBOX_ROLE_ICONS_MAPPING[self.mailbox.role.value || 'default'];
+      inboxCustomRoleMailboxService.getMailboxIcon(self.mailbox.role) ||
+      MAILBOX_ROLE_ICONS_MAPPING[self.mailbox.role || 'default'];
   }
 
 }
