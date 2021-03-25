@@ -107,5 +107,5 @@ angular.module('esn.inbox.libs')
     SPAM: 'spam',
     TEMPLATES: 'templates'
   })
-  .constant('INFINITE_MAILBOXES_POLLING_INTERVAL', 10 * 60 * 1000)
+  .constant('INFINITE_MAILBOXES_POLLING_INTERVAL', 60 * 1000)
   .constant('INBOX_SEARCH_DEBOUNCE_DELAY', 1000);

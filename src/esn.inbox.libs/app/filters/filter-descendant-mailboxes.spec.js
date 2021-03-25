@@ -14,7 +14,7 @@ describe('The inboxFilterDescendantMailboxes filter', function() {
 
   beforeEach(angular.mock.inject(function(inboxFilterDescendantMailboxesFilter, inboxMailboxesCache) {
     filter = inboxFilterDescendantMailboxesFilter;
-    cache = inboxMailboxesCache;
+    cache = inboxMailboxesCache.list;
 
     [
       { id: '1', name: '1' },

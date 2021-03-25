@@ -154,7 +154,7 @@ describe('The Unified Inbox Angular module filters', function() {
         ];
 
       mailboxes.forEach(function(mailbox) {
-        inboxMailboxesCache.push(mailbox);
+        inboxMailboxesCache.list.push(mailbox);
       });
 
       expect(inboxFilterRestrictedMailboxesFilter(mailboxes)).to.deep.equal(expectedMailboxes);
