@@ -23,7 +23,7 @@ const experiments = [
   {
     key: 'inbox.experiment.tree-folders',
     title: 'Tree folder display',
-    description: 'In sidebar view, folders display are list with a tree view".'
+    description: 'In sidebar view, folders display are list with a tree view.'
   }
 ];
 

@@ -10,16 +10,20 @@
 
     .email-header-right
       ul.actions.responsive-actions
-        li.action-item(ng-switch="::email.hasReplyAll")
-          a(ng-switch-when="true", ng-click="ctrl.replyAll(); $event.stopPropagation()" title="{{ 'Reply all' | translate }}")
-            i.mdi.mdi-reply-all
-          a(ng-switch-when="false", ng-click="ctrl.reply(); $event.stopPropagation()" title="{{ 'Reply' | translate }}")
+        li.action-item(ng-class="{'hidden-xs': email.hasReplyAll}")
+          a(ng-class="", ng-click="ctrl.reply(); $event.stopPropagation()" title="{{ 'Reply' | translate }}")
             i.mdi.mdi-reply
-        li.action-item
-          a(action-list="/unifiedinbox/views/email/view/action-list.html", title="{{ 'More' | translate }}")
-            i.mdi.mdi-view-module
+        li.action-item(ng-if="::email.hasReplyAll")
+          a(ng-click="ctrl.replyAll(); $event.stopPropagation()" title="{{ 'Reply all' | translate }}")
+            i.mdi.mdi-reply-all
+        li.action-item.hidden-xs
+          a(ng-click="ctrl.forward(); $event.stopPropagation()" title="{{ 'Forward' | translate }}")
+            i.mdi.mdi-forward
         li.action-item
           inbox-star(item='::email')
+        li.action-item
+          a(action-list="/unifiedinbox/views/email/view/action-list.html", title="{{ 'More' | translate }}")
+            i.mdi.mdi-dots-vertical
 
   .email-body
     .inbox-message-info(ng-if="::email")
@@ -32,9 +36,10 @@
         message="email"
       )
 
+    .lv-footer.attachments(ng-if="email.attachments.length > 0")
+      inbox-attachment(ng-repeat="attachment in email.attachments", ng-if="::!attachment.isInline", attachment="::attachment")
+
     .text-center(ng-if="!email.loaded", openpaas-logo-spinner, spinner-start-active="1", spinner-size="0.4")
 
     inbox-message-body(message="::email")
 
-  .lv-footer.attachments(ng-if="email.attachments.length > 0")
-    inbox-attachment(ng-repeat="attachment in email.attachments", ng-if="::!attachment.isInline", attachment="::attachment")

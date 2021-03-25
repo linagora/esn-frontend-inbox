@@ -26,7 +26,8 @@ describe('The Unified Inbox Angular module providers', function() {
         date: new Date(2016, 1, 1, 1, 1, 1, i), // The variable millisecond is what allows us to check ordering in the tests
         mailboxIds: ['id_inbox'],
         threadId: 'thread_' + i,
-        hasAttachment: true
+        hasAttachment: true,
+        attachments: []
       });
     }
 

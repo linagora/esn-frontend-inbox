@@ -17,5 +17,6 @@ block right
     .inbox-selection-aware-subheader.inbox-selecting(ng-switch-when="true")
       inbox-subheader-not-spam-button(ng-click="ctrl.unSpam()", ng-show="ctrl.canUnSpamMessages()")
       inbox-subheader-delete-button(ng-click="ctrl.moveToTrash()", ng-show="ctrl.canTrashMessages()")
-      inbox-subheader-mark-as-read-button(ng-click="ctrl.markAsRead()")
+      inbox-subheader-mark-as-read-button(ng-click="ctrl.markAsRead()", ng-if="ctrl.isSomeUnreadItems()")
+      inbox-subheader-mark-as-unread-button(ng-click="ctrl.markAsUnread()", ng-if="ctrl.isSomeReadItems()")
       inbox-subheader-more-button(action-list="/unifiedinbox/views/unified-inbox/action-list.html")
