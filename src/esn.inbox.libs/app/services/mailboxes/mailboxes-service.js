@@ -286,11 +286,10 @@ angular.module('esn.inbox.libs')
               })
               .then(function() {
                 $rootScope.$broadcast(INBOX_EVENTS.SHARED_FOLDERS_UPDATED);
-
-                return _getSharedMailboxes(inboxMailboxesCache.list);
               });
           }
 
+        }).then(function() {
           return _getSharedMailboxes(inboxMailboxesCache.list);
         });
       });
