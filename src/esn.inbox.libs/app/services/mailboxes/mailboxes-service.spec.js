@@ -1564,7 +1564,7 @@ describe('The inboxMailboxesService factory', function() {
         });
       };
       jmapClient.mailbox_changes = function() {
-        return $q.when({ oldState: '1', newState: '2' });
+        return $q.when({ oldState: '1', newState: '2', hasMoreChanges: true });
       };
 
       inboxMailboxesService.updateSharedMailboxCache().then(function(sharedMailboxes) {
@@ -1591,7 +1591,7 @@ describe('The inboxMailboxesService factory', function() {
         });
       };
       jmapClient.mailbox_changes = function() {
-        return $q.when({ oldState: '1', newState: '2' });
+        return $q.when({ oldState: '1', newState: '2', hasMoreChanges: true });
       };
 
       inboxMailboxesService.updateSharedMailboxCache().then(function(sharedMailboxes) {
@@ -1625,7 +1625,7 @@ describe('The inboxMailboxesService factory', function() {
         });
       };
       jmapClient.mailbox_changes = function() {
-        return $q.when({ oldState: '1', newState: '2' });
+        return $q.when({ oldState: '1', newState: '2', hasMoreChanges: true });
       };
 
       inboxMailboxesService.updateSharedMailboxCache().then(function(sharedMailboxes) {
