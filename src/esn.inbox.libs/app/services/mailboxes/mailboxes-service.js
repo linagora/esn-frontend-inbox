@@ -17,7 +17,7 @@ angular.module('esn.inbox.libs')
   .factory('inboxMailboxesService', function($q, $state, $rootScope, withJmapClient, asyncJmapAction,
     inboxSpecialMailboxes, inboxMailboxesCache, inboxSharedMailboxesService, limitToFilter,
     esnI18nService, INBOX_EVENTS, MAILBOX_LEVEL_SEPARATOR, INBOX_RESTRICTED_MAILBOXES, INBOX_DISPLAY_NAME_SIZE,
-    INBOX_MAILBOX_ROLES) {
+    INBOX_MAILBOX_ROLES, MAILBOX_MAXIMUM_CHANGES_RESPONSE) {
 
     let mailboxesListAlreadyFetched = false;
     let mailboxesListPromise;
@@ -266,9 +266,10 @@ angular.module('esn.inbox.libs')
       return withJmapClient(function(jmapClient) {
         return jmapClient.mailbox_changes({
           accountId: null,
-          sinceState: inboxMailboxesCache.state
+          sinceState: inboxMailboxesCache.state,
+          maxChanged: MAILBOX_MAXIMUM_CHANGES_RESPONSE
         }).then(function(changes) {
-          if (changes.newState !== inboxMailboxesCache.state) {
+          if (changes.hasMoreChanges) {
             return jmapClient.mailbox_get({
               accountId: null,
               ids: null

@@ -108,4 +108,5 @@ angular.module('esn.inbox.libs')
     TEMPLATES: 'templates'
   })
   .constant('INFINITE_MAILBOXES_POLLING_INTERVAL', 60 * 1000)
-  .constant('INBOX_SEARCH_DEBOUNCE_DELAY', 1000);
+  .constant('INBOX_SEARCH_DEBOUNCE_DELAY', 1000)
+  .constant('MAILBOX_MAXIMUM_CHANGES_RESPONSE', 128);

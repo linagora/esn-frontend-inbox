@@ -11,6 +11,7 @@ describe('The inboxMailboxesService factory', function() {
 
   beforeEach(angular.mock.module('esn.inbox.libs', function($provide) {
     $provide.constant('INBOX_DISPLAY_NAME_SIZE', 10);
+    $provide.constant('MAILBOX_MAXIMUM_CHANGES_RESPONSE', 128);
 
     jmapClient = {
       mailbox_get: function() { return $q.when({ list: [] }); }
