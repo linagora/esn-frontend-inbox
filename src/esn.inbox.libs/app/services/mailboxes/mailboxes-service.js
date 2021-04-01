@@ -267,7 +267,7 @@ angular.module('esn.inbox.libs')
         return jmapClient.mailbox_changes({
           accountId: null,
           sinceState: inboxMailboxesCache.state,
-          maxChanged: MAILBOX_MAXIMUM_CHANGES_RESPONSE
+          maxChanges: MAILBOX_MAXIMUM_CHANGES_RESPONSE
         }).then(function(changes) {
           if (changes.hasMoreChanges) {
             return jmapClient.mailbox_get({
