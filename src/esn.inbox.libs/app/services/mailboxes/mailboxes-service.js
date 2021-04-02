@@ -282,15 +282,13 @@ angular.module('esn.inbox.libs')
                 return _addSharedMailboxVisibility(_getSharedMailboxes(mailboxList));
               })
               .then(function(sharedMailboxList) {
-                return _updateSharedMailboxList(sharedMailboxList);
+                _updateSharedMailboxList(sharedMailboxList);
               })
               .then(function() {
                 $rootScope.$broadcast(INBOX_EVENTS.FOLDERS_UPDATED);
               });
           }
 
-        }).then(function() {
-          return _getSharedMailboxes(inboxMailboxesCache.list);
         });
       });
     }

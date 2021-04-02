@@ -6,7 +6,7 @@ const { expect } = chai;
 
 describe('The inboxMailboxesService factory', function() {
 
-  var inboxMailboxesCache, inboxMailboxesService, jmapClient, jmapDraftClient, $rootScope, jmapDraft, notificationFactory,
+  var inboxMailboxesCache, inboxMailboxesService, inboxSharedMailboxesService, jmapClient, jmapDraftClient, $rootScope, jmapDraft, notificationFactory,
     inboxConfigMock, INBOX_HIDDEN_SHAREDMAILBOXES_CONFIG_KEY, INBOX_ROLE_NAMESPACE_TYPES, INBOX_EVENTS, INBOX_MAILBOX_ROLES;
 
   beforeEach(angular.mock.module('esn.inbox.libs', function($provide) {
@@ -34,12 +34,13 @@ describe('The inboxMailboxesService factory', function() {
     });
   }));
 
-  beforeEach(angular.mock.inject(function(_inboxMailboxesService_, _$state_, _$rootScope_,
+  beforeEach(angular.mock.inject(function(_inboxMailboxesService_, _inboxSharedMailboxesService_, _$state_, _$rootScope_,
     _inboxMailboxesCache_, _jmapDraft_, _notificationFactory_, _INBOX_EVENTS_,
     _INBOX_HIDDEN_SHAREDMAILBOXES_CONFIG_KEY_, _INBOX_ROLE_NAMESPACE_TYPES_, _INBOX_MAILBOX_ROLES_) {
     inboxMailboxesCache = _inboxMailboxesCache_;
     notificationFactory = _notificationFactory_;
     inboxMailboxesService = _inboxMailboxesService_;
+    inboxSharedMailboxesService = _inboxSharedMailboxesService_;
     $rootScope = _$rootScope_;
     jmapDraft = _jmapDraft_;
     INBOX_HIDDEN_SHAREDMAILBOXES_CONFIG_KEY = _INBOX_HIDDEN_SHAREDMAILBOXES_CONFIG_KEY_;
@@ -1490,6 +1491,10 @@ describe('The inboxMailboxesService factory', function() {
 
   describe('The updateSharedMailboxCache function', function() {
 
+    function _getSharedMailboxes(mailboxes) {
+      return _.filter(mailboxes, inboxSharedMailboxesService.isShared);
+    }
+
     it('should do anything on inboxMailboxesCache', function(done) {
       inboxMailboxesCache = { state: '1', list: [] };
       jmapClient.mailbox_get = function() {
@@ -1499,8 +1504,8 @@ describe('The inboxMailboxesService factory', function() {
         return $q.when({ oldState: '1', newState: '1' });
       };
 
-      inboxMailboxesService.updateSharedMailboxCache().then(function(sharedMailboxes) {
-        expect(sharedMailboxes).to.deep.equal([]);
+      inboxMailboxesService.updateSharedMailboxCache().then(function() {
+        expect(_getSharedMailboxes(inboxMailboxesCache.list)).to.deep.equal([]);
 
         done();
       });
@@ -1542,8 +1547,8 @@ describe('The inboxMailboxesService factory', function() {
         return $q.when({ oldState: '1', newState: '1' });
       };
 
-      inboxMailboxesService.updateSharedMailboxCache().then(function(sharedMailboxes) {
-        expect(sharedMailboxes).to.deep.equal([{
+      inboxMailboxesService.updateSharedMailboxCache().then(function() {
+        expect(_getSharedMailboxes(inboxMailboxesCache.list)).to.deep.equal([{
           id: 2, name: '2', namespace: 'Delegated', level: 1, qualifiedName: '2'
         }]);
 
@@ -1566,8 +1571,8 @@ describe('The inboxMailboxesService factory', function() {
         return $q.when({ oldState: '1', newState: '2' });
       };
 
-      inboxMailboxesService.updateSharedMailboxCache().then(function(sharedMailboxes) {
-        expect(sharedMailboxes).to.deep.equal([{
+      inboxMailboxesService.updateSharedMailboxCache().then(function() {
+        expect(_getSharedMailboxes(inboxMailboxesCache.list)).to.deep.equal([{
           id: 1, name: '1', namespace: 'Delegated', level: 1, qualifiedName: '1'
         },
         {
@@ -1593,8 +1598,8 @@ describe('The inboxMailboxesService factory', function() {
         return $q.when({ oldState: '1', newState: '2' });
       };
 
-      inboxMailboxesService.updateSharedMailboxCache().then(function(sharedMailboxes) {
-        expect(sharedMailboxes).to.deep.equal([{
+      inboxMailboxesService.updateSharedMailboxCache().then(function() {
+        expect(_getSharedMailboxes(inboxMailboxesCache.list)).to.deep.equal([{
           id: 1, name: '1', namespace: 'Delegated', level: 1, qualifiedName: '1'
         }]);
 
@@ -1627,8 +1632,8 @@ describe('The inboxMailboxesService factory', function() {
         return $q.when({ oldState: '1', newState: '2' });
       };
 
-      inboxMailboxesService.updateSharedMailboxCache().then(function(sharedMailboxes) {
-        expect(sharedMailboxes).to.deep.equal([{
+      inboxMailboxesService.updateSharedMailboxCache().then(function() {
+        expect(_getSharedMailboxes(inboxMailboxesCache.list)).to.deep.equal([{
           id: 2, name: '2', namespace: 'Delegated', level: 1, qualifiedName: '2'
         },
         {
