@@ -189,7 +189,7 @@ angular.module('esn.inbox.libs')
         cache[index] = qualifyMailbox(mailbox);
       });
 
-      $rootScope.$broadcast(INBOX_EVENTS.PERSONAL_FOLDERS_UPDATED);
+      $rootScope.$broadcast(INBOX_EVENTS.FOLDERS_UPDATED);
 
       return inboxMailboxesCache.list.sort(_sortBySortOrderAndQualifiedName);
     }
@@ -285,7 +285,7 @@ angular.module('esn.inbox.libs')
                 return _updateSharedMailboxList(sharedMailboxList);
               })
               .then(function() {
-                $rootScope.$broadcast(INBOX_EVENTS.SHARED_FOLDERS_UPDATED);
+                $rootScope.$broadcast(INBOX_EVENTS.FOLDERS_UPDATED);
               });
           }
 
@@ -515,7 +515,7 @@ angular.module('esn.inbox.libs')
         return client.setMailboxes({ destroy: ids })
           .then(function(response) {
             _removeMailboxesFromCache(response.destroyed);
-            $rootScope.$broadcast(INBOX_EVENTS.PERSONAL_FOLDERS_UPDATED);
+            $rootScope.$broadcast(INBOX_EVENTS.FOLDERS_UPDATED);
 
             if (response.destroyed.length !== ids.length) {
               return $q.reject('Expected ' + ids.length + ' successfull deletions, but got ' + response.destroyed.length + '.');

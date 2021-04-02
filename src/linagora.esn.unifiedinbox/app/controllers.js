@@ -649,12 +649,10 @@ require('./services/common/inbox-utils.service.js');
       $scope.displaySharedFolders = displaySharedFolders;
       $scope.$onDestroy = $onDestroy;
 
-      $scope.updateMyPersonnalsfolders = $rootScope.$on(INBOX_EVENTS.PERSONAL_FOLDERS_UPDATED, displayMyFolders);
-      $scope.updateSharedfolders = $rootScope.$on(INBOX_EVENTS.SHARED_FOLDERS_UPDATED, displaySharedFolders);
+      $scope.updateFolders = $rootScope.$on(INBOX_EVENTS.FOLDERS_UPDATED, displayFolders);
 
       function $onDestroy() {
-        $scope.updateMyPersonnalsfolders();
-        $scope.updateSharedfolders();
+        $scope.updateFolders();
       }
 
       inboxAsyncHostedMailControllerHelper(this, function() {
@@ -666,6 +664,13 @@ require('./services/common/inbox-utils.service.js');
           displaySharedFolders();
         });
       });
+
+      function displayFolders() {
+        displayMyFolders();
+        if ($scope.isFolderSharingEnabled) {
+          displaySharedFolders();
+        }
+      }
 
       function displayMyFolders() {
         if (!$scope.mailboxes) {
