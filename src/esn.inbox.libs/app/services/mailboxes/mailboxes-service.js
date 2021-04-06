@@ -128,6 +128,9 @@ angular.module('esn.inbox.libs')
       return inboxSharedMailboxesService.getHiddenMaiboxesConfig();
     }
 
+    /**
+     * Return a Promise of mailboxes with isDisplayed to false on mailboxes that should hidden
+     */
     function _addSharedMailboxVisibility(mailboxes) {
       return _getInvisibleItems()
         .then(function(invisibleItems) {
@@ -172,6 +175,10 @@ angular.module('esn.inbox.libs')
 
     function _updateMailBoxCacheState(newState) {
       inboxMailboxesCache.state = newState;
+    }
+
+    function _clearMailboxCache() {
+      inboxMailboxesCache.list = [];
     }
 
     function _updateMailboxCache(mailboxes) {
@@ -253,60 +260,84 @@ angular.module('esn.inbox.libs')
       return _getAllMailboxes().then(_getSharedMailboxes);
     }
 
+    /**
+     * Only return mailboxes where isShared is true
+     */
     function _getSharedMailboxes(mailboxes) {
       return _.filter(mailboxes, inboxSharedMailboxesService.isShared);
     }
 
-    function _getDifferenceById(toInspect, toExclude) {
-      return _.difference(_.map(toInspect, 'id'), _.map(toExclude, 'id'));
-    }
-
     function updateSharedMailboxCache() {
-
       return withJmapClient(function(jmapClient) {
         return jmapClient.mailbox_changes({
           accountId: null,
           sinceState: inboxMailboxesCache.state
         }).then(function(changes) {
-          if (changes.newState !== inboxMailboxesCache.state) {
-            return jmapClient.mailbox_get({
-              accountId: null,
-              ids: null
-            })
-              .then(function(mailboxes) {
-                _updateMailBoxCacheState(mailboxes.state);
-
-                return mailboxes.list;
-              })
-              .then(function(mailboxList) {
-                return _addSharedMailboxVisibility(_getSharedMailboxes(mailboxList));
-              })
-              .then(function(sharedMailboxList) {
-                _updateSharedMailboxList(sharedMailboxList);
-              })
-              .then(function() {
-                $rootScope.$broadcast(INBOX_EVENTS.FOLDERS_UPDATED);
-              });
+          if (changes.hasMoreChanges) {
+            return _updateCacheFetchingAllMailboxes(jmapClient);
           }
-
+          if (changes.newState !== inboxMailboxesCache.state) {
+            return _updateCacheFetchingMailboxChanges(jmapClient, changes);
+          }
         });
       });
     }
 
-    function _updateSharedMailboxList(sharedMailboxList) {
-      const sharedMailboxCache = _getSharedMailboxes(inboxMailboxesCache.list);
-      const removedSharedFoldersIds = _getDifferenceById(sharedMailboxCache, sharedMailboxList);
+    function _updateCacheFetchingMailboxChanges(jmapClient, changes) {
+      _updateMailBoxCacheState(changes.newState);
 
-      if (!_.isEmpty(removedSharedFoldersIds)) {
+      const mailboxesToFetch = _.union(changes.created, changes.updated);
 
-        _removeMailboxesFromCache(removedSharedFoldersIds);
+      if (!_.isEmpty(changes.destroyed)) {
+        _removeMailboxesFromCache(changes.destroyed);
 
-        if (removedSharedFoldersIds.includes($state.params.context) === true) {
+        if (changes.destroyed.includes($state.params.context) === true) {
           $state.go('unifiedinbox.inbox', { type: '', account: '', context: '' }, { location: 'replace' });
+        }
+
+        if (_.isEmpty(mailboxesToFetch)) {
+          // in this case the event is not broadcasted by _updateMailboxCache but needed
+          $rootScope.$broadcast(INBOX_EVENTS.FOLDERS_UPDATED);
         }
       }
 
-      _updateMailboxCache(sharedMailboxList);
+      if (!_.isEmpty(mailboxesToFetch)) {
+        return jmapClient
+          .mailbox_get({
+            accountId: null,
+            ids: mailboxesToFetch
+          })
+          .then(function(mailboxes) {
+            const translatedMailboxList = _translateMailboxes(mailboxes.list);
+
+            return _addSharedMailboxVisibility(translatedMailboxList);
+          })
+          .then(function(mailboxListWithSharedVisibility) {
+
+            _updateMailboxCache(mailboxListWithSharedVisibility);
+          });
+      }
+    }
+
+    function _updateCacheFetchingAllMailboxes(jmapClient) {
+
+      return jmapClient.mailbox_get({
+        accountId: null,
+        ids: null
+      }).then(function(mailboxes) {
+        if (mailboxes.list.findIndex(mailbox => mailbox.id === $state.params.context) === -1) {
+          $state.go('unifiedinbox.inbox', { type: '', account: '', context: '' }, { location: 'replace' });
+        }
+
+        _updateMailBoxCacheState(mailboxes.state);
+
+        const translatedMailboxList = _translateMailboxes(mailboxes.list);
+
+        return _addSharedMailboxVisibility(translatedMailboxList);
+      }).then(function(mailboxListWithSharedVisibility) {
+        _clearMailboxCache();
+        _updateMailboxCache(mailboxListWithSharedVisibility);
+      });
     }
 
     function _getAllMailboxes(filter) {
