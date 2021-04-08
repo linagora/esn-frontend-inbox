@@ -325,7 +325,8 @@ angular.module('esn.inbox.libs')
         accountId: null,
         ids: null
       }).then(function(mailboxes) {
-        if (mailboxes.list.findIndex(mailbox => mailbox.id === $state.params.context) === -1) {
+
+        if ($state.params.context && mailboxes.list.findIndex(mailbox => mailbox.id === $state.params.context) === -1) {
           $state.go('unifiedinbox.inbox', { type: '', account: '', context: '' }, { location: 'replace' });
         }
 
