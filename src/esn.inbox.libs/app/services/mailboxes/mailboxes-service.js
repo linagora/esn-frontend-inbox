@@ -170,6 +170,10 @@ angular.module('esn.inbox.libs')
       });
     }
 
+    function _updateMailBoxCacheState(newState) {
+      inboxMailboxesCache.state = newState;
+    }
+
     function _updateMailboxCache(mailboxes) {
       if (!angular.isArray(mailboxes)) {
         mailboxes = [mailboxes];
@@ -178,16 +182,16 @@ angular.module('esn.inbox.libs')
       mailboxes.forEach(function(mailbox) {
         const targetIndexInCache = _getMailboxIndexInCache(mailbox.id);
 
-        inboxMailboxesCache[targetIndexInCache] = mailbox;
+        inboxMailboxesCache.list[targetIndexInCache] = mailbox;
       });
 
-      inboxMailboxesCache.forEach(function(mailbox, index, cache) {
+      inboxMailboxesCache.list.forEach(function(mailbox, index, cache) {
         cache[index] = qualifyMailbox(mailbox);
       });
 
       $rootScope.$broadcast(INBOX_EVENTS.PERSONAL_FOLDERS_UPDATED);
 
-      return inboxMailboxesCache.sort(_sortBySortOrderAndQualifiedName);
+      return inboxMailboxesCache.list.sort(_sortBySortOrderAndQualifiedName);
     }
 
     function _sortBySortOrderAndQualifiedName(a, b) {
@@ -195,7 +199,7 @@ angular.module('esn.inbox.libs')
     }
 
     function _findMailboxInCache(id) {
-      return id && _.find(inboxMailboxesCache, { id: id });
+      return id && _.find(inboxMailboxesCache.list, { id: id });
     }
 
     function _removeMailboxesFromCache(ids) {
@@ -203,7 +207,7 @@ angular.module('esn.inbox.libs')
         ids = [ids];
       }
 
-      return _.remove(inboxMailboxesCache, function(mailbox) {
+      return _.remove(inboxMailboxesCache.list, function(mailbox) {
         return _.indexOf(ids, mailbox.id) > -1;
       });
     }
@@ -258,43 +262,58 @@ angular.module('esn.inbox.libs')
     }
 
     function updateSharedMailboxCache() {
+
       return withJmapClient(function(jmapClient) {
-        return jmapClient.mailbox_get({
+        return jmapClient.mailbox_changes({
           accountId: null,
-          ids: null
-        })
-          .then(function(mailboxes) {
-            return mailboxes.list;
-          })
-          .then(function(mailboxList) {
-            return _addSharedMailboxVisibility(_getSharedMailboxes(mailboxList));
-          })
-          .then(function(sharedMailboxList) {
-            const sharedMailboxCache = _getSharedMailboxes(inboxMailboxesCache);
-            const removedSharedFoldersIds = _getDifferenceById(sharedMailboxCache, sharedMailboxList);
+          sinceState: inboxMailboxesCache.state
+        }).then(function(changes) {
+          if (changes.newState !== inboxMailboxesCache.state) {
+            return jmapClient.mailbox_get({
+              accountId: null,
+              ids: null
+            })
+              .then(function(mailboxes) {
+                _updateMailBoxCacheState(mailboxes.state);
 
-            if (!_.isEmpty(removedSharedFoldersIds)) {
+                return mailboxes.list;
+              })
+              .then(function(mailboxList) {
+                return _addSharedMailboxVisibility(_getSharedMailboxes(mailboxList));
+              })
+              .then(function(sharedMailboxList) {
+                return _updateSharedMailboxList(sharedMailboxList);
+              })
+              .then(function() {
+                $rootScope.$broadcast(INBOX_EVENTS.SHARED_FOLDERS_UPDATED);
+              });
+          }
 
-              _removeMailboxesFromCache(removedSharedFoldersIds);
-
-              if (removedSharedFoldersIds.includes($state.params.context) === true) {
-                $state.go('unifiedinbox.inbox', { type: '', account: '', context: '' }, { location: 'replace' });
-              }
-            }
-
-            _updateMailboxCache(sharedMailboxList);
-          })
-          .then(function() {
-            $rootScope.$broadcast(INBOX_EVENTS.SHARED_FOLDERS_UPDATED);
-
-            return _getSharedMailboxes(inboxMailboxesCache);
-          });
+        }).then(function() {
+          return _getSharedMailboxes(inboxMailboxesCache.list);
+        });
       });
+    }
+
+    function _updateSharedMailboxList(sharedMailboxList) {
+      const sharedMailboxCache = _getSharedMailboxes(inboxMailboxesCache.list);
+      const removedSharedFoldersIds = _getDifferenceById(sharedMailboxCache, sharedMailboxList);
+
+      if (!_.isEmpty(removedSharedFoldersIds)) {
+
+        _removeMailboxesFromCache(removedSharedFoldersIds);
+
+        if (removedSharedFoldersIds.includes($state.params.context) === true) {
+          $state.go('unifiedinbox.inbox', { type: '', account: '', context: '' }, { location: 'replace' });
+        }
+      }
+
+      _updateMailboxCache(sharedMailboxList);
     }
 
     function _getAllMailboxes(filter) {
       if (mailboxesListAlreadyFetched) {
-        return $q.when(inboxMailboxesCache).then(filter || _.identity);
+        return $q.when(inboxMailboxesCache.list).then(filter || _.identity);
       }
 
       if (!mailboxesListPromise) {
@@ -303,7 +322,11 @@ angular.module('esn.inbox.libs')
             accountId: null,
             ids: null
           })
-            .then(mailboxes => mailboxes.list)
+            .then(({ state, list }) => {
+              _updateMailBoxCacheState(state);
+
+              return list;
+            })
             .then(_translateMailboxes)
             .then(_addSharedMailboxVisibility)
             .then(_updateMailboxCache)
@@ -342,7 +365,7 @@ angular.module('esn.inbox.libs')
     }
 
     function _getMailboxFromId(mailboxObjectOrId) {
-      return (mailboxObjectOrId && mailboxObjectOrId.id ? mailboxObjectOrId : _.find(inboxMailboxesCache, { id: mailboxObjectOrId }));
+      return (mailboxObjectOrId && mailboxObjectOrId.id ? mailboxObjectOrId : _.find(inboxMailboxesCache.list, { id: mailboxObjectOrId }));
     }
 
     function canMoveMessagesOutOfMailbox(mailboxObjectOrId) {
@@ -548,28 +571,28 @@ angular.module('esn.inbox.libs')
     function markAllAsRead(mailboxId) {
       const targetIndexInCache = _getMailboxIndexInCache(mailboxId);
 
-      inboxMailboxesCache[targetIndexInCache].unreadEmails = 0;
+      inboxMailboxesCache.list[targetIndexInCache].unreadEmails = 0;
 
-      return inboxMailboxesCache[targetIndexInCache];
+      return inboxMailboxesCache.list[targetIndexInCache];
     }
 
     function emptyMailbox(mailboxId) {
       const targetIndexInCache = _getMailboxIndexInCache(mailboxId);
 
-      inboxMailboxesCache[targetIndexInCache].unreadEmails = 0;
-      inboxMailboxesCache[targetIndexInCache].totalEmails = 0;
+      inboxMailboxesCache.list[targetIndexInCache].unreadEmails = 0;
+      inboxMailboxesCache.list[targetIndexInCache].totalEmails = 0;
 
-      return inboxMailboxesCache[targetIndexInCache];
+      return inboxMailboxesCache.list[targetIndexInCache];
     }
 
     function _getMailboxIndexInCache(mailboxId) {
-      const index = _.findIndex(inboxMailboxesCache, { id: mailboxId });
+      const index = _.findIndex(inboxMailboxesCache.list, { id: mailboxId });
 
-      return index > -1 ? index : inboxMailboxesCache.length;
+      return index > -1 ? index : inboxMailboxesCache.list.length;
     }
 
     function updateUnreadDraftsCount(currentInboxListId, updateDraftsList) {
-      const draftsFolder = _.find(inboxMailboxesCache, { role: INBOX_MAILBOX_ROLES.DRAFTS }),
+      const draftsFolder = _.find(inboxMailboxesCache.list, { role: INBOX_MAILBOX_ROLES.DRAFTS }),
         isBrowsingDrafts = currentInboxListId && currentInboxListId === draftsFolder.id;
 
       updateDraftsList = updateDraftsList || $q.when();
@@ -595,7 +618,7 @@ angular.module('esn.inbox.libs')
 
       while (toScanMailboxIds.length) {
         const toScanMailboxId = toScanMailboxIds.shift();
-        const mailboxChildren = _.filter(inboxMailboxesCache, { parentId: toScanMailboxId });
+        const mailboxChildren = _.filter(inboxMailboxesCache.list, { parentId: toScanMailboxId });
 
         scannedMailboxIds.push(toScanMailboxId);
         mailboxChildren.forEach(pushDescendant);

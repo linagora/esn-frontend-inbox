@@ -672,7 +672,7 @@ describe('The inboxJmapItemService service', function() {
       inboxConfigMock.numberItemsPerPageOnBulkReadOperations = perPage;
       inboxConfigMock.numberItemsPerPageOnBulkDeleteOperations = perPage;
       mailboxId = 'id_trash';
-      inboxMailboxesCache[0] = {
+      inboxMailboxesCache.list[0] = {
         id: mailboxId, name: 'name_trash', totalEmails: 6, unreadEmails: 1
       };
       messageIdsList = ['1', '2', '3', '4', '5', '6'];
@@ -702,8 +702,8 @@ describe('The inboxJmapItemService service', function() {
         expect(inboxFilteredList.removeFromList).to.have.been.calledOnce;
         expect(inboxFilteredList.removeFromList).to.have.been.calledWith(messageIdsList);
         expect(inboxMailboxesService.emptyMailbox).to.have.been.calledOnce;
-        expect(inboxMailboxesCache[0].totalEmails).to.deep.equal(0);
-        expect(inboxMailboxesCache[0].unreadEmails).to.deep.equal(0);
+        expect(inboxMailboxesCache.list[0].totalEmails).to.deep.equal(0);
+        expect(inboxMailboxesCache.list[0].unreadEmails).to.deep.equal(0);
 
         done();
       });
@@ -755,7 +755,7 @@ describe('The inboxJmapItemService service', function() {
       mailboxId = '123';
       unreadFlag = 'isUnread';
       state = false;
-      inboxMailboxesCache[0] = {
+      inboxMailboxesCache.list[0] = {
         id: mailboxId, name: 'mailboxName', totalEmails: 6, unreadEmails: 4
       };
       messageIdsList = ['id1', 'id2', 'id3'];
@@ -797,7 +797,7 @@ describe('The inboxJmapItemService service', function() {
         expect(inboxFilteredList.updateFlagFromList).to.have.been.calledOnce;
         expect(inboxFilteredList.updateFlagFromList).to.have.been.calledWith(messageIdsList);
         expect(inboxMailboxesService.markAllAsRead).to.have.been.calledOnce;
-        expect(inboxMailboxesCache[0].unreadEmails).to.deep.equal(0);
+        expect(inboxMailboxesCache.list[0].unreadEmails).to.deep.equal(0);
 
         done();
       });
