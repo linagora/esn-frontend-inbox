@@ -43,7 +43,7 @@ angular.module('esn.inbox.libs')
       emptyMailbox,
       markAllAsRead,
       sharedMailboxesList,
-      updateSharedMailboxCache,
+      updateMailboxCache,
       canTrashMessages,
       canUnSpamMessages,
       canMoveMessagesIntoMailbox,
@@ -267,7 +267,7 @@ angular.module('esn.inbox.libs')
       return _.filter(mailboxes, inboxSharedMailboxesService.isShared);
     }
 
-    function updateSharedMailboxCache() {
+    function updateMailboxCache() {
       return withJmapClient(function(jmapClient) {
         return jmapClient.mailbox_changes({
           accountId: null,

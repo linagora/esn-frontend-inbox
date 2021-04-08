@@ -691,7 +691,7 @@ require('./services/common/inbox-utils.service.js');
       function setupFolderPolling() {
         if (INFINITE_MAILBOXES_POLLING_INTERVAL > 0) {
           var folderPoller = $interval(function() {
-            inboxMailboxesService.updateSharedMailboxCache();
+            inboxMailboxesService.updateMailboxCache();
           }, INFINITE_MAILBOXES_POLLING_INTERVAL);
 
           $scope.$on('$destroy', function() {
