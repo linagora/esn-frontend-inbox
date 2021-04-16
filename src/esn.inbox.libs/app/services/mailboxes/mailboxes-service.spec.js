@@ -34,7 +34,7 @@ describe('The inboxMailboxesService factory', function() {
     });
   }));
 
-  beforeEach(angular.mock.inject(function(_inboxMailboxesService_, _$state_, _$rootScope_,
+  beforeEach(angular.mock.inject(function(_inboxMailboxesService_, _inboxSharedMailboxesService_, _$state_, _$rootScope_,
     _inboxMailboxesCache_, _jmapDraft_, _notificationFactory_, _INBOX_EVENTS_,
     _INBOX_HIDDEN_SHAREDMAILBOXES_CONFIG_KEY_, _INBOX_ROLE_NAMESPACE_TYPES_, _INBOX_MAILBOX_ROLES_) {
     inboxMailboxesCache = _inboxMailboxesCache_;
@@ -1488,7 +1488,7 @@ describe('The inboxMailboxesService factory', function() {
     });
   });
 
-  describe('The updateSharedMailboxCache function', function() {
+  describe('The updateMailboxCache function', function() {
 
     it('should do anything on inboxMailboxesCache', function(done) {
       inboxMailboxesCache = { state: '1', list: [] };
@@ -1499,8 +1499,8 @@ describe('The inboxMailboxesService factory', function() {
         return $q.when({ oldState: '1', newState: '1' });
       };
 
-      inboxMailboxesService.updateSharedMailboxCache().then(function(sharedMailboxes) {
-        expect(sharedMailboxes).to.deep.equal([]);
+      inboxMailboxesService.updateMailboxCache().then(function() {
+        expect(inboxMailboxesCache.list).to.deep.equal([]);
 
         done();
       });
@@ -1511,14 +1511,57 @@ describe('The inboxMailboxesService factory', function() {
     it('should not call mailbox_get when no changes', function(done) {
       inboxMailboxesCache.state = '1';
       inboxMailboxesCache.list = [];
-      jmapClient.mailbox_get = function() {
-        sinon.assert.fail('should not call mailbox_get');
-      };
+      jmapClient.mailbox_get = sinon.spy();
       jmapClient.mailbox_changes = function() {
         return $q.when({ oldState: '1', newState: '1' });
       };
 
-      inboxMailboxesService.updateSharedMailboxCache().then(function() {
+      inboxMailboxesService.updateMailboxCache().then(function() {
+        expect(jmapClient.mailbox_get).to.have.not.been.called;
+        done();
+      });
+
+      $rootScope.$digest();
+    });
+
+    it('should fetch all mailboxes when hasMoreChanges is true', function(done) {
+      inboxMailboxesCache.state = '1';
+      inboxMailboxesCache.list = [
+        {
+          id: 1, name: '1', namespace: 'Personal'
+        },
+        {
+          id: 2, name: '2', namespace: 'Delegated'
+        }
+      ];
+      jmapClient.mailbox_get = sinon.spy(function() {
+        return $q.when({
+          state: '3',
+          list: [
+            { id: 1, name: '1', namespace: 'Delegated' },
+            { id: 3, name: '3', namespace: 'Personal' }
+          ]
+        });
+      });
+      jmapClient.mailbox_changes = function() {
+        return $q.when({ oldState: '1', newState: '2', hasMoreChanges: true });
+      };
+
+      inboxMailboxesService.updateMailboxCache().then(function() {
+        expect(inboxMailboxesCache).to.deep.equal({
+          state: '3',
+          list: [
+            {
+              id: 1, name: '1', namespace: 'Delegated', level: 1, qualifiedName: '1'
+            },
+            {
+              id: 3, name: '3', namespace: 'Personal', level: 1, qualifiedName: '3'
+            }
+          ]
+        });
+        expect(jmapClient.mailbox_get).to.have.been.calledOnce;
+        expect(jmapClient.mailbox_get.getCall(0).args[0].ids).to.equal(null);
+
         done();
       });
 
@@ -1542,8 +1585,8 @@ describe('The inboxMailboxesService factory', function() {
         return $q.when({ oldState: '1', newState: '1' });
       };
 
-      inboxMailboxesService.updateSharedMailboxCache().then(function(sharedMailboxes) {
-        expect(sharedMailboxes).to.deep.equal([{
+      inboxMailboxesService.updateMailboxCache().then(function() {
+        expect(inboxMailboxesCache.list).to.deep.equal([{
           id: 2, name: '2', namespace: 'Delegated', level: 1, qualifiedName: '2'
         }]);
 
@@ -1553,21 +1596,25 @@ describe('The inboxMailboxesService factory', function() {
       $rootScope.$digest();
     });
 
-    it('should add new shared mailboxes to inboxMailboxesCache', function(done) {
+    it('should add new mailbox to inboxMailboxesCache', function(done) {
       inboxMailboxesCache.state = '1';
       inboxMailboxesCache.list = [{ id: 2, name: '2', namespace: 'Delegated' }];
-      jmapClient.mailbox_get = function() {
+      jmapClient.mailbox_get = sinon.spy(function() {
         return $q.when({
           state: '2',
           list: [{ id: 1, name: '1', namespace: 'Delegated' }, { id: 2, name: '2', namespace: 'Delegated' }]
         });
-      };
+      });
       jmapClient.mailbox_changes = function() {
-        return $q.when({ oldState: '1', newState: '2' });
+        return $q.when({
+          oldState: '1', newState: '2', created: [2], updated: [], destroyed: []
+        });
       };
 
-      inboxMailboxesService.updateSharedMailboxCache().then(function(sharedMailboxes) {
-        expect(sharedMailboxes).to.deep.equal([{
+      inboxMailboxesService.updateMailboxCache().then(function() {
+        expect(jmapClient.mailbox_get).to.have.been.calledOnce;
+        expect(jmapClient.mailbox_get.getCall(0).args[0].ids).to.have.members([2]);
+        expect(inboxMailboxesCache.list).to.deep.equal([{
           id: 1, name: '1', namespace: 'Delegated', level: 1, qualifiedName: '1'
         },
         {
@@ -1580,22 +1627,20 @@ describe('The inboxMailboxesService factory', function() {
       $rootScope.$digest();
     });
 
-    it('should remove shared mailboxes FROM inboxMailboxesCache', function(done) {
+    it('should remove mailbox from inboxMailboxesCache', function(done) {
       inboxMailboxesCache.state = '1';
       inboxMailboxesCache.list = [{ id: 2, name: '2', namespace: 'Delegated' }, { id: 1, name: '1', namespace: 'Delegated' }];
-      jmapClient.mailbox_get = function() {
+      jmapClient.mailbox_get = sinon.spy();
+      jmapClient.mailbox_changes = function() {
         return $q.when({
-          state: '2',
-          list: [{ id: 1, name: '1', namespace: 'Delegated' }]
+          oldState: '1', newState: '2', created: [], updated: [], destroyed: [2]
         });
       };
-      jmapClient.mailbox_changes = function() {
-        return $q.when({ oldState: '1', newState: '2' });
-      };
 
-      inboxMailboxesService.updateSharedMailboxCache().then(function(sharedMailboxes) {
-        expect(sharedMailboxes).to.deep.equal([{
-          id: 1, name: '1', namespace: 'Delegated', level: 1, qualifiedName: '1'
+      inboxMailboxesService.updateMailboxCache().then(function() {
+        expect(jmapClient.mailbox_get).to.not.have.been.called;
+        expect(inboxMailboxesCache.list).to.deep.equal([{
+          id: 1, name: '1', namespace: 'Delegated'
         }]);
 
         done();
@@ -1604,7 +1649,7 @@ describe('The inboxMailboxesService factory', function() {
       $rootScope.$digest();
     });
 
-    it('should update (add and remove) shared mailboxes to inboxMailboxesCache', function(done) {
+    it('should update (add and remove) mailboxes from inboxMailboxesCache', function(done) {
       inboxMailboxesCache.state = '1';
       inboxMailboxesCache.list = [
         { id: 1, name: '1', namespace: 'Delegated' },
@@ -1615,25 +1660,40 @@ describe('The inboxMailboxesService factory', function() {
         { id: 6, name: '6', namespace: 'Personal' }
       ];
 
-      jmapClient.mailbox_get = function() {
+      jmapClient.mailbox_get = sinon.spy(function() {
         return $q.when({
           state: '2',
-          list: [{ id: 2, name: '2', namespace: 'Delegated' },
+          list: [
+            { id: 2, name: '2', namespace: 'Delegated' },
             { id: 3, name: '33333333', namespace: 'Delegated' },
-            { id: 5, name: '5', namespace: 'Personal' }]
+            { id: 5, name: '5', namespace: 'Personal' },
+            { id: 7, name: '7', namespace: 'Personal' }
+          ]
+        });
+      });
+      jmapClient.mailbox_changes = function() {
+        return $q.when({
+          oldState: '1', newState: '2', created: [7], updated: [3], destroyed: [1, 4, 6]
         });
       };
-      jmapClient.mailbox_changes = function() {
-        return $q.when({ oldState: '1', newState: '2' });
-      };
 
-      inboxMailboxesService.updateSharedMailboxCache().then(function(sharedMailboxes) {
-        expect(sharedMailboxes).to.deep.equal([{
-          id: 2, name: '2', namespace: 'Delegated', level: 1, qualifiedName: '2'
-        },
-        {
-          id: 3, name: '33333333', namespace: 'Delegated', level: 1, qualifiedName: '33333333'
-        }]);
+      inboxMailboxesService.updateMailboxCache().then(function() {
+        expect(jmapClient.mailbox_get).to.have.been.calledOnce;
+        expect(jmapClient.mailbox_get.getCall(0).args[0].ids).to.have.members([3, 7]);
+        expect(inboxMailboxesCache.list).to.deep.equal([
+          {
+            id: 2, name: '2', namespace: 'Delegated', level: 1, qualifiedName: '2'
+          },
+          {
+            id: 3, name: '33333333', namespace: 'Delegated', level: 1, qualifiedName: '33333333'
+          },
+          {
+            id: 5, name: '5', namespace: 'Personal', level: 1, qualifiedName: '5'
+          },
+          {
+            id: 7, name: '7', namespace: 'Personal', level: 1, qualifiedName: '7'
+          }
+        ]);
 
         done();
       });

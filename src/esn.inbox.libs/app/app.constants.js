@@ -55,8 +55,7 @@ angular.module('esn.inbox.libs')
     UNAVAILABLE_ACCOUNT_DETECTED: 'inbox:unavailableAccountDetected',
     DRAFT_DESTROYED: 'inbox:draftDestroyed',
     DRAFT_CREATED: 'inbox:draftCreated',
-    PERSONAL_FOLDERS_UPDATED: 'inbox:personalFoldersUpdated',
-    SHARED_FOLDERS_UPDATED: 'inbox:sharedFoldersUpdated',
+    FOLDERS_UPDATED: 'inbox:foldersUpdated',
     CLOSE_COMPOSER_WARNING: 'inbox:closeComposerWarning'
   })
   .constant('INBOX_SUMMERNOTE_OPTIONS', {
