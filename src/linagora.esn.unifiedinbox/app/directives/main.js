@@ -257,6 +257,11 @@ require('../services.js');
             };
           }.bind(this));
 
+          if ($scope.email && $scope.email.attachments) {
+            $scope.attachmentsNumber = $scope.email.attachments.length;
+            $scope.attachmentsSize = $scope.email.attachments.map(attachment => attachment.size).reduce((sum, size) => sum + size, 0);
+          }
+
           this.toggleIsCollapsed = function(email) {
             if (angular.isDefined(email.isCollapsed)) {
               email.isCollapsed = !email.isCollapsed;
