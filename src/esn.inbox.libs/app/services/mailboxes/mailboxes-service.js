@@ -303,29 +303,23 @@ angular.module('esn.inbox.libs')
 
       if (!_.isEmpty(mailboxesToFetch)) {
         return jmapClient
-          .mailbox_get({
-            accountId: null,
-            ids: mailboxesToFetch
-          })
+          .mailbox_get({ accountId: null, ids: mailboxesToFetch })
           .then(function(mailboxes) {
             const translatedMailboxList = _translateMailboxes(mailboxes.list);
 
             return _addSharedMailboxVisibility(translatedMailboxList);
           })
           .then(function(mailboxListWithSharedVisibility) {
-
             _updateMailboxCache(mailboxListWithSharedVisibility);
           });
       }
     }
 
     function _updateCacheFetchingAllMailboxes(jmapClient) {
-
       return jmapClient.mailbox_get({
         accountId: null,
         ids: null
       }).then(function(mailboxes) {
-
         if ($state.params.context && mailboxes.list.findIndex(mailbox => mailbox.id === $state.params.context) === -1) {
           $state.go('unifiedinbox.inbox', { type: '', account: '', context: '' }, { location: 'replace' });
         }
