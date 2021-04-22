@@ -34,12 +34,5 @@ COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
 
-# Copy shell script to container
-WORKDIR /usr/share/nginx/html
-COPY ./scripts/generate_env.sh .
-
-# Make our shell script executable
-RUN chmod +x generate_env.sh
-
 # Start Nginx server
-CMD ["/bin/bash", "-c", "/usr/share/nginx/html/generate_env.sh && nginx -g \"daemon off;\""]
+CMD ["/bin/bash", "-c", "nginx -g \"daemon off;\""]
