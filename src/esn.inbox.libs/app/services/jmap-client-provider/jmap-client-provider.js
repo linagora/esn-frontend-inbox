@@ -25,7 +25,8 @@ angular.module('esn.inbox.libs')
           .withAPIUrl(data[1])
           .withDownloadUrl(data[2])
           .withAuthenticationToken('Bearer ' + data[0])
-          .withCustomMailboxRoles(inboxCustomRoleMailboxService.getAllRoles());
+          .withCustomMailboxRoles(inboxCustomRoleMailboxService.getAllRoles())
+          .withJmapVersionHeader();
 
         return jmapClient;
       });
