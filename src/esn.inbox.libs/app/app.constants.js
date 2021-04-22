@@ -67,7 +67,8 @@ angular.module('esn.inbox.libs')
       ['style', ['style']],
       ['color', ['color']],
       ['font', ['bold', 'italic', 'underline', 'strikethrough']],
-      ['alignment', ['paragraph', 'ul', 'ol']]
+      ['alignment', ['paragraph', 'ul', 'ol']],
+      ['height', ['height']]
     ],
     keyMap: {
       pc: { 'CTRL+ENTER': '', ENTER: 'insertParagraph' },
