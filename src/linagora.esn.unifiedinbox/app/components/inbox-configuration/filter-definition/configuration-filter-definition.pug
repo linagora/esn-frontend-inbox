@@ -26,6 +26,7 @@ sub-header
     .form-group(ng-class='{"ng-hide":$ctrl.newFilter.when.key !== $ctrl.JMAP_FILTER.CONDITIONS.SUBJECT.JMAP_KEY}')
       .fg-line
         input.form-control(
+          required
           type="text"
           placeholder="{{ 'Subject' | translate }}"
           ng-model="$ctrl.newFilter.subject")
@@ -44,7 +45,7 @@ sub-header
     .form-group
       .fg-line
         md-input-container
-          md-select(ng-model='$ctrl.newFilter.moveTo')
+          md-select(ng-model='$ctrl.newFilter.moveTo', required, md-no-asterisk)
             md-option(
               ng-repeat="mailbox in $ctrl.mailboxes track by mailbox.id"
               ng-value="mailbox")

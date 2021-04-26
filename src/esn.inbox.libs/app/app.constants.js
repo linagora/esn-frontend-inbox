@@ -4,7 +4,7 @@ angular.module('esn.inbox.libs')
 
   .constant('INBOX_MODULE_NAME', 'linagora.esn.unifiedinbox')
   .constant('MAILBOX_ROLE_ICONS_MAPPING', {
-    default: 'mdi mdi-email',
+    default: 'mdi mdi-folder',
     inbox: 'mdi mdi-inbox-arrow-down',
     archive: 'mdi mdi-archive',
     drafts: 'mdi mdi-file-document',
@@ -66,8 +66,9 @@ angular.module('esn.inbox.libs')
     toolbar: [
       ['style', ['style']],
       ['color', ['color']],
-      ['font', ['bold', 'italic', 'underline', 'strikethrough']],
-      ['alignment', ['paragraph', 'ul', 'ol']]
+      ['font', ['bold', 'italic', 'underline', 'strikethrough', 'clear']],
+      ['alignment', ['ul', 'ol', 'paragraph']],
+      ['table', ['table']]
     ],
     keyMap: {
       pc: { 'CTRL+ENTER': '', ENTER: 'insertParagraph' },
@@ -96,4 +97,6 @@ angular.module('esn.inbox.libs')
     isDisplayedByDefault: true
   })
   .constant('INBOX_SIGNATURE_SEPARATOR', '-- \n') // https://tools.ietf.org/html/rfc3676#section-4.3
-  .constant('INBOX_ATTACHMENT_TYPE_JMAP', 'jmap');
+  .constant('INBOX_ATTACHMENT_TYPE_JMAP', 'jmap')
+  .constant('INFINITE_MAILBOXES_POLLING_INTERVAL', 10 * 60 * 1000)
+  .constant('INBOX_SEARCH_DEBOUNCE_DELAY', 1000);

@@ -3,8 +3,8 @@
 const _ = require('lodash');
 
 angular.module('esn.inbox.libs')
-  .factory('generateJwtToken', function($http, httpConfigurer) {
+  .factory('generateJwtToken', function(esnRestangular) {
     return function() {
-      return $http.post(httpConfigurer.getUrl('/api/jwt/generate')).then(_.property('data'));
+      return esnRestangular.one('/jwt').post('generate').then(_.property('data'));
     };
   });

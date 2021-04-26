@@ -1,6 +1,6 @@
 @inboxAsideFontSize: 1.2em;
-@inboxAsideHeadingFontSize: 1.6em;
-@inboxAsideIconFontSize: 1.8em;
+@inboxAsideHeadingFontSize: 1.4em;
+@inboxAsideIconFontSize: 20px;
 @dividerColor: rgba(0, 0, 0, 0.08);
 @inboxAsideDragTargetBgColor: #FFCC80;
 
@@ -24,8 +24,22 @@
       border-radius: 2px;
 
       .badge {
-        border: 1px solid @badge-color;
+        color: inherit;
+        font-weight: 500;
+        margin-right: 0;
       }
+    }
+
+    .badge {
+      background-color: @body-bg;
+      color: lighten(@secondaryTextColor, 10%);
+      bottom: initial;
+      right: initial;
+      border-radius: 0 0;
+      border: initial;
+      box-shadow: -6px 0px 3px @body-bg;
+      letter-spacing: .3px;
+      position: relative;
     }
 
     &:hover {
@@ -33,11 +47,17 @@
         background-color: @darkenBgColor;
         border-radius: 2px;
       }
+
+      .badge {
+        background-color: @darkenBgColor;
+        box-shadow: -6px 0px 3px @darkenBgColor;
+        margin-right: 0;
+      }
     }
 
-    &.toggle-submenu {
+    &.folder-with-icon.toggle-submenu {
       .menu-item .menu-item-after:after {
-        background-color: @body-bg;
+        background-color: @bodyBgColor;
       }
     }
   }
@@ -51,7 +71,7 @@
 
   .listview:not(.lv-lg):not(.lv-message) {
     .lv-item:not(.menu-heading) {
-      padding: 3px 3px 3px 22px;
+      padding: 3px 3px 3px 20px;
     }
 
     .lv-item.toggle-submenu:not(.toggle-empty) {
@@ -84,7 +104,7 @@
 
   esn-filter-input {
     width: 100%;
-    margin: 2px 2px 2px 16px;
+    margin: 2px 2px 2px 3px;
 
     input:not([type='button']):not([type='submit']):not([type='file']) {
       font-size: 13px;
@@ -166,7 +186,7 @@
 
       &.selected {
         .menu-item .menu-item-after:after {
-          background-color: darken(@darkenBgColor, 2%);
+          background-color: darken(@darkenBgColor, 3%);
         }
 
         &:hover {
@@ -178,19 +198,13 @@
 
       &.folder-with-icon {
         .menu-item .menu-item-after:after {
-          background-color: darken(@darkenBgColor, 2%);
+          background-color: darken(@darkenBgColor, 3%);
         }
 
         &:hover {
           .menu-item .menu-item-after:after {
             background-color: @darkenBgColor;
           }
-        }
-      }
-
-      &.toggle-submenu {
-        .menu-item .menu-item-after:after {
-          background-color: @darkenBgColor;
         }
       }
 
@@ -211,9 +225,19 @@
 }
 
 .is-mobile .inbox-aside .clickable {
+  &.selected .badge {
+    box-shadow: -6px 0px 3px @darkenBgColor;
+    background-color: @darkenBgColor;
+  }
+
   &:hover {
     .menu-item .menu-item-after:after {
       background-color: white;
     }
+  }
+
+  .badge {
+    background-color: white;
+    box-shadow: -6px 0px 3px white;
   }
 }

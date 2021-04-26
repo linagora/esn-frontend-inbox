@@ -60,8 +60,7 @@
     &.has-sidebar-open {
       width: 100%;
       float: left;
-      padding-right: 18vw;
-      .transition(@transition-sidebar);
+      padding-right: 0;
     }
   }
 
@@ -209,6 +208,22 @@
               font-size: 18px;
             }
           }
+
+          .inbox-list-item-mailbox {
+            max-width: 120px;
+            color: @textPrimaryColor;
+
+            span {
+              overflow: hidden;
+              text-overflow: ellipsis;
+              margin-left: 10px;
+              background-color: lighten(@m-gray, 10%);
+              padding: 2px 8px;
+              border-radius: 2px;
+              font-size: 11.5px;
+              font-weight: 400;
+            }
+          }
         }
 
         .preview {
@@ -284,6 +299,14 @@
             }
           }
         }
+
+        .highlight {
+          background: @m-yellow;
+
+          &.empty {
+            display: none;
+          }
+        }
       }
 
       .inbox-hover-actions {
@@ -339,6 +362,11 @@
               &:before, &:after {
                 background-color: lighten(@accentColor, 20%);
               }
+            }
+
+            .inbox-hover-actions {
+              background-color: lighten(@accentColor, 20%);
+              box-shadow: -4px 0px 20px lighten(@accentColor, 20%);
             }
           }
         }
@@ -425,6 +453,11 @@
                   background-color: lighten(@accentColor, 20%);
                 }
               }
+
+              .inbox-hover-actions {
+                background-color: lighten(@accentColor, 20%);
+                box-shadow: -4px 0px 20px lighten(@accentColor, 20%);
+              }
             }
 
             &.dragging:active {
@@ -443,6 +476,11 @@
 
 @media (min-width: @screen-xl-min) {
   .inbox-root {
+    .inbox-list.has-sidebar-open {
+      padding-right: 18vw;
+      .transition(@transition-sidebar);
+    }
+
     .inbox-items-group {
       .inbox-list-item {
         min-height: @inbox-list-item-height;
@@ -489,8 +527,8 @@
               .flex-space-between;
               .flex-shorthand(1, 1);
 
-              min-width: 110px;
-              max-width: 110px;
+              min-width: 130px;
+              max-width: 130px;
               height: 22.4px;
             }
           }
@@ -529,7 +567,7 @@
 
         .inbox-hover-actions {
           top: 1px;
-          right: 110px;
+          right: 130px;
           padding-left: 10px;
           padding-right: 28px;
           box-shadow: -4px 0px 20px @darkenBgColor;

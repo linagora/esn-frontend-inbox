@@ -51,53 +51,6 @@ require('../services.js');
       };
     })
 
-    .directive('mailboxDisplay', function(
-      $rootScope,
-      inboxCustomRoleMailboxService,
-      inboxMailboxesService,
-      inboxJmapItemService,
-      MAILBOX_ROLE_ICONS_MAPPING,
-      INBOX_EVENTS
-    ) {
-      return {
-        restrict: 'E',
-        replace: true,
-        scope: {
-          mailbox: '=',
-          hideBadge: '@',
-          hideAside: '&',
-          isSpecial: '=?',
-          isSystem: '=?',
-          isFolder: '=?',
-          isShared: '=?'
-        },
-        template: require('../../views/sidebar/email/menu-item.pug'),
-        link: function(scope) {
-          scope.mailboxIcons = getMailboxIcon();
-
-          $rootScope.$on(INBOX_EVENTS.BADGE_LOADING_ACTIVATED, function(evt, data) {
-            scope.badgeLoadingActivated = data;
-          });
-
-          scope.onDrop = function($dragData) {
-            return inboxJmapItemService.moveMultipleItems($dragData, scope.mailbox);
-          };
-
-          scope.isDropZone = function($dragData) {
-            return _.all($dragData, function(item) {
-              return inboxMailboxesService.canMoveMessage(item, scope.mailbox);
-            });
-          };
-
-          function getMailboxIcon() {
-            return scope.mailbox.icon ||
-              inboxCustomRoleMailboxService.getMailboxIcon(scope.mailbox.role.value) ||
-              MAILBOX_ROLE_ICONS_MAPPING[scope.mailbox.role.value || 'default'];
-          }
-        }
-      };
-    })
-
     .directive('inboxEmailerAvatar', function() {
       return {
         restrict: 'E',
@@ -298,11 +251,16 @@ require('../services.js');
           X_OPENPAAS_CAL_HEADERS,
           X_OPENPAAS_CAL_VALUES
         ) {
-          ['reply', 'replyAll', 'forward'].forEach(function(action) {
+          ['reply', 'replyAll', 'forward', 'editAsNew'].forEach(function(action) {
             this[action] = function() {
               inboxJmapItemService[action]($scope.email);
             };
           }.bind(this));
+
+          if ($scope.email && $scope.email.attachments) {
+            $scope.attachmentsNumber = $scope.email.attachments.length;
+            $scope.attachmentsSize = $scope.email.attachments.map(attachment => attachment.size).reduce((sum, size) => sum + size, 0);
+          }
 
           this.toggleIsCollapsed = function(email) {
             if (angular.isDefined(email.isCollapsed)) {
@@ -354,29 +312,10 @@ require('../services.js');
 
           self.shouldDisplayCalendarInvitationMessageIndicator = $scope.item && $scope.item.headers && $scope.item.headers[INVITATION_MESSAGE_HEADERS.UID];
           self.shouldDisplayCalendarResourceManagementIndicator = $scope.item && $scope.item.headers && $scope.item.headers[X_OPENPAAS_CAL_HEADERS.ACTION];
+          self.shouldDisplayAttachmentIndicator = !self.shouldDisplayCalendarInvitationMessageIndicator &&
+            !self.shouldDisplayCalendarResourceManagementIndicator &&
+            $scope.item && $scope.item.hasAttachment;
         }
-      };
-    })
-
-    .directive('inboxEmailFooter', function(inboxJmapItemService) {
-      return {
-        restrict: 'E',
-        template: require('../../views/partials/email-footer.pug'),
-        scope: {
-          email: '='
-        },
-        controller: function($scope, esnShortcuts, INBOX_SHORTCUTS_ACTIONS_CATEGORY) {
-          ['reply', 'replyAll', 'forward'].forEach(function(action) {
-            this[action] = function() {
-              inboxJmapItemService[action]($scope.email);
-            };
-          }.bind(this));
-
-          esnShortcuts.use(INBOX_SHORTCUTS_ACTIONS_CATEGORY.shortcuts.REPLY_EMAIL, this.reply, $scope);
-          esnShortcuts.use(INBOX_SHORTCUTS_ACTIONS_CATEGORY.shortcuts.REPLY_ALL_EMAIL, this.replyAll, $scope);
-          esnShortcuts.use(INBOX_SHORTCUTS_ACTIONS_CATEGORY.shortcuts.FORWARD_EMAIL, this.forward, $scope);
-        },
-        controllerAs: 'ctrl'
       };
     })
 

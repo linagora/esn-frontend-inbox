@@ -1,12 +1,12 @@
-/* global chai: false, sinon: false, moment: false */
+/* global chai: false, sinon: false */
 
 const { expect } = chai;
 
 describe('The inboxMessageListItem directive', function() {
-  var $controller, $rootScope, $scope, inboxJmapItemService, inboxSelectionService, inboxConfigMock, nowDate = new Date('2017-04-20T12:00:00Z');
+  var $controller, $rootScope, $scope, inboxJmapItemService, inboxSelectionService, inboxConfigMock, inboxPlugins, inboxMailboxesService;
 
   function initController(bindings) {
-    const controller = $controller('messageListItemController', { $scope: $scope }, bindings);
+    const controller = $controller('messageListItemController', { $scope: $scope, inboxPlugins: inboxPlugins, inboxMailboxesService: inboxMailboxesService }, bindings);
 
     controller.$onChanges({});
 
@@ -16,11 +16,7 @@ describe('The inboxMessageListItem directive', function() {
   }
 
   beforeEach(function() {
-    angular.mock.module('linagora.esn.unifiedinbox', function($provide) {
-      $provide.constant('moment', function(argument) {
-        return moment.tz(argument || nowDate, 'UTC');
-      });
-    });
+    angular.mock.module('linagora.esn.unifiedinbox');
   });
 
   beforeEach(angular.mock.module(function($provide) {
@@ -35,13 +31,29 @@ describe('The inboxMessageListItem directive', function() {
     });
   }));
 
-  beforeEach(angular.mock.inject(function(_$controller_, _$rootScope_, _inboxJmapItemService_, _inboxSelectionService_) {
+  beforeEach(angular.mock.inject(function(_$controller_, _$rootScope_, _inboxJmapItemService_, _inboxSelectionService_, _inboxPlugins_, _inboxMailboxesService_) {
     $rootScope = _$rootScope_;
     $controller = _$controller_;
     inboxJmapItemService = _inboxJmapItemService_;
     inboxSelectionService = _inboxSelectionService_;
+    inboxPlugins = _inboxPlugins_;
+    inboxMailboxesService = _inboxMailboxesService_;
+
     inboxSelectionService.toggleItemSelection = sinon.spy(inboxSelectionService.toggleItemSelection);
     $scope = $rootScope.$new();
+
+    inboxPlugins.add({
+      type: 'jmap',
+      resolveContextRole: function() {
+        return $q.when('Sent');
+      }
+    });
+
+    var mailbox = [{ id: '1', name: 'My mailbox' }];
+
+    inboxMailboxesService.assignMailbox = sinon.spy(function() {
+      return $q.when(mailbox);
+    });
   }));
 
   describe('the exposed functions from inboxJmapItemService', function() {
@@ -53,7 +65,7 @@ describe('The inboxMessageListItem directive', function() {
     });
 
     it('should expose several functions to the element controller', function() {
-      const controller = initController({ item: $scope.item });
+      const controller = initController();
 
       ['reply', 'replyAll', 'forward', 'markAsUnread', 'markAsRead', 'markAsFlagged',
         'unmarkAsFlagged', 'moveToTrash', 'moveToSpam', 'unSpam'].forEach(function(action) {
@@ -61,6 +73,33 @@ describe('The inboxMessageListItem directive', function() {
 
         expect(inboxJmapItemService[action]).to.have.been.called;
       });
+    });
+  });
+
+  describe('$onChanges', function() {
+    it('should ask plugin for resolved context role', function() {
+      inboxPlugins.add({
+        type: 'jmap',
+        resolveContextRole: function() {
+          return $q.when('-Role-');
+        }
+      });
+
+      const controller = initController({ item: $scope.item });
+
+      $rootScope.$digest();
+
+      expect(controller.mailboxRole).to.equal('-Role-');
+    });
+
+    it('should get mailboxes of each item', function() {
+      $scope.item = { mailboxIds: ['1', '2', '3'] };
+
+      const controller = initController({ item: $scope.item });
+
+      $rootScope.$digest();
+
+      expect(controller.item.mailboxes[0]).to.deep.equal([{ id: '1', name: 'My mailbox' }]);
     });
   });
 
@@ -143,6 +182,12 @@ describe('The inboxMessageListItem directive', function() {
         canMoveMessagesOutOfMailbox: sinon.stub(inboxMailboxesService, 'canMoveMessagesOutOfMailbox').callsFake(function() { return serviceFunctionStubResult; }),
         canUnSpamMessages: sinon.stub(inboxMailboxesService, 'canUnSpamMessages').callsFake(function() { return serviceFunctionStubResult; })
       };
+
+      var mailbox = { id: 'aca5887c-2a90-4180-9b53-042f7917f4d8', name: 'My mailbox' };
+
+      inboxMailboxesService.assignMailbox = sinon.spy(function() {
+        return $q.when(mailbox);
+      });
     }));
 
     describe('The canTrashMessages function', function() {
@@ -180,7 +225,6 @@ describe('The inboxMessageListItem directive', function() {
 
       it('should return true when neither context nor scope.email', function() {
         $stateParams.context = null;
-        $scope.item = null;
 
         const controller = initController({ item: $scope.item });
 

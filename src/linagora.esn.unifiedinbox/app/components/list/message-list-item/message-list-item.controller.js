@@ -3,18 +3,24 @@ const _ = require('lodash');
 angular.module('linagora.esn.unifiedinbox')
   .controller('messageListItemController', function messageListItemController(
     $state,
+    $q,
     $stateParams,
     newComposerService,
     inboxJmapItemService,
     inboxSwipeHelper,
     inboxMailboxesService,
     inboxSelectionService,
+    inboxPlugins,
     $scope,
     INVITATION_MESSAGE_HEADERS,
-    X_OPENPAAS_CAL_HEADERS
+    X_OPENPAAS_CAL_HEADERS,
+    PROVIDER_TYPES,
+    INBOX_ALL_MAIL_MAILBOX
   ) {
     var self = this,
-      context = $stateParams.context;
+      account = $stateParams.account,
+      context = $stateParams.context,
+      plugin = inboxPlugins.get('jmap');
 
     self.$onChanges = () => {
       const mailbox = $stateParams.mailbox || ($scope.mailbox && $scope.mailbox.id) || (self.item && _.first(self.item.mailboxIds));
@@ -29,6 +35,27 @@ angular.module('linagora.esn.unifiedinbox')
 
       self.shouldDisplayCalendarInvitationMessageIndicator = self.item && self.item.headers && self.item.headers[INVITATION_MESSAGE_HEADERS.UID];
       self.shouldDisplayCalendarResourceManagementIndicator = self.item && self.item.headers && self.item.headers[X_OPENPAAS_CAL_HEADERS.ACTION];
+      self.shouldDisplayAttachmentIndicator = !self.shouldDisplayCalendarInvitationMessageIndicator &&
+            !self.shouldDisplayCalendarResourceManagementIndicator &&
+            self.item && self.item.hasAttachment;
+      self.shouldDisplayMailbox = context === INBOX_ALL_MAIL_MAILBOX.id || $stateParams.type === PROVIDER_TYPES.SEARCH;
+      self.query = $stateParams.q || $stateParams.a && $stateParams.a.contains;
+
+      if (plugin) {
+        plugin.resolveContextRole(account, context).then(function(role) {
+          self.mailboxRole = role;
+        });
+      }
+
+      if (self.item && self.item.mailboxIds) {
+        $q.all(
+          _.map(self.item.mailboxIds, function(mailboxId) {
+            return inboxMailboxesService.assignMailbox(mailboxId, self, true);
+          })
+        ).then(function(mailboxes) {
+          self.item.mailboxes = mailboxes;
+        });
+      }
     };
 
     self.select = (item, $event) => {

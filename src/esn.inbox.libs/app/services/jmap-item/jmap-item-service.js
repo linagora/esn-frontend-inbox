@@ -16,6 +16,7 @@ angular.module('esn.inbox.libs')
     return {
       reply: reply,
       replyAll: replyAll,
+      editAsNew: editAsNew,
       forward: forward,
       ackReceipt: ackReceipt,
       markAsUnread: markAsUnread,
@@ -213,6 +214,12 @@ angular.module('esn.inbox.libs')
       });
     }
 
+    function editAsNew(message) {
+      emailSendingService.editAsNewEmailObject(message.id, session.user).then(function(newMessage) {
+        newComposerService.open(newMessage);
+      });
+    }
+
     function replyAll(message) {
       emailSendingService.createReplyAllEmailObject(message.id, session.user).then(function(replyMessage) {
         newComposerService.open(replyMessage);
@@ -271,6 +278,8 @@ angular.module('esn.inbox.libs')
             if (!_.isEmpty(response.MDNNotSent)) {
               return $q.reject(new Error('Could not send the read receipt.'));
             }
+
+            return $q.when();
           });
       });
     }

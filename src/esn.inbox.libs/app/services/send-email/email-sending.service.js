@@ -7,7 +7,7 @@ require('../jmap-helper/jmap-helper');
 require('../../app.constants');
 
 angular.module('esn.inbox.libs')
-  .factory('emailSendingService', function($q, emailService, jmapDraft, session, emailBodyService, sendEmail, inboxJmapHelper, INBOX_ATTACHMENT_TYPE_JMAP, INBOX_MESSAGE_HEADERS) {
+  .factory('emailSendingService', function($q, emailService, jmapDraft, session, emailBodyService, sendEmail, inboxJmapHelper, inboxMessagesCache, INBOX_ATTACHMENT_TYPE_JMAP, INBOX_MESSAGE_HEADERS) {
     const referencingEmailOptions = {
       reply: {
         subjectPrefix: 'Re: ',
@@ -24,6 +24,11 @@ angular.module('esn.inbox.libs')
         subjectPrefix: 'Re: ',
         recipients: getReplyAllRecipients,
         referenceIdHeader: INBOX_MESSAGE_HEADERS.REPLY_TO
+      },
+      editAsNew: {
+        recipients: getReplyAllRecipients,
+        includeAttachments: true,
+        templateName: 'editAsNew'
       }
     };
 
@@ -44,6 +49,7 @@ angular.module('esn.inbox.libs')
       createReplyAllEmailObject: _createQuotedEmail.bind(null, referencingEmailOptions.replyAll),
       createReplyEmailObject: _createQuotedEmail.bind(null, referencingEmailOptions.reply),
       createForwardEmailObject: _createQuotedEmail.bind(null, referencingEmailOptions.forward),
+      editAsNewEmailObject: _createQuotedEmail.bind(null, referencingEmailOptions.editAsNew),
       countRecipients,
       handleInlineImageBeforeSending
     };
@@ -193,13 +199,25 @@ angular.module('esn.inbox.libs')
       };
     }
 
-    function getReplyRecipients(email) {
-      if (!email) {
+    function getReplyRecipients(email, sender) {
+      function notMe(item) {
+        return item.email !== getEmailAddress(sender);
+      }
+
+      function replyTo() {
+        if (email.from.email !== session.user.preferredEmail) {
+          return getReplyToRecipients(email);
+        }
+
+        return _(email.to || []).concat(getReplyToRecipients(email)).uniq('email').value().filter(notMe);
+      }
+
+      if (!email || !sender) {
         return;
       }
 
       return {
-        to: getReplyToRecipients(email),
+        to: replyTo(),
         cc: [],
         bcc: []
       };
@@ -251,7 +269,7 @@ angular.module('esn.inbox.libs')
     }
 
     function _createQuotedEmail(opts, messageId, sender) {
-      return inboxJmapHelper.getMessageById(messageId).then(function(message) {
+      return $q.when(inboxMessagesCache[messageId] || inboxJmapHelper.getMessageById(messageId)).then(function(message) {
         const newRecipients = opts.recipients ? opts.recipients(message, sender) : {},
           newEmail = {
             from: getEmailAddress(sender),

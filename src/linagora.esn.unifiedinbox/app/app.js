@@ -51,7 +51,8 @@ angular.module('linagora.esn.unifiedinbox', [
   'linagora.esn.unifiedinbox.linshare',
   'angular-clockpicker',
   'awesome-angular-swipe',
-  angularDragula(angular) // eslint-disable-line no-undef
+  angularDragula(angular), // eslint-disable-line no-undef
+  'ui.tree'
 ]);
 
 require('../../esn.inbox.libs/app/app.module.js');
@@ -120,6 +121,7 @@ require('./components/config/disable-local-copy/inbox-config-form-disable-local-
 require('./components/config/inbox-config-form.component.js');
 require('./components/config/inbox-config-form.constants.js');
 require('./components/config/inbox-config-form.controller.js');
+require('./components/email/footer/email-footer');
 require('./components/inbox-configuration/configuration.component.js');
 require('./components/inbox-configuration/configuration.controller.js');
 require('./components/inbox-configuration/filter-definition/configuration-filter-definition.component.js');
@@ -141,7 +143,9 @@ require('./components/inbox-configuration/forwardings/user/inbox-forwardings-use
 require('./components/inbox-configuration/read-receipt/request-receipts/request-receipts.controller.js');
 require('./components/inbox-configuration/read-receipt/request-receipts/request-receipts.js');
 require('./components/inbox-configuration/read-receipt/request-receipts/subheader/request-receipts-subheader.js');
-require('./components/inbox-configuration/experiments/configuration-experiments.component');
+require('./components/inbox-configuration/experiments/configuration-experiments.component.js');
+require('./components/inbox-configuration/experiments/configuration-experiments.controller.js');
+require('./components/inbox-configuration/experiments/subheader/experiments-subheader.js');
 require('./components/list/group-toggle-selection/list-group-toggle-selection.controller.js');
 require('./components/list/group-toggle-selection/list-group-toggle-selection.js');
 require('./components/list/header/list-header.controller.js');
@@ -165,7 +169,11 @@ require('./components/sidebar/attachment/sidebar-attachment.component.js');
 require('./components/sidebar/attachment/sidebar-attachment.controller.js');
 require('./components/sidebar/folder-settings/folder-settings.component.js');
 require('./components/sidebar/folder-settings/folder-settings.controller.js');
-require('./components/sidebar/unifiedinbox-button/unifiedinbox-button.component.js');
+require('./components/sidebar/mailbox-display/mailbox-display.component.js');
+require('./components/sidebar/mailbox-display/mailbox-display.controller.js');
+require('./components/sidebar/mailbox-display-tree/mailbox-display-tree.component.js');
+require('./components/sidebar/mailbox-display-tree/mailbox-display-tree.controller.js');
+require('./components/sidebar/mailbox-display-tree/mailbox-display-tree.config.js');
 require('./components/subheader/delete-button/subheader-delete-button.js');
 require('./components/subheader/mark-as-read-button/subheader-mark-as-read-button.js');
 require('./components/subheader/mark-as-unread-button/subheader-mark-as-unread-button.js');

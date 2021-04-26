@@ -1,5 +1,6 @@
 angular.module('esnApp', [
   'ui.router',
+  'ct.ui.router.extras.dsr',
   'linagora.esn.unifiedinbox',
   'linagora.esn.james',
   'esn.session',

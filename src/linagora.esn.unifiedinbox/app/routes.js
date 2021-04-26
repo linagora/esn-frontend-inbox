@@ -4,7 +4,7 @@ require('./controllers.js');
 
 angular.module('linagora.esn.unifiedinbox')
 
-  .config(function($stateProvider) {
+  .config(function($stateProvider, $urlRouterProvider) {
 
     function stateOpeningListItem(state) {
       function toggleElementOpened(opening) {
@@ -74,6 +74,17 @@ angular.module('linagora.esn.unifiedinbox')
         $location.path('/');
       });
     }
+
+    $urlRouterProvider.when('/', function($state, session, inboxMailboxesService, jmapDraft) {
+      session.ready.then(function() {
+        inboxMailboxesService.getMailboxWithRole(jmapDraft.MailboxRole.INBOX).then(({ id }) => {
+          $state.go('unifiedinbox.inbox', {
+            type: 'jmap',
+            context: id
+          });
+        });
+      });
+    });
 
     $stateProvider
       .state('unifiedinbox', {

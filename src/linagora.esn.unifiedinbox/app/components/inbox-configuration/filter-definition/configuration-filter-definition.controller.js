@@ -44,6 +44,7 @@ function inboxConfigurationFilterDefinitionController(
   self.hideRecipientsAutoComplete = hideRecipientsAutoComplete;
   self.initEditForm = initEditForm;
   self.saveFilter = saveFilter;
+  self.validateFilterForm = validateFilterForm;
 
   self._initStakeholdersField = _initStakeholdersField;
   self._initMoveToField = _initMoveToField;
@@ -111,6 +112,10 @@ function inboxConfigurationFilterDefinitionController(
     });
   }
 
+  function validateFilterForm() {
+    return 'name' in self.newFilter && !!self.newFilter.name && self.newFilter.moveTo && 'id' in self.newFilter.moveTo;
+  }
+
   function saveFilter() {
     var fn = self.editFilterId ?
       _.partial(inboxMailboxesFilterService.editFilter, self.editFilterId) :
@@ -123,11 +128,15 @@ function inboxConfigurationFilterDefinitionController(
     case JMAP_FILTER.CONDITIONS.TO.JMAP_KEY:
     case JMAP_FILTER.CONDITIONS.CC.JMAP_KEY:
     case JMAP_FILTER.CONDITIONS.RECIPIENT.JMAP_KEY:
-      conditionValue = self.newFilter.stakeholders[0].email;
+      conditionValue = !!self.newFilter.stakeholders.length && self.newFilter.stakeholders[0].email || '';
       break;
     case JMAP_FILTER.CONDITIONS.SUBJECT.JMAP_KEY:
-      conditionValue = self.newFilter.subject;
+      conditionValue = self.newFilter.subject || '';
       break;
+    }
+
+    if (!self.validateFilterForm() || !conditionValue) {
+      return;
     }
 
     return fn(

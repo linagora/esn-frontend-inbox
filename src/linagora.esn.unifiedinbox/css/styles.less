@@ -93,6 +93,20 @@
 
   .inbox-icon {
     margin-right: 5px;
+    font-size: @inboxAsideIconFontSize;
+    vertical-align: bottom;
+  }
+
+  .btn-caret-submenu {
+    margin: 0px 4px 0 -5px;
+    border-radius: 50%;
+    padding: 0;
+
+    i.mdi-menu-down {
+      font-size: 20px;
+      color: @secondaryTextColor;
+      vertical-align: middle;
+    }
   }
 
   .card {
@@ -148,7 +162,7 @@
       }
 
       i.mdi-menu-down {
-        font-size: 1.8em;
+        font-size: 20px;
         color: @secondaryTextColor;
       }
     }
@@ -162,6 +176,18 @@
           .rotateZ3d(-90deg);
         }
       }
+    }
+  }
+
+  .btn-caret-submenu {
+    margin: 0px 4px 0 -5px;
+    border-radius: 50%;
+    padding: 0;
+
+    i.mdi-menu-down {
+      font-size: 20px;
+      color: @secondaryTextColor;
+      vertical-align: middle;
     }
   }
 }
@@ -186,11 +212,20 @@ inbox-fab {
           background-color: lighten(@accentColor, 20%);
         }
 
+        .badge {
+          background-color: lighten(@accentColor, 20%);
+          box-shadow: -6px 0px 3px lighten(@accentColor, 20%);
+        }
+
         &:active{
           .cursor-grabbing;
         }
       }
     }
+    .clickable:not(.text-danger):not(.menu-root):active {
+      background-color: darken(@bodyBgColor, 5%);
+    }
+
     .clickable.text-danger:hover {
       color: darken(@state-danger-text, 10%);
     }

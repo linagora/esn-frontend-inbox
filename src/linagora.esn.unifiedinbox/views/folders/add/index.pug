@@ -15,7 +15,7 @@
               .form-group.fg-line.select
                 .field-name {{ 'Is located under' | translate }}
                 select.form-control(ng-model="mailbox.parentId", ng-options="mailbox.id as mailbox.qualifiedName for mailbox in mailboxes")
-                  option(value="") {{ 'Unified Inbox' | translate }}
+                  option(value="")
         .modal-footer
           .flex-vertical-centered.flex-end
             button.btn.btn-link.color-default(type='button', ng-click="$hide()") {{ 'Cancel' | translate }}

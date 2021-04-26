@@ -38,12 +38,6 @@ require('./services/common/inbox-utils.service.js');
       $scope.inboxListModel = inboxFilteredList.asMdVirtualRepeatModel($scope.loadMoreElements);
       $scope.loading = false;
 
-      if (plugin && plugin.type === PROVIDER_TYPES.JMAP) {
-        plugin.resolveContextRole($stateParams.account, $stateParams.context).then(function(role) {
-          $scope.mailboxRole = role;
-        });
-      }
-
       $scope.$on(INBOX_EVENTS.FILTER_CHANGED, updateFetchersInScope);
 
       // We are currently unable to add a new message in our filteredList without calling PageAggregator.
@@ -52,7 +46,6 @@ require('./services/common/inbox-utils.service.js');
       $scope.$on(INBOX_EVENTS.DRAFT_CREATED, handleNewDraft);
       $scope.$on(INBOX_EVENTS.UNAVAILABLE_ACCOUNT_DETECTED, handleUnavailableAccount.bind(this));
 
-      _getVacationActivated();
       _getQuotaStatus();
 
       $scope.$on(INBOX_EVENTS.VACATION_STATUS, _getVacationActivated);
@@ -153,7 +146,7 @@ require('./services/common/inbox-utils.service.js');
 
     .controller('viewEmailController', function($scope, $state, $stateParams, esnShortcuts, inboxJmapItemService,
       inboxMailboxesService, inboxJmapHelper, inboxAsyncHostedMailControllerHelper, inboxUnavailableAccountNotifier,
-      inboxFilteredList, INBOX_SHORTCUTS_NAVIGATION_CATEGORY, INBOX_SHORTCUTS_ACTIONS_CATEGORY, INBOX_EVENTS,
+      inboxFilteredList, inboxMessagesCache, INBOX_SHORTCUTS_NAVIGATION_CATEGORY, INBOX_SHORTCUTS_ACTIONS_CATEGORY, INBOX_EVENTS,
       INBOX_CONTROLLER_LOADING_STATES) {
       var context = $stateParams.context;
       var emailId = $stateParams.emailId;
@@ -170,6 +163,8 @@ require('./services/common/inbox-utils.service.js');
         return inboxJmapHelper
           .getMessageById(emailId)
           .then(function(message) {
+            inboxMessagesCache[emailId] = message;
+
             if (!$scope.email) {
               $scope.email = message;
             } else {
@@ -178,7 +173,9 @@ require('./services/common/inbox-utils.service.js');
               });
             }
 
-            inboxJmapItemService.markAsRead($scope.email);
+            if ($scope.email && $scope.email.isUnread) {
+              inboxJmapItemService.markAsRead($scope.email);
+            }
           })
           .finally(function() {
             $scope.email.loaded = true;
@@ -641,7 +638,7 @@ require('./services/common/inbox-utils.service.js');
 
     .controller('inboxSidebarEmailController', function($scope, $rootScope, $interval,
       inboxMailboxesService, inboxSpecialMailboxes, inboxAsyncHostedMailControllerHelper,
-      inboxUnavailableAccountNotifier, session, inboxSharedMailboxesService, $filter, INFINITE_LIST_POLLING_INTERVAL, INBOX_EVENTS) {
+      inboxUnavailableAccountNotifier, session, inboxSharedMailboxesService, $filter, INFINITE_MAILBOXES_POLLING_INTERVAL, INBOX_EVENTS) {
       setupFolderPolling();
 
       $scope.specialMailboxes = inboxSpecialMailboxes.list();
@@ -673,7 +670,7 @@ require('./services/common/inbox-utils.service.js');
           return;
         }
 
-        $scope.displayPersonnalFolders = $filter('filter')($scope.mailboxes, { role: { value: '!' }, namespace: { type: 'Personal' } }).length > 0;
+        $scope.displayPersonnalFolders = $filter('filter')($scope.mailboxes, { role: { value: '!' }, namespace: { type: 'Personal' } });
       }
 
       function displaySharedFolders() {
@@ -685,10 +682,10 @@ require('./services/common/inbox-utils.service.js');
       }
 
       function setupFolderPolling() {
-        if (INFINITE_LIST_POLLING_INTERVAL > 0) {
+        if (INFINITE_MAILBOXES_POLLING_INTERVAL > 0) {
           var folderPoller = $interval(function() {
             inboxMailboxesService.updateSharedMailboxCache();
-          }, INFINITE_LIST_POLLING_INTERVAL);
+          }, INFINITE_MAILBOXES_POLLING_INTERVAL);
 
           $scope.$on('$destroy', function() {
             $interval.cancel(folderPoller);
@@ -719,6 +716,16 @@ require('./services/common/inbox-utils.service.js');
       self.getSelectedItems = inboxSelectionService.getSelectedItems;
       self.unselectAllItems = inboxSelectionService.unselectAllItems;
       self.selectedItems = {};
+      self.isSomeUnreadItems = isSomeUnreadItems;
+      self.isSomeReadItems = isSomeReadItems;
+
+      function isSomeUnreadItems() {
+        return _.some(self.getSelectedItems(), message => message._isUnread);
+      }
+
+      function isSomeReadItems() {
+        return _.some(self.getSelectedItems(), message => !message._isUnread);
+      }
 
       ['markAsUnread', 'markAsRead', 'unmarkAsFlagged', 'markAsFlagged', 'moveToTrash', 'moveToSpam', 'unSpam'].forEach(function(action) {
         self[action] = function() {

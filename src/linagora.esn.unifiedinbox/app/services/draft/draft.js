@@ -7,7 +7,7 @@ require('../../services.js');
 angular.module('linagora.esn.unifiedinbox')
 
   .factory('InboxDraft', function($rootScope, $q, emailBodyService, asyncJmapAction, inboxJmapHelper,
-    waitUntilMessageIsComplete, inboxConfig, gracePeriodService,
+    waitUntilMessageIsComplete, inboxConfig, gracePeriodService, inboxMailboxesService, jmapDraft,
     INBOX_EVENTS, ATTACHMENTS_ATTRIBUTES) {
     function InboxDraft(original) {
       this.original = original ? angular.copy(original) : {};
@@ -42,9 +42,11 @@ angular.module('linagora.esn.unifiedinbox')
         .then(function() {
           return asyncJmapAction('Saving your email as draft', function(client) {
             return inboxJmapHelper.toOutboundMessage(client, email).then(function(message) {
-              return client.saveAsDraft(message).then(function(ack) {
-                newDraftId = ack.id;
-              });
+              return inboxMailboxesService.getMailboxWithRole(jmapDraft.MailboxRole.DRAFTS)
+                .then(drafts => client.saveAsDraft(message, drafts))
+                .then(ack => {
+                  newDraftId = ack.id;
+                });
             });
           }, options);
         })

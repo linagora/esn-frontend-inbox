@@ -39,7 +39,7 @@ form.form-horizontal.compose.ng-cloak(ng-submit="$ctrl.send()")
         md-menu
           button.btn.btn-link.btn-icon(type="button", ng-click="$mdMenu.open()", title="{{ 'More' | translate }}")
             i.mdi.mdi-dots-vertical
-          md-menu-content(width="3")
+          md-menu-content(width="3", ng-mouseleave="$mdMenu.close()")
             md-menu-item.md-indent(type="checkbox", ng-model="$ctrl.hasRequestedReadReceipt")
               | {{ 'Request a read receipt' | translate }}
       inbox-linshare-composer-select-attachment(email="$ctrl.message")

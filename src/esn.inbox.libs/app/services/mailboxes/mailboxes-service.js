@@ -21,6 +21,7 @@ angular.module('esn.inbox.libs')
     esnI18nService, INBOX_EVENTS, MAILBOX_LEVEL_SEPARATOR, INBOX_RESTRICTED_MAILBOXES) {
 
     let mailboxesListAlreadyFetched = false;
+    let mailboxesListPromise;
 
     $rootScope.$on(INBOX_EVENTS.DRAFT_DESTROYED, function updateMailboxCounters(event, message) {
       return updateCountersWhenMovingMessage(message);
@@ -48,7 +49,8 @@ angular.module('esn.inbox.libs')
       canUnSpamMessages,
       canMoveMessagesIntoMailbox,
       canMoveMessagesOutOfMailbox,
-      updateUnreadDraftsCount
+      updateUnreadDraftsCount,
+      mailboxtoTree
     };
 
     /////
@@ -71,6 +73,37 @@ angular.module('esn.inbox.libs')
       }
 
       return mailbox;
+    }
+
+    function mailboxtoTree(mailboxes) {
+      if (!angular.isArray(mailboxes)) {
+        mailboxes = [mailboxes];
+      }
+
+      const arrMap = new Map(mailboxes.map(item => [item.id, item]));
+      const tree = [];
+
+      mailboxes.forEach(item => {
+        item.nodes = []; //reset nodes
+
+        if (item.parentId) {
+          const parentItem = arrMap.get(item.parentId);
+
+          if (parentItem && parentItem !== null && parentItem.id !== item.id && !_.find(parentItem.nodes, { id: item.id })) {
+            if (parentItem.nodes) {
+              parentItem.nodes.push(item);
+            } else {
+              parentItem.nodes = [item];
+            }
+          } else {
+            tree.push(item);
+          }
+        } else {
+          tree.push(item);
+        }
+      });
+
+      return tree;
     }
 
     function _translateMailboxes(mailboxes) {
@@ -251,18 +284,21 @@ angular.module('esn.inbox.libs')
         return $q.when(inboxMailboxesCache).then(filter || _.identity);
       }
 
-      return withJmapClient(function(jmapClient) {
-        return jmapClient.getMailboxes()
-          .then(function(mailboxes) {
-            mailboxesListAlreadyFetched = true;
+      if (!mailboxesListPromise) {
+        mailboxesListPromise = withJmapClient(function(jmapClient) {
+          return jmapClient.getMailboxes()
+            .then(_translateMailboxes)
+            .then(_addSharedMailboxVisibility)
+            .then(_updateMailboxCache)
+            .then(mailboxes => {
+              mailboxesListAlreadyFetched = true;
 
-            return mailboxes;
-          })
-          .then(_translateMailboxes)
-          .then(_addSharedMailboxVisibility)
-          .then(_updateMailboxCache)
-          .then(filter || _.identity);
-      });
+              return mailboxes;
+            });
+        });
+      }
+
+      return mailboxesListPromise.then(filter || _.identity);
     }
 
     function flagIsUnreadChanged(email, status) {

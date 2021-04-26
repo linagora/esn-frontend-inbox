@@ -68,11 +68,17 @@
           font-size: 13px;
 
           * {
-            line-height: 14px;
+            line-height: 18px;
           }
 
           .name {
-            font-weight: bold;
+            font-weight: 500;
+          }
+
+          .size {
+            font-size: 12px;
+            font-weight: 400;
+            color: @lighterSecondaryTextColor;
           }
 
           .retry > a {
@@ -99,6 +105,68 @@
     }
   }
 
+  md-card {
+    margin: 8px 0;
+    box-shadow: initial;
+    border-top: 1px solid @body-bg;
+    border-bottom: 1px solid @body-bg;
+    margin-top: -5px;
+
+    md-card-header {
+      padding: 8px;
+      border-bottom: 1px solid @body-bg;
+      .clickable;
+
+      &.collapse {
+        .clickable;
+      }
+
+      md-card-header-text {
+        .flex-vertical-centered;
+
+        flex-direction: row;
+
+        i.mdi {
+          font-size: 18px;
+        }
+
+        .md-subhead {
+          font-size: 1em;
+        }
+
+        .subhead-size {
+          font-weight: 500;
+          margin-left: 10px;
+        }
+
+        .md-button.md-icon-button {
+          height: 30px;
+          width: 30px;
+          min-height: 30px;
+          padding: 4px;
+        }
+      }
+    }
+
+    md-card-content.lv-footer.attachments {
+      border-bottom: 1px solid @body-bg;
+      min-height: 76px;
+      max-height: 76px;
+      overflow-y: auto;
+
+      &.more-6 {
+        min-height: 120px;
+        max-height: 120px;
+      }
+
+      &.expand {
+        min-height: initial;
+        max-height: initial;
+      }
+
+
+    }
+  }
 }
 
 .attachments-zone {
@@ -138,6 +206,13 @@
         .z-index-on-top(2);
       }
     }
+  }
+}
+
+.email-view {
+  .attachments {
+    padding: 0px 0 15px 0;
+    margin-top: 10px;
   }
 }
 
