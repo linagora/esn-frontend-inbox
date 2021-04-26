@@ -3,6 +3,7 @@ const _ = require('lodash');
 angular.module('linagora.esn.unifiedinbox')
   .controller('messageListItemController', function messageListItemController(
     $state,
+    $q,
     $stateParams,
     newComposerService,
     inboxJmapItemService,
@@ -12,7 +13,9 @@ angular.module('linagora.esn.unifiedinbox')
     inboxPlugins,
     $scope,
     INVITATION_MESSAGE_HEADERS,
-    X_OPENPAAS_CAL_HEADERS
+    X_OPENPAAS_CAL_HEADERS,
+    PROVIDER_TYPES,
+    INBOX_ALL_MAIL_MAILBOX
   ) {
     var self = this,
       account = $stateParams.account,
@@ -35,10 +38,22 @@ angular.module('linagora.esn.unifiedinbox')
       self.shouldDisplayAttachmentIndicator = !self.shouldDisplayCalendarInvitationMessageIndicator &&
             !self.shouldDisplayCalendarResourceManagementIndicator &&
             self.item && self.item.hasAttachment;
+      self.shouldDisplayMailbox = context === INBOX_ALL_MAIL_MAILBOX.id || $stateParams.type === PROVIDER_TYPES.SEARCH;
+      self.query = $stateParams.q || $stateParams.a && $stateParams.a.contains;
 
       if (plugin) {
         plugin.resolveContextRole(account, context).then(function(role) {
           self.mailboxRole = role;
+        });
+      }
+
+      if (self.item && self.item.mailboxIds) {
+        $q.all(
+          _.map(self.item.mailboxIds, function(mailboxId) {
+            return inboxMailboxesService.assignMailbox(mailboxId, self, true);
+          })
+        ).then(function(mailboxes) {
+          self.item.mailboxes = mailboxes;
         });
       }
     };

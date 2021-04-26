@@ -208,6 +208,22 @@
               font-size: 18px;
             }
           }
+
+          .inbox-list-item-mailbox {
+            max-width: 120px;
+            color: @textPrimaryColor;
+
+            span {
+              overflow: hidden;
+              text-overflow: ellipsis;
+              margin-left: 10px;
+              background-color: lighten(@m-gray, 10%);
+              padding: 2px 8px;
+              border-radius: 2px;
+              font-size: 11.5px;
+              font-weight: 400;
+            }
+          }
         }
 
         .preview {
@@ -281,6 +297,14 @@
               top: 10px;
               left: 10px;
             }
+          }
+        }
+
+        .highlight {
+          background: @m-yellow;
+
+          &.empty {
+            display: none;
           }
         }
       }
