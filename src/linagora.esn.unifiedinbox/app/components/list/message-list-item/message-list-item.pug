@@ -21,17 +21,17 @@
       .media-body(ng-class="{ bold: ctrl.item.isUnread }")
         .inbox-list-item-subject-and-from
           .inbox-subject.lv-title
-            span.inbox-subject-inline {{ ctrl.item.subject }}
+            span.inbox-subject-inline(ng-bind-html="ctrl.item.subject | esnHighlight: ctrl.query") {{ ctrl.item.subject }}
             span.inbox-preview-inline.inbox-preview-divider(ng-if='ctrl.item.subject') -
-            .inbox-preview-inline.lv-small.preview(ng-if="ctrl.item.preview") {{ ctrl.item.preview }}
+            .inbox-preview-inline.lv-small.preview(ng-if="ctrl.item.preview", ng-bind-html="ctrl.item.preview | esnHighlight: ctrl.query") {{ ctrl.item.preview }}
           .flags-container
             i.flag-icon.mdi.mdi-forward.visible-xl(ng-if='ctrl.item.isForwarded', title="{{ 'Forwarded' | translate }}")
             i.flag-icon.mdi.mdi-reply.visible-xl(ng-if='ctrl.item.isAnswered', title="{{ 'Replied' | translate }}")
           .inbox-from.lv-title
             span.inbox-item-draft(ng-if="ctrl.item.isDraft") {{ 'Draft' | translate }}
             span.inbox-item-draft-divider -
-            inbox-emailer(is-unread="ctrl.item.isUnread", ng-if="ctrl.mailboxRole !== 'sent'", emailer="ctrl.item.from")
-            inbox-emailer-group(ng-if="ctrl.mailboxRole === 'sent' && ctrl.item.emailRecipients", group="ctrl.item.emailRecipients", display-inline="true")
+            inbox-emailer(is-unread="ctrl.item.isUnread", ng-if="ctrl.mailboxRole !== 'sent'", emailer="ctrl.item.from", highlight="{{::ctrl.query}}")
+            inbox-emailer-group(ng-if="ctrl.mailboxRole === 'sent' && ctrl.item.emailRecipients", group="ctrl.item.emailRecipients", display-inline="true", highlight="{{::ctrl.query}}")
         .inbox-list-item-date-and-indicators
           .inbox-hover-actions.flex-row(ng-click='$event.stopPropagation(); $event.preventDefault()')
               i.mdi.mdi-delete.waves-notransition(ng-if='ctrl.canTrashMessages()', ng-click='ctrl.moveToTrash()', title="{{ 'Delete' | translate }}")
@@ -46,6 +46,9 @@
                     cal-inbox-resource-management-indicator(ng-if="ctrl.shouldDisplayCalendarResourceManagementIndicator")
                   i.flag-icon.mdi.mdi-paperclip(ng-if='ctrl.shouldDisplayAttachmentIndicator', title="{{ 'Attachments' | translate }}")
             .date-container
-            span(ng-attr-title="{{ctrl.item.date  | esnDatetime: 'shortDate time' }}") {{ ctrl.item.date | inboxItemDate }}
-          inbox-indicators(item="ctrl.item", hidden-xl="true")
-    .inbox-preview-block.preview {{ ctrl.item.preview }}
+            span(ng-attr-title="{{ctrl.item.date | esnDatetime: 'shortDate time' | esnHighlight: query }}") {{ ctrl.item.date | inboxItemDate }}
+          .flex-end
+            .inbox-list-item-mailbox.ellipsis.flex-vertical-centered(ng-if="ctrl.shouldDisplayMailbox")
+              span(ng-repeat="mailbox in ctrl.item.mailboxes track by $index", title="{{ ::mailbox.name }}")  {{ ::mailbox.name }}
+            inbox-indicators(item="ctrl.item", hidden-xl="true")
+    .inbox-preview-block.preview(ng-bind-html="ctrl.item.preview | esnHighlight: ctrl.query") {{ ctrl.item.preview }}

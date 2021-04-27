@@ -26,6 +26,7 @@
       .badge {
         color: inherit;
         font-weight: 500;
+        margin-right: 0;
       }
     }
 
@@ -36,7 +37,7 @@
       right: initial;
       border-radius: 0 0;
       border: initial;
-      box-shadow: -10px 0px 3px @body-bg;
+      box-shadow: -6px 0px 3px @body-bg;
       letter-spacing: .3px;
       position: relative;
     }
@@ -49,7 +50,8 @@
 
       .badge {
         background-color: @darkenBgColor;
-        box-shadow: -10px 0px 3px @darkenBgColor;
+        box-shadow: -6px 0px 3px @darkenBgColor;
+        margin-right: 0;
       }
     }
 
@@ -69,7 +71,7 @@
 
   .listview:not(.lv-lg):not(.lv-message) {
     .lv-item:not(.menu-heading) {
-      padding: 3px 3px 3px 25px;
+      padding: 3px 3px 3px 20px;
     }
 
     .lv-item.toggle-submenu:not(.toggle-empty) {
@@ -224,7 +226,7 @@
 
 .is-mobile .inbox-aside .clickable {
   &.selected .badge {
-    box-shadow: -4px 0px 20px @darkenBgColor;
+    box-shadow: -6px 0px 3px @darkenBgColor;
     background-color: @darkenBgColor;
   }
 
@@ -236,6 +238,6 @@
 
   .badge {
     background-color: white;
-    box-shadow: -4px 0px 20px white;
+    box-shadow: -6px 0px 3px white;
   }
 }
