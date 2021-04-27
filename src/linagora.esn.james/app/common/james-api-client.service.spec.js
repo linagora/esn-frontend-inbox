@@ -6,7 +6,7 @@ const jamesApi = require('esn-api-client/src/api/james');
 const { expect } = chai;
 
 describe('The jamesApiClient factory', function() {
-  let jamesApiClient;
+  let jamesApiClient; // eslint-disable-line no-unused-vars
   let jamesApiMock, esnApiClientMock;
 
   beforeEach(function() {
