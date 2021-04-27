@@ -48,6 +48,12 @@ describe('The inboxMessageListItem directive', function() {
         return $q.when('Sent');
       }
     });
+
+    var mailbox = [{ id: '1', name: 'My mailbox' }];
+
+    inboxMailboxesService.assignMailbox = sinon.spy(function() {
+      return $q.when(mailbox);
+    });
   }));
 
   describe('the exposed functions from inboxJmapItemService', function() {
@@ -59,7 +65,7 @@ describe('The inboxMessageListItem directive', function() {
     });
 
     it('should expose several functions to the element controller', function() {
-      const controller = initController({ item: $scope.item });
+      const controller = initController();
 
       ['reply', 'replyAll', 'forward', 'markAsUnread', 'markAsRead', 'markAsFlagged',
         'unmarkAsFlagged', 'moveToTrash', 'moveToSpam', 'unSpam'].forEach(function(action) {
@@ -79,11 +85,21 @@ describe('The inboxMessageListItem directive', function() {
         }
       });
 
-      const controller = initController();
+      const controller = initController({ item: $scope.item });
 
       $rootScope.$digest();
 
       expect(controller.mailboxRole).to.equal('-Role-');
+    });
+
+    it('should get mailboxes of each item', function() {
+      $scope.item = { mailboxIds: ['1', '2', '3'] };
+
+      const controller = initController({ item: $scope.item });
+
+      $rootScope.$digest();
+
+      expect(controller.item.mailboxes[0]).to.deep.equal([{ id: '1', name: 'My mailbox' }]);
     });
   });
 
@@ -166,6 +182,12 @@ describe('The inboxMessageListItem directive', function() {
         canMoveMessagesOutOfMailbox: sinon.stub(inboxMailboxesService, 'canMoveMessagesOutOfMailbox').callsFake(function() { return serviceFunctionStubResult; }),
         canUnSpamMessages: sinon.stub(inboxMailboxesService, 'canUnSpamMessages').callsFake(function() { return serviceFunctionStubResult; })
       };
+
+      var mailbox = { id: 'aca5887c-2a90-4180-9b53-042f7917f4d8', name: 'My mailbox' };
+
+      inboxMailboxesService.assignMailbox = sinon.spy(function() {
+        return $q.when(mailbox);
+      });
     }));
 
     describe('The canTrashMessages function', function() {
@@ -203,7 +225,6 @@ describe('The inboxMessageListItem directive', function() {
 
       it('should return true when neither context nor scope.email', function() {
         $stateParams.context = null;
-        $scope.item = null;
 
         const controller = initController({ item: $scope.item });
 

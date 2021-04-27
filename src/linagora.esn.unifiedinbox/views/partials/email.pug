@@ -36,8 +36,20 @@
         message="email"
       )
 
-    .lv-footer.attachments(ng-if="email.attachments.length > 0")
-      inbox-attachment(ng-repeat="attachment in email.attachments", ng-if="::!attachment.isInline", attachment="::attachment")
+    div(ng-if="email.attachments.length > 0")
+      md-card
+        md-card-header(ng-click="isExpand = !isExpand")
+          md-card-header-text.flex.flex-start
+            i.mdi.mdi-paperclip(title="{{ attachmentsNumber > 1 ? 'Attachments' : 'Attachment' | translate }}")
+            span.md-subhead
+              | {{ attachmentsNumber }} {{ attachmentsNumber > 1 ? 'Attachments' : 'Attachment' | translate }}
+            span.subhead-size {{ attachmentsSize | bytes }}
+          md-card-header-text.flex.flex-end
+            md-button.md-icon-button(aria-label='icon')
+              md-icon(md-svg-icon="{{ isExpand ? 'chevron-double-up' : 'chevron-double-down' }}")
+
+        md-card-content.lv-footer.attachments(ng-class="{ expand: isExpand, 'more-6':attachmentsNumber > 6 }")
+          inbox-attachment(ng-repeat="attachment in email.attachments", ng-if="::!attachment.isInline", attachment="::attachment")
 
     .text-center(ng-if="!email.loaded", openpaas-logo-spinner, spinner-start-active="1", spinner-size="0.4")
 

@@ -65,8 +65,9 @@ angular.module('esn.inbox.libs')
     toolbar: [
       ['style', ['style']],
       ['color', ['color']],
-      ['font', ['bold', 'italic', 'underline', 'strikethrough']],
-      ['alignment', ['paragraph', 'ul', 'ol']]
+      ['font', ['bold', 'italic', 'underline', 'strikethrough', 'clear']],
+      ['alignment', ['ul', 'ol', 'paragraph']],
+      ['table', ['table']]
     ],
     keyMap: {
       pc: { 'CTRL+ENTER': '', ENTER: 'insertParagraph' },
