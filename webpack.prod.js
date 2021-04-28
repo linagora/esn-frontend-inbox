@@ -13,7 +13,7 @@ module.exports = merge(commons, {
   output: {
     filename: '[name].[hash].min.js',
     path: path.resolve(__dirname, 'dist'),
-    publicPath: [BASE_HREF, '/inbox']
+    publicPath: BASE_HREF
   },
   module: {
     rules: [
