@@ -1568,6 +1568,50 @@ describe('The inboxMailboxesService factory', function() {
       $rootScope.$digest();
     });
 
+    it('should fetch all mailboxes when server cannot calculate changes', function(done) {
+      inboxMailboxesCache.state = '1';
+      inboxMailboxesCache.list = [
+        {
+          id: 1, name: '1', namespace: 'Personal'
+        },
+        {
+          id: 2, name: '2', namespace: 'Delegated'
+        }
+      ];
+      jmapClient.mailbox_get = sinon.spy(function() {
+        return $q.when({
+          state: '3',
+          list: [
+            { id: 1, name: '1', namespace: 'Delegated' },
+            { id: 3, name: '3', namespace: 'Personal' }
+          ]
+        });
+      });
+      jmapClient.mailbox_changes = function() {
+        return $q.reject({ type: 'cannotCalculateChanges' });
+      };
+
+      inboxMailboxesService.updateMailboxCache().then(function() {
+        expect(inboxMailboxesCache).to.deep.equal({
+          state: '3',
+          list: [
+            {
+              id: 1, name: '1', namespace: 'Delegated', level: 1, qualifiedName: '1'
+            },
+            {
+              id: 3, name: '3', namespace: 'Personal', level: 1, qualifiedName: '3'
+            }
+          ]
+        });
+        expect(jmapClient.mailbox_get).to.have.been.calledOnce;
+        expect(jmapClient.mailbox_get.getCall(0).args[0].ids).to.equal(null);
+
+        done();
+      });
+
+      $rootScope.$digest();
+    });
+
     it('should add and remove anything on inboxMailboxesCache', function(done) {
       inboxMailboxesCache.state = '1';
       inboxMailboxesCache.list = [
