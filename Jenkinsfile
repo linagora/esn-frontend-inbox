@@ -32,7 +32,7 @@ pipeline {
         script {
           def dockerImage = docker.build 'linagora/esn-frontend-inbox'
           docker.withRegistry('', 'dockerHub') {
-            dockerImage.push('latest')
+            dockerImage.push('main')
           }
         }
       }
