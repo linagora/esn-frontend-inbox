@@ -36,7 +36,7 @@
         message="email"
       )
 
-    div(ng-if="email.attachments.length > 0")
+    div(ng-if="attachmentsNumber > 0")
       md-card
         md-card-header(ng-click="isExpand = !isExpand")
           md-card-header-text.flex.flex-start
@@ -49,7 +49,7 @@
               md-icon(md-svg-icon="{{ isExpand ? 'chevron-double-up' : 'chevron-double-down' }}")
 
         md-card-content.lv-footer.attachments(ng-class="{ expand: isExpand, 'more-6':attachmentsNumber > 6 }")
-          inbox-attachment(ng-repeat="attachment in email.attachments", ng-if="::!attachment.isInline", attachment="::attachment")
+          inbox-attachment(ng-repeat="attachment in noInlineAttachments", attachment="::attachment")
 
     .text-center(ng-if="!email.loaded", openpaas-logo-spinner, spinner-start-active="1", spinner-size="0.4")
 
