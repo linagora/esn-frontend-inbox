@@ -44,7 +44,7 @@
     "dotenv-webpack": "^2.0.0",
     "eslint": "^7.8.1",
     "eslint-config-airbnb-base": "^14.2.0",
-    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-import": "2.22.0",
     "esn-frontend-login": "github:openpaas-suite/esn-frontend-login#main",
     "exports-loader": "^1.0.0",
     "expose-loader": "^1.0.0",
