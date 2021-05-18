@@ -76,6 +76,14 @@ module.exports = {
         {
           from: path.resolve(__dirname, 'env', 'openpaas.js'),
           to: 'env'
+        },
+        {
+          from: path.resolve(__dirname, 'src', 'linagora.esn.unifiedinbox', 'images', 'white-logo.svg'),
+          to: 'images'
+        },
+        {
+          from: path.resolve(__dirname, 'node_modules', 'socket.io-client', 'dist', 'socket.io.js'),
+          to: 'socket.io/socket.io.js'
         }
       ]
     })
@@ -220,7 +228,7 @@ module.exports = {
         }
       },
       {
-        test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+        test: /\.(woff(2)?|ttf|eot)(\?v=\d+\.\d+\.\d+)?$/,
         use: [
           {
             loader: 'file-loader'
@@ -247,16 +255,15 @@ module.exports = {
         ]
       },
       {
-        test: /\.(png|jpe?g|gif)$/i,
+        test: /\.(png|jpe?g|gif|svg)$/i,
         use: [
           {
-            loader: 'url-loader'
+            loader: 'file-loader',
+            options: {
+              outputPath: 'images'
+            }
           }
         ]
-      },
-      {
-        test: /\.svg$/,
-        loader: 'svg-inline-loader'
       },
       /*
       * for the "index.html" file of this SPA.
