@@ -2,7 +2,6 @@ angular.module('esnApp', [
   'ui.router',
   'ct.ui.router.extras.dsr',
   'linagora.esn.unifiedinbox',
-  'linagora.esn.james',
   'esn.session',
   'esn.login',
   'esn.material',
@@ -17,6 +16,5 @@ require('esn-frontend-common-libs/src/frontend/js/modules/material/material.modu
 
 require('./app.config');
 require('./app.run');
-require('../linagora.esn.james/app/app.module.js');
 require('../linagora.esn.unifiedinbox/app/app.js');
 require('../esn.inbox.libs/app/app.module.js');
