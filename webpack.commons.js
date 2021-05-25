@@ -94,6 +94,7 @@ module.exports = {
     publicPath: '/inbox/',
     compress: true,
     port: 9900,
+    historyApiFallback: true,
     proxy: [
       {
         context: [
