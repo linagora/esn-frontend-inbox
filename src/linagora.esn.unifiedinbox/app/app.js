@@ -45,7 +45,6 @@ angular.module('linagora.esn.unifiedinbox', [
   'esn.dropdownList',
   'material.components.menuBar',
   'esn.attachments-selector',
-  'linagora.esn.james',
   'esn.inbox.libs',
   'esn.inbox-calendar',
   'linagora.esn.unifiedinbox.linshare',
