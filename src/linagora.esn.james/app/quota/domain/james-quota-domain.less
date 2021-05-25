@@ -1,0 +1,39 @@
+james-quota-domain {
+  a {
+    &:extend(.dropdown-menu > li > a);
+    &:extend(.dropdown-menu.dropdown-menu-right > li > a);
+
+    &:hover {
+      &:extend(.dropdown-menu > li > a:hover);
+    }
+  }
+}
+
+.james-quota-domain-dialog {
+  .helper-text {
+    .text-muted;
+
+    padding-left:15px;
+  }
+
+  .quota-set {
+    margin-top: 30px;
+  }
+
+  small {
+    display: block;
+  }
+
+  james-quota-form {
+    .row {
+      margin-left: 0;
+      margin-right: 0;
+    }
+  }
+
+  .error-message {
+    color: @secondaryTextColor;
+    font-size: 1.4em;
+    text-align: center;
+  }
+}
