@@ -93,6 +93,8 @@ module.exports = {
     contentBasePublicPath: [BASE_HREF, '/login'],
     publicPath: '/inbox/',
     compress: true,
+    host: '0.0.0.0',
+    disableHostCheck: true,
     port: 9900,
     historyApiFallback: true,
     proxy: [
