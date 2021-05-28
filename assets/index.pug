@@ -2,7 +2,7 @@ doctype html
 html.loading.full-height
   head
     meta(charset='utf8')
-    base(href=base)
+    base(href="/PREFIX_PLACEHOLDER/")
     title Inbox - OpenPaas
     meta(name="viewport", content="width=device-width, initial-scale=1")
     meta(name="theme-color", content="#0C7CD5")
@@ -34,9 +34,11 @@ html.loading.full-height
           transform: translateY(-12px);
         }
       }
-    script(src="/socket.io/socket.io.js")
+    script(src="/PREFIX_PLACEHOLDER/socket.io/socket.io.js")
+    script(src="/PREFIX_PLACEHOLDER/env/openpaas.js")
+    script
+      include set-public-path.js
 
   body.container-fluid(ng-app="esnApp", ng-controller="sessionInitESNController", device-detector, ng-class="{ 'grabbable': esnIsDragging }")
     #wrap(ng-include='session.template')
       include ../src/app/app-loading.pug
-    script(src="/inbox/env/openpaas.js")

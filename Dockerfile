@@ -5,9 +5,6 @@ ARG NGINX_VERSION=1.19.3
 
 FROM node:${NODE_VERSION} as build-stage
 
-ARG BASE_HREF=/inbox/
-ARG APP_GRID_ITEMS="[{ \"name\": \"Calendar\", \"url\": \"/calendar/\" }, { \"name\": \"Contacts\", \"url\": \"/contacts/\" }, { \"name\": \"Inbox\", \"url\": \"/inbox/\" }]"
-
 WORKDIR /app
 
 COPY package.json /app/
@@ -17,7 +14,7 @@ RUN npm install
 COPY . .
 
 # Production mode build
-RUN npm run build:prod
+RUN npm run build:dev
 
 ### STAGE 2: Add Nginx for hosting the AngularJS app ###
 
@@ -29,10 +26,10 @@ RUN rm -rf /usr/share/nginx/html/*
 # Copy the bundle
 COPY --from=build-stage /app/dist /usr/share/nginx/html
 
+# Copy nginx entrypoint scripts
+COPY scripts/nginx-entrypoints /docker-entrypoint.d
+
 # Copy the default nginx.conf
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY nginx.conf.template /etc/nginx/templates/default.conf.template
 
 EXPOSE 80
-
-# Start Nginx server
-CMD ["/bin/bash", "-c", "nginx -g \"daemon off;\""]

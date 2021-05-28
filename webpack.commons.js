@@ -23,7 +23,7 @@ module.exports = {
   output: {
     filename: 'main.js',
     path: path.resolve(__dirname, 'dist'),
-    publicPath: '/inbox/'
+    publicPath: '/PREFIX_PLACEHOLDER/'
   },
   resolve: {
     alias: {
@@ -61,7 +61,8 @@ module.exports = {
     }),
     new FaviconsWebpackPlugin({
       logo: './src/linagora.esn.unifiedinbox/images/inbox-icon.svg',
-      prefix: 'inbox-assets/'
+      outputPath: '/images',
+      prefix: 'PREFIX_PLACEHOLDER/images/'
     }),
     new CopyWebpackPlugin({
       patterns: [
@@ -90,45 +91,13 @@ module.exports = {
   ],
   devServer: {
     contentBase: [path.join(__dirname, 'dist'), path.resolve(__dirname, 'node_modules', 'esn-frontend-login', 'dist')],
-    contentBasePublicPath: [BASE_HREF, '/login'],
-    publicPath: '/inbox/',
+    contentBasePublicPath: ['/PREFIX_PLACEHOLDER/', '/login'],
+    publicPath: '/PREFIX_PLACEHOLDER/',
     compress: true,
     host: '0.0.0.0',
     disableHostCheck: true,
     port: 9900,
     historyApiFallback: true,
-    proxy: [
-      {
-        context: [
-          '/auth',
-          '/api',
-          '/logout',
-          '/views',
-          '/account/api',
-          '/profile/app',
-          '/controlcenter/app',
-          '/images',
-          '/socket.io/',
-          '/user-status/app/bubble/',
-          '/user-status/api',
-          '/contact/app',
-          '/contact/images',
-          '/dav/api',
-          '/unifiedinbox/views',
-          '/unifiedinbox/app',
-          '/unifiedinbox/api',
-          '/calendar/app',
-          '/calendar/api',
-          '/linagora.esn.resource/api',
-          '/linagora.esn.linshare/api'
-        ],
-        target: OPENPAAS_URL,
-        disableHostCheck: true,
-        secure: true,
-        changeOrigin: true,
-        withCredentials: true
-      }
-    ]
   },
   module: {
     rules: [
@@ -282,7 +251,7 @@ module.exports = {
             loader: 'pug-html-loader',
             options: {
               data: {
-                base: BASE_HREF
+                base: '/'
               }
             }
           }
