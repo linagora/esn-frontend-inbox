@@ -28,7 +28,8 @@ describe('The linagora.esn.unifiedinbox List module directives', function() {
     });
 
     $provide.value('esnI18nService', {
-      translate: text => text
+      translate: text => text,
+      getLocale: sinon.stub().returns('en')
     });
   }));
 
