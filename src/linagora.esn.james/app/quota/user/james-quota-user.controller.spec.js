@@ -14,12 +14,6 @@ describe('The jamesQuotaUserController', function() {
 
   beforeEach(function() {
     angular.mock.module('linagora.esn.james');
-    angular.mock.module('esn.configuration', function($provide) {
-      $provide.value('esnConfig', function() {
-        return $q.when();
-      });
-    });
-
     angular.mock.inject(function(
       _$controller_,
       _$rootScope_,
