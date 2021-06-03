@@ -96,6 +96,7 @@ module.exports = {
     host: '0.0.0.0',
     disableHostCheck: true,
     port: 9900,
+    historyApiFallback: true,
     proxy: [
       {
         context: [
