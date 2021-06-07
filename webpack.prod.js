@@ -9,7 +9,7 @@ module.exports = merge(commons, {
   mode: 'production',
   devtool: 'source-map',
   output: {
-    filename: '[name].[hash].min.js',
+    filename: '[name].[hash].min.js'
   },
   module: {
     rules: [
