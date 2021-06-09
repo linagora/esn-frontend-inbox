@@ -22,7 +22,7 @@ function inboxEmailerResolver(inboxCacheService, esnAvatarUrlService, INBOX_AVAT
         }
 
         self.id = person && person.id;
-        self.avatarUrl = person && person.photos && person.photos[0] && person.photos[0].url || esnAvatarUrlService.generateUrl(self.email, self.name);
+        self.avatarUrl = esnAvatarUrlService.generateUrl(self.email, self.name);
       })
       .then(function() {
         return {
