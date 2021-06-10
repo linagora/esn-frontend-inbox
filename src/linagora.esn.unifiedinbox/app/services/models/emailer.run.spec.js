@@ -42,7 +42,7 @@ describe('The EMailer run block', function() {
     emailer.resolve();
     $rootScope.$digest();
 
-    expect(emailer.avatarUrl).to.equal('/photo');
+    expect(emailer.avatarUrl).to.equal('/api/avatars?email=a@a.com&objectType=email&displayName=displayName');
     expect(emailer.name).to.equal('displayName');
   });
 
@@ -62,7 +62,7 @@ describe('The EMailer run block', function() {
     emailer.resolve();
     $rootScope.$digest();
 
-    expect(emailer.avatarUrl).to.equal('/photo');
+    expect(emailer.avatarUrl).to.equal('/api/avatars?email=a@a.com&objectType=email&displayName=a');
     expect(emailer.name).to.equal('a');
   });
 
@@ -136,8 +136,8 @@ describe('The EMailer run block', function() {
     emailer.resolve().then(function(avatar) {
       expect(avatar).to.deep.equal({
         id: 'myId',
-        url: '/photo?size=' + INBOX_AVATAR_SIZE,
-        email: 'a@a.com'
+        email: 'a@a.com',
+        url: '/api/avatars?email=a@a.com&objectType=email&displayName=a&size=' + INBOX_AVATAR_SIZE
       });
 
       done();
@@ -162,7 +162,7 @@ describe('The EMailer run block', function() {
     emailer.resolve().then(function(avatar) {
       expect(avatar).to.deep.equal({
         id: false,
-        url: '/photo?size=' + INBOX_AVATAR_SIZE,
+        url: '/api/avatars?email=a@a.com&objectType=email&displayName=displayName&size=' + INBOX_AVATAR_SIZE,
         email: 'a@a.com'
       });
 
