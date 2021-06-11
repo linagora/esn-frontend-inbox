@@ -3,6 +3,8 @@ const webpack = require('webpack');
 const { merge } = require('webpack-merge');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
+const CompressionWebpackPlugin = require('compression-webpack-plugin');
+
 const commons = require('./webpack.commons.js');
 
 module.exports = merge(commons, {
@@ -38,6 +40,7 @@ module.exports = merge(commons, {
     ]
   },
   plugins: [
+    new CompressionWebpackPlugin(),
     new CleanWebpackPlugin(),
     new webpack.ProgressPlugin(),
     new webpack.HashedModuleIdsPlugin(),
