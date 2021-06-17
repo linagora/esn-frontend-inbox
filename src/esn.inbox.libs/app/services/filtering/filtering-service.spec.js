@@ -10,6 +10,18 @@ describe('The inboxFilteringService service', function() {
 
   beforeEach(angular.mock.module('esn.inbox.libs'));
 
+  const tokenAPIMock = {
+    getWebToken() {
+      return $q.when({ data: 'jwt' });
+    }
+  };
+
+  beforeEach(function() {
+    angular.mock.module(function($provide) {
+      $provide.value('tokenAPI', tokenAPIMock);
+    });
+  });
+
   beforeEach(angular.mock.inject(function(_$rootScope_, inboxFilteringService, inboxFilters, _INBOX_EVENTS_) {
     $rootScope = _$rootScope_;
     service = inboxFilteringService;

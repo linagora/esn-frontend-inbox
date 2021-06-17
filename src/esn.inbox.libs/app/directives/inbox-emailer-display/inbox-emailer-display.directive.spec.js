@@ -23,6 +23,18 @@ describe('The inboxEmailerDisplay directive', function() {
     return element;
   }
 
+  const tokenAPIMock = {
+    getWebToken() {
+      return $q.when({ data: 'jwt' });
+    }
+  };
+
+  beforeEach(function() {
+    angular.mock.module(function($provide) {
+      $provide.value('tokenAPI', tokenAPIMock);
+    });
+  });
+
   beforeEach(function() {
     angular.mock.module('esn.inbox.libs');
   });

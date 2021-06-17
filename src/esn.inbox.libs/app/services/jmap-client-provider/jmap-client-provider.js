@@ -2,11 +2,10 @@
 
 require('../config/config.js');
 require('../jmap-client-wrapper/jmap-client-wrapper.service.js');
-require('../generate-jwt-token/generate-jwt-token.js');
 require('../custom-role-mailbox/custom-role-mailbox.service.js');
 
 angular.module('esn.inbox.libs')
-  .service('jmapClientProvider', function($q, inboxConfig, jmapDraft, dollarHttpTransport, dollarQPromiseProvider, generateJwtToken, inboxCustomRoleMailboxService) {
+  .service('jmapClientProvider', function($q, inboxConfig, jmapDraft, dollarHttpTransport, dollarQPromiseProvider, tokenAPI, inboxCustomRoleMailboxService) {
     let jmapClient;
 
     return {
@@ -17,14 +16,14 @@ angular.module('esn.inbox.libs')
 
     function _initializeJmapClient() {
       return $q.all([
-        generateJwtToken(),
+        tokenAPI.getWebToken(),
         inboxConfig('api'),
         inboxConfig('downloadUrl')
-      ]).then(function(data) {
+      ]).then(function([{ data: jwt }, apiUrl, downloadUrl]) {
         jmapClient = new jmapDraft.Client(dollarHttpTransport, dollarQPromiseProvider)
-          .withAPIUrl(data[1])
-          .withDownloadUrl(data[2])
-          .withAuthenticationToken('Bearer ' + data[0])
+          .withAPIUrl(apiUrl)
+          .withDownloadUrl(downloadUrl)
+          .withAuthenticationToken(`Bearer ${jwt}`)
           .withCustomMailboxRoles(inboxCustomRoleMailboxService.getAllRoles())
           .withJmapVersionHeader();
 
@@ -33,6 +32,10 @@ angular.module('esn.inbox.libs')
     }
 
     function get() {
-      return jmapClient ? $q.when(jmapClient) : _initializeJmapClient();
+      if (jmapClient) {
+        return tokenAPI.getWebToken().then(({ data: jwt }) => jmapClient.withAuthenticationToken(`Bearer ${jwt}`));
+      }
+
+      return _initializeJmapClient();
     }
   });

@@ -57,7 +57,6 @@ require('./services/mailboxes/shared-mailboxes.js');
 require('./services/mailboxes/special-mailboxes.constants.js');
 require('./services/mailboxes/special-mailboxes.js');
 require('./services/mailboxes/special-mailboxes.run.js');
-require('./services/generate-jwt-token/generate-jwt-token.js');
 require('./services/hook/email-composing-hook.service.js');
 require('./services/hook/email-sending-hook.service.js');
 require('./services/identities/inbox-identities.service.js');
