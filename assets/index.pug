@@ -34,9 +34,9 @@ html.loading.full-height
           transform: translateY(-12px);
         }
       }
-    script(src=base + "socket.io/socket.io.js")
+    script(src=base + "assets/socket.io/socket.io.js")
 
   body.container-fluid(ng-app="esnApp", ng-controller="sessionInitESNController", device-detector, ng-class="{ 'grabbable': esnIsDragging }")
     #wrap(ng-include='session.template')
       include ../src/app/app-loading.pug
-    script(src=base + "env/openpaas.js")
+    script(src=base + "assets/env/openpaas.js")

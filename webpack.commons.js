@@ -16,13 +16,14 @@ const pugLoaderOptions = {
 };
 
 const BASE_HREF = process.env.BASE_HREF || '/inbox/';
+const assetsFolder = 'assets/';
 
 module.exports = {
   entry: './src/index.js',
   output: {
     filename: 'main.js',
-    path: path.resolve(__dirname, 'dist'),
-    publicPath: BASE_HREF
+    path: path.resolve(__dirname, 'dist', assetsFolder),
+    publicPath: BASE_HREF + assetsFolder
   },
   resolve: {
     alias: {
@@ -56,11 +57,11 @@ module.exports = {
      */
     new HtmlWebpackPlugin({
       template: './assets/index.pug',
-      filename: './index.html'
+      filename: '../index.html'
     }),
     new FaviconsWebpackPlugin({
       logo: './src/linagora.esn.unifiedinbox/images/inbox-icon.svg',
-      prefix: 'inbox-assets/'
+      prefix: 'favicon/'
     }),
     new CopyWebpackPlugin({
       patterns: [
@@ -92,8 +93,8 @@ module.exports = {
     })
   ],
   devServer: {
-    contentBase: [path.resolve(__dirname, 'node_modules', 'esn-frontend-login', 'dist')],
-    contentBasePublicPath: ['/login'],
+    contentBase: [path.join(__dirname, 'dist'), path.resolve(__dirname, 'node_modules', 'esn-frontend-login', 'dist')],
+    contentBasePublicPath: [BASE_HREF + 'index.html', '/login'],
     compress: true,
     host: '0.0.0.0',
     disableHostCheck: true,
