@@ -8,8 +8,15 @@ describe('The jmapClientProvider service', function() {
 
   var $rootScope, jmapClientProvider, jmapDraft, config;
 
+  const tokenAPIMock = {
+    getWebToken() {
+      return $q.when({ data: 'jwt' });
+    }
+  };
+
   beforeEach(function() {
     angular.mock.module('esn.inbox.libs', function($provide) {
+      $provide.value('tokenAPI', tokenAPIMock);
       config = config || {};
 
       $provide.value('esnConfig', function(key, defaultValue) {
@@ -33,11 +40,7 @@ describe('The jmapClientProvider service', function() {
   it('should return a rejected promise if jwt generation fails', function(done) {
     var error = new Error('error message');
 
-    angular.mock.module(function($provide) {
-      $provide.value('generateJwtToken', function() {
-        return $q.reject(error);
-      });
-    });
+    tokenAPIMock.getWebToken = () => $q.reject(error);
     injectServices.bind(this)();
 
     jmapClientProvider.get().then(done.bind(null, 'should reject'), function(err) {
@@ -49,23 +52,20 @@ describe('The jmapClientProvider service', function() {
   });
 
   it('should return a fulfilled promise if jwt generation succeed', function(done) {
-    angular.mock.module(function($provide) {
-      $provide.value('generateJwtToken', function() {
-        return $q.when('expected jwt');
-      });
-    });
     config['linagora.esn.unifiedinbox.api'] = 'expected jmap api';
     config['linagora.esn.unifiedinbox.downloadUrl'] = 'expected jmap downloadUrl';
+    tokenAPIMock.getWebToken = () => $q.when({ data: 'jwt' });
     injectServices.bind(this)();
 
-    jmapClientProvider.get().then(function(client) {
-      expect(client).to.be.an.instanceof(jmapDraft.Client);
-      expect(client.authToken).to.equal('Bearer expected jwt');
-      expect(client.apiUrl).to.equal('expected jmap api');
-      expect(client.downloadUrl).to.equal('expected jmap downloadUrl');
+    jmapClientProvider.get()
+      .then(function(client) {
+        expect(client).to.be.an.instanceof(jmapDraft.Client);
+        expect(client.authToken).to.equal('Bearer jwt');
+        expect(client.apiUrl).to.equal('expected jmap api');
+        expect(client.downloadUrl).to.equal('expected jmap downloadUrl');
 
-      done();
-    }, done.bind(null, 'should resolve'));
+        done();
+      });
     $rootScope.$digest();
   });
 
