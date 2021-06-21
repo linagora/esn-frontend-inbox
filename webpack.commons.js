@@ -86,6 +86,10 @@ module.exports = {
           to: 'images'
         },
         {
+          from: path.resolve(__dirname, 'src', 'linagora.esn.unifiedinbox', 'images', 'logo-tiny.png'),
+          to: 'images'
+        },
+        {
           from: path.resolve(__dirname, 'node_modules', 'socket.io-client', 'dist', 'socket.io.js'),
           to: 'socket.io/socket.io.js'
         }
