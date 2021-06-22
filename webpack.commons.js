@@ -78,15 +78,7 @@ module.exports = {
           to: 'env'
         },
         {
-          from: path.resolve(__dirname, 'src', 'linagora.esn.unifiedinbox', 'images', 'white-logo.svg'),
-          to: 'images'
-        },
-        {
-          from: path.resolve(__dirname, 'src', 'linagora.esn.unifiedinbox', 'images', 'user.png'),
-          to: 'images'
-        },
-        {
-          from: path.resolve(__dirname, 'src', 'linagora.esn.unifiedinbox', 'images', 'logo-tiny.png'),
+          from: path.resolve(__dirname, 'src', 'linagora.esn.unifiedinbox', 'images'),
           to: 'images'
         },
         {
