@@ -13,7 +13,7 @@ function inboxEmailerResolver(esnAvatarUrlService, INBOX_AVATAR_SIZE) {
     var self = this;
 
     self.objectType = 'email';
-    self.avatarUrl = esnAvatarUrlService.generateUrl(self.email, self.name);
+    self.avatarUrl = esnAvatarUrlService.generateUrlByUserEmail(self.email);
 
     return Promise.resolve({
       id: false,

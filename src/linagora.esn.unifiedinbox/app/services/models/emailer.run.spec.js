@@ -27,7 +27,7 @@ describe('The EMailer run block', function() {
     emailer.resolve();
     $rootScope.$digest();
 
-    expect(emailer.avatarUrl).to.equal('/api/avatars?email=a@a.com&objectType=email&displayName=a');
+    expect(emailer.avatarUrl).to.equal('/api/avatars?email=a@a.com');
     expect(emailer.name).to.equal('a');
   });
 
@@ -37,7 +37,7 @@ describe('The EMailer run block', function() {
     emailer.resolve();
     $rootScope.$digest();
 
-    expect(emailer.avatarUrl).to.equal('/api/avatars?email=a@a.com&objectType=email&displayName=a');
+    expect(emailer.avatarUrl).to.equal('/api/avatars?email=a@a.com');
     expect(emailer.name).to.equal('a');
   });
 
@@ -47,7 +47,7 @@ describe('The EMailer run block', function() {
     emailer.resolve();
     $rootScope.$digest();
 
-    expect(emailer.avatarUrl).to.equal('/api/avatars?email=a@a.com&objectType=email&displayName=a');
+    expect(emailer.avatarUrl).to.equal('/api/avatars?email=a@a.com');
     expect(emailer.name).to.equal('a');
   });
 
@@ -57,7 +57,7 @@ describe('The EMailer run block', function() {
     emailer.resolve();
     $rootScope.$digest();
 
-    expect(emailer.avatarUrl).to.equal('/api/avatars?email=a@a.com&objectType=email&displayName=a');
+    expect(emailer.avatarUrl).to.equal('/api/avatars?email=a@a.com');
     expect(emailer.name).to.equal('a');
   });
 
@@ -74,7 +74,7 @@ describe('The EMailer run block', function() {
     const emailer = new jmapDraft.EMailer({ email: 'a@a.com', name: 'a' });
     const resolved = await emailer.resolve();
 
-    expect(resolved.url).to.equal('/api/avatars?email=a@a.com&objectType=email&displayName=a&size=' + INBOX_AVATAR_SIZE);
+    expect(resolved.url).to.equal('/api/avatars?email=a@a.com&size=' + INBOX_AVATAR_SIZE);
   });
 
   it('should set avatar.id only if the match is a user', async() => {
@@ -84,7 +84,7 @@ describe('The EMailer run block', function() {
     expect(resolved).to.deep.equal({
       id: false,
       email: 'a@a.com',
-      url: '/api/avatars?email=a@a.com&objectType=email&displayName=a&size=' + INBOX_AVATAR_SIZE
+      url: '/api/avatars?email=a@a.com&size=' + INBOX_AVATAR_SIZE
     });
   });
 });
