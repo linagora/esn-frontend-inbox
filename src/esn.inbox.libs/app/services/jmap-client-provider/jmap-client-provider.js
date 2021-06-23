@@ -19,13 +19,16 @@ angular.module('esn.inbox.libs')
         tokenAPI.getWebToken(),
         inboxConfig('api'),
         inboxConfig('downloadUrl')
-      ]).then(function([{ data: jwt }, apiUrl, downloadUrl]) {
+      ]).then(function([tokenApiResponse, apiUrl, downloadUrl]) {
         jmapClient = new jmapDraft.Client(dollarHttpTransport, dollarQPromiseProvider)
           .withAPIUrl(apiUrl)
           .withDownloadUrl(downloadUrl)
-          .withAuthenticationToken(`Bearer ${jwt}`)
           .withCustomMailboxRoles(inboxCustomRoleMailboxService.getAllRoles())
           .withJmapVersionHeader();
+
+        if (tokenApiResponse) {
+          return jmapClient.withAuthenticationToken(`Bearer ${tokenApiResponse.data}`);
+        }
 
         return jmapClient;
       });
