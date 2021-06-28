@@ -11,6 +11,9 @@ describe('The jmapClientProvider service', function() {
   const tokenAPIMock = {
     getWebToken() {
       return $q.when({ data: 'jwt' });
+    },
+    getWebTokenWhenSignInComplete() {
+      return $q.when({ data: 'jwt' });
     }
   };
 
