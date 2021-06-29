@@ -44,6 +44,7 @@ describe('The jmapClientProvider service', function() {
     var error = new Error('error message');
 
     tokenAPIMock.getWebToken = () => $q.reject(error);
+    tokenAPIMock.getWebTokenWhenSignInComplete = () => $q.reject(error);
     injectServices.bind(this)();
 
     jmapClientProvider.get().then(done.bind(null, 'should reject'), function(err) {
@@ -58,6 +59,7 @@ describe('The jmapClientProvider service', function() {
     config['linagora.esn.unifiedinbox.api'] = 'expected jmap api';
     config['linagora.esn.unifiedinbox.downloadUrl'] = 'expected jmap downloadUrl';
     tokenAPIMock.getWebToken = () => $q.when({ data: 'jwt' });
+    tokenAPIMock.getWebTokenWhenSignInComplete = () => $q.when({ data: 'jwt' });
     injectServices.bind(this)();
 
     jmapClientProvider.get()

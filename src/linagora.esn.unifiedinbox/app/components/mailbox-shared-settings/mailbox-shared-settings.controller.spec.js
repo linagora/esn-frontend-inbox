@@ -18,7 +18,8 @@ describe('The InboxMailboxSharedSettingsController controller', function() {
     userAPIMock,
     userUtils,
     $q,
-    INBOX_MAILBOX_SHARING_ROLES;
+    INBOX_MAILBOX_SHARING_ROLES,
+    esnAuth;
 
   beforeEach(function() {
     user = {
@@ -43,12 +44,19 @@ describe('The InboxMailboxSharedSettingsController controller', function() {
         return user;
       })
     };
+
+    esnAuth = {
+      signInCompletePromise: {
+        then: callback => callback()
+      }
+    };
   });
 
   beforeEach(function() {
     angular.mock.module('linagora.esn.unifiedinbox');
     angular.mock.module(function($provide) {
       $provide.value('userAPI', userAPIMock);
+      $provide.value('esnAuth', esnAuth);
     });
   });
 

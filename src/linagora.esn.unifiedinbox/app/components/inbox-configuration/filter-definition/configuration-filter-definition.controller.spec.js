@@ -5,7 +5,7 @@
 const { expect } = chai;
 
 describe('The inboxConfigurationFilterDefinitionController', function() {
-  var $controller, $scope, $state, $rootScope, inboxMailboxesService, inboxMailboxesFilterService, JMAP_FILTER, userAPI;
+  var $controller, $scope, $state, $rootScope, inboxMailboxesService, inboxMailboxesFilterService, JMAP_FILTER, userAPI, esnAuth;
 
   beforeEach(function() {
     angular.mock.module('linagora.esn.unifiedinbox', function($provide) {
@@ -27,7 +27,14 @@ describe('The inboxConfigurationFilterDefinitionController', function() {
         })
       };
 
+      esnAuth = {
+        signInCompletePromise: {
+          then: callback => callback()
+        }
+      };
+
       $provide.value('userAPI', userAPI);
+      $provide.value('esnAuth', esnAuth);
       $provide.value('inboxMailboxesFilterService', inboxMailboxesFilterService);
     });
   });
