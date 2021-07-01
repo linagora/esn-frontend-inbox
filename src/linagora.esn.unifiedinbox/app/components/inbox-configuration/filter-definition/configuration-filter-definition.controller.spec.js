@@ -28,9 +28,6 @@ describe('The inboxConfigurationFilterDefinitionController', function() {
       };
 
       esnAuth = {
-        // signInCompletePromise: {
-        //   then: callback => callback()
-        // }
         signInCompletePromise: $q.when()
       };
 

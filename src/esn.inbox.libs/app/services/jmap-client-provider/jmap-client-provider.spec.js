@@ -8,14 +8,7 @@ describe('The jmapClientProvider service', function() {
 
   var $rootScope, jmapClientProvider, jmapDraft, config;
 
-  const tokenAPIMock = {
-    getWebToken() {
-      return $q.when({ data: 'jwt' });
-    },
-    getWebTokenWhenSignInComplete() {
-      return $q.when({ data: 'jwt' });
-    }
-  };
+  const tokenAPIMock = {};
 
   beforeEach(function() {
     angular.mock.module('esn.inbox.libs', function($provide) {
@@ -43,7 +36,7 @@ describe('The jmapClientProvider service', function() {
   it('should return a rejected promise if jwt generation fails', function(done) {
     var error = new Error('error message');
 
-    tokenAPIMock.getWebTokenWhenSignInComplete = () => $q.reject(error);
+    tokenAPIMock.getWebToken = () => $q.reject(error);
     injectServices.bind(this)();
 
     jmapClientProvider.get().then(done.bind(null, 'should reject'), function(err) {
@@ -57,7 +50,7 @@ describe('The jmapClientProvider service', function() {
   it('should return a fulfilled promise if jwt generation succeed', function(done) {
     config['linagora.esn.unifiedinbox.api'] = 'expected jmap api';
     config['linagora.esn.unifiedinbox.downloadUrl'] = 'expected jmap downloadUrl';
-    tokenAPIMock.getWebTokenWhenSignInComplete = () => $q.when({ data: 'jwt' });
+    tokenAPIMock.getWebToken = () => $q.when({ data: 'jwt' });
     injectServices.bind(this)();
 
     jmapClientProvider.get()
