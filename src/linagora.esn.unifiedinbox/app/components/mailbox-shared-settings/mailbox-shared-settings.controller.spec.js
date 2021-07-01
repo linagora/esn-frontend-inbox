@@ -17,7 +17,6 @@ describe('The InboxMailboxSharedSettingsController controller', function() {
     inboxSharedMailboxesPermissionsService,
     userAPIMock,
     userUtils,
-    $q,
     INBOX_MAILBOX_SHARING_ROLES,
     esnAuth;
 
@@ -46,9 +45,7 @@ describe('The InboxMailboxSharedSettingsController controller', function() {
     };
 
     esnAuth = {
-      signInCompletePromise: {
-        then: callback => callback()
-      }
+      signInCompletePromise: $q.when()
     };
   });
 
@@ -69,7 +66,6 @@ describe('The InboxMailboxSharedSettingsController controller', function() {
       inboxMailboxesService = _inboxMailboxesService_;
       inboxSharedMailboxesPermissionsService = _inboxSharedMailboxesPermissionsService_;
       INBOX_MAILBOX_SHARING_ROLES = _INBOX_MAILBOX_SHARING_ROLES_;
-      $q = _$q_;
     });
 
     mailbox = { _id: '1', namespace: { owner: 'user2@test.com' }, sharedWith: { 'user1@test.com': INBOX_MAILBOX_SHARING_ROLES.READ_AND_UPDATE } };
