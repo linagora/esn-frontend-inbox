@@ -16,7 +16,7 @@ angular.module('esn.inbox.libs')
 
     function _initializeJmapClient() {
       return $q.all([
-        tokenAPI.getWebToken(),
+        tokenAPI.getWebTokenWhenSignInComplete(),
         inboxConfig('api'),
         inboxConfig('downloadUrl')
       ]).then(function([{ data: jwt }, apiUrl, downloadUrl]) {
