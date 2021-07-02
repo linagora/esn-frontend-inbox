@@ -8,11 +8,7 @@ describe('The jmapClientProvider service', function() {
 
   var $rootScope, jmapClientProvider, jmapDraft, config;
 
-  const tokenAPIMock = {
-    getWebToken() {
-      return $q.when({ data: 'jwt' });
-    }
-  };
+  const tokenAPIMock = {};
 
   beforeEach(function() {
     angular.mock.module('esn.inbox.libs', function($provide) {
