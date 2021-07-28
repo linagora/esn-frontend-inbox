@@ -42,7 +42,7 @@ form.form-horizontal.compose.ng-cloak(ng-submit="$ctrl.send()")
           md-menu-content(width="3", ng-mouseleave="$mdMenu.close()")
             md-menu-item.md-indent(type="checkbox", ng-model="$ctrl.hasRequestedReadReceipt")
               | {{ 'Request a read receipt' | translate }}
-      inbox-linshare-composer-select-attachment(email="$ctrl.message")
+      inbox-linshare-composer-select-attachment(email="$ctrl.message", feature-flag="core.modules.linagora.esn.linshare.enabled")
       inbox-composer-attachments-selector(attachment-holder="$ctrl.attachmentHolder")
       button.btn.btn-primary(type="submit", value="submit", ng-disabled="$ctrl.isSendingMessage") {{ 'Send' | translate }}
         i.mdi.mdi-send
