@@ -95,7 +95,7 @@ describe('The inboxMessageBodyHtml component', function() {
       var ctrl = compile('<inbox-message-body-html message="message" />');
 
       ctrl.$onInit().then(ctrl.loadAsyncImages).then(function() {
-        expect(element.find('#one').attr('src')).to.eq('remote.png');
+        expect(element.find('[id$="one"]').attr('src')).to.eq('remote.png');
         done();
       });
       $timeout.flush();
@@ -112,7 +112,7 @@ describe('The inboxMessageBodyHtml component', function() {
       var ctrl = compile('<inbox-message-body-html message="message" />');
 
       ctrl.$onInit().then(ctrl.loadAsyncImages).then(function() {
-        expect(element.find('#one').attr('src')).to.eq('signed-url');
+        expect(element.find('[id$="one"]').attr('src')).to.eq('signed-url');
         done();
       });
       $timeout.flush();
@@ -125,7 +125,7 @@ describe('The inboxMessageBodyHtml component', function() {
       var ctrl = compile('<inbox-message-body-html message="message" />');
 
       ctrl.$onInit().then(ctrl.loadAsyncImages).then(function() {
-        expect(element.find('#one').attr('src')).to.eq('broken-link');
+        expect(element.find('[id$="one"]').attr('src')).to.eq('broken-link');
         done();
       });
       $timeout.flush();
