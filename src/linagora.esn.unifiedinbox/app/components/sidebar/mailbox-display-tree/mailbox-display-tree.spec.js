@@ -166,18 +166,34 @@ describe('The mailboxDisplayTree controller', function() {
       expect(controller.displayPersonnalFolders).to.deep.equal(mailboxesTree);
     });
 
-    it('should filter displayPersonnalFolders by filter', function() {
-      var controller = initController();
-      var changes = {
-        filter: {
-          currentValue: 'test'
-        }
-      };
+    describe('the personal folders filter', () => {
+      it('should filter the personal folder list down to an empty array if there is no match', () => {
+        const controller = initController();
+        const changes = {
+          filter: {
+            currentValue: 'test'
+          },
+          mailboxes
+        };
 
-      controller.$onInit();
-      controller.$onChanges(changes);
+        controller.$onInit();
+        controller.$onChanges(changes);
+        expect(controller.displayPersonnalFolders).to.have.length(0);
+      });
 
-      expect(controller.filter).to.deep.equal(changes.filter.currentValue);
+      it('should recursively filter the mailbox child nodes if the box name does\t match', () => {
+        const controller = initController();
+        const changes = {
+          filter: {
+            currentValue: 'Mailbox 2'
+          },
+          mailboxes
+        };
+
+        controller.$onInit();
+        controller.$onChanges(changes);
+        expect(controller.displayPersonnalFolders).to.have.length(1); // bacause mailbox 2 is a child of mailbox 1
+      });
     });
 
   });
