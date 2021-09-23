@@ -1,3 +1,4 @@
-#tree-root(ui-tree, feature-flag="inbox.experiment.tree-folders")
-  div(ui-tree-nodes, ng-model="ctrl.displayPersonnalFolders")
-    div(ng-repeat="node in ctrl.displayPersonnalFolders | filter: { name: ctrl.filter } track by node.id", ui-tree-node, ng-include="'/unifiedinbox/app/components/sidebar/mailbox-display-tree/mailbox-display-tree-node.html'")
+div(ng-if="ctrl.displayPersonnalFolders.length")
+  #tree-root(ui-tree, feature-flag="inbox.experiment.tree-folders")
+    div(ui-tree-nodes, ng-model="ctrl.displayPersonnalFolders")
+      div(ng-repeat="node in ctrl.displayPersonnalFolders track by node.id", ui-tree-node, ng-include="'/unifiedinbox/app/components/sidebar/mailbox-display-tree/mailbox-display-tree-node.html'")
