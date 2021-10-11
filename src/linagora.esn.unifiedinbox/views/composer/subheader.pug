@@ -5,7 +5,7 @@ block left
 
 block right
   .inbox-composer-buttons.flex-vertical-centered
-    inbox-linshare-composer-select-attachment(email="$ctrl.message", is-mobile="true")
+    inbox-linshare-composer-select-attachment(email="$ctrl.message", is-mobile="true", feature-flag="core.modules.linagora.esn.linshare.enabled")
     inbox-composer-attachments-selector(attachment-holder="$ctrl.attachmentHolder")
     button.send.btn.btn-link.flex-vertical-centered.hidden-xs(ng-click='$ctrl.send()', ng-disabled="$ctrl.isSendingMessage")
       | {{ 'Send' | translate }}

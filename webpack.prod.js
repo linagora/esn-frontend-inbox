@@ -3,6 +3,8 @@ const webpack = require('webpack');
 const { merge } = require('webpack-merge');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
+const CompressionWebpackPlugin = require('compression-webpack-plugin');
+
 const commons = require('./webpack.commons.js');
 
 const BASE_HREF = process.env.BASE_HREF || '/';
@@ -11,9 +13,7 @@ module.exports = merge(commons, {
   mode: 'production',
   devtool: 'source-map',
   output: {
-    filename: '[name].[hash].min.js',
-    path: path.resolve(__dirname, 'dist'),
-    publicPath: BASE_HREF
+    filename: '[name].[hash].min.js'
   },
   module: {
     rules: [
@@ -42,18 +42,32 @@ module.exports = merge(commons, {
     ]
   },
   plugins: [
+    new CompressionWebpackPlugin(),
     new CleanWebpackPlugin(),
     new webpack.ProgressPlugin(),
     new webpack.HashedModuleIdsPlugin(),
     new webpack.BannerPlugin(`${process.env.npm_package_name} v${process.env.npm_package_version}`)
   ],
   optimization: {
+    runtimeChunk: 'single',
+    splitChunks: {
+      chunks: 'all',
+      maxInitialRequests: Infinity,
+      minSize: 200000,
+      cacheGroups: {
+        vendor: {
+          test: /[\\/]node_modules[\\/]/,
+          name(module) {
+            const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1];
+
+            return `${packageName.replace('@', '')}`;
+          }
+        }
+      }
+    },
     minimize: true,
     minimizer: [
-      new TerserPlugin({
-        cache: true,
-        parallel: true
-      })
+      new TerserPlugin({})
     ]
   }
 });

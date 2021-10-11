@@ -17,8 +17,8 @@ describe('The InboxMailboxSharedSettingsController controller', function() {
     inboxSharedMailboxesPermissionsService,
     userAPIMock,
     userUtils,
-    $q,
-    INBOX_MAILBOX_SHARING_ROLES;
+    INBOX_MAILBOX_SHARING_ROLES,
+    esnAuth;
 
   beforeEach(function() {
     user = {
@@ -43,12 +43,17 @@ describe('The InboxMailboxSharedSettingsController controller', function() {
         return user;
       })
     };
+
+    esnAuth = {
+      signInCompletePromise: $q.when()
+    };
   });
 
   beforeEach(function() {
     angular.mock.module('linagora.esn.unifiedinbox');
     angular.mock.module(function($provide) {
       $provide.value('userAPI', userAPIMock);
+      $provide.value('esnAuth', esnAuth);
     });
   });
 
@@ -61,7 +66,6 @@ describe('The InboxMailboxSharedSettingsController controller', function() {
       inboxMailboxesService = _inboxMailboxesService_;
       inboxSharedMailboxesPermissionsService = _inboxSharedMailboxesPermissionsService_;
       INBOX_MAILBOX_SHARING_ROLES = _INBOX_MAILBOX_SHARING_ROLES_;
-      $q = _$q_;
     });
 
     mailbox = { _id: '1', namespace: 'Delegated[user2@test.com]', rights: { 'user1@test.com': INBOX_MAILBOX_SHARING_ROLES.READ_AND_UPDATE } };

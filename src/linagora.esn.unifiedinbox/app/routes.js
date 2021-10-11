@@ -89,6 +89,7 @@ angular.module('linagora.esn.unifiedinbox')
     $stateProvider
       .state('unifiedinbox', {
         url: '/unifiedinbox',
+        default: true,
         template: require('../views/home.pug'),
         deepStateRedirect: {
           default: 'unifiedinbox.inbox',
@@ -272,5 +273,12 @@ angular.module('linagora.esn.unifiedinbox')
       }))
       .state('unifiedinbox.inbox.message.move', stateOpeningModal({
         url: '/move'
-      }, '/unifiedinbox/views/email/view/move/index.html', 'inboxMoveItemController'));
+      }, '/unifiedinbox/views/email/view/move/index.html', 'inboxMoveItemController'))
+      .state('home', {
+        onEnter: function($state, $timeout) {
+          $timeout(() => {
+            $state.go('unifiedinbox');
+          });
+        }
+      });
   });
