@@ -49,6 +49,6 @@
             span(ng-attr-title="{{ctrl.item.date | esnDatetime: 'shortDate time' | esnHighlight: query }}") {{ ctrl.item.date | inboxItemDate }}
           .flex-end
             .inbox-list-item-mailbox.ellipsis.flex-vertical-centered(ng-if="ctrl.shouldDisplayMailbox")
-              span(ng-repeat="mailbox in ctrl.item.mailboxes track by $index", title="{{ ::mailbox.name }}")  {{ ::mailbox.name }}
+              span(ng-repeat="mailbox in ctrl.item.mailboxes track by $index", title="{{ mailbox.name }}")  {{ mailbox.name }}
             inbox-indicators(item="ctrl.item", hidden-xl="true")
     .inbox-preview-block.preview(ng-bind-html="ctrl.item.preview | esnHighlight: ctrl.query") {{ ctrl.item.preview }}
