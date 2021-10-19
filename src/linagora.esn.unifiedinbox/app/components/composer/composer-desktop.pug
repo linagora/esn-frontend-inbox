@@ -26,6 +26,7 @@ form.form-horizontal.compose.ng-cloak(ng-submit="$ctrl.send()")
     upload="$ctrl.upload($attachment)",
     remove-attachment="$ctrl.removeAttachment($attachment)",
     on-body-update="$ctrl.onBodyUpdate($body)",
+    on-signature-update="$ctrl.onSignatureUpdate()"
     on-attachments-upload="$ctrl.onAttachmentsUpload(attachments)")
 
   .compose-footer.flex-space-between(attachment-drag-and-drop-handler="$ctrl.onAttachmentsUpload(attachments).then($ctrl.attachmentHolder.onAttachmentsUpdate)")
