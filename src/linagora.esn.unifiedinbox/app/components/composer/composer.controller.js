@@ -46,6 +46,7 @@ angular.module('linagora.esn.unifiedinbox')
     self.toggleReadReceiptRequest = toggleReadReceiptRequest;
     self.saving = false;
     self.needsSave = false;
+    self.onSignatureUpdate = onSignatureUpdate;
 
     /////
 
@@ -268,5 +269,9 @@ angular.module('linagora.esn.unifiedinbox')
       if (email && email.to) {
         email.to = _.uniq(email.to, to => to.email) || [];
       }
+    }
+
+    function onSignatureUpdate() {
+      self.draft = new InboxDraft(self.message);
     }
   });

@@ -83,6 +83,7 @@ angular.module('linagora.esn.unifiedinbox')
         signatureElement.html(INBOX_SIGNATURE_SEPARATOR + $filter('sanitizeStylisedHtml')(identity.htmlSignature));
 
         self.onBodyUpdate({ $body: $element.find('.summernote').summernote('code') });
+        self.onSignatureUpdate();
       } else {
         signatureElement.remove();
       }
