@@ -17,7 +17,7 @@ describe('The mailboxDisplayTree controller', function() {
       {
         id: 'id_mailbox',
         name: 'Mailbox 1',
-        totalMessages: 10,
+        totalEmails: 10,
         parentId: null,
         level: 1,
         qualifiedName: 'Mailbox 1'
@@ -25,7 +25,7 @@ describe('The mailboxDisplayTree controller', function() {
       {
         id: 'id_mailbox2',
         name: 'Mailbox 2',
-        unreadMessages: 0,
+        unreadEmails: 0,
         parentId: 'id_mailbox',
         level: 2,
         qualifiedName: 'Mailbox 1 / Mailbox 2'
@@ -33,7 +33,7 @@ describe('The mailboxDisplayTree controller', function() {
       {
         id: 'id_mailbox3',
         name: 'Mailbox 3',
-        unreadMessages: 0,
+        unreadEmails: 0,
         parentId: 'id_mailbox_special',
         level: 2,
         qualifiedName: 'Mailbox special / Mailbox 3'
@@ -73,7 +73,7 @@ describe('The mailboxDisplayTree controller', function() {
         {
           id: 'id_mailbox',
           name: 'Mailbox 1',
-          totalMessages: 10,
+          totalEmails: 10,
           parentId: null,
           level: 1,
           qualifiedName: 'Mailbox 1',
@@ -81,7 +81,7 @@ describe('The mailboxDisplayTree controller', function() {
             {
               id: 'id_mailbox2',
               name: 'Mailbox 2',
-              unreadMessages: 0,
+              unreadEmails: 0,
               parentId: 'id_mailbox',
               level: 2,
               qualifiedName: 'Mailbox 1 / Mailbox 2',
@@ -92,7 +92,7 @@ describe('The mailboxDisplayTree controller', function() {
         {
           id: 'id_mailbox3',
           name: 'Mailbox 3',
-          unreadMessages: 0,
+          unreadEmails: 0,
           parentId: 'id_mailbox_special',
           level: 2,
           qualifiedName: 'Mailbox special / Mailbox 3',
@@ -132,7 +132,7 @@ describe('The mailboxDisplayTree controller', function() {
         {
           id: 'id_mailbox',
           name: 'Mailbox 1',
-          totalMessages: 10,
+          totalEmails: 10,
           parentId: null,
           level: 1,
           qualifiedName: 'Mailbox 1',
@@ -140,7 +140,7 @@ describe('The mailboxDisplayTree controller', function() {
             {
               id: 'id_mailbox2',
               name: 'Mailbox 2',
-              unreadMessages: 0,
+              unreadEmails: 0,
               parentId: 'id_mailbox',
               level: 2,
               qualifiedName: 'Mailbox 1 / Mailbox 2',
@@ -151,7 +151,7 @@ describe('The mailboxDisplayTree controller', function() {
         {
           id: 'id_mailbox3',
           name: 'Mailbox 3',
-          unreadMessages: 0,
+          unreadEmails: 0,
           parentId: 'id_mailbox_special',
           level: 2,
           qualifiedName: 'Mailbox special / Mailbox 3',
