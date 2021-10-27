@@ -110,6 +110,23 @@ require('../services.js');
         template: require('../../views/composer/recipients-auto-complete.pug'),
         link: function(scope, element) {
 
+          // prevents Firefox from inserting images in the tags input fields.
+          const callback = mutations => {
+            mutations.forEach(mutation => {
+              if (mutation.type === 'childList' && mutation.removedNodes.length) {
+                const target = document.querySelector('.inbox-tags-input > .host > .tags > img');
+
+                if (target) {
+                  target.remove();
+                }
+              }
+            });
+          };
+
+          const observer = new MutationObserver(callback);
+
+          observer.observe(document.body, { childList: true });
+
           function normalizeToEMailer(tag) {
             Object.keys(tag).forEach(function(key) {
 
