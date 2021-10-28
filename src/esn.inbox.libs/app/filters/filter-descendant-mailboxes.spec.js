@@ -6,10 +6,18 @@ const { expect } = chai;
 
 describe('The inboxFilterDescendantMailboxes filter', function() {
 
-  var filter, cache;
+  var filter, cache, inboxMailboxesService;
 
   beforeEach(function() {
     angular.mock.module('esn.inbox.libs');
+    angular.mock.module(function($provide) {
+      $provide.value('inboxMailboxesService', inboxMailboxesService);
+    });
+    inboxMailboxesService = {
+      getMailboxDescendants: function() {
+        return undefined;
+      }
+    };
   });
 
   beforeEach(angular.mock.inject(function(inboxFilterDescendantMailboxesFilter, inboxMailboxesCache) {
@@ -44,14 +52,29 @@ describe('The inboxFilterDescendantMailboxes filter', function() {
   });
 
   it('should filter out the mailbox and its descendants', function() {
+    inboxMailboxesService.getMailboxDescendants = function() {
+      return [
+        { id: '2', name: '2', parentId: '1' },
+        { id: '3', name: '3', parentId: '2' }
+      ];
+    };
     expect(_.map(filter(cache, '1'), 'id')).to.deep.equal(['4', '5']);
   });
 
   it('should filter out the mailbox only when there is no descendants', function() {
+    inboxMailboxesService.getMailboxDescendants = function() {
+      return [];
+    };
     expect(_.map(filter(cache, '5'), 'id')).to.deep.equal(['1', '2', '3', '4']);
   });
 
   it('should filter out the mailbox only when there is descendants but filterOnlyParentMailbox=true', function() {
+    inboxMailboxesService.getMailboxDescendants = function() {
+      return [
+        { id: '2', name: '2', parentId: '1' },
+        { id: '3', name: '3', parentId: '2' }
+      ];
+    };
     expect(_.map(filter(cache, '1', true), 'id')).to.deep.equal(['2', '3', '4', '5']);
   });
 

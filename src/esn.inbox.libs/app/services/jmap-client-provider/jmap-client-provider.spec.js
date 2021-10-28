@@ -4,7 +4,7 @@
 
 const { expect } = chai;
 
-describe('The jmapDraftClientProvider service', function() {
+describe('The jmapClientProvider service', function() {
 
   var $rootScope, jmapDraftClientProvider, jmapDraft, config;
 
@@ -50,7 +50,7 @@ describe('The jmapDraftClientProvider service', function() {
   it('should return a fulfilled promise if jwt generation succeed', function(done) {
     config['linagora.esn.unifiedinbox.api'] = 'expected jmap api';
     config['linagora.esn.unifiedinbox.downloadUrl'] = 'expected jmap downloadUrl';
-    tokenAPIMock.getWebToken = () => $q.when({ data: 'jwt' });
+    tokenAPIMock.getWebToken = () => $q.when({ data: 'expected jwt' });
     injectServices.bind(this)();
 
     jmapDraftClientProvider.get().then(function(client) {

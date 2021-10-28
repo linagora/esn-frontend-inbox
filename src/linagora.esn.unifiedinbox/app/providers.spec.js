@@ -174,7 +174,7 @@ describe('The Unified Inbox Angular module providers', function() {
       var filter = { inMailboxes: ['id_inbox'] };
       var fetcher = inboxHostedMailAttachmentProvider.fetch(filter);
 
-      jmapClient.getMessageList = sinon.stub().returns($q.when({
+      jmapDraftClient.getMessageList = sinon.stub().returns($q.when({
         getMessages: function() {
           return $q.when(messageList);
         }

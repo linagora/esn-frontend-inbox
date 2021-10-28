@@ -7,8 +7,6 @@ const CompressionWebpackPlugin = require('compression-webpack-plugin');
 
 const commons = require('./webpack.commons.js');
 
-const BASE_HREF = process.env.BASE_HREF || '/';
-
 module.exports = merge(commons, {
   mode: 'production',
   devtool: 'source-map',
