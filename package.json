@@ -16,7 +16,6 @@
   "license": "AGPLv3",
   "dependencies": {
     "angularjs-dragula": "2.0.0",
-    "dompurify": "~2.2.0",
     "esn-api-client": "github:linagora/esn-api-client#main",
     "esn-frontend-common-libs": "github:linagora/esn-frontend-common-libs#main",
     "esn-frontend-inbox-calendar": "github:linagora/esn-frontend-inbox-calendar#main",
