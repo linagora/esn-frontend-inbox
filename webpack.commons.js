@@ -48,7 +48,6 @@ module.exports = {
       'window.angularInjections': angularInjections,
       angularDragula: 'angularjs-dragula/angularjs-dragula.js', // for unifiedinbox
       sanitizeHtml: 'sanitize-html', // for unifiedinbox
-      DOMPurify: 'dompurify', // for unifiedinbox
       localforage: 'localforage', // for calendar
       angularUiTree: 'ui.tree' // for unifiedinbox
     }),
