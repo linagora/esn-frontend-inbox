@@ -70,7 +70,7 @@ angular.module('linagora.esn.unifiedinbox')
       }
       e.preventDefault();
 
-      const cleanHtml = htmlCleaner.clean(pastedHtml);
+      const cleanHtml = htmlCleaner.clean(pastedHtml).replaceAll(/[\n\r]/g, '');
 
       $element.find('.summernote').summernote('pasteHTML', cleanHtml);
     }
