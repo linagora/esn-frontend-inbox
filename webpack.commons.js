@@ -89,7 +89,15 @@ module.exports = {
   ],
   devServer: {
     contentBase: [path.join(__dirname, 'dist'), path.resolve(__dirname, 'node_modules', 'esn-frontend-login', 'dist')],
+    // contentBasePublicPath and writeToDisk are needed because webpack base path is 'assets' subfolder
+    // So index.html needs to be accessed explicitly from root 'dist' folder
     contentBasePublicPath: [BASE_HREF + 'index.html', '/login'],
+    // and index.html needs to be copied explicitly to root 'dist' folder
+    writeToDisk: filePath => {
+      if (filePath.endsWith('index.html')) {
+        return (filePath);
+      }
+    },
     compress: true,
     host: '0.0.0.0',
     disableHostCheck: true,
