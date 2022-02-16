@@ -233,3 +233,6 @@ require('./services/shortcuts/shortcuts.constants.js');
 require('./services/shortcuts/shortcuts.run.js');
 require('./services/user-quota/user-quota-service.constants.js');
 require('./services/user-quota/user-quota-service.js');
+require('./services/close-window/close-window.service.js');
+require('./services/composer-status/composer-status-service.js');
+

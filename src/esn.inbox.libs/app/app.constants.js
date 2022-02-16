@@ -58,6 +58,10 @@ angular.module('esn.inbox.libs')
     FOLDERS_UPDATED: 'inbox:foldersUpdated',
     CLOSE_COMPOSER_WARNING: 'inbox:closeComposerWarning'
   })
+  .constant('INBOX_COMPOSER_STATUS', {
+    OPENING: 'OPENING',
+    DISCARDING: 'DISCARDING'
+  })
   .constant('INBOX_SUMMERNOTE_OPTIONS', {
     focus: false,
     airMode: false,

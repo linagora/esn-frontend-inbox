@@ -41,6 +41,10 @@ angular.module('linagora.esn.unifiedinbox')
     inboxEmailSendingHookService.registerPreSendingHook(emailSendingService.handleInlineImageBeforeSending);
   })
 
+  .run(function(inboxComposerCloseWindowService) {
+    inboxComposerCloseWindowService.setup();
+  })
+
   .run(function($templateCache) {
     $templateCache.put('/unifiedinbox/app/components/composer/boxed/composer-boxed.html', require('./components/composer/boxed/composer-boxed.pug'));
     $templateCache.put('/unifiedinbox/views/components/sidebar/attachment/sidebar-attachment-item.html', require('./components/sidebar/attachment/sidebar-attachment-item.pug'));
