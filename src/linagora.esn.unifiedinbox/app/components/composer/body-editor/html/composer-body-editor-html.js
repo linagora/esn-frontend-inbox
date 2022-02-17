@@ -13,6 +13,7 @@ angular.module('linagora.esn.unifiedinbox')
       upload: '&',
       removeAttachment: '&',
       onBodyUpdate: '&',
-      onAttachmentsUpload: '&'
+      onAttachmentsUpload: '&',
+      onSignatureUpdate: '&'
     }
   });

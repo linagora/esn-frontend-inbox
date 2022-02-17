@@ -8,6 +8,7 @@ angular.module('linagora.esn.unifiedinbox')
     $element,
     $compile,
     $filter,
+    htmlCleaner,
     INBOX_SUMMERNOTE_OPTIONS,
     INBOX_SIGNATURE_SEPARATOR
   ) {
@@ -18,6 +19,7 @@ angular.module('linagora.esn.unifiedinbox')
     self.onSummernoteInit = onSummernoteInit;
     self.onSummernoteKeydown = onSummernoteKeydown;
     self.onSummernoteBlur = onSummernoteBlur;
+    self.onSummernotePaste = onSummernotePaste;
     self.onImageUpload = onImageUpload;
     self.summernoteOptions = INBOX_SUMMERNOTE_OPTIONS;
 
@@ -60,6 +62,19 @@ angular.module('linagora.esn.unifiedinbox')
       self.onBodyUpdate({ $body: $element.find('.summernote').summernote('code') });
     }
 
+    function onSummernotePaste(e) {
+      const pastedHtml = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text/HTML');
+
+      if (!pastedHtml) {
+        return;
+      }
+      e.preventDefault();
+
+      const cleanHtml = htmlCleaner.clean(pastedHtml);
+
+      $element.find('.summernote').summernote('pasteHTML', cleanHtml);
+    }
+
     function updateIdentity(identity, initializing) {
       if (!summernoteIsReady || !identity || !initializing && self.message.isDraft) {
         return;
@@ -83,6 +98,7 @@ angular.module('linagora.esn.unifiedinbox')
         signatureElement.html(INBOX_SIGNATURE_SEPARATOR + $filter('sanitizeStylisedHtml')(identity.htmlSignature));
 
         self.onBodyUpdate({ $body: $element.find('.summernote').summernote('code') });
+        self.onSignatureUpdate();
       } else {
         signatureElement.remove();
       }

@@ -110,6 +110,23 @@ require('../services.js');
         template: require('../../views/composer/recipients-auto-complete.pug'),
         link: function(scope, element) {
 
+          // prevents Firefox from inserting images in the tags input fields.
+          const callback = mutations => {
+            mutations.forEach(mutation => {
+              if (mutation.type === 'childList' && mutation.removedNodes.length) {
+                const target = document.querySelector('.inbox-tags-input > .host > .tags > img');
+
+                if (target) {
+                  target.remove();
+                }
+              }
+            });
+          };
+
+          const observer = new MutationObserver(callback);
+
+          observer.observe(document.body, { childList: true });
+
           function normalizeToEMailer(tag) {
             Object.keys(tag).forEach(function(key) {
 
@@ -258,8 +275,10 @@ require('../services.js');
           }.bind(this));
 
           if ($scope.email && $scope.email.attachments) {
-            $scope.attachmentsNumber = $scope.email.attachments.length;
-            $scope.attachmentsSize = $scope.email.attachments.map(attachment => attachment.size).reduce((sum, size) => sum + size, 0);
+            $scope.noInlineAttachments = $scope.email.attachments.filter(attachment => !attachment.isInline) || [];
+
+            $scope.attachmentsNumber = $scope.noInlineAttachments.length;
+            $scope.attachmentsSize = $scope.noInlineAttachments.map(attachment => attachment.size).reduce((sum, size) => sum + size, 0);
           }
 
           this.toggleIsCollapsed = function(email) {
@@ -312,9 +331,6 @@ require('../services.js');
 
           self.shouldDisplayCalendarInvitationMessageIndicator = $scope.item && $scope.item.headers && $scope.item.headers[INVITATION_MESSAGE_HEADERS.UID];
           self.shouldDisplayCalendarResourceManagementIndicator = $scope.item && $scope.item.headers && $scope.item.headers[X_OPENPAAS_CAL_HEADERS.ACTION];
-          self.shouldDisplayAttachmentIndicator = !self.shouldDisplayCalendarInvitationMessageIndicator &&
-            !self.shouldDisplayCalendarResourceManagementIndicator &&
-            $scope.item && $scope.item.hasAttachment;
         }
       };
     })

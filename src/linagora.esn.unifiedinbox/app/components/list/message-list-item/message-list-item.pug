@@ -44,11 +44,11 @@
                   i.inbox-message-indicators
                     cal-inbox-invitation-message-indicator(ng-if="ctrl.shouldDisplayCalendarInvitationMessageIndicator")
                     cal-inbox-resource-management-indicator(ng-if="ctrl.shouldDisplayCalendarResourceManagementIndicator")
-                  i.flag-icon.mdi.mdi-paperclip(ng-if='ctrl.shouldDisplayAttachmentIndicator', title="{{ 'Attachments' | translate }}")
+                  i.flag-icon.mdi.mdi-paperclip(ng-if='ctrl.item.hasAttachment', title="{{ 'Attachments' | translate }}")
             .date-container
             span(ng-attr-title="{{ctrl.item.date | esnDatetime: 'shortDate time' | esnHighlight: query }}") {{ ctrl.item.date | inboxItemDate }}
           .flex-end
             .inbox-list-item-mailbox.ellipsis.flex-vertical-centered(ng-if="ctrl.shouldDisplayMailbox")
-              span(ng-repeat="mailbox in ctrl.item.mailboxes track by $index", title="{{ ::mailbox.name }}")  {{ ::mailbox.name }}
+              span(ng-repeat="mailbox in ctrl.item.mailboxes track by $index", title="{{ mailbox.name }}")  {{ mailbox.name }}
             inbox-indicators(item="ctrl.item", hidden-xl="true")
     .inbox-preview-block.preview(ng-bind-html="ctrl.item.preview | esnHighlight: ctrl.query") {{ ctrl.item.preview }}

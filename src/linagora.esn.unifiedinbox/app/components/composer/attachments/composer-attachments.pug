@@ -3,9 +3,9 @@
     .attachment(ng-click="$event.stopPropagation()", ng-repeat="attachment in $ctrl.message.attachments | orderBy:'-'", ng-if="::!attachment.isInline", ng-class="attachment.status", name="attachment-{{$index}}")
       .progress(ng-if="attachment.status === 'uploading'", ng-style="{ width: attachment.upload.progress + '%' }")
       .icon(ng-switch='attachment.status')
-        img(ng-switch-when="error", src="/images/exclamation.svg", alt="{{ 'Error' | translate }}")
-        img(ng-switch-when="uploading", src="/images/upload.svg", alt="{{ 'Uploading' | translate }}")
-        img(ng-switch-default, fallback-src="/images/file-icons/default.png", src="/images/file-icons/default.png", ng-src="/images/file-icons/{{ ::attachment.type | extension }}.png", alt="{{ 'Attachment' | translate }}")
+        img(ng-switch-when="error", src="assets/images/exclamation.svg", alt="{{ 'Error' | translate }}")
+        img(ng-switch-when="uploading", src="assets/images/upload.svg", alt="{{ 'Uploading' | translate }}")
+        img(ng-switch-default, fallback-src="assets/images/file-icons/default.png", src="assets/images/file-icons/default.png", ng-src="assets/images/file-icons/{{ ::attachment.type | extension }}.png", alt="{{ 'Attachment' | translate }}")
       .metadata
         .basic-info
           .name.ellipsis {{ ::attachment.name }}

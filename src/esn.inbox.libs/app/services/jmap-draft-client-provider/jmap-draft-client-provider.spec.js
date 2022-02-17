@@ -7,6 +7,7 @@ const { expect } = chai;
 describe('The jmapDraftClientProvider service', function() {
 
   var $rootScope, jmapDraftClientProvider, jmapDraft, config;
+  const tokenAPIMock = {};
 
   beforeEach(function() {
     angular.mock.module('esn.inbox.libs', function($provide) {
@@ -15,6 +16,7 @@ describe('The jmapDraftClientProvider service', function() {
       $provide.value('esnConfig', function(key, defaultValue) {
         return $q.when(angular.isDefined(config[key]) ? config[key] : defaultValue);
       });
+      $provide.value('tokenAPI', tokenAPIMock);
     });
   });
 
@@ -33,11 +35,7 @@ describe('The jmapDraftClientProvider service', function() {
   it('should return a rejected promise if jwt generation fails', function(done) {
     var error = new Error('error message');
 
-    angular.mock.module(function($provide) {
-      $provide.value('generateJwtToken', function() {
-        return $q.reject(error);
-      });
-    });
+    tokenAPIMock.getWebToken = () => $q.reject(error);
     injectServices.bind(this)();
 
     jmapDraftClientProvider.get().then(done.bind(null, 'should reject'), function(err) {
@@ -49,11 +47,7 @@ describe('The jmapDraftClientProvider service', function() {
   });
 
   it('should return a fulfilled promise if jwt generation succeed', function(done) {
-    angular.mock.module(function($provide) {
-      $provide.value('generateJwtToken', function() {
-        return $q.when('expected jwt');
-      });
-    });
+    tokenAPIMock.getWebToken = () => $q.when({ data: 'expected jwt' });
     config['linagora.esn.unifiedinbox.api'] = 'expected jmap api';
     config['linagora.esn.unifiedinbox.downloadUrl'] = 'expected jmap downloadUrl';
     injectServices.bind(this)();

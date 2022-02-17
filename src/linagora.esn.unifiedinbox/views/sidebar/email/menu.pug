@@ -25,7 +25,8 @@
         div(ng-if="displayPersonnalFolders.length > 0")
           hr
           div {{ 'My folders' | translate }}
-          mailbox-display(feature-flag="inbox.experiment.tree-folders", feature-flag-hide, is-folder="true", hide-aside="$hide()", mailbox="mailbox", ng-repeat="mailbox in mailboxes | filter: { role: '!', namespace: 'Personal', name: ctrl.filter } track by mailbox.id")
+          div(ng-repeat="folder in displayPersonnalFolders | filter: { name: ctrl.filter } track by folder.id")
+            mailbox-display(ng-model="folder", feature-flag="inbox.experiment.tree-folders", feature-flag-hide, is-folder="true", hide-aside="$hide()", mailbox="folder")
 
           mailbox-display-tree(feature-flag="inbox.experiment.tree-folders", mailboxes="displayPersonnalFolders", hide-aside="$hide()", filter="ctrl.filter")
 
