@@ -32,6 +32,16 @@ angular.module('linagora.esn.unifiedinbox')
     }
 
     function onSummernoteKeydown(event) {
+      if (event.ctrlKey && !event.shiftKey && ['Z', 'z'].includes(event.key)) {
+        event.preventDefault();
+        $element.find('.summernote').summernote('undo');
+      }
+
+      if (event.ctrlKey && (event.shiftKey && ['Z', 'z'].includes(event.key) || ['Y', 'y'].includes(event.key))) {
+        event.preventDefault();
+        $element.find('.summernote').summernote('redo');
+      }
+
       if ((event.metaKey || event.ctrlKey) && (event.keyCode === 10 || event.keyCode === 13)) {
         self.send();
       }
