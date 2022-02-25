@@ -67,6 +67,7 @@ angular.module('esn.inbox.libs')
       ['style', ['style']],
       ['color', ['color']],
       ['font', ['bold', 'italic', 'underline', 'strikethrough', 'clear']],
+      ['link', ['link']],
       ['alignment', ['ul', 'ol', 'paragraph']],
       ['table', ['table']],
       ['height', ['height']],
