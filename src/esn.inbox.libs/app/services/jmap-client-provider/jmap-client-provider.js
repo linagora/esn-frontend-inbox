@@ -1,41 +1,45 @@
 'use strict';
 
 require('../config/config.js');
-require('../jmap-client-wrapper/jmap-client-wrapper.service.js');
-require('../custom-role-mailbox/custom-role-mailbox.service.js');
+const { Client } = require('jmap-client-ts/lib');
+const { FetchTransport } = require('jmap-client-ts/lib/utils/fetch-transport');
 
-angular.module('esn.inbox.libs')
-  .service('jmapClientProvider', function($q, inboxConfig, jmapDraft, dollarHttpTransport, dollarQPromiseProvider, tokenAPI, inboxCustomRoleMailboxService) {
+angular
+  .module('esn.inbox.libs')
+  .service('jmapClientProvider', function($q, inboxConfig, tokenAPI) {
     let jmapClient;
+    let jmapClientPromise;
 
     return {
       get
     };
 
-    /////
+    function _initializeJmapClientWithSession() {
+      if (!jmapClientPromise) {
+        jmapClientPromise = $q(function(resolve, reject) {
+          $q.all([tokenAPI.getWebToken(), inboxConfig('api')])
+            .then(([{ data: jwt }, apiUrl]) => {
+              const client = new Client({
+                accessToken: jwt,
+                overriddenApiUrl: apiUrl,
+                sessionUrl: `${apiUrl}/session`,
+                transport: new FetchTransport(fetch.bind())
+              });
 
-    function _initializeJmapClient() {
-      return $q.all([
-        tokenAPI.getWebToken(),
-        inboxConfig('api'),
-        inboxConfig('downloadUrl')
-      ]).then(function([{ data: jwt }, apiUrl, downloadUrl]) {
-        jmapClient = new jmapDraft.Client(dollarHttpTransport, dollarQPromiseProvider)
-          .withAPIUrl(apiUrl)
-          .withDownloadUrl(downloadUrl)
-          .withAuthenticationToken(`Bearer ${jwt}`)
-          .withCustomMailboxRoles(inboxCustomRoleMailboxService.getAllRoles())
-          .withJmapVersionHeader();
+              client.fetchSession().then(() => {
+                jmapClient = client;
+                jmapClientPromise = undefined;
+                resolve(client);
+              }).catch(reject);
+            })
+            .catch(reject);
+        });
+      }
 
-        return jmapClient;
-      });
+      return jmapClientPromise;
     }
 
     function get() {
-      if (jmapClient) {
-        return tokenAPI.getWebToken().then(({ data: jwt }) => jmapClient.withAuthenticationToken(`Bearer ${jwt}`));
-      }
-
-      return _initializeJmapClient();
+      return jmapClient ? $q.when(jmapClient) : _initializeJmapClientWithSession();
     }
   });

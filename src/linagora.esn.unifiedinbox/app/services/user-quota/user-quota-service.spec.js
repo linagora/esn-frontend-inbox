@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  /* global chai: false, sinon: false, jmapDraft: false */
+  /* global chai: false, sinon: false */
   const { expect } = chai;
 
   describe('The inboxUserQuotaService service', function() {
@@ -24,7 +24,12 @@
     }));
 
     function mockInboxQuota(defaultQuotas) {
-      var fakeInbox = new jmapDraft.Mailbox({}, 'id', 'INBOX', { role: { value: 'inbox' }, quotas: { 'private#...': defaultQuotas } });
+      var fakeInbox = {
+        id: 'id',
+        name: 'INBOX',
+        role: 'inbox',
+        quotas: { 'private#...': defaultQuotas }
+      };
 
       mailboxesServiceMock.getUserInbox = sinon.spy(function() { return mockPromise || $q.when(fakeInbox);});
       mockPromise = undefined;

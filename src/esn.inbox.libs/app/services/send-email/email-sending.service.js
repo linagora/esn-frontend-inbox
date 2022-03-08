@@ -3,11 +3,12 @@
 const _ = require('lodash');
 
 require('../email-body/email-body');
-require('../jmap-helper/jmap-helper');
+require('../jmap-draft-helper/jmap-draft-helper');
+require('../with-jmap-draft-client/with-jmap-draft-client');
 require('../../app.constants');
 
 angular.module('esn.inbox.libs')
-  .factory('emailSendingService', function($q, emailService, jmapDraft, session, emailBodyService, sendEmail, inboxJmapHelper,
+  .factory('emailSendingService', function($q, emailService, jmapDraft, session, emailBodyService, sendEmail, inboxJmapDraftHelper,
     inboxMessagesCache, INBOX_ATTACHMENT_TYPE_JMAP, INBOX_MESSAGE_HEADERS, htmlCleaner) {
     const referencingEmailOptions = {
       reply: {
@@ -270,7 +271,7 @@ angular.module('esn.inbox.libs')
     }
 
     function _createQuotedEmail(opts, messageId, sender) {
-      return $q.when(inboxMessagesCache[messageId] || inboxJmapHelper.getMessageById(messageId)).then(function(message) {
+      return $q.when(inboxMessagesCache[messageId] || inboxJmapDraftHelper.getMessageById(messageId)).then(function(message) {
         if (message.htmlBody) {
           message.htmlBody = htmlCleaner.clean(message.htmlBody);
         }

@@ -18,7 +18,7 @@ angular.module('linagora.esn.unifiedinbox')
       },
       getEmptyContextTemplateUrl: function(account, context) {
         return inboxMailboxesService.assignMailbox(context, {}, true).then(function(mailbox) {
-          if (!mailbox || mailbox.role.value) {
+          if (!mailbox || mailbox.role) {
             return '/unifiedinbox/app/services/plugins/jmap/jmap-empty-message.html';
           }
 

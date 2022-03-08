@@ -7,17 +7,16 @@ const { expect } = chai;
 describe('The jmapDraftClientProvider service', function() {
 
   var $rootScope, jmapDraftClientProvider, jmapDraft, config;
-
   const tokenAPIMock = {};
 
   beforeEach(function() {
     angular.mock.module('esn.inbox.libs', function($provide) {
-      $provide.value('tokenAPI', tokenAPIMock);
       config = config || {};
 
       $provide.value('esnConfig', function(key, defaultValue) {
         return $q.when(angular.isDefined(config[key]) ? config[key] : defaultValue);
       });
+      $provide.value('tokenAPI', tokenAPIMock);
     });
   });
 
@@ -48,9 +47,9 @@ describe('The jmapDraftClientProvider service', function() {
   });
 
   it('should return a fulfilled promise if jwt generation succeed', function(done) {
+    tokenAPIMock.getWebToken = () => $q.when({ data: 'expected jwt' });
     config['linagora.esn.unifiedinbox.api'] = 'expected jmap api';
     config['linagora.esn.unifiedinbox.downloadUrl'] = 'expected jmap downloadUrl';
-    tokenAPIMock.getWebToken = () => $q.when({ data: 'expected jwt' });
     injectServices.bind(this)();
 
     jmapDraftClientProvider.get().then(function(client) {
@@ -60,7 +59,7 @@ describe('The jmapDraftClientProvider service', function() {
       expect(client.downloadUrl).to.equal('expected jmap downloadUrl');
 
       done();
-    });
+    }, done.bind(null, 'should resolve'));
     $rootScope.$digest();
   });
 

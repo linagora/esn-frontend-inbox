@@ -24,7 +24,7 @@ angular.module('linagora.esn.unifiedinbox')
 
     function onSave() {
       inboxSharedMailboxesService.setHiddenMailboxes(self.mailboxes).then(function() {
-        inboxMailboxesService.updateSharedMailboxCache();
+        inboxMailboxesService.updateMailboxCache();
       });
     }
 

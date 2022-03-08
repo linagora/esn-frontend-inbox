@@ -23,9 +23,8 @@ angular.module('esn.inbox.libs')
     }
 
     function add(mailbox) {
-      mailbox.role = mailbox.role || {};
       mailbox.qualifiedName = mailbox.name;
-      mailbox.unreadMessages = 0;
+      mailbox.unreadEmails = 0;
 
       mailboxes.push(mailbox);
     }

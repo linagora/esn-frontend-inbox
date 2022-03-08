@@ -6,7 +6,7 @@ require('./permissions-service.constants.js');
 
 angular.module('linagora.esn.unifiedinbox')
 
-  .service('inboxSharedMailboxesPermissionsService', function($q, inboxMailboxesService,
+  .service('inboxSharedMailboxesPermissionsService', function($q, inboxMailboxesService, inboxUtils,
     INBOX_PERSONAL_MAILBOX_NAMESPACE_TYPE, INBOX_MAILBOX_SHARING_ROLES, INBOX_MAILBOX_SHARING_PERMISSIONS) {
 
     var mapOfRolesByPermission = buildMapOfRolesIndexedByPermissions();
@@ -30,8 +30,11 @@ angular.module('linagora.esn.unifiedinbox')
     }
 
     function isMyOwnMailbox(mailbox) {
-      return mailbox && mailbox.namespace && mailbox.namespace.type &&
-        mailbox.namespace.type.toLowerCase() === INBOX_PERSONAL_MAILBOX_NAMESPACE_TYPE;
+      return (
+        mailbox &&
+        mailbox.namespace &&
+        mailbox.namespace.toLowerCase() === INBOX_PERSONAL_MAILBOX_NAMESPACE_TYPE
+      );
     }
 
     function isValidMailbox(mailbox) {
@@ -45,16 +48,16 @@ angular.module('linagora.esn.unifiedinbox')
       if (!isValidMailbox(mailbox)) {
         return $q.reject(new Error('invalid mailbox provided'));
       }
-      if (!isMyOwnMailbox(mailbox)) { // has permissions to update mailbox sharedWith props
+      if (!isMyOwnMailbox(mailbox)) { // has permissions to update mailbox rights props
         return $q.reject(new Error('Only user ' +
-          (mailbox.namespace && mailbox.namespace.owner || '') +
+          inboxUtils.getMailboxOwnerEmail(mailbox.namespace) +
           ' is allowed to update sharing settings'));
       }
       if (!preferredEmail) {
         return $q.reject(new Error('user email not provided'));
       }
-      mailbox.sharedWith = mailbox.sharedWith || {};
-      mailbox.sharedWith[preferredEmail] = INBOX_MAILBOX_SHARING_PERMISSIONS[role];
+      mailbox.rights = mailbox.rights || {};
+      mailbox.rights[preferredEmail] = INBOX_MAILBOX_SHARING_PERMISSIONS[role];
 
       return $q.when(mailbox);
     }
@@ -81,16 +84,16 @@ angular.module('linagora.esn.unifiedinbox')
       }
       if (!isMyOwnMailbox(mailbox)) {
         return $q.reject(new Error('Only user ' +
-          (mailbox.namespace && mailbox.namespace.owner || '') +
+        inboxUtils.getMailboxOwnerEmail(mailbox.namespace) +
           ' is allowed to update sharing settings'));
       }
       if (!preferredEmail) {
         return $q.reject(new Error('user email not provided'));
       }
-      if (!_.has(mailbox.sharedWith, preferredEmail)) {
+      if (!_.has(mailbox.rights, preferredEmail)) {
         return $q.reject(new Error('"' + preferredEmail + '" had not been granted yet!'));
       }
-      delete mailbox.sharedWith[preferredEmail];
+      delete mailbox.rights[preferredEmail];
 
       return $q.when(mailbox);
     }
@@ -110,7 +113,7 @@ angular.module('linagora.esn.unifiedinbox')
       if (!preferredEmail) {
         return $q.reject(new Error('user email not provided'));
       }
-      var currentUserSortedPermissions = ((mailbox.sharedWith || {})[preferredEmail] || []).sort();
+      var currentUserSortedPermissions = ((mailbox.rights || {})[preferredEmail] || []).sort();
 
       return _.has(mapOfRolesByPermission, currentUserSortedPermissions) ?
         $q.when(mapOfRolesByPermission[currentUserSortedPermissions]) :

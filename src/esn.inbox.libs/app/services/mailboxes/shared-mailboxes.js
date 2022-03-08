@@ -15,12 +15,11 @@ angular.module('esn.inbox.libs')
     let foldersSharingConfig = null;
 
     function isSharedMailbox(mailbox) {
-      if (!mailbox || !mailbox.namespace || !mailbox.namespace.type) {
+      if (!mailbox || !mailbox.namespace) {
         return false;
       }
 
-      return mailbox.namespace && mailbox.namespace.type &&
-        mailbox.namespace.type.toLowerCase() === INBOX_ROLE_NAMESPACE_TYPES.shared;
+      return mailbox.namespace.toLowerCase().startsWith(INBOX_ROLE_NAMESPACE_TYPES.shared);
     }
 
     function getHiddenMaiboxesConfig() {
@@ -73,13 +72,13 @@ angular.module('esn.inbox.libs')
     }
 
     function isShareableMailbox(mailbox) {
-      const mailboxRole = mailbox.role.value;
+      const mailboxRole = mailbox.role;
 
-      if (mailboxRole !== null) {
-        return !_.contains(INBOX_MAILBOXES_NON_SHAREABLE, mailboxRole.toLowerCase());
+      if (!mailboxRole) {
+        return true;
       }
 
-      return true;
+      return !_.contains(INBOX_MAILBOXES_NON_SHAREABLE, mailboxRole.toLowerCase());
     }
 
     function isEnabled() {

@@ -17,7 +17,7 @@
         esn-filter-input(on-change="ctrl.filter = $filter")
         mailbox-display(is-special="true", mailbox="mailbox", ng-repeat="mailbox in specialMailboxes" )
 
-        mailbox-display(is-system="true", mailbox="mailbox", ng-repeat="mailbox in mailboxes | filter: { role: { value: '' }, namespace: { type: 'Personal' }, name: ctrl.filter } track by mailbox.id")
+        mailbox-display(is-system="true", mailbox="mailbox", ng-repeat="mailbox in mailboxes | filter: { role: '', namespace: 'Personal', name: ctrl.filter } track by mailbox.id")
 
         hr
         inbox-sidebar-new-folder-button

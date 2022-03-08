@@ -2,7 +2,10 @@
 
 angular.module('esn.inbox.libs')
   .factory('inboxMailboxesCache', function() {
-    return [];
+    return {
+      state: null,
+      list: []
+    };
   })
 
   .factory('inboxMessagesCache', function() { return {}; });

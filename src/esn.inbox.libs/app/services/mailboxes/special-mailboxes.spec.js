@@ -24,9 +24,9 @@ describe('The inboxSpecialMailboxes factory', function() {
       expect(specialMailboxes[0]).to.shallowDeepEqual({
         id: 'all',
         name: 'All Mail',
-        role: { value: 'all' },
+        role: 'all',
         qualifiedName: 'All Mail',
-        unreadMessages: 0
+        unreadEmails: 0
       });
     });
   });
@@ -61,8 +61,7 @@ describe('The inboxSpecialMailboxes factory', function() {
         id: 'new',
         name: 'New',
         qualifiedName: 'New',
-        role: {},
-        unreadMessages: 0
+        unreadEmails: 0
       });
     });
 

@@ -4,7 +4,7 @@
 
 const { expect } = chai;
 
-describe('The jmap client wrapper services', function() {
+describe('The jmap draft client wrapper services', function() {
   beforeEach(function() {
     angular.mock.module('esn.inbox.libs');
   });

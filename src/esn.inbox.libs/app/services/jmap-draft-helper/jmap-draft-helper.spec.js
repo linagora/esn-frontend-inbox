@@ -4,16 +4,16 @@
 
 const { expect } = chai;
 
-describe('The inboxJmapHelper service', function() {
+describe('The inboxJmapDraftHelper service', function() {
 
-  var inboxJmapHelper, jmapDraft, emailBodyServiceMock, $rootScope, notificationFactory, jmapClient;
+  var inboxJmapDraftHelper, jmapDraft, emailBodyServiceMock, $rootScope, notificationFactory, jmapDraftClient;
 
   beforeEach(function() {
     angular.mock.module('esn.inbox.libs', function($provide) {
-      jmapClient = {};
+      jmapDraftClient = {};
 
-      $provide.value('withJmapClient', function(callback) {
-        return callback(jmapClient);
+      $provide.value('withJmapDraftClient', function(callback) {
+        return callback(jmapDraftClient);
       });
       $provide.value('emailBodyService', emailBodyServiceMock = { bodyProperty: 'htmlBody' });
       $provide.value('inboxIdentitiesService', {
@@ -23,8 +23,8 @@ describe('The inboxJmapHelper service', function() {
       });
     });
 
-    angular.mock.inject(function(_$rootScope_, _inboxJmapHelper_, _notificationFactory_, _jmapDraft_) {
-      inboxJmapHelper = _inboxJmapHelper_;
+    angular.mock.inject(function(_$rootScope_, _inboxJmapDraftHelper_, _notificationFactory_, _jmapDraft_) {
+      inboxJmapDraftHelper = _inboxJmapDraftHelper_;
       jmapDraft = _jmapDraft_;
       $rootScope = _$rootScope_;
       notificationFactory = _notificationFactory_;
@@ -36,24 +36,24 @@ describe('The inboxJmapHelper service', function() {
   describe('The getMessageById function', function() {
 
     it('should fetch the message, and reject upon failure', function(done) {
-      jmapClient.getMessages = function(options) {
+      jmapDraftClient.getMessages = function(options) {
         expect(options.ids).to.deep.equal(['id']);
 
         return $q.reject();
       };
 
-      inboxJmapHelper.getMessageById('id').then(null, done);
+      inboxJmapDraftHelper.getMessageById('id').then(null, done);
       $rootScope.$digest();
     });
 
     it('should fetch the message, and return it upon success', function(done) {
-      jmapClient.getMessages = function(options) {
+      jmapDraftClient.getMessages = function(options) {
         expect(options.ids).to.deep.equal(['id']);
 
         return $q.when([{ id: 'id' }]);
       };
 
-      inboxJmapHelper.getMessageById('id').then(function(message) {
+      inboxJmapDraftHelper.getMessageById('id').then(function(message) {
         expect(message).to.deep.equal({ id: 'id' });
 
         done();
@@ -66,7 +66,7 @@ describe('The inboxJmapHelper service', function() {
   describe('The toOutboundMessage fn', function() {
 
     it('should build and return new instance of jmapDraft.OutboundMessage', function() {
-      inboxJmapHelper.toOutboundMessage({}, {
+      inboxJmapDraftHelper.toOutboundMessage({}, {
         identity: {
           name: 'Alice Cooper',
           email: 'alice@domain'
@@ -94,7 +94,7 @@ describe('The inboxJmapHelper service', function() {
     });
 
     it('should filter attachments with no blobId', function() {
-      inboxJmapHelper.toOutboundMessage({}, {
+      inboxJmapDraftHelper.toOutboundMessage({}, {
         identity: {
           name: 'Alice Cooper',
           email: 'alice@domain'
@@ -120,7 +120,7 @@ describe('The inboxJmapHelper service', function() {
     it('should include email.htmlBody when provided', function() {
       emailBodyServiceMock.bodyProperty = 'textBody';
 
-      inboxJmapHelper.toOutboundMessage({}, {
+      inboxJmapDraftHelper.toOutboundMessage({}, {
         identity: {
           name: 'Alice Cooper',
           email: 'alice@domain'
@@ -137,7 +137,7 @@ describe('The inboxJmapHelper service', function() {
     it('should leverage emailBodyServiceMock.bodyProperty when emailState.htmlBody is undefined', function() {
       emailBodyServiceMock.bodyProperty = 'textBody';
 
-      inboxJmapHelper.toOutboundMessage({}, {
+      inboxJmapDraftHelper.toOutboundMessage({}, {
         identity: {
           name: 'Alice Cooper',
           email: 'alice@domain'
@@ -152,7 +152,7 @@ describe('The inboxJmapHelper service', function() {
     });
 
     it('should set replyTo in the OutboundMessage, if defined in the identity', function() {
-      inboxJmapHelper.toOutboundMessage({}, {
+      inboxJmapDraftHelper.toOutboundMessage({}, {
         identity: {
           name: 'Alice Cooper',
           email: 'alice@domain',
@@ -177,7 +177,7 @@ describe('The inboxJmapHelper service', function() {
     });
 
     it('should use default identity if none defined at the message level', function() {
-      inboxJmapHelper.toOutboundMessage({}, {
+      inboxJmapDraftHelper.toOutboundMessage({}, {
         to: [{ email: 'to@domain', name: 'to' }]
       }).then(function(message) {
         expect(message).to.deep.equal(new jmapDraft.OutboundMessage({}, {
@@ -197,7 +197,7 @@ describe('The inboxJmapHelper service', function() {
     });
 
     it('should include headers when provided', function() {
-      inboxJmapHelper.toOutboundMessage({}, {
+      inboxJmapDraftHelper.toOutboundMessage({}, {
         identity: {
           name: 'Sender',
           email: 'sender@domain'
@@ -229,7 +229,7 @@ describe('The inboxJmapHelper service', function() {
     });
 
     it('should NOT set headers when NOT provided', function() {
-      inboxJmapHelper.toOutboundMessage({}, {
+      inboxJmapDraftHelper.toOutboundMessage({}, {
         identity: {
           name: 'Sender',
           email: 'sender@domain'

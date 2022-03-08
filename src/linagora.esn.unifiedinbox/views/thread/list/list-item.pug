@@ -11,7 +11,7 @@
     )
     .inbox-item-with-icon
       .list-image.badge-container(ng-click="ctrl.select(item, $event)", desktop-hover="hovering = hover && !esnIsDragging")
-        inbox-emailer-avatar(ng-hide="hovering || item.selected", emailer="mailboxRole.value !== 'sent' ? item.lastEmail.from : item.lastEmail.emailFirstRecipient" )
+        inbox-emailer-avatar(ng-hide="hovering || item.selected", emailer="mailboxRole !== 'sent' ? item.lastEmail.from : item.lastEmail.emailFirstRecipient" )
         label.checkbox.clickable(ng-hide="!hovering && !item.selected")
           input(type='checkbox', ng-model="item.selected")
           i.input-helper
@@ -31,8 +31,8 @@
           .inbox-from.lv-title
             span.inbox-item-draft(ng-if="item.lastEmail.isDraft") {{ 'Draft' | translate }}
             span.inbox-item-draft-divider -
-            inbox-emailer(ng-if="mailboxRole.value !== 'sent'", emailer="item.lastEmail.from")
-            inbox-emailer-group(ng-if="mailboxRole.value === 'sent' && item.emailRecipients", group="item.emailRecipients", display-inline="true")
+            inbox-emailer(ng-if="mailboxRole !== 'sent'", emailer="item.lastEmail.from")
+            inbox-emailer-group(ng-if="mailboxRole === 'sent' && item.emailRecipients", group="item.emailRecipients", display-inline="true")
         .inbox-list-item-date-and-indicators
           .date-and-indicators-container
             .indicators.esn-flex-noshrink.visible-xl

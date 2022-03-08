@@ -2,7 +2,7 @@
 
 angular.module('esn.inbox.libs')
 
-  .service('newComposerService', function($state, inboxJmapHelper, boxOverlayOpener, deviceDetector, esnI18nService) {
+  .service('newComposerService', function($state, inboxJmapDraftHelper, boxOverlayOpener, deviceDetector, esnI18nService) {
 
     return {
       open: open,
@@ -38,7 +38,7 @@ angular.module('esn.inbox.libs')
     }
 
     function openDraft(id, boxConfig) {
-      inboxJmapHelper.getMessageById(id).then(function(message) {
+      inboxJmapDraftHelper.getMessageById(id).then(function(message) {
         open(message, boxConfig);
       });
     }

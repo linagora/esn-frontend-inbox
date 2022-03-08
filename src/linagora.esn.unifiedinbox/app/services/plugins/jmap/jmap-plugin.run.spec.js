@@ -9,7 +9,7 @@ describe('The JMAP plugin', function() {
   var $rootScope, inboxPlugins, mailbox;
 
   beforeEach(function() {
-    mailbox = { name: 'mailboxName', role: {} };
+    mailbox = { name: 'mailboxName' };
 
     angular.mock.module('linagora.esn.unifiedinbox', function($provide) {
       $provide.value('inboxMailboxesService', {
@@ -32,9 +32,7 @@ describe('The JMAP plugin', function() {
   describe('The getEmptyContextTemplateUrl function', function() {
 
     it('should return the default template if mailbox is a system mailbox', function(done) {
-      mailbox.role = {
-        value: 'inbox'
-      };
+      mailbox.role = 'inbox';
 
       inboxPlugins.get('jmap').getEmptyContextTemplateUrl().then(function(template) {
         expect(template).to.equal('/unifiedinbox/app/services/plugins/jmap/jmap-empty-message.html');
@@ -84,12 +82,10 @@ describe('The JMAP plugin', function() {
   describe('The resolveContextRole function', function() {
 
     it('should return @role', function(done) {
-      mailbox.role = {
-        value: 'inbox'
-      };
+      mailbox.role = 'inbox';
 
       inboxPlugins.get('jmap').resolveContextRole('accountId').then(function(role) {
-        expect(role.value).to.equal('inbox');
+        expect(role).to.equal('inbox');
 
         done();
       });

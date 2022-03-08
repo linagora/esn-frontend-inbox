@@ -145,7 +145,7 @@ require('./services/common/inbox-utils.service.js');
     })
 
     .controller('viewEmailController', function($scope, $state, $stateParams, esnShortcuts, inboxJmapItemService,
-      inboxMailboxesService, inboxJmapHelper, inboxAsyncHostedMailControllerHelper, inboxUnavailableAccountNotifier,
+      inboxMailboxesService, inboxJmapDraftHelper, inboxAsyncHostedMailControllerHelper, inboxUnavailableAccountNotifier,
       inboxFilteredList, inboxMessagesCache, INBOX_SHORTCUTS_NAVIGATION_CATEGORY, INBOX_SHORTCUTS_ACTIONS_CATEGORY, INBOX_EVENTS,
       INBOX_CONTROLLER_LOADING_STATES) {
       var context = $stateParams.context;
@@ -160,7 +160,7 @@ require('./services/common/inbox-utils.service.js');
       }
 
       inboxAsyncHostedMailControllerHelper(this, function() {
-        return inboxJmapHelper
+        return inboxJmapDraftHelper
           .getMessageById(emailId)
           .then(function(message) {
             inboxMessagesCache[emailId] = message;
@@ -257,10 +257,10 @@ require('./services/common/inbox-utils.service.js');
       esnShortcuts.use(INBOX_SHORTCUTS_ACTIONS_CATEGORY.shortcuts.SPAM_EMAIL, this.moveToSpam, $scope);
     })
 
-    .controller('viewThreadController', function($scope, $stateParams, $state, withJmapClient, inboxJmapItemService, JMAP_GET_MESSAGES_VIEW) {
+    .controller('viewThreadController', function($scope, $stateParams, $state, withJmapDraftClient, inboxJmapItemService, JMAP_GET_MESSAGES_VIEW) {
       $scope.thread = $stateParams.item;
 
-      withJmapClient(function(client) {
+      withJmapDraftClient(function(client) {
         client
           .getThreads({ ids: [$stateParams.threadId] })
           .then(_.head)
@@ -380,7 +380,7 @@ require('./services/common/inbox-utils.service.js');
     })
 
     .controller('inboxDeleteFolderController', function($scope, $state, inboxMailboxesService, esnI18nService) {
-      var descendants = $scope.mailbox.descendants,
+      var descendants = inboxMailboxesService.getMailboxDescendants($scope.mailbox.id),
         numberOfDescendants = descendants.length,
         numberOfMailboxesToDisplay = 3,
         more = numberOfDescendants - numberOfMailboxesToDisplay,
@@ -394,25 +394,27 @@ require('./services/common/inbox-utils.service.js');
       destroyMailboxesIds.push($scope.mailbox.id);
       destroyMailboxesIds = destroyMailboxesIds.concat(descendants.map(_.property('id')));
 
+      const displayName = inboxMailboxesService.getDisplayName($scope.mailbox.name);
+
       if (numberOfDescendants < 1) {
-        $scope.message = esnI18nService.translate(messageFor1Folder, { mainFolder: $scope.mailbox.displayName }, true).toString();
+        $scope.message = esnI18nService.translate(messageFor1Folder, { mainFolder: displayName }, true).toString();
       } else {
-        var displayingDescendants = descendants.slice(0, numberOfMailboxesToDisplay).map(_.property('displayName')).join(', ');
+        var displayingDescendants = descendants.slice(0, numberOfMailboxesToDisplay).map(mailbox => inboxMailboxesService.getDisplayName(mailbox.name)).join(', ');
 
         if (more <= 0) {
           $scope.message = esnI18nService.translate(messageFor2To4Folders, {
-            mainFolder: $scope.mailbox.displayName,
+            mainFolder: displayName,
             otherFolders: displayingDescendants
           }, true).toString();
         } else if (more === 1) {
           $scope.message = esnI18nService.translate(messageFor5Folders, {
-            mainFolder: $scope.mailbox.displayName,
+            mainFolder: displayName,
             otherFolders: displayingDescendants,
-            lastFolder: descendants[numberOfMailboxesToDisplay].displayName
+            lastFolder: inboxMailboxesService.getDisplayName(descendants[numberOfMailboxesToDisplay].name)
           }, true).toString();
         } else {
           $scope.message = esnI18nService.translate(messageForMoreFolders, {
-            mainFolder: $scope.mailbox.displayName,
+            mainFolder: displayName,
             otherFolders: displayingDescendants,
             count: more
           }, true).toString();
@@ -435,7 +437,7 @@ require('./services/common/inbox-utils.service.js');
       $stateParams,
       $q,
       jmapDraft,
-      withJmapClient,
+      withJmapDraftClient,
       rejectWithErrorNotification,
       asyncJmapAction,
       esnPreviousPage,
@@ -476,7 +478,7 @@ require('./services/common/inbox-utils.service.js');
           $scope.vacation = {};
           $scope.is24HourFormat = {};
 
-          withJmapClient(function(client) {
+          withJmapDraftClient(function(client) {
 
             $q.all([
               is24HourFormat(),
@@ -576,7 +578,7 @@ require('./services/common/inbox-utils.service.js');
       };
 
       $scope.$on(INBOX_EVENTS.VACATION_STATUS, function() {
-        withJmapClient(function(client) {
+        withJmapDraftClient(function(client) {
           client.getVacationResponse().then(function(vacation) {
             $scope.vacation.isEnabled = vacation.isEnabled;
           });
@@ -647,12 +649,10 @@ require('./services/common/inbox-utils.service.js');
       $scope.displaySharedFolders = displaySharedFolders;
       $scope.$onDestroy = $onDestroy;
 
-      $scope.updateMyPersonnalsfolders = $rootScope.$on(INBOX_EVENTS.PERSONAL_FOLDERS_UPDATED, displayMyFolders);
-      $scope.updateSharedfolders = $rootScope.$on(INBOX_EVENTS.SHARED_FOLDERS_UPDATED, displaySharedFolders);
+      $scope.updateFolders = $rootScope.$on(INBOX_EVENTS.FOLDERS_UPDATED, displayFolders);
 
       function $onDestroy() {
-        $scope.updateMyPersonnalsfolders();
-        $scope.updateSharedfolders();
+        $scope.updateFolders();
       }
 
       inboxAsyncHostedMailControllerHelper(this, function() {
@@ -665,12 +665,19 @@ require('./services/common/inbox-utils.service.js');
         });
       });
 
+      function displayFolders() {
+        displayMyFolders();
+        if ($scope.isFolderSharingEnabled) {
+          displaySharedFolders();
+        }
+      }
+
       function displayMyFolders() {
         if (!$scope.mailboxes) {
           return;
         }
 
-        $scope.displayPersonnalFolders = $filter('filter')($scope.mailboxes, { role: { value: '!' }, namespace: { type: 'Personal' } });
+        $scope.displayPersonnalFolders = $filter('filter')($scope.mailboxes, { role: '!', namespace: 'Personal' });
       }
 
       function displaySharedFolders() {
@@ -684,7 +691,7 @@ require('./services/common/inbox-utils.service.js');
       function setupFolderPolling() {
         if (INFINITE_MAILBOXES_POLLING_INTERVAL > 0) {
           var folderPoller = $interval(function() {
-            inboxMailboxesService.updateSharedMailboxCache();
+            inboxMailboxesService.updateMailboxCache();
           }, INFINITE_MAILBOXES_POLLING_INTERVAL);
 
           $scope.$on('$destroy', function() {

@@ -2,15 +2,15 @@
 
 const _ = require('lodash');
 
-require('../jmap-client-wrapper/jmap-client-wrapper.service.js');
+require('../jmap-draft-client-wrapper/jmap-draft-client-wrapper.service.js');
 require('../email-body/email-body.js');
-require('../with-jmap-client/with-jmap-client.js');
+require('../with-jmap-draft-client/with-jmap-draft-client');
 require('../identities/inbox-identities.service.js');
 require('../../app.constants');
 
 angular.module('esn.inbox.libs')
 
-  .factory('inboxJmapHelper', function($q, jmapDraft, emailBodyService, withJmapClient, inboxIdentitiesService, JMAP_GET_MESSAGES_VIEW) {
+  .factory('inboxJmapDraftHelper', function($q, jmapDraft, emailBodyService, withJmapDraftClient, inboxIdentitiesService, JMAP_GET_MESSAGES_VIEW) {
     return {
       getMessageById,
       toOutboundMessage
@@ -19,12 +19,12 @@ angular.module('esn.inbox.libs')
     /////
 
     function getMessageById(id) {
-      return withJmapClient(function(client) {
+      return withJmapDraftClient(function(client) {
         return client.getMessages({ ids: [id], properties: JMAP_GET_MESSAGES_VIEW }).then(_.head);
       });
     }
 
-    function toOutboundMessage(jmapClient, emailState) {
+    function toOutboundMessage(jmapDraftClient, emailState) {
       return $q.when(emailState.identity || inboxIdentitiesService.getDefaultIdentity())
         .then(function(identity) {
           const message = {
@@ -49,7 +49,7 @@ angular.module('esn.inbox.libs')
             });
           }
 
-          return new jmapDraft.OutboundMessage(jmapClient, message);
+          return new jmapDraft.OutboundMessage(jmapDraftClient, message);
         });
     }
 

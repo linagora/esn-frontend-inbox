@@ -36,6 +36,7 @@ module.exports = merge(commons, {
           path.resolve(__dirname, 'src/linagora.esn.unifiedinbox/app/module-registry.run.js'),
           path.resolve(__dirname, 'src/linagora.esn.unifiedinbox/app/search/search-query.run.js'),
           path.resolve(__dirname, 'src/esn.inbox.libs/app/services/jmap-client-provider/jmap-client-provider.run.js'),
+          path.resolve(__dirname, 'src/esn.inbox.libs/app/services/jmap-draft-client-provider/jmap-draft-client-provider.run.js'),
           path.resolve(__dirname, 'node_modules/esn-frontend-common-libs/src/frontend/js/modules/i18n/i18n.run.js'),
           path.resolve(__dirname, 'node_modules/esn-frontend-inbox-linshare/src/app/app.run.js')
         ]

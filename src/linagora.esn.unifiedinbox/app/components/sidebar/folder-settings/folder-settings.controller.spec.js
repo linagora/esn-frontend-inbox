@@ -15,10 +15,8 @@ describe('The inboxFolderSettings controller', function() {
   beforeEach(function() {
     mailbox = {
       id: 'id_mailbox',
-      role: {
-        value: 'trash'
-      },
-      totalMessages: 10
+      role: 'trash',
+      totalEmails: 10
     };
 
     angular.mock.inject(function(_$rootScope_, _$controller_, _inboxJmapItemService_, _inboxSharedMailboxesService_) {
@@ -58,7 +56,7 @@ describe('The inboxFolderSettings controller', function() {
 
     controller.emptyTrash(mailbox.id);
 
-    expect(mailbox.role.value).to.equal('trash');
+    expect(mailbox.role).to.equal('trash');
     expect(inboxJmapItemService.emptyMailbox).to.have.been.calledWith(mailbox.id);
   });
 

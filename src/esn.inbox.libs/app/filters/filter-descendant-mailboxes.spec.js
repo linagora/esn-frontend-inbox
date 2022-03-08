@@ -8,20 +8,26 @@ describe('The inboxFilterDescendantMailboxes filter', function() {
 
   var filter, cache;
 
+  const tokenAPIMock = {
+    getWebToken: () => $q.when({ data: 'jwt' })
+  };
+
   beforeEach(function() {
-    angular.mock.module('esn.inbox.libs');
+    angular.mock.module('esn.inbox.libs', function($provide) {
+      $provide.value('tokenAPI', tokenAPIMock);
+    });
   });
 
-  beforeEach(angular.mock.inject(function(inboxFilterDescendantMailboxesFilter, inboxMailboxesCache, jmapDraft) {
+  beforeEach(angular.mock.inject(function(inboxFilterDescendantMailboxesFilter, inboxMailboxesCache) {
     filter = inboxFilterDescendantMailboxesFilter;
-    cache = inboxMailboxesCache;
+    cache = inboxMailboxesCache.list;
 
     [
-      new jmapDraft.Mailbox(null, '1', '1'),
-      new jmapDraft.Mailbox(null, '2', '2', { parentId: '1' }),
-      new jmapDraft.Mailbox(null, '3', '3', { parentId: '2' }),
-      new jmapDraft.Mailbox(null, '4', '4'),
-      new jmapDraft.Mailbox(null, '5', '5', { parentId: '4' })
+      { id: '1', name: '1' },
+      { id: '2', name: '2', parentId: '1' },
+      { id: '3', name: '3', parentId: '2' },
+      { id: '4', name: '4' },
+      { id: '5', name: '5', parentId: '4' }
     ].forEach(function(mailbox) {
       cache.push(mailbox);
     });

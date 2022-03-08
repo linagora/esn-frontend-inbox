@@ -143,18 +143,18 @@ describe('The Unified Inbox Angular module filters', function() {
 
     it('should filter RestrictMailboxes', function() {
       var mailboxes = [
-          { id: 1, mayAddItems: true, role: { value: 'outbox' } },
-          { id: 2, mayAddItems: true, role: { value: 'drafts' } },
-          { id: 3, mayAddItems: true, role: { value: undefined } },
-          { id: 4, mayAddItems: true, role: { value: 'inbox' } }
+          { id: 1, myRights: { mayAddItems: true }, role: 'outbox' },
+          { id: 2, myRights: { mayAddItems: true }, role: 'drafts' },
+          { id: 3, myRights: { mayAddItems: true } },
+          { id: 4, myRights: { mayAddItems: true }, role: 'inbox' }
         ],
         expectedMailboxes = [
-          { id: 3, mayAddItems: true, role: { value: undefined } },
-          { id: 4, mayAddItems: true, role: { value: 'inbox' } }
+          { id: 3, myRights: { mayAddItems: true } },
+          { id: 4, myRights: { mayAddItems: true }, role: 'inbox' }
         ];
 
       mailboxes.forEach(function(mailbox) {
-        inboxMailboxesCache.push(mailbox);
+        inboxMailboxesCache.list.push(mailbox);
       });
 
       expect(inboxFilterRestrictedMailboxesFilter(mailboxes)).to.deep.equal(expectedMailboxes);

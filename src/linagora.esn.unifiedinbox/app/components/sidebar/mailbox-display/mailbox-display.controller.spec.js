@@ -60,9 +60,7 @@ describe('The mailboxDisplay controller', function() {
 
     it('should define $scope.mailboxIcons to default value if mailbox has no role', function() {
       mailbox = {
-        role: {
-          value: null
-        },
+        role: null,
         qualifiedName: 'test'
       };
 
@@ -75,9 +73,7 @@ describe('The mailboxDisplay controller', function() {
 
     it('should define $scope.mailboxIcons to the correct value when mailbox has a role', function() {
       mailbox = {
-        role: {
-          value: 'testrole'
-        },
+        role: 'testrole',
         qualifiedName: 'test'
       };
 

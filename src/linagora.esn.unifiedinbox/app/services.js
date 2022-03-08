@@ -57,7 +57,7 @@ const _ = require('lodash');
       }
     })
 
-    .service('attachmentUploadService', function($q, $rootScope, inboxConfig, jmapClientProvider, inBackground, xhrWithUploadProgress) {
+    .service('attachmentUploadService', function($q, $rootScope, inboxConfig, jmapDraftClientProvider, inBackground, xhrWithUploadProgress) {
       function in$Apply(fn) {
         return function(value) {
           if ($rootScope.$$phase) {
@@ -73,7 +73,7 @@ const _ = require('lodash');
       //eslint-disable-next-line no-unused-vars
       function uploadFile(unusedUrl, file, type, size, options, canceler) {
         return $q.all([
-          jmapClientProvider.get(),
+          jmapDraftClientProvider.get(),
           inboxConfig('uploadUrl')
         ]).then(function(data) {
           var authToken = data[0].authToken,

@@ -7,7 +7,7 @@ const { expect } = chai;
 describe('The Unified Inbox Angular module providers', function() {
 
   var $rootScope, inboxProviders, inboxHostedMailAttachmentProvider, inboxHostedMailThreadsProvider, inboxSearchResultsProvider,
-    jmapClient, inboxConfigMock, jmapDraft, ELEMENTS_PER_REQUEST;
+    jmapDraftClient, inboxConfigMock, ELEMENTS_PER_REQUEST;
 
   function elements(id, length, offset) {
     var array = [], start = offset || 0;
@@ -35,14 +35,7 @@ describe('The Unified Inbox Angular module providers', function() {
     angular.mock.module('esn.core');
     angular.mock.module('esn.configuration');
     angular.mock.module('linagora.esn.unifiedinbox', function($provide) {
-      jmapClient = {
-        getMailboxes: function() {
-          return $q.when([
-            new jmapDraft.Mailbox({}, 'id_inbox', 'name_inbox', { role: 'inbox' }),
-            new jmapDraft.Mailbox({}, 'id_trash', 'name_trash', { role: 'trash' }),
-            new jmapDraft.Mailbox({}, 'id_spam', 'name_spam', { role: 'spam' })
-          ]);
-        },
+      jmapDraftClient = {
         getMessageList: function(options) {
           expect(options.filter.inMailboxes).to.deep.equal(['id_inbox']);
 
@@ -58,8 +51,8 @@ describe('The Unified Inbox Angular module providers', function() {
         }
       };
 
-      $provide.value('withJmapClient', function(cb) {
-        return cb(jmapClient);
+      $provide.value('withJmapDraftClient', function(cb) {
+        return cb(jmapDraftClient);
       });
       $provide.decorator('inboxMailboxesService', function($delegate) {
         $delegate.flagIsUnreadChanged = sinon.spy($delegate.flagIsUnreadChanged);
@@ -74,13 +67,12 @@ describe('The Unified Inbox Angular module providers', function() {
   });
 
   beforeEach(angular.mock.inject(function(_$rootScope_, _inboxProviders_, _inboxSearchResultsProvider_,
-    _inboxHostedMailAttachmentProvider_, _inboxHostedMailThreadsProvider_, _jmapDraft_, _ELEMENTS_PER_REQUEST_) {
+    _inboxHostedMailAttachmentProvider_, _inboxHostedMailThreadsProvider_, _ELEMENTS_PER_REQUEST_) {
     $rootScope = _$rootScope_;
     inboxProviders = _inboxProviders_;
     inboxSearchResultsProvider = _inboxSearchResultsProvider_;
     inboxHostedMailAttachmentProvider = _inboxHostedMailAttachmentProvider_;
     inboxHostedMailThreadsProvider = _inboxHostedMailThreadsProvider_;
-    jmapDraft = _jmapDraft_;
 
     ELEMENTS_PER_REQUEST = _ELEMENTS_PER_REQUEST_;
   }));
@@ -182,7 +174,7 @@ describe('The Unified Inbox Angular module providers', function() {
       var filter = { inMailboxes: ['id_inbox'] };
       var fetcher = inboxHostedMailAttachmentProvider.fetch(filter);
 
-      jmapClient.getMessageList = sinon.stub().returns($q.when({
+      jmapDraftClient.getMessageList = sinon.stub().returns($q.when({
         getMessages: function() {
           return $q.when(messageList);
         }

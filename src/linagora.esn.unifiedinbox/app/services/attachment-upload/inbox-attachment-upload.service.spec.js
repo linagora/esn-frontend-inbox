@@ -17,7 +17,7 @@ describe('The inboxAttachmentUploadService service', function() {
     $provide.value('inboxConfig', function(key, defaultValue) {
       return $q.when(defaultValue);
     });
-    $provide.value('withJmapClient', function(callback) {
+    $provide.value('withJmapDraftClient', function(callback) {
       return callback({});
     });
     $provide.value('inboxAttachmentAlternativeUploaderModal', {

@@ -5,11 +5,11 @@
 const { expect } = chai;
 
 describe('The inboxMailboxesFilterService factory', function() {
-  var $rootScope, asyncJmapAction, jmapClient, inboxMailboxesFilterService, JMAP_FILTER, jmapDraft;
+  var $rootScope, asyncJmapAction, jmapDraftClient, inboxMailboxesFilterService, JMAP_FILTER, jmapDraft;
 
   beforeEach(function() {
     angular.mock.module('linagora.esn.unifiedinbox', function($provide) {
-      jmapClient = {
+      jmapDraftClient = {
         getFilter: sinon.stub().callsFake(function() { // $q is not injected at this stage, `.returns` is unusable
           return $q.when([]);
         }),
@@ -21,7 +21,7 @@ describe('The inboxMailboxesFilterService factory', function() {
       asyncJmapAction = sinon.stub().callsFake(function(object, callback) {
         var fn = callback || object;
 
-        return fn(jmapClient);
+        return fn(jmapDraftClient);
       });
 
       var inboxMailboxesService = {
@@ -31,7 +31,7 @@ describe('The inboxMailboxesFilterService factory', function() {
       };
 
       $provide.value('asyncJmapAction', asyncJmapAction);
-      $provide.value('withJmapClient', asyncJmapAction);
+      $provide.value('withJmapDraftClient', asyncJmapAction);
       $provide.value('inboxMailboxesService', inboxMailboxesService);
     });
   });
@@ -47,8 +47,8 @@ describe('The inboxMailboxesFilterService factory', function() {
 
   function getDeterministicFilterRule() {
     var id = 0;
-    var FilterRule = function(jmapClient, name) {
-      var res = new jmapDraft.OldFilterRule(jmapClient, name);
+    var FilterRule = function(jmapDraftClient, name) {
+      var res = new jmapDraft.OldFilterRule(jmapDraftClient, name);
 
       res.id = String(++id);
 
@@ -210,7 +210,7 @@ describe('The inboxMailboxesFilterService factory', function() {
       $rootScope.$digest();
 
       inboxMailboxesFilterService.getFilters().then(function(filters) {
-        expect(jmapClient.getFilter).to.not.have.been.called;
+        expect(jmapDraftClient.getFilter).to.not.have.been.called;
         expect(filters).to.eql([1, 2, 3]);
 
         done();
@@ -250,7 +250,7 @@ describe('The inboxMailboxesFilterService factory', function() {
         }
       };
 
-      jmapClient.getFilter.returns($q.when([filter1, filter2]));
+      jmapDraftClient.getFilter.returns($q.when([filter1, filter2]));
 
       inboxMailboxesFilterService.getFilters().then(function() {
         expect(inboxMailboxesFilterService.filters.length).to.equal(2);
@@ -300,7 +300,7 @@ describe('The inboxMailboxesFilterService factory', function() {
       };
 
       inboxMailboxesFilterService.filters = [filter1, filter2];
-      expect(jmapClient.setFilter).to.have.been.calledWith([filter1, filter2]);
+      expect(jmapDraftClient.setFilter).to.have.been.calledWith([filter1, filter2]);
     });
 
     it('should set the filters locally', function(done) {
@@ -335,12 +335,12 @@ describe('The inboxMailboxesFilterService factory', function() {
       };
 
       inboxMailboxesFilterService.filters = [];
-      jmapClient.setFilter().then(function() {
+      jmapDraftClient.setFilter().then(function() {
         expect(inboxMailboxesFilterService.filters).to.deep.eql([]);
 
         inboxMailboxesFilterService.filters = [filter1, filter2];
 
-        jmapClient.setFilter().then(function() {
+        jmapDraftClient.setFilter().then(function() {
           expect(inboxMailboxesFilterService.filters).to.deep.eql([filter1, filter2]);
           done();
         });
