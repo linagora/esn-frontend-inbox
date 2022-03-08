@@ -1,13 +1,12 @@
 'use strict';
 
 require('../config/config.js');
-require('../generate-jwt-token/generate-jwt-token.js');
 const { Client } = require('jmap-client-ts/lib');
 const { FetchTransport } = require('jmap-client-ts/lib/utils/fetch-transport');
 
 angular
   .module('esn.inbox.libs')
-  .service('jmapClientProvider', function($q, inboxConfig, generateJwtToken) {
+  .service('jmapClientProvider', function($q, inboxConfig, tokenAPI) {
     let jmapClient;
     let jmapClientPromise;
 
@@ -18,12 +17,12 @@ angular
     function _initializeJmapClientWithSession() {
       if (!jmapClientPromise) {
         jmapClientPromise = $q(function(resolve, reject) {
-          $q.all([generateJwtToken(), inboxConfig('api')])
-            .then(data => {
+          $q.all([tokenAPI.getWebToken(), inboxConfig('api')])
+            .then(([{ data: jwt }, apiUrl]) => {
               const client = new Client({
-                accessToken: data[0],
-                overriddenApiUrl: data[1],
-                sessionUrl: `${data[1]}/session`,
+                accessToken: jwt,
+                overriddenApiUrl: apiUrl,
+                sessionUrl: `${apiUrl}/session`,
                 transport: new FetchTransport(fetch.bind())
               });
 

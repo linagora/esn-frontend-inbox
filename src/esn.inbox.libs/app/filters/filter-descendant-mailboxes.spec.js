@@ -8,8 +8,14 @@ describe('The inboxFilterDescendantMailboxes filter', function() {
 
   var filter, cache;
 
+  const tokenAPIMock = {
+    getWebToken: () => $q.when({ data: 'jwt' })
+  };
+
   beforeEach(function() {
-    angular.mock.module('esn.inbox.libs');
+    angular.mock.module('esn.inbox.libs', function($provide) {
+      $provide.value('tokenAPI', tokenAPIMock);
+    });
   });
 
   beforeEach(angular.mock.inject(function(inboxFilterDescendantMailboxesFilter, inboxMailboxesCache) {

@@ -10,7 +10,7 @@ describe('The inboxComposerBodyEditorHtml component', function() {
 
   function compileComponent() {
     element = angular.element(
-      '<inbox-composer-body-editor-html message="message" identity="identity" send="send()" on-body-update="message.htmlBody = $body" />'
+      '<inbox-composer-body-editor-html message="message" identity="identity" send="send()" on-body-update="message.htmlBody = $body" on-signature-update="onSignatureUpdate()" />'
     );
     element.appendTo(document.body);
 
@@ -61,6 +61,7 @@ describe('The inboxComposerBodyEditorHtml component', function() {
     $rootScope.identity = {
       htmlSignature: 'my signature'
     };
+    $rootScope.onSignatureUpdate = sinon.spy();
 
     $scope = $rootScope.$new();
   });
@@ -145,6 +146,14 @@ describe('The inboxComposerBodyEditorHtml component', function() {
       $rootScope.$digest();
 
       expect($rootScope.message.htmlBody).to.equal('<p><br></p><div class="openpaas-signature">-- \nmy signature</div>');
+    });
+
+    it('should call onSignatureUpdate on init', () => {
+      compileComponent();
+
+      $rootScope.$digest();
+
+      expect($rootScope.onSignatureUpdate).to.have.been.called;
     });
   });
 

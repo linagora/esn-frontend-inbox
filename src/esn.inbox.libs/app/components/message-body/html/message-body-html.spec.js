@@ -9,6 +9,12 @@ describe('The inboxMessageBodyHtml component', function() {
   var $compile, $rootScope, $timeout, newComposerService;
   var element;
 
+  const tokenAPIMock = {
+    getWebToken() {
+      return $q.when({ data: 'jwt' });
+    }
+  };
+
   function compile(html) {
     element = angular.element(html);
     element.appendTo(document.body);
@@ -33,6 +39,7 @@ describe('The inboxMessageBodyHtml component', function() {
     angular.mock.module('esn.inbox.libs', function($provide) {
       $provide.value('newComposerService', { open: sinon.spy() });
       $provide.value('touchscreenDetectorService', { hasTouchscreen: function() { return false; } });
+      $provide.value('tokenAPI', tokenAPIMock);
     });
   });
 
@@ -88,7 +95,7 @@ describe('The inboxMessageBodyHtml component', function() {
       var ctrl = compile('<inbox-message-body-html message="message" />');
 
       ctrl.$onInit().then(ctrl.loadAsyncImages).then(function() {
-        expect(element.find('#one').attr('src')).to.eq('remote.png');
+        expect(element.find('[id$="one"]').attr('src')).to.eq('remote.png');
         done();
       });
       $timeout.flush();
@@ -105,7 +112,7 @@ describe('The inboxMessageBodyHtml component', function() {
       var ctrl = compile('<inbox-message-body-html message="message" />');
 
       ctrl.$onInit().then(ctrl.loadAsyncImages).then(function() {
-        expect(element.find('#one').attr('src')).to.eq('signed-url');
+        expect(element.find('[id$="one"]').attr('src')).to.eq('signed-url');
         done();
       });
       $timeout.flush();
@@ -118,7 +125,7 @@ describe('The inboxMessageBodyHtml component', function() {
       var ctrl = compile('<inbox-message-body-html message="message" />');
 
       ctrl.$onInit().then(ctrl.loadAsyncImages).then(function() {
-        expect(element.find('#one').attr('src')).to.eq('broken-link');
+        expect(element.find('[id$="one"]').attr('src')).to.eq('broken-link');
         done();
       });
       $timeout.flush();

@@ -40,9 +40,8 @@ require('./directives/lists.js');
 
                         if (trueAttachment.length > 0) {
                           message.attachments = trueAttachment;
+                          messageTrueAttachmentList.push(message);
                         }
-
-                        messageTrueAttachmentList.push(message);
                       });
 
                       return messageTrueAttachmentList;

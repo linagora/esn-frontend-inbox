@@ -18,7 +18,13 @@ describe('The Unified Inbox Angular module providers', function() {
         date: new Date(2016, 1, 1, 1, 1, 1, i), // The variable millisecond is what allows us to check ordering in the tests
         mailboxIds: ['id_inbox'],
         threadId: 'thread_' + i,
-        hasAttachment: true
+        hasAttachment: true,
+        attachments: [
+          { isInline: false, name: 'meeting.ics' },
+          { isInline: false, name: 'file.pdf' },
+          { isInline: false, name: null },
+          { isInline: true, name: 'picture.jpg' }
+        ]
       });
     }
 
@@ -117,6 +123,66 @@ describe('The Unified Inbox Angular module providers', function() {
         expect(messages[ELEMENTS_PER_REQUEST - 1]).to.shallowDeepEqual({
           id: 'message_' + (ELEMENTS_PER_REQUEST * 2 - 1)
         });
+
+        done();
+      });
+      $rootScope.$digest();
+    });
+
+    it('should request the backend using the JMAP client, and return TRUE attchments messages', function(done) {
+      var trueMessageList = [{
+        mailboxIds: ['id_inbox'],
+        hasAttachment: true,
+        attachments: [
+          { isInline: false, name: 'file.pdf' }
+        ]
+      },
+      {
+        mailboxIds: ['id_inbox'],
+        hasAttachment: true,
+        attachments: [
+          { isInline: false, name: 'file.pdf' }
+        ]
+      }];
+
+      var messageList = [{
+        mailboxIds: ['id_inbox'],
+        hasAttachment: true,
+        attachments: [
+          { isInline: false, name: 'meeting.ics' },
+          { isInline: false, name: 'file.pdf' },
+          { isInline: false, name: null },
+          { isInline: true, name: 'picture.jpg' }
+        ]
+      },
+      {
+        mailboxIds: ['id_inbox'],
+        hasAttachment: true,
+        attachments: [
+          { isInline: false, name: 'meeting.ics' },
+          { isInline: false, name: 'file.pdf' },
+          { isInline: false, name: null },
+          { isInline: true, name: 'picture.jpg' }
+        ]
+      },
+      {
+        mailboxIds: ['id_inbox'],
+        hasAttachment: false,
+        attachments: []
+      }];
+
+      var filter = { inMailboxes: ['id_inbox'] };
+      var fetcher = inboxHostedMailAttachmentProvider.fetch(filter);
+
+      jmapDraftClient.getMessageList = sinon.stub().returns($q.when({
+        getMessages: function() {
+          return $q.when(messageList);
+        }
+      }));
+
+      fetcher().then(function(messages) {
+        expect(messages.length).to.equal(trueMessageList.length);
+        expect(messages).to.deep.equal(trueMessageList);
 
         done();
       });

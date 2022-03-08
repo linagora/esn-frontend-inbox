@@ -29,9 +29,12 @@ describe('The inboxListHeader component', function() {
   beforeEach(function() {
     angular.mock.module('linagora.esn.unifiedinbox', function($provide) {
       $provide.constant('INBOX_SEARCH_DEBOUNCE_DELAY', 10);
-      $provide.constant('moment', function(argument) {
+      const momentMock = function(argument) {
         return moment.tz(argument || nowDate, 'UTC');
-      });
+      };
+
+      momentMock.locale = () => 'en';
+      $provide.constant('moment', momentMock);
     });
   });
 

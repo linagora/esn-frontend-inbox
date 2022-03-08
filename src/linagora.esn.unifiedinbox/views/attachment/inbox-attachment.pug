@@ -1,6 +1,6 @@
 .clickable.attachment.waves-effect(ng-click="ctrl.download(attachment)", title="{{ ::attachment.name }}")
   .icon
-    img(fallback-src="/images/file-icons/default.png", src="/images/file-icons/default.png", ng-src="/images/file-icons/{{ ::attachment.type | extension }}.png", alt="{{ 'Attachment' | translate }}")
+    img(fallback-src="assets/images/file-icons/default.png", src="assets/images/file-icons/default.png", ng-src="assets/images/file-icons/{{ ::attachment.type | extension }}.png", alt="{{ 'Attachment' | translate }}")
   .metadata
     .basic-info
       .name.ellipsis {{ ::attachment.name }}

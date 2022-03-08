@@ -8,7 +8,7 @@ describe('The inboxJmapItemService service', function() {
 
   var $rootScope, jmapDraft, inboxJmapItemService, newComposerService, emailSendingService, quoteEmail, jmapDraftClientMock, jmapClientMock,
     notificationFactory, counter, infiniteListService, inboxSelectionService, INFINITE_LIST_EVENTS, INBOX_EVENTS,
-    inboxConfigMock, inboxMailboxesService, inboxFilteredList, INBOX_MAILBOX_ROLES;
+    inboxConfigMock, inboxMailboxesService, inboxFilteredList, INBOX_MAILBOX_ROLES, esnI18nService;
 
   beforeEach(angular.mock.module('esn.inbox.libs'));
 
@@ -55,9 +55,13 @@ describe('The inboxJmapItemService service', function() {
     $provide.value('inboxConfig', function(key, defaultValue) {
       return $q.when(angular.isDefined(inboxConfigMock[key]) ? inboxConfigMock[key] : defaultValue);
     });
-    $provide.value('esnI18nService', {
+
+    esnI18nService = {
+      getLocale: sinon.stub().returns('en'),
       translate: text => text
-    });
+    };
+
+    $provide.value('esnI18nService', esnI18nService);
   }));
 
   beforeEach(angular.mock.inject(function(_$rootScope_, _jmapDraft_, _inboxJmapItemService_, _notificationFactory_,

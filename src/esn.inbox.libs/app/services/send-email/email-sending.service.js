@@ -8,7 +8,8 @@ require('../with-jmap-draft-client/with-jmap-draft-client');
 require('../../app.constants');
 
 angular.module('esn.inbox.libs')
-  .factory('emailSendingService', function($q, emailService, jmapDraft, session, emailBodyService, sendEmail, inboxJmapDraftHelper, inboxMessagesCache, INBOX_ATTACHMENT_TYPE_JMAP, INBOX_MESSAGE_HEADERS) {
+  .factory('emailSendingService', function($q, emailService, jmapDraft, session, emailBodyService, sendEmail, inboxJmapDraftHelper,
+    inboxMessagesCache, INBOX_ATTACHMENT_TYPE_JMAP, INBOX_MESSAGE_HEADERS, htmlCleaner) {
     const referencingEmailOptions = {
       reply: {
         subjectPrefix: 'Re: ',
@@ -271,6 +272,10 @@ angular.module('esn.inbox.libs')
 
     function _createQuotedEmail(opts, messageId, sender) {
       return $q.when(inboxMessagesCache[messageId] || inboxJmapDraftHelper.getMessageById(messageId)).then(function(message) {
+        if (message.htmlBody) {
+          message.htmlBody = htmlCleaner.clean(message.htmlBody);
+        }
+
         const newRecipients = opts.recipients ? opts.recipients(message, sender) : {},
           newEmail = {
             from: getEmailAddress(sender),
