@@ -13,6 +13,7 @@ pipeline {
         sh 'npm install -f'
         sh 'npm run lint'
         sh 'npm run test'
+	sh 'npm run build:prod'
       }
       post {
         always {

@@ -20,7 +20,7 @@
     "esn-frontend-common-libs": "github:linagora/esn-frontend-common-libs#main",
     "esn-frontend-inbox-calendar": "github:linagora/esn-frontend-inbox-calendar#main",
     "esn-frontend-inbox-linshare": "github:linagora/esn-frontend-inbox-linshare#main",
-    "jmap-client-ts": "github:linagora/jmap-client-ts#main",
+    "jmap-client-ts": "github:rezk2ll/jmap-client-ts#main",
     "jmap-draft-client": "^0.1.5",
     "lodash": "2.4.1",
     "sanitize-html": "github:linagora/sanitize-html#c89d4ebe09da48296f33cc80ddcc02e11d853265",
