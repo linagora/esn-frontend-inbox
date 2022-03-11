@@ -53,7 +53,7 @@
     "html-loader": "^1.1.0",
     "html-webpack-plugin": "^4.3.0",
     "ignore-loader": "^0.1.2",
-    "jmap-client-ts": "github:openpaas-suite/jmap-client-ts#main",
+    "jmap-client-ts": "github:linagora/jmap-client-ts#main",
     "jquery-mockjax": "2.2.1",
     "karma": "4.2.0",
     "karma-firefox-launcher": "1.1.0",
