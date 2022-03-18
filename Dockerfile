@@ -14,7 +14,7 @@ COPY package.json /app/
 
 RUN npm install -g npm@7.24.2
 
-RUN npm install
+RUN npm install --legacy-peer-deps
 
 COPY . .
 
