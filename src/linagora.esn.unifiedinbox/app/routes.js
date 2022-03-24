@@ -75,9 +75,9 @@ angular.module('linagora.esn.unifiedinbox')
       });
     }
 
-    $urlRouterProvider.when('/', function($state, session, inboxMailboxesService, jmapDraft) {
+    $urlRouterProvider.when('/', function($state, session, inboxMailboxesService, INBOX_MAILBOX_ROLES) {
       session.ready.then(function() {
-        inboxMailboxesService.getMailboxWithRole(jmapDraft.MailboxRole.INBOX).then(({ id }) => {
+        inboxMailboxesService.getMailboxWithRole(INBOX_MAILBOX_ROLES.INBOX).then(({ id }) => {
           $state.go('unifiedinbox.inbox', {
             type: 'jmap',
             context: id
