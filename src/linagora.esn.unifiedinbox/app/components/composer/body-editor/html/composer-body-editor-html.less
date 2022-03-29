@@ -136,3 +136,19 @@ inbox-composer-body-editor-html.esn-summernote {
 .btn-sm, .btn-group-sm > .btn {
   padding: 5px 8px;
 }
+
+// the !imporant is needed because we override summernote inline styles
+.note-dropdown-menu {
+  min-width: 277px !important;
+  .note-palette, .note-color-palette {
+    width: 128px !important;
+    .note-color-row {
+      height: 16px !important;
+      .note-color-btn {
+        margin: 0 !important;
+        width: 16px !important;
+        height: 16px !important;
+      }
+    }
+  }
+}
