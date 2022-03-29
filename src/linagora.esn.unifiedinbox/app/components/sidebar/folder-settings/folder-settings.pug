@@ -10,7 +10,7 @@ md-menu-item(ng-if="ctrl.isFolder || !ctrl.isShared && !ctrl.isSystem", esn-moda
   md-button
     md-icon(md-menu-origin, md-svg-icon="settings", aria-label="settings Icon")
     | {{ 'Folder settings' | translate }}
-md-menu-item(ng-if="ctrl.mailbox.role === INBOX_MAILBOX_ROLES.TRASH")
+md-menu-item(ng-if="ctrl.mailbox.role === ctrl.INBOX_MAILBOX_ROLES.TRASH")
   md-button(ng-disabled="ctrl.mailbox.totalEmails === 0", ng-click="ctrl.emptyTrash(ctrl.mailbox.id)")
     md-icon(md-menu-origin, md-svg-icon="delete-empty", aria-label="empty Icon")
     | {{ 'Empty trash' | translate }}
