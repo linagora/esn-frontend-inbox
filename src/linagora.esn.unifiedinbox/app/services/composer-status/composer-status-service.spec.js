@@ -1,67 +1,62 @@
 'use strict';
 
-/* global chai, sinon: false */
+/* global chai: false */
 
 const { expect } = chai;
 
 describe('The composerStatus service', function() {
-  let $rootScope, $log, inboxComposerStatus, INBOX_COMPOSER_STATUS;
+  let inboxComposerStatus;
 
   beforeEach(function() {
     angular.mock.module('linagora.esn.unifiedinbox');
 
-    angular.mock.inject(function(_$rootScope_, _$log_, _inboxComposerStatus_, _INBOX_COMPOSER_STATUS_) {
-      $rootScope = _$rootScope_;
-      $log = _$log_;
+    angular.mock.inject(function(_inboxComposerStatus_) {
       inboxComposerStatus = _inboxComposerStatus_;
-      INBOX_COMPOSER_STATUS = _INBOX_COMPOSER_STATUS_;
-
-      $rootScope.$broadcast = sinon.stub();
-      $log.error = sinon.stub();
     });
   });
 
-  describe('The DISCARDING status', function() {
-    it('should be INBOX_COMPOSER_STATUS.DISCARDING', function() {
-      const currentStatus = inboxComposerStatus.getStatus();
+  describe('The hasUnsavedDraft method', function() {
+    it('should return false after initialization', function() {
+      expect(inboxComposerStatus.hasUnsavedDraft()).to.be.false;
+    });
 
-      expect(currentStatus).to.equal(INBOX_COMPOSER_STATUS.DISCARDING);
+    it('should return true if there is at least one composer with an unsaved draft', function() {
+      inboxComposerStatus.registerComposer({ needsSave: true });
+
+      expect(inboxComposerStatus.hasUnsavedDraft()).to.be.true;
+
+      inboxComposerStatus.registerComposer({ needsSave: false });
+
+      expect(inboxComposerStatus.hasUnsavedDraft()).to.be.true;
+    });
+
+    it('should return false if there is no composer with an unsaved draft', function() {
+      inboxComposerStatus.registerComposer({ needsSave: false });
+
+      expect(inboxComposerStatus.hasUnsavedDraft()).to.be.false;
+
+      inboxComposerStatus.registerComposer({ needsSave: false });
+
+      expect(inboxComposerStatus.hasUnsavedDraft()).to.be.false;
     });
   });
 
-  describe('The getStatus method', function() {
-    it('should return the current status', function() {
-      let currentStatus = inboxComposerStatus.getStatus();
+  describe('The registerComposer method', function() {
+    it('should unregister the composer correctly', function() {
+      const unregisterComposers = [
+        inboxComposerStatus.registerComposer({ needsSave: false }),
+        inboxComposerStatus.registerComposer({ needsSave: true })
+      ];
 
-      expect(currentStatus).to.equal(INBOX_COMPOSER_STATUS.DISCARDING);
+      expect(inboxComposerStatus.hasUnsavedDraft()).to.be.true;
 
-      inboxComposerStatus.updateStatus(INBOX_COMPOSER_STATUS.OPENING);
+      unregisterComposers[0]();
 
-      currentStatus = inboxComposerStatus.getStatus();
+      expect(inboxComposerStatus.hasUnsavedDraft()).to.be.true;
 
-      expect(currentStatus).to.equal(INBOX_COMPOSER_STATUS.OPENING);
-    });
-  });
+      unregisterComposers[1]();
 
-  describe('The updateStatus method', function() {
-    it('should update the current status if the incoming new status is valid ', function() {
-      inboxComposerStatus.updateStatus(INBOX_COMPOSER_STATUS.OPENING);
-
-      const currentStatus = inboxComposerStatus.getStatus();
-
-      expect(currentStatus).to.equal(INBOX_COMPOSER_STATUS.OPENING);
-    });
-
-    it('should neither update the current status nor broadcast an event if the incoming new status is invalid, but log an error', function() {
-      const previousStatus = inboxComposerStatus.getStatus();
-      const newStatus = INBOX_COMPOSER_STATUS.OPENING + 'some_invalid_string_123abc!@#$$^(*)21';
-
-      inboxComposerStatus.updateStatus(INBOX_COMPOSER_STATUS.OPENING + 'some_invalid_string_123abc!@#$$^(*)21');
-
-      const currentStatus = inboxComposerStatus.getStatus();
-
-      expect(previousStatus).to.equal(currentStatus);
-      expect($log.error).to.have.been.calledWith(`Cannot update the mail status since the mail status '${newStatus}' is not allowed.`);
+      expect(inboxComposerStatus.hasUnsavedDraft()).to.be.false;
     });
   });
 });

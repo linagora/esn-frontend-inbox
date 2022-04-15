@@ -5,7 +5,7 @@
 const { expect } = chai;
 
 describe('The inboxComposerCloseWindowService service', function() {
-  let $window, $rootScope, inboxComposerCloseWindowService, inboxComposerStatusMock, INBOX_COMPOSER_STATUS;
+  let $window, $rootScope, inboxComposerCloseWindowService, INBOX_EVENTS, inboxComposerStatusMock;
 
   beforeEach(function() {
     inboxComposerStatusMock = {
@@ -19,11 +19,11 @@ describe('The inboxComposerCloseWindowService service', function() {
       $provide.value('inboxComposerStatus', inboxComposerStatusMock);
     });
 
-    angular.mock.inject(function(_inboxComposerCloseWindowService_, _$window_, _$rootScope_, _INBOX_COMPOSER_STATUS_) {
+    angular.mock.inject(function(_inboxComposerCloseWindowService_, _$window_, _$rootScope_, _INBOX_EVENTS_) {
       inboxComposerCloseWindowService = _inboxComposerCloseWindowService_;
       $rootScope = _$rootScope_;
       $window = _$window_;
-      INBOX_COMPOSER_STATUS = _INBOX_COMPOSER_STATUS_;
+      INBOX_EVENTS = _INBOX_EVENTS_;
     });
   });
 
@@ -35,37 +35,38 @@ describe('The inboxComposerCloseWindowService service', function() {
     });
 
     describe('The onbeforeunload handler', function() {
-      it('should return when composer status is not opening', function() {
+      it('should prevent default when there is at least one unsaved draft', function() {
         const emitSpy = sinon.spy($rootScope, '$emit');
         const event = {
           preventDefault: sinon.spy()
         };
 
-        inboxComposerStatusMock.getStatus.returns(INBOX_COMPOSER_STATUS.DISCARDING);
-
         inboxComposerCloseWindowService.setup();
 
-        const result = $window.onbeforeunload(event);
+        inboxComposerStatusMock.hasUnsavedDraft = sinon.stub().returns(true);
+
+        $window.onbeforeunload(event);
 
         expect(event.preventDefault).to.have.been.calledOnce;
-        expect(result).to.be.empty;
-        expect(emitSpy).to.not.have.been.called;
+        expect(event.returnValue).to.equal('');
+        expect(emitSpy).to.have.been.calledWith(INBOX_EVENTS.CLOSE_COMPOSER_WARNING);
       });
 
-      it('should return when composer status is OPENING', function() {
+      it('should not prevent default when there is no unsaved draft', function() {
+        const emitSpy = sinon.spy($rootScope, '$emit');
         const event = {
           preventDefault: sinon.spy()
         };
 
-        inboxComposerStatusMock.getStatus.returns(INBOX_COMPOSER_STATUS.OPENING);
-
         inboxComposerCloseWindowService.setup();
 
-        const result = $window.onbeforeunload(event);
+        inboxComposerStatusMock.hasUnsavedDraft = sinon.stub().returns(false);
 
-        expect(event.preventDefault).to.have.been.calledOnce;
-        expect(result).to.match(/Are you sure you want to leave?/);
-        expect(event.returnValue).to.match(/Are you sure you want to leave?/);
+        $window.onbeforeunload(event);
+
+        expect(event.preventDefault).to.not.have.been.called;
+        expect(event.returnValue).to.be.undefined;
+        expect(emitSpy).to.not.have.been.called;
       });
     });
   });
