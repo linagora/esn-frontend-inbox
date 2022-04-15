@@ -1,27 +1,34 @@
-
 angular
   .module('linagora.esn.unifiedinbox')
-  .service('inboxComposerStatus', function($log, INBOX_COMPOSER_STATUS) {
+  .service('inboxComposerStatus', function() {
     const self = this;
 
-    self.status = INBOX_COMPOSER_STATUS.DISCARDING;
+    self.composers = {};
+    self.nextId = 0;
 
     return {
-      getStatus,
-      updateStatus
+      registerComposer,
+      hasUnsavedDraft
     };
 
-    function getStatus() {
-      return self.status;
+    /**
+     * @param composer the instance of a composer to register
+     * @returns the method to unregister the composer
+     */
+    function registerComposer(composer) {
+      const id = self.nextId++;
+
+      self.composers[id] = composer;
+
+      return () => {
+        delete self.composers[id];
+      };
     }
 
-    function updateStatus(newStatus) {
-      if (!Object.values(INBOX_COMPOSER_STATUS).includes(newStatus)) {
-        return $log.error(
-          `Cannot update the mail status since the mail status '${newStatus}' is not allowed.`
-        );
-      }
-
-      self.status = newStatus;
+    /**
+     * @returns true if there is at least one composer with an unsaved draft
+     */
+    function hasUnsavedDraft() {
+      return Object.values(self.composers).some(composer => composer.needsSave);
     }
   });

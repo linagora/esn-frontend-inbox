@@ -1,12 +1,10 @@
 'use strict';
 
-const RETURN_VALUE = 'Are you sure you want to leave?';
-
 angular
   .module('linagora.esn.unifiedinbox')
   .service('inboxComposerCloseWindowService', inboxComposerCloseWindowService);
 
-function inboxComposerCloseWindowService($window, $rootScope, INBOX_COMPOSER_STATUS, inboxComposerStatus, INBOX_EVENTS) {
+function inboxComposerCloseWindowService($window, $rootScope, inboxComposerStatus, INBOX_EVENTS) {
   return {
     setup
   };
@@ -14,20 +12,13 @@ function inboxComposerCloseWindowService($window, $rootScope, INBOX_COMPOSER_STA
   function setup() {
 
     $window.onbeforeunload = event => {
+      if (inboxComposerStatus.hasUnsavedDraft()) {
+        event.preventDefault();
+        // Needed for Chrome
+        event.returnValue = '';
 
-      event.preventDefault();
-
-      const mustWarn = inboxComposerStatus.getStatus();
-
-      if (mustWarn !== INBOX_COMPOSER_STATUS.OPENING) {
-
-        return;
+        $rootScope.$emit(INBOX_EVENTS.CLOSE_COMPOSER_WARNING);
       }
-
-      $rootScope.$emit(INBOX_EVENTS.CLOSE_COMPOSER_WARNING);
-      event.returnValue = RETURN_VALUE;
-
-      return RETURN_VALUE;
     };
   }
 }
