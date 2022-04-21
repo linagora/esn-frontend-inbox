@@ -5,7 +5,7 @@
 const { expect } = chai;
 
 describe('The inboxComposerCloseWindowService service', function() {
-  let $window, $rootScope, inboxComposerCloseWindowService, INBOX_EVENTS, inboxComposerStatusMock;
+  let $window, notificationFactory, inboxComposerCloseWindowService, inboxComposerStatusMock;
 
   beforeEach(function() {
     inboxComposerStatusMock = {
@@ -19,11 +19,10 @@ describe('The inboxComposerCloseWindowService service', function() {
       $provide.value('inboxComposerStatus', inboxComposerStatusMock);
     });
 
-    angular.mock.inject(function(_inboxComposerCloseWindowService_, _$window_, _$rootScope_, _INBOX_EVENTS_) {
+    angular.mock.inject(function(_inboxComposerCloseWindowService_, _$window_, _notificationFactory_) {
       inboxComposerCloseWindowService = _inboxComposerCloseWindowService_;
-      $rootScope = _$rootScope_;
+      notificationFactory = _notificationFactory_;
       $window = _$window_;
-      INBOX_EVENTS = _INBOX_EVENTS_;
     });
   });
 
@@ -36,7 +35,7 @@ describe('The inboxComposerCloseWindowService service', function() {
 
     describe('The onbeforeunload handler', function() {
       it('should prevent default when there is at least one unsaved draft', function() {
-        const emitSpy = sinon.spy($rootScope, '$emit');
+        const emitSpy = sinon.spy(notificationFactory, 'weakError');
         const event = {
           preventDefault: sinon.spy()
         };
@@ -49,11 +48,11 @@ describe('The inboxComposerCloseWindowService service', function() {
 
         expect(event.preventDefault).to.have.been.calledOnce;
         expect(event.returnValue).to.equal('');
-        expect(emitSpy).to.have.been.calledWith(INBOX_EVENTS.CLOSE_COMPOSER_WARNING);
+        expect(emitSpy).to.have.been.calledOnce;
       });
 
       it('should not prevent default when there is no unsaved draft', function() {
-        const emitSpy = sinon.spy($rootScope, '$emit');
+        const emitSpy = sinon.spy(notificationFactory, 'weakError');
         const event = {
           preventDefault: sinon.spy()
         };

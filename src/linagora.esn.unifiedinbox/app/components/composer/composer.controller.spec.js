@@ -1,5 +1,7 @@
 'use strict';
 
+const { noop } = require('lodash');
+
 /* global chai: false, sinon: false */
 
 const { expect } = chai;
@@ -515,6 +517,8 @@ describe('The inboxComposerController controller', function() {
     });
 
     it('should notify caller when email is being sent', function() {
+      ctrl.unregisterComposer = noop;
+
       ctrl.send();
 
       expect(ctrl.onSending).to.have.been.called;
@@ -798,6 +802,8 @@ describe('The inboxComposerController controller', function() {
         expect(ctrl.draft.cancelDestroy).to.have.been.called;
         expect(ctrl.onShow).to.have.been.called;
       });
+
+      ctrl.unregisterComposer = noop;
 
       ctrl.destroyDraft();
     });
