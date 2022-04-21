@@ -229,6 +229,7 @@ angular.module('linagora.esn.unifiedinbox')
     }
 
     function _closeComposer() {
+      self.unregisterComposer();
       skipAutoSaveOnDestroy = true;
       self.onHide();
     }

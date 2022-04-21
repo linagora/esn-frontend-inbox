@@ -4,7 +4,7 @@ angular
   .module('linagora.esn.unifiedinbox')
   .service('inboxComposerCloseWindowService', inboxComposerCloseWindowService);
 
-function inboxComposerCloseWindowService($window, $rootScope, inboxComposerStatus, INBOX_EVENTS) {
+function inboxComposerCloseWindowService($window, inboxComposerStatus, notificationFactory) {
   return {
     setup
   };
@@ -17,7 +17,7 @@ function inboxComposerCloseWindowService($window, $rootScope, inboxComposerStatu
         // Needed for Chrome
         event.returnValue = '';
 
-        $rootScope.$emit(INBOX_EVENTS.CLOSE_COMPOSER_WARNING);
+        notificationFactory.weakError('Note', 'You should save your email in order not to lose it');
       }
     };
   }
