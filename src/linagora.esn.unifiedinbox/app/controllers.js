@@ -626,16 +626,29 @@ require('./services/common/inbox-utils.service.js');
       };
     })
 
-    .controller('attachmentController', function(navigateTo, asyncAction, esnI18nService) {
+    .controller('attachmentController', function(asyncAction, esnI18nService) {
       this.download = function(attachment) {
         return asyncAction({
           progressing: 'Please wait while your download is being prepared',
           success: 'Your download has started',
           failure: esnI18nService.translate('Unable to download attachment %s', { attachmentName: attachment.name })
         }, function() {
-          return attachment.getSignedDownloadUrl().then(navigateTo);
+          return attachment.getSignedDownloadUrl().then(downloadFile);
         });
       };
+
+      function downloadFile(url) {
+        let downloadIframe = document.getElementById('download-iframe');
+
+        if (!downloadIframe) {
+          downloadIframe = document.createElement('iframe');
+          downloadIframe.id = 'download-iframe';
+          downloadIframe.style.display = 'none';
+          document.body.appendChild(downloadIframe);
+        }
+
+        downloadIframe.src = url;
+      }
     })
 
     .controller('inboxSidebarEmailController', function($scope, $rootScope, $interval,

@@ -8,7 +8,7 @@ describe('The linagora.esn.unifiedinbox module controllers', function() {
 
   var $stateParams, $rootScope, scope, $controller, $timeout, $interval,
     jmapDraftClient, jmapDraft, jmapClient, notificationFactory, Offline = {},
-    newComposerService = {}, $state, $modal, $hide, navigateTo, inboxPlugins, inboxFilteredList,
+    newComposerService = {}, $state, $modal, $hide, inboxPlugins, inboxFilteredList,
     inboxMailboxesService, inboxJmapItemService, fileUploadMock, config, moment, inboxMailboxesCache,
     esnPreviousPage, inboxFilterDescendantMailboxesFilter, inboxSelectionService,
     inboxUserQuotaService, inboxUnavailableAccountNotifier, inboxUtils;
@@ -87,7 +87,6 @@ describe('The linagora.esn.unifiedinbox module controllers', function() {
       });
       $provide.value('filter', { filter: 'condition' });
       $provide.value('searchService', { searchByEmail: function() { return $q.when(); } });
-      $provide.value('navigateTo', navigateTo = sinon.spy());
       $provide.value('inboxFilterDescendantMailboxesFilter', inboxFilterDescendantMailboxesFilter);
       $provide.decorator('inboxFilteredList', function($delegate) {
         $delegate.addAll = sinon.spy($delegate.addAll);
@@ -1913,6 +1912,8 @@ describe('The linagora.esn.unifiedinbox module controllers', function() {
       });
 
       it('should navigate to signed URL once it is known', function() {
+        expect(document.getElementById('download-iframe')).to.be.null;
+
         initController('attachmentController').download({
           getSignedDownloadUrl: function() {
             return $q.when('signedUrl');
@@ -1920,7 +1921,7 @@ describe('The linagora.esn.unifiedinbox module controllers', function() {
         });
         $rootScope.$digest();
 
-        expect(navigateTo).to.have.been.calledWith('signedUrl');
+        expect(document.getElementById('download-iframe')).to.not.be.null;
       });
 
     });
