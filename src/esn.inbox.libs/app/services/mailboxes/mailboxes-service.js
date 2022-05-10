@@ -17,7 +17,7 @@ angular.module('esn.inbox.libs')
   .factory('inboxMailboxesService', function($q, $state, $rootScope, withJmapClient, asyncJmapAction,
     inboxSpecialMailboxes, inboxMailboxesCache, inboxSharedMailboxesService, limitToFilter,
     esnI18nService, INBOX_EVENTS, MAILBOX_LEVEL_SEPARATOR, INBOX_RESTRICTED_MAILBOXES, INBOX_DISPLAY_NAME_SIZE,
-    INBOX_MAILBOX_ROLES) {
+    INBOX_MAILBOX_ROLES, JMAP_MAILBOX_MAX_CHANGES) {
 
     let mailboxesListAlreadyFetched = false;
     let mailboxesListPromise;
@@ -271,13 +271,18 @@ angular.module('esn.inbox.libs')
       return withJmapClient(function(jmapClient) {
         return jmapClient.mailbox_changes({
           accountId: null,
-          sinceState: inboxMailboxesCache.state
+          sinceState: inboxMailboxesCache.state,
+          maxChanges: JMAP_MAILBOX_MAX_CHANGES
         }).then(function(changes) {
           if (changes.hasMoreChanges) {
             return _updateCacheFetchingAllMailboxes(jmapClient);
           }
           if (changes.newState !== inboxMailboxesCache.state) {
             return _updateCacheFetchingMailboxChanges(jmapClient, changes);
+          }
+        }).catch(function(error) {
+          if (error && error.type === 'cannotCalculateChanges') {
+            return _updateCacheFetchingAllMailboxes(jmapClient);
           }
         });
       });
