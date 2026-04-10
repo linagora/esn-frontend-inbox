@@ -22,7 +22,7 @@
     "esn-frontend-inbox-linshare": "github:linagora/esn-frontend-inbox-linshare#main",
     "jmap-client-ts": "1.0.0",
     "jmap-draft-client": "^0.1.5",
-    "lodash": "2.4.1",
+    "lodash": "4.18.1",
     "sanitize-html": "github:linagora/sanitize-html#c89d4ebe09da48296f33cc80ddcc02e11d853265",
     "ui-select": "0.19.8",
     "angular-ui-tree": "~2.22.6"
